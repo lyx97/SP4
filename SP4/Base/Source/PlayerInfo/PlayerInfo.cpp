@@ -511,7 +511,7 @@ void CPlayerInfo::Constrain(void)
 	}
 }
 
-void CPlayerInfo::AttachCamera(FPSCamera* _cameraPtr)
+void CPlayerInfo::AttachCamera(Camera* _cameraPtr)
 {
 	attachedCamera = _cameraPtr;
 }

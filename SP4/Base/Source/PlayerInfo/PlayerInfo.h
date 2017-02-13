@@ -1,6 +1,6 @@
 #pragma once
 #include "Vector3.h"
-#include "../FPSCamera.h"
+#include "../Camera.h"
 #include "../GroundEntity.h"
 #include "../WeaponInfo/WeaponInfo.h"
 
@@ -93,7 +93,7 @@ public:
 	void Constrain(void);
 
 	// Handling Camera
-	void AttachCamera(FPSCamera* _cameraPtr);
+	void AttachCamera(Camera* _cameraPtr);
 	void DetachCamera();
 
 private:
@@ -113,7 +113,7 @@ private:
 	bool m_bFallDownwards;
 	double m_dFallAcceleration;
 
-	FPSCamera* attachedCamera;
+	Camera* attachedCamera;
 
 	CWeaponInfo* primaryWeapon;
 	CWeaponInfo* secondaryWeapon;
