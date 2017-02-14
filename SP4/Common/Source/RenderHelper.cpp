@@ -3,6 +3,7 @@
 #include "GraphicsManager.h"
 #include "ShaderProgram.h"
 #include "MatrixStack.h"
+#include "GL\glew.h"
 
 void RenderHelper::RenderMesh(Mesh* _mesh)
 {
@@ -86,6 +87,7 @@ void RenderHelper::RenderText(Mesh* _mesh, const std::string& _text, Color _colo
 	if (!_mesh || _mesh->textureID <= 0)
 		return;
 
+    glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 	ShaderProgram* currProg = GraphicsManager::GetInstance()->GetActiveShader();
 
 	currProg->UpdateInt("textEnabled", 1);
@@ -103,7 +105,7 @@ void RenderHelper::RenderText(Mesh* _mesh, const std::string& _text, Color _colo
 	{
 		Mtx44 characterSpacing, MVP;
 		//characterSpacing.SetToTranslation((i+0.5f) * 1.0f, 0, 0); // 1.0f is the spacing of each character, you may change this value
-		characterSpacing.SetToTranslation((float)(1 + (int)i), 0.0f, 0.0f); // 1.0f is the spacing of each character, you may change this value
+		characterSpacing.SetToTranslation((float)(1.0f + ((int)i * .5f)), 0.0f, 0.0f); // 1.0f is the spacing of each character, you may change this value
 		MVP = GraphicsManager::GetInstance()->GetProjectionMatrix() * GraphicsManager::GetInstance()->GetViewMatrix() * GraphicsManager::GetInstance()->GetModelStack().Top() * characterSpacing;
 		currProg->UpdateMatrix44("MVP", &MVP.a[0]);
 
@@ -112,6 +114,7 @@ void RenderHelper::RenderText(Mesh* _mesh, const std::string& _text, Color _colo
 
 	GraphicsManager::GetInstance()->UnbindTexture(0);
 	currProg->UpdateInt("textEnabled", 0);
+    glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 }
 
 //void RenderHelper::SetFontData(FontData& fontdata)

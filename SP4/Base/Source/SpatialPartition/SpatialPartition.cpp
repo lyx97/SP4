@@ -287,7 +287,7 @@ float CSpatialPartition::CalculateDistanceSquare(Vector3* theCameraPosition, con
 /********************************************************************************
 Set Camera
 ********************************************************************************/
-void CSpatialPartition::SetCamera(FPSCamera* _cameraPtr)
+void CSpatialPartition::SetCamera(Camera* _cameraPtr)
 {
     this->theCamera = _cameraPtr;
 }

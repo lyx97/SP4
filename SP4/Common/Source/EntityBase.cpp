@@ -3,10 +3,12 @@
 EntityBase::EntityBase()
     : position(0.0f, 0.0f, 0.0f)
     , scale(1.0f, 1.0f, 1.0f)
+	, velocity(0, 0, 0)
     , isDone(false)
     , m_bCollider(false)
     , m_bLaser(false)
     , m_eEntityType(DEFAULT)
+	, mass(1.0f)
 {
 }
 
@@ -34,6 +36,16 @@ bool EntityBase::IsDone()
 void EntityBase::SetIsDone(bool _value)
 {
 	isDone = _value;
+}
+
+void EntityBase::ApplyForce(Vector3 direction, float magnitude)
+{
+	if (magnitude != 0)
+	{
+		if (!direction.IsZero())
+			direction = direction.Normalized() * magnitude;
+	}
+	velocity += (direction / mass);
 }
 
 // Check if this entity has a collider class parent

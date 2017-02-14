@@ -31,8 +31,8 @@ end
 title 	= "DM2240 - Week 14 Scripting"
 width 	= 800
 height 	= 600
-PlayerPos_x = 100
-PlayerPos_z = 200
+PlayerPos_x = 0
+PlayerPos_z = 0
 
 moveForward 	= "W"
 moveBackward 	= "S"

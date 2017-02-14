@@ -9,6 +9,7 @@
 #include "../WeaponInfo/LaserBlaster.h"
 #include "../WeaponInfo/GrenadeThrow.h"
 #include "../Lua/LuaInterface.h"
+#include "../EntityManager.h"
 
 // Allocating and initializing CPlayerInfo's static data member.  
 // The pointer is allocated but not the object's constructor.
@@ -27,10 +28,11 @@ CPlayerInfo::CPlayerInfo(void)
 	, m_pTerrain(NULL)
 	, primaryWeapon(NULL)
 	, secondaryWeapon(NULL)
-    , keyMoveForward('W')
-    , keyMoveBackward('S')
-    , keyMoveLeft('A')
-    , keyMoveRight('D')
+	, keyMoveForward('W')
+	, keyMoveBackward('S')
+	, keyMoveLeft('A')
+	, keyMoveRight('D')
+	, isMoving(false)
 {
 }
 
@@ -87,6 +89,8 @@ void CPlayerInfo::Init(void)
 
     int a = 1, b = 2, c = 3, d = 4;
     CLuaInterface::GetInstance()->getVariableValues("GetMinMax", a, b, c, d);
+
+	EntityManager::GetInstance()->AddEntity(this);
 }
 
 // Returns true if the player is on ground
@@ -136,12 +140,6 @@ void CPlayerInfo::SetToJumpUpwards(bool isOnJumpUpwards)
 		m_bFallDownwards = false;
 		m_dJumpSpeed = 4.0;
 	}
-}
-
-// Set position
-void CPlayerInfo::SetPos(const Vector3& pos)
-{
-	position = pos;
 }
 
 // Set target
@@ -209,12 +207,6 @@ void CPlayerInfo::Reset(void)
 
 	// Stop vertical movement too
 	StopVerticalMovement();
-}
-
-// Get position x of the player
-Vector3 CPlayerInfo::GetPos(void) const
-{
-	return position;
 }
 
 // Get target
@@ -296,48 +288,89 @@ void CPlayerInfo::Update(double dt)
 	double camera_yaw = mouse_diff_x * 0.0174555555555556 * 10;		// 3.142 / 180.0
 	double camera_pitch = mouse_diff_y * 0.0174555555555556 * 10;	// 3.142 / 180.0
 
-	// Update the position if the WASD buttons were activated
+	position += velocity * (float)dt;
+	Vector3 forceDir;
+	isMoving = false;
+	if (!isMoving)
+	{
+		velocity *= 0.9f;
+	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward) ||
 		KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward) ||
 		KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft) ||
 		KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
 	{
-		Vector3 viewVector = target - position;
-		Vector3 rightUV;
-        if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
+		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
 		{
-			Vector3 temp(viewVector);
-			temp.y = 0;
-			position += temp.Normalized() * (float)m_dSpeed * (float)dt;
+			forceDir.z -= 1;
 		}
-        else if (KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward))
+		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward))
 		{
-			Vector3 temp(viewVector);
-			temp.y = 0;
-			position -= temp.Normalized() * (float)m_dSpeed * (float)dt;
+			forceDir.z += 1;
 		}
-        if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
+		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
 		{
-			rightUV = (viewVector.Normalized()).Cross(up);
-			rightUV.y = 0;
-			rightUV.Normalize();
-			position -= rightUV * (float)m_dSpeed * (float)dt;
+			forceDir.x -= 1;
 		}
-        else if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
+		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
 		{
-			rightUV = (viewVector.Normalized()).Cross(up);
-			rightUV.y = 0;
-			rightUV.Normalize();
-			position += rightUV * (float)m_dSpeed * (float)dt;
+			forceDir.x += 1;
 		}
-		// Constrain the position
+
+		if (!forceDir.IsZero())
+		{
+			forceDir.Normalized();
+			if (velocity.LengthSquared() < (MOVEMENT_LIMIT)* (MOVEMENT_LIMIT))
+			{
+				isMoving = true;
+				forceMagnitude = MOVEMENT_LIMIT;
+				this->ApplyForce(forceDir, forceMagnitude * dt);
+			}
+		}
 		Constrain();
-		// Update the target
-		target = position + viewVector;
 	}
 
+	//if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward) ||
+	//	KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward) ||
+	//	KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft) ||
+	//	KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
+	//{
+	//	Vector3 viewVector = target - position;
+	//	Vector3 rightUV;
+ //       if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
+	//	{
+	//		Vector3 temp(viewVector);
+	//		temp.y = 0;
+	//		position += temp.Normalized() * (float)m_dSpeed * (float)dt;
+	//	}
+ //       else if (KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward))
+	//	{
+	//		Vector3 temp(viewVector);
+	//		temp.y = 0;
+	//		position -= temp.Normalized() * (float)m_dSpeed * (float)dt;
+	//	}
+ //       if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
+	//	{
+	//		rightUV = (viewVector.Normalized()).Cross(up);
+	//		rightUV.y = 0;
+	//		rightUV.Normalize();
+	//		position -= rightUV * (float)m_dSpeed * (float)dt;
+	//	}
+ //       else if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
+	//	{
+	//		rightUV = (viewVector.Normalized()).Cross(up);
+	//		rightUV.y = 0;
+	//		rightUV.Normalize();
+	//		position += rightUV * (float)m_dSpeed * (float)dt;
+	//	}
+	//	// Constrain the position
+	//	Constrain();
+	//	// Update the target
+	//	target = position + viewVector;
+	//}
+
 	// Rotate the view direction
-	if (KeyboardController::GetInstance()->IsKeyDown(VK_LEFT) ||
+	/*if (KeyboardController::GetInstance()->IsKeyDown(VK_LEFT) ||
 		KeyboardController::GetInstance()->IsKeyDown(VK_RIGHT) ||
 		KeyboardController::GetInstance()->IsKeyDown(VK_UP) ||
 		KeyboardController::GetInstance()->IsKeyDown(VK_DOWN))
@@ -392,39 +425,39 @@ void CPlayerInfo::Update(double dt)
 			viewUV = rotation * viewUV;
 			target = position + viewUV;
 		}
-	}
+	}*/
 
 	//Update the camera direction based on mouse move
-	{
-		Vector3 viewUV = (target - position).Normalized();
-		Vector3 rightUV;
+	//{
+	//	Vector3 viewUV = (target - position).Normalized();
+	//	Vector3 rightUV;
 
-		{
-			float yaw = (float)(-m_dSpeed * camera_yaw * (float)dt);
-			Mtx44 rotation;
-			rotation.SetToRotation(yaw, 0, 1, 0);
-			viewUV = rotation * viewUV;
-			target = position + viewUV;
-			rightUV = viewUV.Cross(up);
-			rightUV.y = 0;
-			rightUV.Normalize();
-			up = rightUV.Cross(viewUV).Normalized();
-		}
-		{
-			float pitch = (float)(-m_dSpeed * camera_pitch * (float)dt);
-			rightUV = viewUV.Cross(up);
-			rightUV.y = 0;
-			rightUV.Normalize();
-			up = rightUV.Cross(viewUV).Normalized();
-			Mtx44 rotation;
-			rotation.SetToRotation(pitch, rightUV.x, rightUV.y, rightUV.z);
-			viewUV = rotation * viewUV;
-            if (viewUV.y <= 0.9f && viewUV.y >= -0.6f)
-            {
-                target = position + viewUV;
-            }
-		}
-	}
+	//	{
+	//		float yaw = (float)(-m_dSpeed * camera_yaw * (float)dt);
+	//		Mtx44 rotation;
+	//		rotation.SetToRotation(yaw, 0, 1, 0);
+	//		viewUV = rotation * viewUV;
+	//		target = position + viewUV;
+	//		rightUV = viewUV.Cross(up);
+	//		rightUV.y = 0;
+	//		rightUV.Normalize();
+	//		up = rightUV.Cross(viewUV).Normalized();
+	//	}
+	//	{
+	//		float pitch = (float)(-m_dSpeed * camera_pitch * (float)dt);
+	//		rightUV = viewUV.Cross(up);
+	//		rightUV.y = 0;
+	//		rightUV.Normalize();
+	//		up = rightUV.Cross(viewUV).Normalized();
+	//		Mtx44 rotation;
+	//		rotation.SetToRotation(pitch, rightUV.x, rightUV.y, rightUV.z);
+	//		viewUV = rotation * viewUV;
+ //           if (viewUV.y <= 0.9f && viewUV.y >= -0.6f)
+ //           {
+ //               target = position + viewUV;
+ //           }
+	//	}
+	//}
 
 	// If the user presses SPACEBAR, then make him jump
 	if (KeyboardController::GetInstance()->IsKeyDown(VK_SPACE) &&
@@ -471,16 +504,16 @@ void CPlayerInfo::Update(double dt)
 	}
 	else
 	{
-		UpdateJumpUpwards(dt);
-		UpdateFreeFall(dt);
+		//UpdateJumpUpwards(dt);
+		//UpdateFreeFall(dt);
 	}
 
 	// If a camera is attached to this playerInfo class, then update it
 	if (attachedCamera)
 	{
-		attachedCamera->SetCameraPos(position);
-		attachedCamera->SetCameraTarget(target);
-		attachedCamera->SetCameraUp(up);
+		//attachedCamera->SetCameraPos(position);
+		//attachedCamera->SetCameraTarget(target);
+		//attachedCamera->SetCameraUp(up);
 	}
 }
 

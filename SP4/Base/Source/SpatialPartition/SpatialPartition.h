@@ -3,7 +3,7 @@
 #include "Vector3.h"
 #include "Grid.h"
 #include "EntityBase.h"
-#include "../FPSCamera.h"
+#include "../Camera/Camera.h"
 
 class CSpatialPartition
 {
@@ -24,7 +24,7 @@ protected:
 	std::string _meshName; // Name of the mesh
 
     // We store the pointer to the Camera so we can get it's position and direction to calculate LOD and visibility
-    FPSCamera* theCamera;
+    Camera* theCamera;
     // LOD distances
     float LevelOfDetails_Distances[2];
 
@@ -97,7 +97,7 @@ public:
 	vector<EntityBase*> MigrationList;
 
     // Handling Camera
-    void SetCamera(FPSCamera* _cameraPtr);
+    void SetCamera(Camera* _cameraPtr);
     void RemoveCamera(void);
 
     // Set LOD camera

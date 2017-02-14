@@ -65,11 +65,21 @@ void SceneText::Init()
 	playerInfo = CPlayerInfo::GetInstance();
 	playerInfo->Init();
 
-    cout << playerInfo->GetPos() << endl;
 	// Create and attach the camera to the scene
 	//camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
-	camera.Init(playerInfo->GetPos(), playerInfo->GetTarget(), playerInfo->GetUp());
-	playerInfo->AttachCamera(&camera);
+	//World Space
+	m_worldHeight = 300;
+	m_worldWidth = m_worldHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
+
+	//Camera Space View
+	m_orthoHeight = 200;
+	m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
+
+	camera.Init(Vector3(0, 1, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	//camera.Init(Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	//camera.entityList.push_back(playerInfo->GetInstance()->GetPosition());
+
+	//playerInfo->AttachCamera(&camera);
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 
 	// Load all the meshes
@@ -112,7 +122,7 @@ void SceneText::Init()
 
     // Set up the Spatial Partition and pass it to the EntityManager to manage
     CSpatialPartition::GetInstance()->Init(100, 100, 10, 10);
-    CSpatialPartition::GetInstance()->SetMesh("GRIDMESH");
+    //CSpatialPartition::GetInstance()->SetMesh("GRIDMESH");
     CSpatialPartition::GetInstance()->SetCamera(&camera);
     CSpatialPartition::GetInstance()->SetLevelOfDetails(40000.0f, 160000.0f);
     EntityManager::GetInstance()->SetSpatialPartition(CSpatialPartition::GetInstance());
@@ -224,6 +234,27 @@ void SceneText::Update(double dt)
 {
 	// Update our entities
 	EntityManager::GetInstance()->Update(dt);
+	camera.Update(dt);
+	//cout << playerInfo->GetPosition() << endl;
+	//cout << camera.GetCameraPos() << " : " << camera.GetCameraTarget() << " : " << camera.GetCameraUp() << endl;
+	cout << Application::GetInstance().GetWorldBasedMousePos() << endl;
+	{//handles required mouse calculations
+		double x, y;
+		MouseController::GetInstance()->GetMousePosition(x, y);
+		int w = Application::GetInstance().GetWindowWidth();
+		int h = Application::GetInstance().GetWindowHeight();
+		x = m_orthoWidth * (x / w);
+		y = m_orthoHeight * ((h - y) / h);
+
+		mousePos_screenBased.Set(x, y, 0);
+		mousePos_worldBased.Set(
+			x + camera.GetCameraTarget().x - (m_orthoWidth * 0.5f),
+			y + camera.GetCameraTarget().z - (m_orthoHeight * 0.5f),
+			0
+			);
+	}
+	Vector3 lookDir = (mousePos_worldBased - playerInfo->GetInstance()->GetPosition()).Normalized();
+	playerInfo->GetInstance()->SetFront(lookDir);
 
 	// THIS WHOLE CHUNK TILL <THERE> CAN REMOVE INTO ENTITIES LOGIC! Or maybe into a scene function to keep the update clean
 	if(KeyboardController::GetInstance()->IsKeyDown('1'))
@@ -282,6 +313,16 @@ void SceneText::Update(double dt)
 	{
 		cout << "Mouse Wheel has offset in Y-axis of " << MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_YOFFSET) << endl;
 	}
+	if (KeyboardController::GetInstance()->IsKeyDown('N'))
+	{
+		m_orthoHeight--;
+		m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
+	}
+	if (KeyboardController::GetInstance()->IsKeyDown('M'))
+	{
+		m_orthoHeight++;
+		m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
+	}
 	// <THERE>
 
 	// Update the player position and other details based on keyboard and mouse inputs
@@ -301,7 +342,7 @@ void SceneText::Update(double dt)
 
 	std::ostringstream ss1;
 	ss1.precision(4);
-	ss1 << "Player:" << playerInfo->GetPos();
+	ss1 << "Player:" << playerInfo->GetPosition();
 	textObj[2]->SetText(ss1.str());
 }
 
@@ -311,17 +352,31 @@ void SceneText::Render()
 
 	GraphicsManager::GetInstance()->UpdateLightUniforms();
 
-	// Setup 3D pipeline then render 3D
-	GraphicsManager::GetInstance()->SetPerspectiveProjection(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
-	GraphicsManager::GetInstance()->AttachCamera(&camera);
-	EntityManager::GetInstance()->Render();
-
 	// Setup 2D pipeline then render 2D
 	int halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2;
 	int halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2;
-	GraphicsManager::GetInstance()->SetOrthographicProjection(-halfWindowWidth, halfWindowWidth, -halfWindowHeight, halfWindowHeight, -10, 10);
-	GraphicsManager::GetInstance()->DetachCamera();
-	EntityManager::GetInstance()->RenderUI();
+	//GraphicsManager::GetInstance()->SetOrthographicProjection(-halfWindowWidth, halfWindowWidth, -halfWindowHeight, halfWindowHeight, -10, 10000);
+	GraphicsManager::GetInstance()->SetOrthographicProjection(-m_orthoWidth * 0.5f, m_orthoWidth * 0.5f, -m_orthoHeight * 0.5f, m_orthoHeight * 0.5f, -1000, 10000);
+
+	GraphicsManager::GetInstance()->GetViewMatrix().SetToLookAt(
+		camera.GetCameraPos().x, camera.GetCameraPos().y, camera.GetCameraPos().z,
+		camera.GetCameraTarget().x, camera.GetCameraTarget().y, camera.GetCameraTarget().z,
+		camera.GetCameraUp().x, camera.GetCameraUp().y, camera.GetCameraUp().z);
+
+	// Setup 3D pipeline then render 3D
+	//GraphicsManager::GetInstance()->SetPerspectiveProjection(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
+
+	GraphicsManager::GetInstance()->AttachCamera(&camera);
+	EntityManager::GetInstance()->Render();
+
+	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
+	GraphicsManager::GetInstance()->GetModelStack().Translate(playerInfo->GetPosition().x, playerInfo->GetPosition().y, playerInfo->GetPosition().z);
+	GraphicsManager::GetInstance()->GetModelStack().Scale(10, 10, 10);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
+	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
+
+	//GraphicsManager::GetInstance()->DetachCamera();
+	//EntityManager::GetInstance()->RenderUI();
 }
 
 void SceneText::Exit()

@@ -1,10 +1,12 @@
 #pragma once
 #include "Vector3.h"
-#include "../Camera.h"
+#include "../Camera/Camera.h"
 #include "../GroundEntity.h"
 #include "../WeaponInfo/WeaponInfo.h"
 
-class CPlayerInfo
+static const float MOVEMENT_LIMIT = 300.f;
+
+class CPlayerInfo : public EntityBase
 {
 protected:
 	static CPlayerInfo *s_instance;
@@ -46,8 +48,6 @@ public:
 	// Reset this player instance to default
 	void Reset(void);
 
-	// Set position
-	void SetPos(const Vector3& pos);
 	// Set target
 	void SetTarget(const Vector3& target);
 	// Set Up
@@ -67,8 +67,6 @@ public:
     // Get the terrain for the player info
     GroundEntity* GetTerrain(void);
 
-	// Get position
-	Vector3 GetPos(void) const;
 	// Get target
 	Vector3 GetTarget(void) const;
 	// Get Up
@@ -93,12 +91,12 @@ public:
 	void Constrain(void);
 
 	// Handling Camera
-	void AttachCamera(Camera* _cameraPtr);
+    void AttachCamera(Camera* _cameraPtr);
 	void DetachCamera();
 
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
-	Vector3 position, target, up;
+	Vector3 target, up;
 	Vector3 maxBoundary, minBoundary;
 	GroundEntity* m_pTerrain;
 
@@ -113,7 +111,7 @@ private:
 	bool m_bFallDownwards;
 	double m_dFallAcceleration;
 
-	Camera* attachedCamera;
+    Camera* attachedCamera;
 
 	CWeaponInfo* primaryWeapon;
 	CWeaponInfo* secondaryWeapon;
@@ -123,4 +121,8 @@ private:
     char keyMoveBackward;
     char keyMoveLeft;
     char keyMoveRight;
+
+	// 2D movements
+	float forceMagnitude = 0;
+	bool isMoving;
 };

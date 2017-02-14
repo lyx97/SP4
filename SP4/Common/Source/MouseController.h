@@ -2,7 +2,9 @@
 #define MOUSE_CONTROLLER_H
 
 #include "SingletonTemplate.h"
+#include "Vector3.h"
 
+class Application;
 class MouseController : public Singleton<MouseController>
 {
 	friend Singleton<MouseController>;
@@ -42,6 +44,8 @@ public:
 
 	inline bool GetKeepMouseCentered(){ return keepMouseCentered; };
 	inline void SetKeepMouseCentered(bool _value){ keepMouseCentered = _value; };
+
+	inline Vector3 GetMousePosition(){ return Vector3(curr_posX, curr_posY, 0); };
 
 private:
 	MouseController();

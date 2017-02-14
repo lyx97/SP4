@@ -21,6 +21,8 @@ public:
 	bool RemoveEntity(EntityBase* _existingEntity);
     bool MarkForDeletion(EntityBase* _existingEntity);
 
+	std::list<EntityBase*> GetEntityList() { return entityList; };
+
     void SetSpatialPartition(CSpatialPartition* theSpatialPartition);
 
 private:

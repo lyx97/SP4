@@ -29,6 +29,9 @@ public:
 	bool IsDone();
 	void SetIsDone(const bool _value);
 
+	void ApplyForce(Vector3 direction, float magnitude = 0.0f);
+	float GetForce();
+
 	// Check if this entity has a collider class parent
 	virtual bool HasCollider(void) const;
 	// Set the flag to indicate if this entity has a collider class parent
@@ -43,6 +46,15 @@ public:
     // Get the entity type
     virtual ENTITY_TYPE GetEntityType(void);
 
+	inline void SetVelocity(const Vector3& _value){ velocity = _value; };
+	inline Vector3 GetVelocity(){ return velocity; };
+
+	inline void SetFront(const Vector3& _value){ front = _value; };
+	inline Vector3 GetFront(){ return front; };
+
+	inline void SetMass(const float& _value){ mass = _value; };
+	inline float GetMass(){ return mass; };
+
 protected:
 	Vector3 position;
 	Vector3 scale;
@@ -52,6 +64,11 @@ protected:
     bool m_bLaser;
 
     ENTITY_TYPE m_eEntityType;
+
+	// 2D movement
+	float mass;
+	Vector3 velocity;
+	Vector3 front;
 };
 
 #endif // ENTITY_BASE_H

@@ -163,7 +163,7 @@ void Application::Init()
 	}
 
 	// Hide the cursor
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	glfwSetMouseButtonCallback(m_window, &Application::MouseButtonCallbacks);
 	glfwSetScrollCallback(m_window, &Application::MouseScrollCallbacks);
 
@@ -264,4 +264,16 @@ int Application::GetWindowHeight()
 int Application::GetWindowWidth()
 {
 	return m_window_width;
+}
+
+Vector3 Application::GetWorldBasedMousePos()
+{
+	Vector3 result;
+	
+	result.Set(
+		MouseController::GetInstance()->GetMousePosition().x - (m_window_width * 0.5f),
+		-(MouseController::GetInstance()->GetMousePosition().y - (m_window_height * 0.5f)),
+		0);
+
+	return result;
 }

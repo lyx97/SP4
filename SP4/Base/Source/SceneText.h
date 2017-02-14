@@ -5,7 +5,7 @@
 #include "Mtx44.h"
 #include "PlayerInfo/PlayerInfo.h"
 #include "GroundEntity.h"
-#include "FPSCamera.h"
+#include "../Camera/Camera.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "GenericEntity.h"
@@ -13,10 +13,12 @@
 #include "Waypoint/WaypointManager.h"
 #include "../Lua/LuaInterface.h"
 #include "Enemy/Enemy.h"
+#include "Font/LoadFontData.h"
 
 class SceneManager;
 class TextEntity;
 class Light;
+class Color;
 
 class SceneText : public Scene
 {	
@@ -32,7 +34,13 @@ public:
 private:
 	CPlayerInfo* playerInfo;
 	GroundEntity* groundEntity;
-	FPSCamera camera;
+
+    Camera camera;
+	float m_worldWidth, m_worldHeight;
+	float m_orthoWidth, m_orthoHeight;
+	Vector3 mousePos_screenBased;
+	Vector3 mousePos_worldBased;
+
 	TextEntity* textObj[3];
 	Light* lights[2];
 

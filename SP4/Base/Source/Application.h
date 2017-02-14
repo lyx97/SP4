@@ -28,6 +28,7 @@ public:
 
 	int GetWindowHeight();
 	int GetWindowWidth();
+	Vector3 GetWorldBasedMousePos();
 	
 private:
 	Application();

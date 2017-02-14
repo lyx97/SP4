@@ -4,7 +4,7 @@
 #include "Mtx44.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
-#include "../FPSCamera.h"
+#include "../Camera/Camera.h"
 #include "../SpriteEntity.h"
 
 class SceneManager;
@@ -22,7 +22,7 @@ public:
     virtual void Exit();
 
 private:
-    FPSCamera camera;
+    Camera camera;
     SpriteEntity* IntroStateBackground;
     // TextEntity* textObj[3];
 };
