@@ -153,6 +153,9 @@
     <ClCompile Include="Source\Camera\Camera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\Enemy2D.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -268,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="Source\Camera\Camera.h">
       <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Enemy2D.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

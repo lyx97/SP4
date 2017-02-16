@@ -13,6 +13,7 @@
 #include "Waypoint/WaypointManager.h"
 #include "../Lua/LuaInterface.h"
 #include "Enemy/Enemy.h"
+#include "Enemy\Enemy2D.h"
 #include "Font/LoadFontData.h"
 
 class SceneManager;
@@ -45,6 +46,7 @@ private:
 	Light* lights[2];
 
 	GenericEntity* theCube;
+	Enemy2D* enemy2D;
     CEnemy* theEnemy;
 };
 

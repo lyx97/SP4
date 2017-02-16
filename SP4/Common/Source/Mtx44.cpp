@@ -380,6 +380,13 @@ void Mtx44::SetToTranslation(float tx, float ty, float tz) {
 	a[14] = tz;
 }
 
+void Mtx44::SetToTranslation(Vector3 t) {
+	SetToIdentity();
+	a[12] = t.x;
+	a[13] = t.y;
+	a[14] = t.z;
+}
+
 /******************************************************************************/
 /*!
 \brief

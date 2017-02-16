@@ -32,22 +32,22 @@ void CEnemy::Init(void)
     defaultUp.Set(0, 1, 0);
 
     // Set up the waypoints
-    listOfWaypoints.push_back(0);
-    listOfWaypoints.push_back(1);
-    listOfWaypoints.push_back(2);
+    //listOfWaypoints.push_back(0);
+    //listOfWaypoints.push_back(1);
+    //listOfWaypoints.push_back(2);
 
     m_iWayPointIndex = 0;
 
     // Set the current values
-    position.Set(10.0f, 0.0f, 0.0f);
+    position.Set(100.0f, 0.0f, 1000.0f);
     //target.Set(10.0f, 0.0f, 450.0f);
-    CWaypoint* nextWaypoint = GetNextWaypoint();
-    if (nextWaypoint)
-        target = nextWaypoint->GetPosition();
-    else
-        target = Vector3(0, 0, 0);
-    cout << "Next target: " << target << endl;
-    up.Set(0.0f, 1.0f, 0.0f);
+    //CWaypoint* nextWaypoint = GetNextWaypoint();
+    //if (nextWaypoint)
+    //    target = nextWaypoint->GetPosition();
+    //else
+    //    target = Vector3(0, 0, 0);
+    //cout << "Next target: " << target << endl;
+    up.Set(0.0f, 1.0f, 0.0f); 
     // Set Boundary
     maxBoundary.Set(1, 1, 1);
     minBoundary.Set(-1, -1, -1);
@@ -107,9 +107,7 @@ void CEnemy::SetTerrain(GroundEntity* m_pTerrain)
 
         SetBoundary(this->m_pTerrain->GetMaxBoundary(), this->m_pTerrain->GetMinBoundary());
     }
-       
 }
-
 
 // Get position
 Vector3 CEnemy::GetPos(void) const
@@ -152,12 +150,11 @@ CWaypoint* CEnemy::GetNextWaypoint(void)
 // Update
 void CEnemy::Update(double dt)
 {
-    Vector3 viewVector = (target - position).Normalized();
-    position += viewVector * (float)m_dSpeed * (float)dt;
     // cout << position << "..." << viewVector << endl;
-
+	position += velocity * dt * 10;
+	
     // Constrain the position
-    Constrain();
+    //Constrain();
 
     // Update the target
     if (position.z > 400.0f)
@@ -165,15 +162,15 @@ void CEnemy::Update(double dt)
     else if (position.z < -400.0f)
         target.z = position.z * -1;
 
-    if ((target - position).LengthSquared() < 25.0f)
-    {
-        CWaypoint* nextWaypoint = GetNextWaypoint();
-        if (nextWaypoint)
-            target = nextWaypoint->GetPosition();
-        else
-            target = Vector3(0, 0, 0);
-        cout << "Next target: " << target << endl;
-    }
+    //if ((target - position).LengthSquared() < 25.0f)
+    //{
+    //    CWaypoint* nextWaypoint = GetNextWaypoint();
+    //    if (nextWaypoint)
+    //        target = nextWaypoint->GetPosition();
+    //    else
+    //        target = Vector3(0, 0, 0);
+    //    cout << "Next target: " << target << endl;
+    //}
 }
 
 // Constrain the position within the borders

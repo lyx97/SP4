@@ -36,6 +36,7 @@ struct Vector3
 	~Vector3();
 	
 	void Set( float a = 0, float b = 0, float c = 0 ); //Set all data
+	void Set( const Vector3& rhs ); //Set all data
 	void SetZero( void ); //Set all data to zero
 	bool IsZero( void ) const; //Check if data is zero
 

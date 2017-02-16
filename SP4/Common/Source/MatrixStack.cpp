@@ -172,6 +172,12 @@ void MS::Translate(float translateX, float translateY, float translateZ) {
 	ms.top() = ms.top() * mat;
 }
 
+void MS::Translate(Vector3 translate) {
+	Mtx44 mat;
+	mat.SetToTranslation(translate);
+	ms.top() = ms.top() * mat;
+}
+
 /******************************************************************************/
 /*!
 \brief

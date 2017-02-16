@@ -10,13 +10,18 @@
 #include "../WeaponInfo/GrenadeThrow.h"
 #include "../Lua/LuaInterface.h"
 #include "../EntityManager.h"
+#include "../Application.h"
+#include "RenderHelper.h"
+#include "GraphicsManager.h"
+#include "MeshBuilder.h"
 
 // Allocating and initializing CPlayerInfo's static data member.  
 // The pointer is allocated but not the object's constructor.
 CPlayerInfo *CPlayerInfo::s_instance = 0;
 
 CPlayerInfo::CPlayerInfo(void)
-	: m_dSpeed(40.0)
+	: GenericEntity(NULL)
+	, m_dSpeed(40.0)
 	, m_dAcceleration(10.0)
 	, m_bJumpUpwards(false)
 	, m_dJumpSpeed(10.0)
@@ -33,6 +38,8 @@ CPlayerInfo::CPlayerInfo(void)
 	, keyMoveLeft('A')
 	, keyMoveRight('D')
 	, isMoving(false)
+	, isDashed(false)
+	, cooldownTimer(0)
 {
 }
 
@@ -54,6 +61,7 @@ CPlayerInfo::~CPlayerInfo(void)
 // Initialise this class instance
 void CPlayerInfo::Init(void)
 {
+	this->scale.Set(3, 3, 3);
 	// Set the default values
 	defaultPosition.Set(0,0,10);
 	defaultTarget.Set(0,0,0);
@@ -282,18 +290,29 @@ void CPlayerInfo::UpdateFreeFall(double dt)
  ********************************************************************************/
 void CPlayerInfo::Update(double dt)
 {
-	double mouse_diff_x, mouse_diff_y;
-	MouseController::GetInstance()->GetMouseDelta(mouse_diff_x, mouse_diff_y);
+	//double mouse_diff_x, mouse_diff_y;
+	//MouseController::GetInstance()->GetMouseDelta(mouse_diff_x, mouse_diff_y);
 
-	double camera_yaw = mouse_diff_x * 0.0174555555555556 * 10;		// 3.142 / 180.0
-	double camera_pitch = mouse_diff_y * 0.0174555555555556 * 10;	// 3.142 / 180.0
+	//double camera_yaw = mouse_diff_x * 0.0174555555555556 * 10;		// 3.142 / 180.0
+	//double camera_pitch = mouse_diff_y * 0.0174555555555556 * 10;	// 3.142 / 180.0
 
 	position += velocity * (float)dt;
+	if (!Application::GetInstance().GetWorldBasedMousePos().IsZero())
+		front.Set(Vector3(position - Application::GetInstance().GetWorldBasedMousePos()).Normalized());
 	Vector3 forceDir;
 	isMoving = false;
 	if (!isMoving)
 	{
 		velocity *= 0.9f;
+	}
+
+	if (isDashed)
+	{
+		cooldownTimer -= dt;
+		if (cooldownTimer <= 0)
+		{
+			isDashed = false;
+		}
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward) ||
 		KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward) ||
@@ -320,12 +339,27 @@ void CPlayerInfo::Update(double dt)
 		if (!forceDir.IsZero())
 		{
 			forceDir.Normalized();
-			if (velocity.LengthSquared() < (MOVEMENT_LIMIT)* (MOVEMENT_LIMIT))
+			if (velocity.LengthSquared() < MOVEMENT_LIMIT * MOVEMENT_LIMIT)
 			{
 				isMoving = true;
 				forceMagnitude = MOVEMENT_LIMIT;
 				this->ApplyForce(forceDir, forceMagnitude * dt);
 			}
+		}
+
+		if (MouseController::GetInstance()->IsButtonPressed(MouseController::RMB))
+		{
+			if (!forceDir.IsZero() && !isDashed)
+			{
+				forceMagnitude = MOVEMENT_LIMIT * DASH_DISTANCE;
+				this->ApplyForce(forceDir, forceMagnitude * dt);
+				isDashed = true;
+				cooldownTimer = DASH_COOLDOWN;
+			}
+		}
+		if (KeyboardController::GetInstance()->IsKeyPressed('E'))
+		{
+
 		}
 		Constrain();
 	}
@@ -459,24 +493,17 @@ void CPlayerInfo::Update(double dt)
 	//	}
 	//}
 
-	// If the user presses SPACEBAR, then make him jump
-	if (KeyboardController::GetInstance()->IsKeyDown(VK_SPACE) &&
-		position.y == m_pTerrain->GetTerrainHeight(position))
-	{
-		SetToJumpUpwards(true);
-	}
-
 	// Update the weapons
 	if (KeyboardController::GetInstance()->IsKeyReleased('R'))
 	{
 		if (primaryWeapon)
 		{
-			primaryWeapon->Reload();
+			//primaryWeapon->Reload();
 			//primaryWeapon->PrintSelf();
 		}
         if (secondaryWeapon)
         {
-            secondaryWeapon->Reload();
+            //secondaryWeapon->Reload();
             //secondaryWeapon->PrintSelf();
         }
 	}
@@ -486,15 +513,15 @@ void CPlayerInfo::Update(double dt)
 		secondaryWeapon->Update(dt);
 
 	// if Mouse Buttons were activated, then act on them
-	if (MouseController::GetInstance()->IsButtonPressed(MouseController::LMB))
+	if (MouseController::GetInstance()->IsButtonDown(MouseController::LMB))
 	{
-		if (primaryWeapon)
-			primaryWeapon->Discharge(position, target, this);
+		//if (primaryWeapon)
+		//	primaryWeapon->Discharge(this->position, target, this);
 	}
-	else if (MouseController::GetInstance()->IsButtonPressed(MouseController::RMB))
+	if (MouseController::GetInstance()->IsButtonDown(MouseController::RMB))
 	{
-        if (secondaryWeapon)
-            secondaryWeapon->Discharge(position, target, this);
+		//if (secondaryWeapon)
+		//	secondaryWeapon->Discharge(this->position, target, this);
 	}
 
 	// If the user presses R key, then reset the view to default values
@@ -515,6 +542,21 @@ void CPlayerInfo::Update(double dt)
 		//attachedCamera->SetCameraTarget(target);
 		//attachedCamera->SetCameraUp(up);
 	}
+}
+
+void CPlayerInfo::Render()
+{
+	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
+	GraphicsManager::GetInstance()->GetModelStack().Translate(
+		this->position.x,
+		this->position.y,
+		this->position.z);
+	GraphicsManager::GetInstance()->GetModelStack().Scale(
+		this->scale.x,
+		this->scale.y,
+		this->scale.z);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("sphere"));
+	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
 }
 
 // Constrain the position within the borders
@@ -552,4 +594,10 @@ void CPlayerInfo::AttachCamera(Camera* _cameraPtr)
 void CPlayerInfo::DetachCamera()
 {
 	attachedCamera = nullptr;
+}
+
+void CPlayerInfo::Shoot(Vector3 dir)
+{
+	if (secondaryWeapon)
+		secondaryWeapon->Discharge(this->position, dir, this);
 }

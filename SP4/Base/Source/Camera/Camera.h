@@ -25,18 +25,13 @@ public:
     virtual Vector3 GetCameraUp() const;
     virtual void SetCameraUp(Vector3 pos);
 
-    bool Deadzone(Vector3 *p, Vector3 cameraTarget, float ortho);
-    void Constrain(GenericEntity* constrain, float radius);
-    void Constrain(CPlayerInfo p, Vector3 cameraTarget);
+	void Constrain(EntityBase* constrain, int radius);
 
 	std::vector<Vector3> entityList;
 
 private:
-    bool isDeadzoned;
     Vector3 tempTarget;
     float m_worldWidth, m_worldHeight;
-
-	Vector3 forceDir;
 
     Vector3 position;
     Vector3 target;

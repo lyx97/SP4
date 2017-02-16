@@ -66,17 +66,15 @@ void SceneText::Init()
 	playerInfo->Init();
 
 	// Create and attach the camera to the scene
-	//camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
 	//World Space
 	m_worldHeight = 300;
 	m_worldWidth = m_worldHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 
 	//Camera Space View
-	m_orthoHeight = 200;
+	m_orthoHeight = 160;
 	m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 
-	camera.Init(Vector3(0, 1, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
-	//camera.Init(Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(0, 5, 0), Vector3(0, 0, 0), Vector3(0, 0, -1));
 	//camera.entityList.push_back(playerInfo->GetInstance()->GetPosition());
 
 	//playerInfo->AttachCamera(&camera);
@@ -198,8 +196,8 @@ void SceneText::Init()
     CWaypointManager::GetInstance()->PrintSelf();
 
     // Create a CEnemy instance
-    theEnemy = new CEnemy();
-    theEnemy->Init();
+	enemy2D = new Enemy2D();
+	enemy2D->Init();
 
 	groundEntity = Create::Ground("GRASS_DARKGREEN", "GEO_GRASS_LIGHTGREEN");
     // Create::Text3DObject("text", Vector3(0.0f, 0.0f, 0.0f), "DM2210", Vector3(10.0f, 10.0f, 10.0f), Color(0, 1, 1));
@@ -214,7 +212,7 @@ void SceneText::Init()
 	groundEntity->SetScale(Vector3(100.0f, 100.0f, 100.0f));
 	groundEntity->SetGrids(Vector3(10.0f, 1.0f, 10.0f));
 	playerInfo->SetTerrain(groundEntity);
-    theEnemy->SetTerrain(groundEntity);
+    //theEnemy->SetTerrain(groundEntity);
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
@@ -234,27 +232,24 @@ void SceneText::Update(double dt)
 {
 	// Update our entities
 	EntityManager::GetInstance()->Update(dt);
-	camera.Update(dt);
-	//cout << playerInfo->GetPosition() << endl;
-	//cout << camera.GetCameraPos() << " : " << camera.GetCameraTarget() << " : " << camera.GetCameraUp() << endl;
-	cout << Application::GetInstance().GetWorldBasedMousePos() << endl;
-	{//handles required mouse calculations
-		double x, y;
-		MouseController::GetInstance()->GetMousePosition(x, y);
-		int w = Application::GetInstance().GetWindowWidth();
-		int h = Application::GetInstance().GetWindowHeight();
-		x = m_orthoWidth * (x / w);
-		y = m_orthoHeight * ((h - y) / h);
 
-		mousePos_screenBased.Set(x, y, 0);
+	{//handles required mouse calculations
+		double x, z;
+		MouseController::GetInstance()->GetMousePosition(x, z);
+		float w = Application::GetInstance().GetWindowWidth();
+		float h = Application::GetInstance().GetWindowHeight();
+		x = m_orthoWidth * (x / w);
+		z = -(m_orthoHeight * (h - z) / h);
+
+		mousePos_screenBased.Set(x, 0, z);
 		mousePos_worldBased.Set(
-			x + camera.GetCameraTarget().x - (m_orthoWidth * 0.5f),
-			y + camera.GetCameraTarget().z - (m_orthoHeight * 0.5f),
-			0
-			);
+			x + camera.GetCameraPos().x - (m_orthoWidth * 0.5f),
+			0,
+			z + camera.GetCameraPos().z + (m_orthoHeight * 0.5f));
+	// BECAUSE THE FUCKING CAMERA IS 45 DEGREES, SO THE MOUSE LOOKS OFF
 	}
-	Vector3 lookDir = (mousePos_worldBased - playerInfo->GetInstance()->GetPosition()).Normalized();
-	playerInfo->GetInstance()->SetFront(lookDir);
+
+
 
 	// THIS WHOLE CHUNK TILL <THERE> CAN REMOVE INTO ENTITIES LOGIC! Or maybe into a scene function to keep the update clean
 	if(KeyboardController::GetInstance()->IsKeyDown('1'))
@@ -293,25 +288,27 @@ void SceneText::Update(double dt)
 		lights[0]->position.y += (float)(10.f * dt);
 
 	// if the left mouse button was released
-	if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
+	if (MouseController::GetInstance()->IsButtonDown(MouseController::LMB))
 	{
-		cout << "Left Mouse Button was released!" << endl;
+		playerInfo->Shoot(mousePos_worldBased);
 	}
-	if (MouseController::GetInstance()->IsButtonReleased(MouseController::RMB))
+	if (MouseController::GetInstance()->IsButtonPressed(MouseController::RMB))
 	{
-		cout << "Right Mouse Button was released!" << endl;
+
 	}
 	if (MouseController::GetInstance()->IsButtonReleased(MouseController::MMB))
 	{
-		cout << "Middle Mouse Button was released!" << endl;
-	}
-	if (MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_XOFFSET) != 0.0)
-	{
-		cout << "Mouse Wheel has offset in X-axis of " << MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_XOFFSET) << endl;
-	}
-	if (MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_YOFFSET) != 0.0)
-	{
-		cout << "Mouse Wheel has offset in Y-axis of " << MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_YOFFSET) << endl;
+		//cout << "added" << endl;
+		//EntityManager::GetInstance()->AddEntity(new Enemy2D());
+		//justkillmenow++;
+		//for (auto q : EntityManager::GetInstance()->GetEntityList())
+		//{
+		//	if (q->GetEntityType() == EntityBase::ENEMY)
+		//	{
+		//		Enemy2D* enemy = dynamic_cast<Enemy2D*>(q);
+		//		enemy->neighbour = justkillmenow;
+		//	}
+		//}
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown('N'))
 	{
@@ -324,11 +321,11 @@ void SceneText::Update(double dt)
 		m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 	}
 	// <THERE>
+	camera.Constrain(playerInfo, 40);
+	camera.Update(dt);
 
 	// Update the player position and other details based on keyboard and mouse inputs
-	playerInfo->Update(dt);
-
-	//camera.Update(dt); // Can put the camera into an entity rather than here (Then we don't have to write this)
+	//playerInfo->Update(dt);
 
 	GraphicsManager::GetInstance()->UpdateLights(dt);
 
@@ -368,12 +365,6 @@ void SceneText::Render()
 
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 	EntityManager::GetInstance()->Render();
-
-	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
-	GraphicsManager::GetInstance()->GetModelStack().Translate(playerInfo->GetPosition().x, playerInfo->GetPosition().y, playerInfo->GetPosition().z);
-	GraphicsManager::GetInstance()->GetModelStack().Scale(10, 10, 10);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
-	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
 
 	//GraphicsManager::GetInstance()->DetachCamera();
 	//EntityManager::GetInstance()->RenderUI();

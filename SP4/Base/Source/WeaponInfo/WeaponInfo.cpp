@@ -145,17 +145,16 @@ void CWeaponInfo::Discharge(Vector3 position, Vector3 target, CPlayerInfo* _sour
 		if (magRounds > 0)
 		{
 			// Create a projectile with a cube mesh. Its position and direction is same as the player.
-			// It will last for 3.0 seconds and travel at 500 units per second
 			CProjectile* aProjectile = Create::Projectile("cube", 
 															position, 
 															(target - position).Normalized(), 
-															2.0f, 
-															10.0f,
+															10.0f, 
+															100.0f,
 															_source);
 			aProjectile->SetCollider(true);
 			aProjectile->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
 			bFire = false;
-			magRounds--;
+			//magRounds--;
 		}
 	}
 }

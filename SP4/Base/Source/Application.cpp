@@ -188,7 +188,8 @@ void Application::Run()
 	{
 		glfwPollEvents();
 		UpdateInput();
-		
+		glfwGetFramebufferSize(m_window, &m_window_width, &m_window_height);
+
 		SceneManager::GetInstance()->Update(m_timer.getElapsedTime());
 		SceneManager::GetInstance()->Render();
 
@@ -270,10 +271,11 @@ Vector3 Application::GetWorldBasedMousePos()
 {
 	Vector3 result;
 	
+	glfwGetFramebufferSize(m_window, &m_window_width, &m_window_height);
 	result.Set(
-		MouseController::GetInstance()->GetMousePosition().x - (m_window_width * 0.5f),
-		-(MouseController::GetInstance()->GetMousePosition().y - (m_window_height * 0.5f)),
-		0);
+		(MouseController::GetInstance()->GetMousePosition().x - (m_window_width * 0.5f)),
+		0,
+		(MouseController::GetInstance()->GetMousePosition().y - (m_window_height * 0.5f)));
 
 	return result;
 }

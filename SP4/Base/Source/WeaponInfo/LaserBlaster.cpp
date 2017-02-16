@@ -40,16 +40,24 @@ void CLaserBlaster::Discharge(Vector3 position, Vector3 target, CPlayerInfo* _so
     if (bFire)
     {
         // If there is still ammo in the magazine, then fire
-        if (magRounds > 0)
+        //if (magRounds > 0)
         {
-            Vector3 _direction = (target - position).Normalized();
+			Vector3 _direction = (target - position).Normalized();
             // Create a laser with a laser mesh. The length is 10.0f, mesh is also set at 10.0f
-            CLaser* aLaser = Create::Laser("laser", position, _direction, 10.0f, 2.0f, 100.0f, _source);
+            CLaser* aLaser = Create::Laser(
+				"laser", 
+				position,
+				_direction,
+				10.0f,
+				5.0f,
+				1000.0f,
+				_source);
+
             aLaser->SetCollider(true);
             aLaser->SetIsLaser(true);
             aLaser->SetAABB(Vector3(0.5f, 0.5f, 0.5), Vector3(-0.5f, -0.5f, -0.5f));
             bFire = false;
-            magRounds--;
+            //magRounds--;
         }
     }
 }

@@ -1,12 +1,16 @@
 #pragma once
+
 #include "Vector3.h"
 #include "../Camera/Camera.h"
 #include "../GroundEntity.h"
 #include "../WeaponInfo/WeaponInfo.h"
+#include "../GenericEntity.h"
 
 static const float MOVEMENT_LIMIT = 300.f;
+static const float DASH_DISTANCE = 50.0f;
+static const float DASH_COOLDOWN = 2.f;
 
-class CPlayerInfo : public EntityBase
+class CPlayerInfo : public GenericEntity
 {
 protected:
 	static CPlayerInfo *s_instance;
@@ -86,6 +90,7 @@ public:
 	void UpdateFreeFall(double dt = 0.0333f);
 	// Update
 	void Update(double dt = 0.0333f);
+	void Render();
 
 	// Constrain the position within the borders
 	void Constrain(void);
@@ -93,6 +98,8 @@ public:
 	// Handling Camera
     void AttachCamera(Camera* _cameraPtr);
 	void DetachCamera();
+
+	void Shoot(Vector3 dir);
 
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
@@ -125,4 +132,6 @@ private:
 	// 2D movements
 	float forceMagnitude = 0;
 	bool isMoving;
+	bool isDashed;
+	float cooldownTimer = 0;
 };
