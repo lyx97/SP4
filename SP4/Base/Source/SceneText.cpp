@@ -72,7 +72,7 @@ void SceneText::Init()
 	m_worldWidth = m_worldHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 
 	//Camera Space View
-	m_orthoHeight = 160;
+	m_orthoHeight = 500;//160;
 	m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 
 	//camera.entityList.push_back(playerInfo->GetInstance()->GetPosition());
@@ -295,17 +295,8 @@ void SceneText::Update(double dt)
 	}
 	if (MouseController::GetInstance()->IsButtonReleased(MouseController::MMB))
 	{
-		//cout << "added" << endl;
-		//EntityManager::GetInstance()->AddEntity(new Enemy2D());
-		//justkillmenow++;
-		//for (auto q : EntityManager::GetInstance()->GetEntityList())
-		//{
-		//	if (q->GetEntityType() == EntityBase::ENEMY)
-		//	{
-		//		Enemy2D* enemy = dynamic_cast<Enemy2D*>(q);
-		//		enemy->neighbour = justkillmenow;
-		//	}
-		//}
+		cout << "added" << endl;
+		EntityManager::GetInstance()->AddEntity(new Enemy2D());
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown('N'))
 	{
@@ -320,8 +311,6 @@ void SceneText::Update(double dt)
 	// <THERE>
 	camera.Update(dt);
 	camera.Constrain(playerInfo, 50.0f);
-
-	cout << /*camera.GetCameraPos() << " : " << */camera.GetCameraTarget() << " : " << camera.GetCameraUp() << endl;
 
 	// Update the player position and other details based on keyboard and mouse inputs
 	//playerInfo->Update(dt);

@@ -1,7 +1,5 @@
 #include "Enemy2D.h"
-#include "GraphicsManager.h"
-#include "RenderHelper.h"
-#include "MeshBuilder.h"
+
 
 Enemy2D::Enemy2D()
 	: GenericEntity(NULL)
@@ -23,7 +21,7 @@ Enemy2D::Enemy2D()
 		Math::RandFloatMinMax(-100, 100));
 
 	this->speed = 1.0f;
-	this->isLeader = false;
+	this->scale.Set(10, 10, 10);
 }
 
 Enemy2D::~Enemy2D()
@@ -32,13 +30,13 @@ Enemy2D::~Enemy2D()
 
 void Enemy2D::Init()
 {
-	this->scale = Vector3(1, 7, 1);
-	this->isLeader = true;
 }
 
 void Enemy2D::Update(double _dt)
 {
 	this->position += this->velocity * _dt * speed;
+	if (this->velocity.LengthSquared() > ENEMY_MAX_SPEED * ENEMY_MAX_SPEED)
+		velocity = velocity.Normalized() * ENEMY_MAX_SPEED;
 
 	if (this->position.x > Application::GetInstance().GetWindowWidth() * 0.5f)
 	{
@@ -57,38 +55,89 @@ void Enemy2D::Update(double _dt)
 		this->position.z += Application::GetInstance().GetWindowHeight();
 	}
 
-	if (!this->isLeader)
-	{
-		Vector3 alignment, cohesion, separation;
+	this->velocity += Cohesion(this) + Separation(this) + Alignment(this);
 
-		// Alignment
-		if (!this->velocity.IsZero())
-		{
-			
-		}
-
-		// Cohesion
-		if (!this->velocity.IsZero())
-		{
-			cohesion = (leaderPos - this->position).Normalized();
-			//cohesion = cohesion / neighbour;
-		}
-
-		// Separation
-		if (!this->velocity.IsZero())
-		{
-			separation = (leaderPos + this->position).Normalized();
-			separation.x *= -1;
-			separation.z *= -1;
-		}
-
-		this->velocity += /*alignment*/  cohesion + separation;
-	}
 }
 
-void Enemy2D::GoToRandomPos(Vector3 pos)
+Vector3 Enemy2D::Cohesion(Enemy2D* enemy)
 {
-	this->leaderPos.Set(pos);
+	Vector3 result(0, 0, 0);
+	Vector3 centreOfMass(0, 0, 0);
+	int neighbour = 0;
+
+	for (auto otherEnemy : EntityManager::GetInstance()->GetEntityList())
+	{
+		if (otherEnemy->GetEntityType() == EntityBase::ENEMY)
+		{
+			if (otherEnemy != enemy)
+			{
+				centreOfMass += otherEnemy->GetPosition();
+				neighbour++;
+			}
+		}
+	}
+
+	if (neighbour > 0)
+	{
+		centreOfMass.x /= neighbour;
+		centreOfMass.z /= neighbour;
+		result = centreOfMass - enemy->position;
+		result.Normalize();
+	}
+
+	return result;
+}
+
+Vector3 Enemy2D::Separation(Enemy2D* enemy)
+{
+	Vector3 result(0, 0, 0);
+
+	for (auto otherEnemy : EntityManager::GetInstance()->GetEntityList())
+	{
+		if (otherEnemy->GetEntityType() == EntityBase::ENEMY)
+		{
+			if (otherEnemy != enemy)
+			{
+				if ((otherEnemy->GetPosition() - this->GetPosition()).LengthSquared() < 10000)
+				{
+					Vector3 headingVector = enemy->GetPosition() - otherEnemy->GetPosition();
+
+					float scale = headingVector.LengthSquared() * 0.001f;
+
+					result = headingVector.Normalized() / scale;
+				}
+			}
+		}
+	}
+
+	return result;
+}
+
+Vector3 Enemy2D::Alignment(Enemy2D* enemy)
+{
+	Vector3 result(0, 0, 0);
+	int neighbour = 0;
+
+	for (auto otherEnemy : EntityManager::GetInstance()->GetEntityList())
+	{
+		if (otherEnemy->GetEntityType() == EntityBase::ENEMY)
+		{
+			if (otherEnemy != enemy)
+			{
+				result += otherEnemy->GetVelocity();
+				neighbour++;
+			}
+		}
+	}
+
+	if (neighbour > 0)
+	{
+		result.x /= neighbour;
+		result.z /= neighbour;
+		result.Normalize();
+	}
+
+	return result;
 }
 
 void Enemy2D::Render()
@@ -102,18 +151,6 @@ void Enemy2D::Render()
 		this->scale.x,
 		this->scale.y,
 		this->scale.z);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("cone"));
-	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
-
-	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
-	GraphicsManager::GetInstance()->GetModelStack().Translate(
-		leaderPos.x,
-		leaderPos.y,
-		leaderPos.z);
-	GraphicsManager::GetInstance()->GetModelStack().Scale(
-		3,
-		3,
-		3);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("cube"));
 	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
 }
