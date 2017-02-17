@@ -1,16 +1,9 @@
-﻿Build started 2/17/2017 12:25:04 PM.
+﻿Build started 2/17/2017 5:49:51 PM.
      1>Project "C:\Users\155118A\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155118A\Desktop\SP4\SP4\/Common/Source /IC:\Users\155118A\Desktop\SP4\SP4\/glfw/include /IC:\Users\155118A\Desktop\SP4\SP4\/glew/include /IC:\Users\155118A\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\SceneText.cpp
-         SceneText.cpp
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\scenetext.h(22): warning C4099: 'Color' : type name first seen using 'struct' now seen using 'class'
-                 c:\users\155118a\desktop\sp4\sp4\common\source\vertex.h(14) : see declaration of 'Color'
-     1>c:\users\155118a\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\scenetext.cpp(238): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\scenetext.cpp(239): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\scenetext.cpp(243): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\scenetext.cpp(247): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\scenetext.cpp(313): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155118A\Desktop\SP4\SP4\/Common/Source /IC:\Users\155118A\Desktop\SP4\SP4\/glfw/include /IC:\Users\155118A\Desktop\SP4\SP4\/glew/include /IC:\Users\155118A\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Enemy\Enemy2D.cpp
+         Enemy2D.cpp
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\enemy\enemy2d.cpp(40): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\Debug /LIBPATH:"C:\Users\155118A\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 Debug\Application.obj
          Debug\Camera.obj
@@ -22,6 +15,7 @@
          Debug\MenuState.obj
          Debug\GenericEntity.obj
          Debug\GroundEntity.obj
+         Debug\Items.obj
          Debug\LevelOfDetails.obj
          Debug\Light.obj
          Debug\LuaInterface.obj
@@ -54,4 +48,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.66
+Time Elapsed 00:00:01.68

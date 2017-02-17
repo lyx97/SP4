@@ -10,6 +10,8 @@ public:
     {
         DEFAULT,
         ENEMY,
+		ITEM,
+		PROJECTILE,
         NUM_ENTITYTYPE
     };
 

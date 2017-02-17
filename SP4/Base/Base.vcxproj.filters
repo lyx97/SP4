@@ -49,6 +49,9 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{e34d0bf2-e68e-4c7b-98bd-93d79a13dd5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{40006d02-8a10-426d-a97d-6002ca85cabe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -155,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="Source\Enemy\Enemy2D.cpp">
       <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Items\Items.cpp">
+      <Filter>Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\Enemy2D.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Items\Items.h">
+      <Filter>Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

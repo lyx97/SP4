@@ -34,9 +34,10 @@ void Enemy2D::Init()
 
 void Enemy2D::Update(double _dt)
 {
-	this->position += this->velocity * _dt * speed;
 	if (this->velocity.LengthSquared() > ENEMY_MAX_SPEED * ENEMY_MAX_SPEED)
 		velocity = velocity.Normalized() * ENEMY_MAX_SPEED;
+
+	this->position += this->velocity * _dt * speed;
 
 	if (this->position.x > Application::GetInstance().GetWindowWidth() * 0.5f)
 	{
@@ -54,8 +55,22 @@ void Enemy2D::Update(double _dt)
 	{
 		this->position.z += Application::GetInstance().GetWindowHeight();
 	}
+	for (auto proj : EntityManager::GetInstance()->GetEntityList())
+	{
+		if (proj->GetEntityType() == EntityBase::PROJECTILE)
+		{
+			cout << proj->GetVelocity() << endl;
+			if ((proj->GetPosition() - this->position).LengthSquared() < 100)
+			{
 
-	this->velocity += Cohesion(this) + Separation(this) + Alignment(this);
+			}
+		}
+	}
+	Vector3 temp = (Cohesion(this) + Alignment(this) + Separation(this));
+	if (!temp.IsZero())
+	{
+		this->velocity += temp.Normalized();
+	}
 
 }
 
@@ -82,7 +97,6 @@ Vector3 Enemy2D::Cohesion(Enemy2D* enemy)
 		centreOfMass.x /= neighbour;
 		centreOfMass.z /= neighbour;
 		result = centreOfMass - enemy->position;
-		result.Normalize();
 	}
 
 	return result;
@@ -104,7 +118,7 @@ Vector3 Enemy2D::Separation(Enemy2D* enemy)
 
 					float scale = headingVector.LengthSquared() * 0.001f;
 
-					result = headingVector.Normalized() / scale;
+					result = headingVector / scale;
 				}
 			}
 		}
@@ -134,7 +148,6 @@ Vector3 Enemy2D::Alignment(Enemy2D* enemy)
 	{
 		result.x /= neighbour;
 		result.z /= neighbour;
-		result.Normalize();
 	}
 
 	return result;

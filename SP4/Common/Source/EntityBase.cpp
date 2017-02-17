@@ -3,7 +3,7 @@
 EntityBase::EntityBase()
     : position(0.0f, 0.0f, 0.0f)
     , scale(1.0f, 1.0f, 1.0f)
-	, velocity(0, 0, 0)
+	, velocity(0.0f, 0.0f, 0.0f)
     , isDone(false)
     , m_bCollider(false)
     , m_bLaser(false)

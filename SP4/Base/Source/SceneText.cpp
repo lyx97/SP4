@@ -198,9 +198,12 @@ void SceneText::Init()
 	enemy2D = new Enemy2D();
 	enemy2D->Init();
 
+	test = new Items();
+	test->Init();
+
 	groundEntity = Create::Ground("GRASS_DARKGREEN", "GEO_GRASS_LIGHTGREEN");
     // Create::Text3DObject("text", Vector3(0.0f, 0.0f, 0.0f), "DM2210", Vector3(10.0f, 10.0f, 10.0f), Color(0, 1, 1));
-	Create::Sprite2DObject("crosshair", Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f));
+	//Create::Sprite2DObject("crosshair", Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f));
 
 	SkyBoxEntity* theSkyBox = Create::SkyBox("SKYBOX_FRONT", "SKYBOX_BACK",
 											 "SKYBOX_LEFT", "SKYBOX_RIGHT",
@@ -245,7 +248,6 @@ void SceneText::Update(double dt)
 			x + camera.GetCameraPos().x - (m_orthoWidth * 0.5f),
 			0,
 			z + camera.GetCameraPos().z + (m_orthoHeight * 0.5f));
-	// BECAUSE THE FUCKING CAMERA IS 45 DEGREES, SO THE MOUSE LOOKS OFF
 	}
 
 	// THIS WHOLE CHUNK TILL <THERE> CAN REMOVE INTO ENTITIES LOGIC! Or maybe into a scene function to keep the update clean
@@ -291,12 +293,12 @@ void SceneText::Update(double dt)
 	}
 	if (MouseController::GetInstance()->IsButtonPressed(MouseController::RMB))
 	{
-
+		Items* newItem = new Items();
 	}
 	if (MouseController::GetInstance()->IsButtonReleased(MouseController::MMB))
 	{
 		cout << "added" << endl;
-		EntityManager::GetInstance()->AddEntity(new Enemy2D());
+		Enemy2D* newEnemy = new Enemy2D();
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown('N'))
 	{
@@ -340,7 +342,7 @@ void SceneText::Render()
 	// Setup 2D pipeline then render 2D
 	int halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2;
 	int halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2;
-	//GraphicsManager::GetInstance()->SetOrthographicProjection(-halfWindowWidth, halfWindowWidth, -halfWindowHeight, halfWindowHeight, -10, 10000);
+
 	GraphicsManager::GetInstance()->SetOrthographicProjection(-m_orthoWidth * 0.5f, m_orthoWidth * 0.5f, -m_orthoHeight * 0.5f, m_orthoHeight * 0.5f, -1000, 10000);
 
 	GraphicsManager::GetInstance()->GetViewMatrix().SetToLookAt(
@@ -351,16 +353,12 @@ void SceneText::Render()
 	// Setup 3D pipeline then render 3D
 	//GraphicsManager::GetInstance()->SetPerspectiveProjection(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
 
-	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
-	GraphicsManager::GetInstance()->GetModelStack().Translate(mousePos_worldBased);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
-	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
-
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 	EntityManager::GetInstance()->Render();
 
-	//GraphicsManager::GetInstance()->DetachCamera();
-	//EntityManager::GetInstance()->RenderUI();
+	GraphicsManager::GetInstance()->SetOrthographicProjection(-halfWindowWidth, halfWindowWidth, -halfWindowHeight, halfWindowHeight, -10, 10000);
+	GraphicsManager::GetInstance()->DetachCamera();
+	EntityManager::GetInstance()->RenderUI();
 }
 
 void SceneText::Exit()
