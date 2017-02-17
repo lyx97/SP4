@@ -62,6 +62,7 @@ void SceneText::Init()
 	lights[1]->name = "lights[1]";
 	
 	// Create the playerinfo instance, which manages all information about the player
+	camera.Init(Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(0, 1, -1));
 	playerInfo = CPlayerInfo::GetInstance();
 	playerInfo->Init();
 
@@ -74,10 +75,8 @@ void SceneText::Init()
 	m_orthoHeight = 160;
 	m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 
-	camera.Init(Vector3(0, 5, 0), Vector3(0, 0, 0), Vector3(0, 0, -1));
 	//camera.entityList.push_back(playerInfo->GetInstance()->GetPosition());
 
-	//playerInfo->AttachCamera(&camera);
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 
 	// Load all the meshes
@@ -249,8 +248,6 @@ void SceneText::Update(double dt)
 	// BECAUSE THE FUCKING CAMERA IS 45 DEGREES, SO THE MOUSE LOOKS OFF
 	}
 
-
-
 	// THIS WHOLE CHUNK TILL <THERE> CAN REMOVE INTO ENTITIES LOGIC! Or maybe into a scene function to keep the update clean
 	if(KeyboardController::GetInstance()->IsKeyDown('1'))
 		glEnable(GL_CULL_FACE);
@@ -321,8 +318,10 @@ void SceneText::Update(double dt)
 		m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 	}
 	// <THERE>
-	camera.Constrain(playerInfo, 40);
 	camera.Update(dt);
+	camera.Constrain(playerInfo, 50.0f);
+
+	cout << /*camera.GetCameraPos() << " : " << */camera.GetCameraTarget() << " : " << camera.GetCameraUp() << endl;
 
 	// Update the player position and other details based on keyboard and mouse inputs
 	//playerInfo->Update(dt);
@@ -362,6 +361,11 @@ void SceneText::Render()
 
 	// Setup 3D pipeline then render 3D
 	//GraphicsManager::GetInstance()->SetPerspectiveProjection(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
+
+	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
+	GraphicsManager::GetInstance()->GetModelStack().Translate(mousePos_worldBased);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
+	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
 
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 	EntityManager::GetInstance()->Render();

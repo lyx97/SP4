@@ -46,8 +46,10 @@ void Camera::Update(double dt)
 	temp.x = temp.x * 0.5f;
 	temp.z = temp.z * 0.5f;
 	this->target.Lerp(temp, 2 * dt);
+	//this->position.x = this->target.x;
+	//this->position.z = this->target.z;
 	this->position = this->target;
-	this->position.z += 1;
+	this->position.z += 1; // the thing making the camera 45 degrees
 	this->position.y += 1;
 
     //double camera_yaw = mouse_diff_x * 0.0174555555555556;		// 3.142 / 180.0
@@ -184,11 +186,13 @@ void Camera::Constrain(EntityBase* constrain, int radius)
 	{
 		this->target.z = constrain->GetPosition().z + radius;
 		this->position.z = constrain->GetPosition().z + radius;
+		this->position.z += 1;
 	}
 	else if (this->target.z < constrain->GetPosition().z - radius)
 	{
 		this->target.z = constrain->GetPosition().z - radius;
 		this->position.z = constrain->GetPosition().z - radius;
+		this->position.z += 1;
 	}
 }
 
