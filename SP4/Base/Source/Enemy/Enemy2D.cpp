@@ -59,10 +59,10 @@ void Enemy2D::Update(double _dt)
 	{
 		if (proj->GetEntityType() == EntityBase::PROJECTILE)
 		{
-			cout << proj->GetVelocity() << endl;
-			if ((proj->GetPosition() - this->position).LengthSquared() < 100)
+			if ((proj->GetPosition() - this->position).LengthSquared() < 200)
 			{
-
+				proj->SetIsDone(true);
+				this->velocity += proj->GetVelocity() * proj->GetMass();;
 			}
 		}
 	}

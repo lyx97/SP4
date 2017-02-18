@@ -76,10 +76,9 @@ void CLaser::Update(double dt)
 	}
 
 	// Update Position
-	position += velocity * dt * m_fSpeed;
-	//position.Set(	position.x + (float)(theDirection.x * dt * m_fSpeed),
-	//				position.y + (float)(theDirection.y * dt * m_fSpeed),
-	//				position.z + (float)(theDirection.z * dt * m_fSpeed));
+	position.Set(	position.x + (float)(theDirection.x * dt * m_fSpeed),
+					position.y + (float)(theDirection.y * dt * m_fSpeed),
+					position.z + (float)(theDirection.z * dt * m_fSpeed));
 }
 
 
@@ -134,6 +133,7 @@ CLaser* Create::Laser(const std::string& _meshName,
 	result->SetCollider(true);
 	result->SetSource(_source);
 	result->SetEntityType(EntityBase::PROJECTILE);
+	result->SetVelocity(_direction); // to get the velocity outside the class
 	EntityManager::GetInstance()->AddEntity(result);
 
 	Vector3 base = Vector3(1.0f, 0.0f, 0.0f);
