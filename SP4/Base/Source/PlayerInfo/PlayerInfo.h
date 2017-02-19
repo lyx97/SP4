@@ -5,6 +5,7 @@
 #include "../GroundEntity.h"
 #include "../WeaponInfo/WeaponInfo.h"
 #include "../GenericEntity.h"
+#include "../TextEntity.h"
 
 static const float MOVEMENT_LIMIT = 300.f;
 static const float DASH_DISTANCE = 50.0f;
@@ -100,6 +101,10 @@ public:
 	void DetachCamera();
 
 	void Shoot(Vector3 dir);
+	inline int GetHealth(){ return health; };
+	inline void SetHealth(int health){ this->health = health; };
+	inline int GetMaxHealth(){ return maxHealth; };
+	inline void SetMaxHealth(int maxHealth){ this->maxHealth = maxHealth; };
 
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
@@ -134,4 +139,8 @@ private:
 	bool isMoving;
 	bool isDashed;
 	float cooldownTimer = 0;
+
+	// player stats
+	int maxHealth;
+	int health;
 };

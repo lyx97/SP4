@@ -17,9 +17,8 @@ public:
 		HEALTH_INCREASE,
 		SPEED_INCREASE,
 
-
 		NUM_POWERUP
-	};
+	}powerup;
 
 	Items();
 	virtual ~Items();

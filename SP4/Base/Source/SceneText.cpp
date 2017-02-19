@@ -326,11 +326,6 @@ void SceneText::Update(double dt)
 	float fps = (float)(1.f / dt);
 	ss << "FPS: " << fps;
 	textObj[1]->SetText(ss.str());
-
-	std::ostringstream ss1;
-	ss1.precision(4);
-	ss1 << "Player:" << playerInfo->GetPosition();
-	textObj[2]->SetText(ss1.str());
 }
 
 void SceneText::Render()
@@ -359,6 +354,11 @@ void SceneText::Render()
 	GraphicsManager::GetInstance()->SetOrthographicProjection(-halfWindowWidth, halfWindowWidth, -halfWindowHeight, halfWindowHeight, -10, 10000);
 	GraphicsManager::GetInstance()->DetachCamera();
 	EntityManager::GetInstance()->RenderUI();
+
+	std::ostringstream ss;
+	ss.precision(3);
+	ss << "Player:" << playerInfo->GetPosition();
+	textObj[2]->SetText(ss.str());
 }
 
 void SceneText::Exit()

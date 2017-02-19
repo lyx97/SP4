@@ -26,6 +26,27 @@ void Items::Update(double _dt)
 {
 	if ((this->position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() < 100)
 	{
+		int random = Math::RandIntMinMax(0, NUM_POWERUP - 1);
+		switch (random)
+		{
+		case Items::HEALTH_RECOVER:
+		{
+			CPlayerInfo::GetInstance()->SetHealth(CPlayerInfo::GetInstance()->GetMaxHealth());
+		}
+			break;
+		case Items::HEALTH_INCREASE:
+		{
+			CPlayerInfo::GetInstance()->SetMaxHealth(CPlayerInfo::GetInstance()->GetMaxHealth() + 10);
+		}
+			break;
+		case Items::SPEED_INCREASE:
+		{
+			cout << "increase speed" << endl;
+		}
+			break;
+		default:
+			break;
+		}
 		this->SetIsDone(true);
 		return;
 	}

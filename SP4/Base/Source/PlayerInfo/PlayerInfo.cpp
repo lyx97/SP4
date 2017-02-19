@@ -1,5 +1,6 @@
 #include "PlayerInfo.h"
 #include <iostream>
+#include <sstream>
 
 #include "MouseController.h"
 #include "KeyboardController.h"
@@ -40,6 +41,8 @@ CPlayerInfo::CPlayerInfo(void)
 	, isMoving(false)
 	, isDashed(false)
 	, cooldownTimer(0)
+	, maxHealth(100)
+	, health(maxHealth)
 {
 }
 
