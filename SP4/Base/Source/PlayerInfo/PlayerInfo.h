@@ -7,7 +7,6 @@
 #include "../GenericEntity.h"
 #include "../TextEntity.h"
 
-static const float MOVEMENT_LIMIT = 300.f;
 static const float DASH_DISTANCE = 50.0f;
 static const float DASH_COOLDOWN = 2.f;
 
@@ -101,10 +100,18 @@ public:
 	void DetachCamera();
 
 	void Shoot(Vector3 dir);
-	inline int GetHealth(){ return health; };
-	inline void SetHealth(int health){ this->health = health; };
-	inline int GetMaxHealth(){ return maxHealth; };
-	inline void SetMaxHealth(int maxHealth){ this->maxHealth = maxHealth; };
+	void RecoverHealth();
+	inline float GetHealth(){ return health; };
+	inline void SetHealth(float health){ this->health = health; };
+
+	inline float GetMaxHealth(){ return maxHealth; };
+	inline void SetMaxHealth(float maxHealth){ this->maxHealth = maxHealth; };
+
+	inline float GetMaxSpeed(){ return maxSpeed; };
+	inline void SetMaxSpeed(float maxSpeed){ this->maxSpeed = maxSpeed; }
+
+	inline float GetHealthRegen(){ return healthRegen; };
+	inline void SetHealthRegen(float healthRegen){ this->healthRegen = healthRegen; };
 
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
@@ -138,9 +145,12 @@ private:
 	float forceMagnitude = 0;
 	bool isMoving;
 	bool isDashed;
-	float cooldownTimer = 0;
 
 	// player stats
-	int maxHealth;
-	int health;
+	float maxHealth;
+	float health;
+	float maxSpeed;
+	float healthRegen;
+	float dashCooldownTimer;
+	float healthregenCooldownTimer;
 };

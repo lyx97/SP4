@@ -50,10 +50,11 @@ void CLaserBlaster::Discharge(Vector3 position, Vector3 target, CPlayerInfo* _so
 				_direction,
 				120.0f,
 				2.0f,
-				1000.0f,
+				100.0f,
 				_source);
 
-			aLaser->SetMass(50); // how hard the laser will hit / pushback
+			aLaser->SetMass(50);	// how hard the laser will hit / pushback
+			aLaser->SetDamage(10);	// how much damage the laser will deal
             aLaser->SetCollider(true);
             aLaser->SetIsLaser(true);
             aLaser->SetAABB(Vector3(0.5f, 0.5f, 0.5), Vector3(-0.5f, -0.5f, -0.5f));

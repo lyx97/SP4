@@ -68,19 +68,19 @@ void CGrid::Update(vector<EntityBase*>* migrationList)
     it = ListOfObjects.begin();
     while (it != ListOfObjects.end())
     {
-        Vector3 position = (*it)->GetPosition();
-        if (((min.x <= position.x) && (position.x <= max.x)) &&
-            ((min.z <= position.z) && (position.z <= max.z)))
-        {
-            // Move on otherwise
-            ++it;
-        }
-        else
-        {
-            migrationList->push_back(*it);
-            // Remove from this Grid
-            it = ListOfObjects.erase(it);
-        }
+		Vector3 position = (*it)->GetPosition();
+		if (((min.x <= position.x) && (position.x <= max.x)) &&
+			((min.z <= position.z) && (position.z <= max.z)))
+		{
+			// Move on otherwise
+			++it;
+		}
+		else
+		{
+			migrationList->push_back(*it);
+			// Remove from this Grid
+			it = ListOfObjects.erase(it);
+		}
     }
 }
 
@@ -142,7 +142,7 @@ bool CGrid::Remove(EntityBase* theObject)
 	end = ListOfObjects.end();
 	while (it != end)
 	{
-		if ((*it) == theObject)
+		if ((*it) == theObject || (*it)->IsDone())
 		{
 			it = ListOfObjects.erase(it);
 			return true;

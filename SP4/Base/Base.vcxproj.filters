@@ -159,7 +159,10 @@
     <ClCompile Include="Source\Enemy\Enemy2D.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Items\Items.cpp">
+    <ClCompile Include="Source\Items\Powerup.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Items\Skill.cpp">
       <Filter>Items</Filter>
     </ClCompile>
   </ItemGroup>
@@ -281,7 +284,10 @@
     <ClInclude Include="Source\Enemy\Enemy2D.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Items\Items.h">
+    <ClInclude Include="Source\Items\Powerup.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Items\Skill.h">
       <Filter>Items</Filter>
     </ClInclude>
   </ItemGroup>

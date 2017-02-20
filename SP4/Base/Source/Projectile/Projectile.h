@@ -37,6 +37,8 @@ public:
 	void SetSource(CPlayerInfo* _source);
 	// Get the source of the projectile
 	CPlayerInfo* GetSource(void) const;
+	inline unsigned int GetDamage(){ return this->damage; };
+	inline void SetDamage(unsigned int damage){ this->damage = damage; };
 
 	// Update the status of this projectile
 	virtual void Update(double dt = 0.0333f);
@@ -55,6 +57,8 @@ protected:
 	Vector3 theDirection;
 	// The character which fired this projectile
 	CPlayerInfo* theSource;
+
+	unsigned int damage;
 };
 
 namespace Create

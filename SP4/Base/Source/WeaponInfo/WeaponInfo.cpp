@@ -139,24 +139,24 @@ void CWeaponInfo::Update(const double dt)
 // Discharge this weapon
 void CWeaponInfo::Discharge(Vector3 position, Vector3 target, CPlayerInfo* _source)
 {
-	if (bFire)
-	{
-		// If there is still ammo in the magazine, then fire
-		if (magRounds > 0)
-		{
-			// Create a projectile with a cube mesh. Its position and direction is same as the player.
-			CProjectile* aProjectile = Create::Projectile("cube", 
-															position, 
-															(target - position).Normalized(), 
-															10.0f, 
-															100.0f,
-															_source);
-			aProjectile->SetCollider(true);
-			aProjectile->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
-			bFire = false;
-			//magRounds--;
-		}
-	}
+	//if (bFire)
+	//{
+	//	// If there is still ammo in the magazine, then fire
+	//	if (magRounds > 0)
+	//	{
+	//		// Create a projectile with a cube mesh. Its position and direction is same as the player.
+	//		CProjectile* aProjectile = Create::Projectile("cube", 
+	//														position, 
+	//														(target - position).Normalized(), 
+	//														10.0f, 
+	//														100.0f,
+	//														_source);
+	//		aProjectile->SetCollider(true);
+	//		aProjectile->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
+	//		bFire = false;
+	//		//magRounds--;
+	//	}
+	//}
 }
 
 // Reload this weapon

@@ -22,13 +22,11 @@ Enemy2D::Enemy2D()
 
 	this->speed = 1.0f;
 	this->scale.Set(10, 10, 10);
+	this->maxHealth = 100;
+	this->health = this->maxHealth;
 }
 
 Enemy2D::~Enemy2D()
-{
-}
-
-void Enemy2D::Init()
 {
 }
 
@@ -55,14 +53,15 @@ void Enemy2D::Update(double _dt)
 	{
 		this->position.z += Application::GetInstance().GetWindowHeight();
 	}
-	for (auto proj : EntityManager::GetInstance()->GetEntityList())
+	for (auto entity : EntityManager::GetInstance()->GetEntityList())
 	{
-		if (proj->GetEntityType() == EntityBase::PROJECTILE)
+		if (entity->GetEntityType() == EntityBase::PROJECTILE)
 		{
+			CProjectile* proj = dynamic_cast<CProjectile*>(entity);
 			if ((proj->GetPosition() - this->position).LengthSquared() < 200)
 			{
-				proj->SetIsDone(true);
-				this->velocity += proj->GetVelocity() * proj->GetMass();;
+				this->SetIsDone(true);
+				//this->health -= proj->GetDamage();
 			}
 		}
 	}
@@ -71,7 +70,15 @@ void Enemy2D::Update(double _dt)
 	{
 		this->velocity += temp.Normalized();
 	}
-
+	if (this->health <= 0)
+	{
+		float randomNo = Math::RandFloatMinMax(0, 100);
+		if (randomNo < CHANCE_OF_DROPPING_POWERUP)
+		{
+			//Powerup* newPowerup = new Powerup(this->position);
+		}
+		//isDone = true;
+	}
 }
 
 Vector3 Enemy2D::Cohesion(Enemy2D* enemy)

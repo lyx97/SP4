@@ -40,9 +40,12 @@ CPlayerInfo::CPlayerInfo(void)
 	, keyMoveRight('D')
 	, isMoving(false)
 	, isDashed(false)
-	, cooldownTimer(0)
-	, maxHealth(100)
-	, health(maxHealth)
+	, maxHealth(100.0f)
+	, health(90.0f)
+	, maxSpeed(300.0f)
+	, healthRegen(0.5f)
+	, dashCooldownTimer(0)
+	, healthregenCooldownTimer(0)
 {
 }
 
@@ -311,11 +314,21 @@ void CPlayerInfo::Update(double dt)
 
 	if (isDashed)
 	{
-		cooldownTimer -= dt;
-		if (cooldownTimer <= 0)
+		dashCooldownTimer -= dt;
+		if (dashCooldownTimer <= 0)
 		{
 			isDashed = false;
 		}
+	}
+	healthregenCooldownTimer -= dt;
+	if (healthregenCooldownTimer <= 0)
+	{
+		if (health + healthRegen >= maxHealth)
+			health = maxHealth;
+		else
+			health += healthRegen;
+
+		healthregenCooldownTimer = 1;
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward) ||
 		KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward) ||
@@ -342,10 +355,10 @@ void CPlayerInfo::Update(double dt)
 		if (!forceDir.IsZero())
 		{
 			forceDir.Normalized();
-			if (velocity.LengthSquared() < MOVEMENT_LIMIT * MOVEMENT_LIMIT)
+			if (velocity.LengthSquared() < maxSpeed * maxSpeed)
 			{
 				isMoving = true;
-				forceMagnitude = MOVEMENT_LIMIT;
+				forceMagnitude = maxSpeed;
 				this->ApplyForce(forceDir, forceMagnitude * dt);
 			}
 		}
@@ -354,15 +367,15 @@ void CPlayerInfo::Update(double dt)
 		{
 			if (!forceDir.IsZero() && !isDashed)
 			{
-				forceMagnitude = MOVEMENT_LIMIT * DASH_DISTANCE;
+				forceMagnitude = maxSpeed * DASH_DISTANCE;
 				this->ApplyForce(forceDir, forceMagnitude * dt);
 				isDashed = true;
-				cooldownTimer = DASH_COOLDOWN;
+				dashCooldownTimer = DASH_COOLDOWN;
 			}
 		}
 		if (KeyboardController::GetInstance()->IsKeyPressed('E'))
 		{
-
+			this->health -= 5;
 		}
 		Constrain();
 	}
@@ -603,4 +616,12 @@ void CPlayerInfo::Shoot(Vector3 dir)
 {
 	if (secondaryWeapon)
 		secondaryWeapon->Discharge(this->position, dir, this);
+}
+
+void CPlayerInfo::RecoverHealth()
+{
+	if (health + 10 >= maxHealth)
+		health = maxHealth;
+	else
+		health += 10;
 }

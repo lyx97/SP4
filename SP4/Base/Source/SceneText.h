@@ -14,7 +14,7 @@
 #include "../Lua/LuaInterface.h"
 #include "Enemy/Enemy.h"
 #include "Enemy\Enemy2D.h"
-#include "Items\Items.h"
+#include "../Items/Powerup.h"
 #include "Font/LoadFontData.h"
 
 class SceneManager;
@@ -49,8 +49,6 @@ private:
 	GenericEntity* theCube;
 	Enemy2D* enemy2D;
     CEnemy* theEnemy;
-
-	Items* test;
 };
 
 #endif

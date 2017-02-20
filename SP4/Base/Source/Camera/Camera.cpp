@@ -42,12 +42,10 @@ void Camera::Update(double dt)
     static const float CAMERA_SPEED = 200.f;
 
 	Vector3 temp;
-	temp = Application::GetInstance().GetWorldBasedMousePos() + CPlayerInfo::GetInstance()->GetPosition();
+	temp = Application::GetInstance().GetWorldBasedMousePos() + CPlayerInfo::GetInstance()->GetPosition() + this->target;
 	temp.x = temp.x * 0.5f;
 	temp.z = temp.z * 0.5f;
 	this->target.Lerp(temp, 2 * dt);
-	//this->position.x = this->target.x;
-	//this->position.z = this->target.z;
 	this->position = this->target;
 	this->position.z += 1; // the thing making the camera 45 degrees
 	this->position.y += 1;

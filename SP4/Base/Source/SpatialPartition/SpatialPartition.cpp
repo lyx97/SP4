@@ -145,10 +145,10 @@ void CSpatialPartition::Update(void)
     if (MigrationList.empty() == false)
     {
         // Check each object to see if they are no longer in this grid
-        for (int i = 0; i < MigrationList.size(); ++i)
-        {
-            Add(MigrationList[i]);
-        }
+		for (int i = 0; i < MigrationList.size(); ++i)
+		{
+			Add(MigrationList[i]);
+		}
         MigrationList.clear();
     }
 }

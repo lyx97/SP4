@@ -2,6 +2,7 @@
 #include "EntityBase.h"
 #include "Collider/Collider.h"
 #include "../Source/WeaponInfo/Laser.h"
+#include "Enemy\Enemy2D.h"
 
 #include <iostream>
 using namespace std;
@@ -25,7 +26,8 @@ void EntityManager::Update(double _dt)
         theSpatialPartition->Update();
 
     // Check for Collision amongst entities with collider properties
-    CheckForCollision();
+
+    //CheckForCollision();
 
     // Clean up entities that are done
     it = entityList.begin();
@@ -98,19 +100,19 @@ bool EntityManager::RemoveEntity(EntityBase* _existingEntity)
 		delete *findIter;
 		findIter = entityList.erase(findIter);
 
-        // Remove from SceneNode too
-        if (CSceneGraph::GetInstance()->DeleteNode(_existingEntity))
-        {
-            cout << "EntityManager::RemoveEntity: Unable to remove entity";
-        }
-        else
-        {
-            // Remove from the Spatial Partition
-            if (theSpatialPartition)
-                theSpatialPartition->Remove(_existingEntity);
-        }
+		// Remove from SceneNode too
+		if (CSceneGraph::GetInstance()->DeleteNode(_existingEntity))
+		{
+			cout << "EntityManager::RemoveEntity: Unable to remove entity";
+		}
+		else
+		{
+			// Remove from the Spatial Partition
+			if (theSpatialPartition)
+				theSpatialPartition->Remove(_existingEntity);
+		}
 
-		return true;	
+		return true;
 	}
 	// Return false if not found
 	return false;
@@ -297,10 +299,10 @@ bool EntityManager::CheckForCollision(void)
             // Check for collision with another collider class
             colliderThatEnd = entityList.end();
             int counter = 0;
-            for (colliderThat = entityList.begin(); colliderThat != colliderThatEnd; ++colliderThat)
-            {
-                if (colliderThat == colliderThis)
-                    continue;
+			for (colliderThat = entityList.begin(); colliderThat != colliderThatEnd; ++colliderThat)
+			{
+				if (colliderThis == colliderThat)
+					continue;
 
                 if ((*colliderThat)->HasCollider())
                 {
