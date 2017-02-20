@@ -47,7 +47,7 @@ private:
 	Light* lights[2];
 
 	GenericEntity* theCube;
-	Enemy2D* enemy2D;
+	//Enemy2D* enemy2D;
     CEnemy* theEnemy;
 };
 

@@ -1,10 +1,21 @@
-﻿Build started 2/20/2017 5:55:07 PM.
-     1>Project "C:\Users\155118A\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2/20/2017 9:37:04 PM.
+     1>Project "C:\Users\155118A\Documents\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155118A\Desktop\SP4\SP4\/Common/Source /IC:\Users\155118A\Desktop\SP4\SP4\/glfw/include /IC:\Users\155118A\Desktop\SP4\SP4\/glew/include /IC:\Users\155118A\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\WeaponInfo\LaserBlaster.cpp
-         LaserBlaster.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155118A\Documents\SP4\SP4\/Common/Source /IC:\Users\155118A\Documents\SP4\SP4\/glfw/include /IC:\Users\155118A\Documents\SP4\SP4\/glew/include /IC:\Users\155118A\Documents\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\PlayerInfo\PlayerInfo.cpp
+         PlayerInfo.cpp
+     1>c:\users\155118a\documents\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\documents\sp4\sp4\base\source\playerinfo\playerinfo.cpp(78): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155118a\documents\sp4\sp4\base\source\playerinfo\playerinfo.cpp(79): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155118a\documents\sp4\sp4\base\source\playerinfo\playerinfo.cpp(97): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\155118a\documents\sp4\sp4\base\source\playerinfo\playerinfo.cpp(98): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\155118a\documents\sp4\sp4\base\source\playerinfo\playerinfo.cpp(99): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\155118a\documents\sp4\sp4\base\source\playerinfo\playerinfo.cpp(100): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\155118a\documents\sp4\sp4\base\source\playerinfo\playerinfo.cpp(317): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\documents\sp4\sp4\base\source\playerinfo\playerinfo.cpp(323): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\documents\sp4\sp4\base\source\playerinfo\playerinfo.cpp(362): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\documents\sp4\sp4\base\source\playerinfo\playerinfo.cpp(371): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\Debug /LIBPATH:"C:\Users\155118A\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 Debug\Application.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155118A\Documents\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155118A\Documents\SP4\SP4\Debug /LIBPATH:"C:\Users\155118A\Documents\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155118A\Documents\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155118A\Documents\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155118A\Documents\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155118A\Documents\SP4\SP4\Debug\Base.lib" /MACHINE:X86 Debug\Application.obj
          Debug\Camera.obj
          Debug\Enemy.obj
          Debug\Enemy2D.obj
@@ -43,9 +54,9 @@
          Debug\WeaponInfo.obj
      1>Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
      1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-         Base.vcxproj -> C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.exe
-     1>Done Building Project "C:\Users\155118A\Desktop\SP4\SP4\Base\Base.vcxproj" (Build target(s)).
+         Base.vcxproj -> C:\Users\155118A\Documents\SP4\SP4\Debug\Base.exe
+     1>Done Building Project "C:\Users\155118A\Documents\SP4\SP4\Base\Base.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.99
+Time Elapsed 00:00:01.62

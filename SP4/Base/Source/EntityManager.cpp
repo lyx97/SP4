@@ -36,7 +36,8 @@ void EntityManager::Update(double _dt)
         if ((*it)->IsDone())
         {
             // Delete if done
-            delete *it;
+			if (*it)
+				delete *it;
             it = entityList.erase(it);
         }
         else
@@ -62,8 +63,8 @@ void EntityManager::Render()
     CSceneGraph::GetInstance()->Render();
 
     // Render the Spatial Partition
-    if (theSpatialPartition)
-        theSpatialPartition->Render();
+    //if (theSpatialPartition)
+    //    theSpatialPartition->Render();
 }
 
 // Render the UI entities

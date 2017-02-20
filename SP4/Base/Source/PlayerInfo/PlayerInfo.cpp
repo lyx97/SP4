@@ -323,7 +323,7 @@ void CPlayerInfo::Update(double dt)
 	healthregenCooldownTimer -= dt;
 	if (healthregenCooldownTimer <= 0)
 	{
-		if (health + healthRegen >= maxHealth)
+		if (health + healthRegen > maxHealth)
 			health = maxHealth;
 		else
 			health += healthRegen;
@@ -620,7 +620,7 @@ void CPlayerInfo::Shoot(Vector3 dir)
 
 void CPlayerInfo::RecoverHealth()
 {
-	if (health + 10 >= maxHealth)
+	if (health + 10 > maxHealth)
 		health = maxHealth;
 	else
 		health += 10;

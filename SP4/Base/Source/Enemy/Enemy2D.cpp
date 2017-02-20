@@ -4,7 +4,7 @@
 Enemy2D::Enemy2D()
 	: GenericEntity(NULL)
 {
-	EntityManager::GetInstance()->AddEntity(this, true);
+	EntityManager::GetInstance()->AddEntity(this);
 	this->position = Vector3(0, 0, 0);
 	this->scale = Vector3(1, 3, 1);
 
@@ -60,8 +60,9 @@ void Enemy2D::Update(double _dt)
 			CProjectile* proj = dynamic_cast<CProjectile*>(entity);
 			if ((proj->GetPosition() - this->position).LengthSquared() < 200)
 			{
-				this->SetIsDone(true);
-				//this->health -= proj->GetDamage();
+				this->velocity += proj->GetVelocity() * proj->GetMass();
+				this->health -= proj->GetDamage();
+				proj->SetIsDone(true);
 			}
 		}
 	}
@@ -75,9 +76,9 @@ void Enemy2D::Update(double _dt)
 		float randomNo = Math::RandFloatMinMax(0, 100);
 		if (randomNo < CHANCE_OF_DROPPING_POWERUP)
 		{
-			//Powerup* newPowerup = new Powerup(this->position);
+			Powerup* newPowerup = new Powerup(this->position);
 		}
-		//isDone = true;
+		isDone = true;
 	}
 }
 

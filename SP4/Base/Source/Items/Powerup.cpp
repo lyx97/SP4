@@ -9,7 +9,7 @@ Powerup::Powerup()
 Powerup::Powerup(Vector3 pos)
 	: GenericEntity(NULL)
 {
-	EntityManager::GetInstance()->AddEntity(this, true);
+	EntityManager::GetInstance()->AddEntity(this);
 	this->position.Set(pos);
 	this->velocity.Set(0, 0, 0);
 	this->scale.Set(10, 10, 10);
@@ -37,21 +37,25 @@ void Powerup::Update(double _dt)
 		{
 		case Powerup::HEALTH_RECOVER:
 		{
+			cout << "Recover Health" << endl;
 			CPlayerInfo::GetInstance()->RecoverHealth();
 		}
 		break;
 		case Powerup::HEALTH_INCREASE:
 		{
+			cout << "Increase Max Health" << endl;
 			CPlayerInfo::GetInstance()->SetMaxHealth(CPlayerInfo::GetInstance()->GetMaxHealth() + 5);
 		}
 		break;
 		case Powerup::SPEED_INCREASE:
 		{
+			cout << "Increase Speed" << endl;
 			CPlayerInfo::GetInstance()->SetMaxSpeed(CPlayerInfo::GetInstance()->GetMaxSpeed() + 10);
 		}
 		break;
 		case Powerup::HEALTHREGEN_INCREASE:
 		{
+			cout << "Increase Health Regen" << endl;
 			CPlayerInfo::GetInstance()->SetHealthRegen(CPlayerInfo::GetInstance()->GetHealthRegen() + 1);
 		}
 		break;
