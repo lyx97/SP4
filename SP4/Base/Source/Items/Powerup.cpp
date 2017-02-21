@@ -17,6 +17,8 @@ Powerup::Powerup(Vector3 pos)
 	this->m_eEntityType = EntityBase::ITEM;
 	this->m_bLaser = false;
 	this->m_bCollider = true;
+
+	random = Math::RandIntMinMax(0, NUM_POWERUP - 1);
 }
 
 Powerup::~Powerup()
@@ -32,7 +34,6 @@ void Powerup::Update(double _dt)
 {
 	if ((this->position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() < 100)
 	{
-		int random = Math::RandIntMinMax(0, NUM_POWERUP - 1);
 		switch (random)
 		{
 		case Powerup::HEALTH_RECOVER:
@@ -78,6 +79,30 @@ void Powerup::Render()
 		this->scale.x,
 		this->scale.y,
 		this->scale.z);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
+	switch (random)
+	{
+	case Powerup::HEALTH_RECOVER:
+	{
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_health"));
+	}
+		break;
+	case Powerup::HEALTH_INCREASE:
+	{
+
+	}
+		break;
+	case Powerup::SPEED_INCREASE:
+	{
+
+	}
+		break;
+	case Powerup::HEALTHREGEN_INCREASE:
+	{
+
+	}
+		break;
+	default:
+		break;
+	}
 	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
 }

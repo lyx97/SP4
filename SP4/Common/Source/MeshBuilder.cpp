@@ -4,7 +4,9 @@
 #include <vector>
 #include "MyMath.h"
 #include "LoadOBJ.h"
+#include "LoadTGA.h"
 #include <iostream>
+
 using namespace std;
 /******************************************************************************/
 /*!
@@ -586,4 +588,54 @@ void MeshBuilder::RemoveMesh(const std::string& _meshName)
 		delete currMesh;
 		meshMap.erase(_meshName);
 	}
+}
+
+void MeshBuilder::Init()
+{
+	// MISC && DEBUG TESTS
+	GenerateAxes("reference");
+	GenerateCrossHair("crosshair");
+	GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	GetMesh("quad")->textureID = LoadTGA("Image//calibri.tga");
+	GenerateText("text", 16, 16);
+	GetMesh("text")->textureID = LoadTGA("Image//calibri.tga");
+	GetMesh("text")->material.kAmbient.Set(1, 0, 0);
+	GenerateOBJ("Chair", "OBJ//chair.obj");
+	GetMesh("Chair")->textureID = LoadTGA("Image//chair.tga");
+	GenerateRing("ring", Color(1, 0, 1), 36, 1, 0.5f);
+	GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
+	GenerateSphere("sphere", Color(1, 0, 0), 18, 36, 1.f);
+	GenerateCone("cone", Color(0.5f, 1, 0.3f), 36, 10.f, 10.f);
+	GenerateCube("cube", Color(1.0f, 1.0f, 0.0f), 1.0f);
+	GetMesh("cone")->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	GetMesh("cone")->material.kSpecular.Set(0.f, 0.f, 0.f);
+	GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
+	GetMesh("GRASS_DARKGREEN")->textureID = LoadTGA("Image//grass_darkgreen.tga");
+	GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
+	GetMesh("GEO_GRASS_LIGHTGREEN")->textureID = LoadTGA("Image//grass_lightgreen.tga");
+	GenerateQuad("GRIDMESH", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GenerateCube("cubeSG", Color(1.0f, 0.64f, 0.0f), 1.0f);
+
+	// SKYBOX
+	GenerateQuad("SKYBOX_FRONT", Color(1, 1, 1), 1.f);
+	GenerateQuad("SKYBOX_BACK", Color(1, 1, 1), 1.f);
+	GenerateQuad("SKYBOX_LEFT", Color(1, 1, 1), 1.f);
+	GenerateQuad("SKYBOX_RIGHT", Color(1, 1, 1), 1.f);
+	GenerateQuad("SKYBOX_TOP", Color(1, 1, 1), 1.f);
+	GenerateQuad("SKYBOX_BOTTOM", Color(1, 1, 1), 1.f);
+	GetMesh("SKYBOX_FRONT")->textureID = LoadTGA("Image//SkyBox//skybox_front.tga");
+	GetMesh("SKYBOX_BACK")->textureID = LoadTGA("Image//SkyBox//skybox_back.tga");
+	GetMesh("SKYBOX_LEFT")->textureID = LoadTGA("Image//SkyBox//skybox_left.tga");
+	GetMesh("SKYBOX_RIGHT")->textureID = LoadTGA("Image//SkyBox//skybox_right.tga");
+	GetMesh("SKYBOX_TOP")->textureID = LoadTGA("Image//SkyBox//skybox_top.tga");
+	GetMesh("SKYBOX_BOTTOM")->textureID = LoadTGA("Image//SkyBox//skybox_bottom.tga");
+
+	// GAME GRAPHICS
+	GenerateRay("laser", 10.0f);
+	GenerateQuad("direction", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("direction")->textureID = LoadTGA("Image//direction.tga");
+	GenerateQuad("wall", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("wall")->textureID = LoadTGA("Image//Tile//wall.tga");
+	GenerateQuad("powerup_health", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("powerup_health")->textureID = LoadTGA("Image//Powerups//powerup_health.tga");
 }

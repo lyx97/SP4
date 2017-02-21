@@ -23,12 +23,6 @@ void EntityManager::Update(double _dt)
     // Update the Scene Graph
     //CSceneGraph::GetInstance()->Update();
 
-    // Update the Spatial Partition
-    //if (partitionList.size() > 0)
-    //    partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Update();
-
-    //if (theSpatialPartition)
-    //    theSpatialPartition->Update();
 
     // Check for Collision amongst entities with collider properties
     //CheckForCollision();
@@ -40,32 +34,22 @@ void EntityManager::Update(double _dt)
         if ((*it)->IsDone())
         {
             // Delete if done
+			Vector3 index = (*it)->GetIndex();
+			partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Remove(*it);
             delete *it;
             it = entityList.erase(it);
         }
         else
         {
-            //Vector3 position = (*it)->GetPosition();
-            //Vector3 index = (*it)->GetIndex();
-            //Vector3 min = partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->GetGrid(index.x, index.z).GetMin();
-            //Vector3 max = partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->GetGrid(index.x, index.z).GetMax();
-
-            //if (((min.x <= position.x) && (position.x <= max.x)) &&
-            //    ((min.z <= position.z) && (position.z <= max.z)))
-            //{
-            //    // Move on otherwise
-            //    ++it;
-            //}
-            //else
-            //{
-            //    partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->MigrationList->push_back(*it);
-            //    // Remove from this Grid
-            //    it = ListOfObjects.erase(it);
-            //}
             // Move on otherwise
             ++it;
         }
     }
+
+	//Update the Spatial Partition
+	if (partitionList.size() > 0)
+		partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Update();
+
 }
 
 // Render all entities

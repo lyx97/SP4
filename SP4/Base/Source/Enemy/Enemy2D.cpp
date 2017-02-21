@@ -26,7 +26,7 @@ Enemy2D::Enemy2D()
 	this->maxHealth = 100;
 	this->health = this->maxHealth;
 
-    EntityManager::GetInstance()->AddEntity(this, true);
+    EntityManager::GetInstance()->AddEntity(this, CPlayerInfo::GetInstance()->GetRoomID());
 }
 
 Enemy2D::~Enemy2D()
@@ -70,10 +70,10 @@ void Enemy2D::Update(double _dt)
 			}
 		}
 	}
-	//Vector3 temp = (Cohesion(this) + Alignment(this) + Separation(this));
-	//if (!temp.IsZero())
+	Vector3 temp = (Cohesion(this) + Alignment(this) + Separation(this));
+	if (!temp.IsZero())
 	{
-		//this->velocity += temp.Normalized();
+		this->velocity += temp.Normalized();
 	}
 	if (this->health <= 0)
 	{
@@ -84,6 +84,21 @@ void Enemy2D::Update(double _dt)
 		}
 		isDone = true;
 	}
+}
+
+void Enemy2D::Render()
+{
+	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
+	GraphicsManager::GetInstance()->GetModelStack().Translate(
+		this->position.x,
+		this->position.y,
+		this->position.z);
+	GraphicsManager::GetInstance()->GetModelStack().Scale(
+		this->scale.x,
+		this->scale.y,
+		this->scale.z);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("cube"));
+	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
 }
 
 Vector3 Enemy2D::Cohesion(Enemy2D* enemy)
@@ -124,14 +139,11 @@ Vector3 Enemy2D::Separation(Enemy2D* enemy)
 		{
 			if (otherEnemy != enemy)
 			{
-				if ((otherEnemy->GetPosition() - this->GetPosition()).LengthSquared() < 10000)
-				{
-					Vector3 headingVector = enemy->GetPosition() - otherEnemy->GetPosition();
+				Vector3 headingVector = enemy->GetPosition() - otherEnemy->GetPosition();
 
-					float scale = headingVector.LengthSquared() * 0.001f;
+				float scale = headingVector.LengthSquared() * 0.0001f;
 
-					result = headingVector / scale;
-				}
+				result = headingVector / scale;
 			}
 		}
 	}
@@ -163,19 +175,4 @@ Vector3 Enemy2D::Alignment(Enemy2D* enemy)
 	}
 
 	return result;
-}
-
-void Enemy2D::Render()
-{
-	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
-	GraphicsManager::GetInstance()->GetModelStack().Translate(
-		this->position.x,
-		this->position.y,
-		this->position.z);
-	GraphicsManager::GetInstance()->GetModelStack().Scale(
-		this->scale.x,
-		this->scale.y,
-		this->scale.z);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("cube"));
-	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
 }

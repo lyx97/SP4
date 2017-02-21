@@ -35,6 +35,7 @@ public:
 	void AddMesh(const std::string& _meshName, Mesh* _newMesh);
 	void RemoveMesh(const std::string& _meshName);
 
+	void Init();
 private:
 	std::map<std::string, Mesh*> meshMap;
 };

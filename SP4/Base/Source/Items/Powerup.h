@@ -28,5 +28,8 @@ public:
 	void Init();
 	virtual void Update(double _dt);
 	virtual void Render();
+
+private:
+	unsigned int random;
 };
 
