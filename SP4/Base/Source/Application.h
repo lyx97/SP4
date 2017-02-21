@@ -4,6 +4,8 @@
 #include "timer.h"
 #include "GameStateManagement\IntroState.h"
 #include "GameStateManagement\MenuState.h"
+#include "GameStateManagement\HelpState.h"
+#include "GameStateManagement\OptionState.h"
 #include "ShaderProgram.h"
 
 struct GLFWwindow;
@@ -22,33 +24,33 @@ public:
 
 	void UpdateInput();
 	void PostInputUpdate();
-	
+
 	static void MouseButtonCallbacks(GLFWwindow* window, int button, int action, int mods);
 	static void MouseScrollCallbacks(GLFWwindow* window, double xoffset, double yoffset);
 
 	int GetWindowHeight();
 	int GetWindowWidth();
 	Vector3 GetWorldBasedMousePos();
-	
+
 private:
 	Application();
 	~Application();
 
 	static bool IsKeyPressed(unsigned short key);
-    void InitDisplay(void);
+	void InitDisplay(void);
 
 	// Should make these not hard-coded :P
 	//const static int m_window_width = 800;
 	//const static int m_window_height = 600;
 
-    int m_window_width;
-    int m_window_height;
+	int m_window_width;
+	int m_window_height;
 
 	//Declare a window object
 	StopWatch m_timer;
 
-    // Pointer to shader program
-    ShaderProgram* currProg;
+	// Pointer to shader program
+	ShaderProgram* currProg;
 };
 
 #endif

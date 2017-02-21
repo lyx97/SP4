@@ -162,6 +162,15 @@
     <ClCompile Include="Source\Items\Items.cpp">
       <Filter>Items</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\HelpState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\OptionState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Chaser.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -283,6 +292,15 @@
     </ClInclude>
     <ClInclude Include="Source\Items\Items.h">
       <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\HelpState.h">
+      <Filter>GameStateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\OptionState.h">
+      <Filter>GameStateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Chaser.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

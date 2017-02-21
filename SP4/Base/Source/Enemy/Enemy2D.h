@@ -7,6 +7,7 @@
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
 #include "MeshBuilder.h"
+#include "../PlayerInfo/PlayerInfo.h"
 
 static const float ENEMY_MAX_SPEED = 50.0f;
 
@@ -27,4 +28,3 @@ public:
 protected:
 	float speed;
 };
-

@@ -6,14 +6,14 @@
 class EntityBase
 {
 public:
-    enum ENTITY_TYPE
-    {
-        DEFAULT,
-        ENEMY,
+	enum ENTITY_TYPE
+	{
+		DEFAULT,
+		ENEMY,
 		ITEM,
 		PROJECTILE,
-        NUM_ENTITYTYPE
-    };
+		NUM_ENTITYTYPE
+	};
 
 	EntityBase();
 	virtual ~EntityBase();
@@ -23,7 +23,7 @@ public:
 	virtual void RenderUI();
 
 	inline void SetPosition(const Vector3& _value){ position = _value; };
- 	inline Vector3 GetPosition(){ return position; };
+	inline Vector3 GetPosition(){ return position; };
 
 	inline void SetScale(const Vector3& _value){ scale = _value; };
 	inline Vector3 GetScale(){ return scale; };
@@ -37,16 +37,16 @@ public:
 	// Check if this entity has a collider class parent
 	virtual bool HasCollider(void) const;
 	// Set the flag to indicate if this entity has a collider class parent
-    virtual void SetCollider(const bool m_bCollider);
-    // Set the flag, bLaser
-    virtual void SetIsLaser(const bool m_bLaser);
-    // Get the flag, bLaser
-    virtual bool GetIsLaser(void) const;
-    
-    // Set the entity type
-    virtual void SetEntityType(ENTITY_TYPE m_eEntityType);
-    // Get the entity type
-    virtual ENTITY_TYPE GetEntityType(void);
+	virtual void SetCollider(const bool m_bCollider);
+	// Set the flag, bLaser
+	virtual void SetIsLaser(const bool m_bLaser);
+	// Get the flag, bLaser
+	virtual bool GetIsLaser(void) const;
+
+	// Set the entity type
+	virtual void SetEntityType(ENTITY_TYPE m_eEntityType);
+	// Get the entity type
+	virtual ENTITY_TYPE GetEntityType(void);
 
 	inline void SetVelocity(const Vector3& _value){ velocity = _value; };
 	inline Vector3 GetVelocity(){ return velocity; };
@@ -63,9 +63,9 @@ protected:
 
 	bool isDone;
 	bool m_bCollider;
-    bool m_bLaser;
+	bool m_bLaser;
 
-    ENTITY_TYPE m_eEntityType;
+	ENTITY_TYPE m_eEntityType;
 
 	// 2D movement
 	float mass;

@@ -12,16 +12,17 @@ class SceneManager;
 class CMenuState : public Scene
 {
 public:
-    CMenuState();
-    ~CMenuState();
+	CMenuState();
+	~CMenuState();
 
-    virtual void Init();
-    virtual void Update(double dt);
-    virtual void Render();
-    virtual void Exit();
+	virtual void Init();
+	virtual void Update(double dt);
+	virtual void Render();
+	virtual void Exit();
 
 private:
-    Camera camera;
-    SpriteEntity* MenuStateBackground;
-    // TextEntity* textObj[3];
+	Camera camera;
+	SpriteEntity* MenuStateBackground;
+	double MousePosX, MousePosY;
+	// TextEntity* textObj[3];
 };

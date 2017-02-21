@@ -16,6 +16,7 @@
 #include "Enemy\Enemy2D.h"
 #include "Items\Items.h"
 #include "Font/LoadFontData.h"
+#include "Enemy/Chaser.h"
 
 class SceneManager;
 class TextEntity;
@@ -23,7 +24,7 @@ class Light;
 class Color;
 
 class SceneText : public Scene
-{	
+{
 public:
 	SceneText();
 	~SceneText();
@@ -37,7 +38,7 @@ private:
 	CPlayerInfo* playerInfo;
 	GroundEntity* groundEntity;
 
-    Camera camera;
+	Camera camera;
 	float m_worldWidth, m_worldHeight;
 	float m_orthoWidth, m_orthoHeight;
 	Vector3 mousePos_screenBased;
@@ -48,7 +49,8 @@ private:
 
 	GenericEntity* theCube;
 	Enemy2D* enemy2D;
-    CEnemy* theEnemy;
+	CChaser* chaser;
+	CEnemy* theEnemy;
 
 	Items* test;
 };

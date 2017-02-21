@@ -10,6 +10,7 @@
 static const float MOVEMENT_LIMIT = 300.f;
 static const float DASH_DISTANCE = 50.0f;
 static const float DASH_COOLDOWN = 2.f;
+extern bool GamePaused;
 
 class CPlayerInfo : public GenericEntity
 {
@@ -69,8 +70,8 @@ public:
 	void SetBoundary(Vector3 max, Vector3 min);
 	// Set the terrain for the player info
 	void SetTerrain(GroundEntity* m_pTerrain);
-    // Get the terrain for the player info
-    GroundEntity* GetTerrain(void);
+	// Get the terrain for the player info
+	GroundEntity* GetTerrain(void);
 
 	// Get target
 	Vector3 GetTarget(void) const;
@@ -97,7 +98,7 @@ public:
 	void Constrain(void);
 
 	// Handling Camera
-    void AttachCamera(Camera* _cameraPtr);
+	void AttachCamera(Camera* _cameraPtr);
 	void DetachCamera();
 
 	void Shoot(Vector3 dir);
@@ -123,16 +124,16 @@ private:
 	bool m_bFallDownwards;
 	double m_dFallAcceleration;
 
-    Camera* attachedCamera;
+	Camera* attachedCamera;
 
 	CWeaponInfo* primaryWeapon;
 	CWeaponInfo* secondaryWeapon;
 
-    // Key to move the player
-    char keyMoveForward;
-    char keyMoveBackward;
-    char keyMoveLeft;
-    char keyMoveRight;
+	// Key to move the player
+	char keyMoveForward;
+	char keyMoveBackward;
+	char keyMoveLeft;
+	char keyMoveRight;
 
 	// 2D movements
 	float forceMagnitude = 0;
@@ -143,4 +144,6 @@ private:
 	// player stats
 	int maxHealth;
 	int health;
+
+	//bool GamePaused;
 };

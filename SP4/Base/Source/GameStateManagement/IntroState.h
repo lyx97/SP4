@@ -13,16 +13,17 @@ class SceneManager;
 class CIntroState : public Scene
 {
 public:
-    CIntroState();
-    ~CIntroState();
+	CIntroState();
+	~CIntroState();
 
-    virtual void Init();
-    virtual void Update(double dt);
-    virtual void Render();
-    virtual void Exit();
+	virtual void Init();
+	virtual void Update(double dt);
+	virtual void Render();
+	virtual void Exit();
 
 private:
-    Camera camera;
-    SpriteEntity* IntroStateBackground;
-    // TextEntity* textObj[3];
+	Camera camera;
+	SpriteEntity* IntroStateBackground;
+	double MousePosX, MousePosY;
+	// TextEntity* textObj[3];
 };

@@ -1,6 +1,5 @@
 #include "Enemy2D.h"
 
-
 Enemy2D::Enemy2D()
 	: GenericEntity(NULL)
 {
@@ -34,44 +33,46 @@ void Enemy2D::Init()
 
 void Enemy2D::Update(double _dt)
 {
-	if (this->velocity.LengthSquared() > ENEMY_MAX_SPEED * ENEMY_MAX_SPEED)
-		velocity = velocity.Normalized() * ENEMY_MAX_SPEED;
+	if (!GamePaused)
+	{
+		if (this->velocity.LengthSquared() > ENEMY_MAX_SPEED * ENEMY_MAX_SPEED)
+			velocity = velocity.Normalized() * ENEMY_MAX_SPEED;
 
-	this->position += this->velocity * _dt * speed;
+		this->position += this->velocity * _dt * speed;
 
-	if (this->position.x > Application::GetInstance().GetWindowWidth() * 0.5f)
-	{
-		this->position.x -= Application::GetInstance().GetWindowWidth();
-	}
-	else if (this->position.x < -Application::GetInstance().GetWindowWidth() * 0.5f)
-	{
-		this->position.x += Application::GetInstance().GetWindowWidth();
-	}
-	if (this->position.z > Application::GetInstance().GetWindowHeight() * 0.5f)
-	{
-		this->position.z -= Application::GetInstance().GetWindowHeight();
-	}
-	else if (this->position.z < -Application::GetInstance().GetWindowHeight() * 0.5f)
-	{
-		this->position.z += Application::GetInstance().GetWindowHeight();
-	}
-	for (auto proj : EntityManager::GetInstance()->GetEntityList())
-	{
-		if (proj->GetEntityType() == EntityBase::PROJECTILE)
+		if (this->position.x > Application::GetInstance().GetWindowWidth() * 0.5f)
 		{
-			if ((proj->GetPosition() - this->position).LengthSquared() < 200)
+			this->position.x -= Application::GetInstance().GetWindowWidth();
+		}
+		else if (this->position.x < -Application::GetInstance().GetWindowWidth() * 0.5f)
+		{
+			this->position.x += Application::GetInstance().GetWindowWidth();
+		}
+		if (this->position.z > Application::GetInstance().GetWindowHeight() * 0.5f)
+		{
+			this->position.z -= Application::GetInstance().GetWindowHeight();
+		}
+		else if (this->position.z < -Application::GetInstance().GetWindowHeight() * 0.5f)
+		{
+			this->position.z += Application::GetInstance().GetWindowHeight();
+		}
+		for (auto proj : EntityManager::GetInstance()->GetEntityList())
+		{
+			if (proj->GetEntityType() == EntityBase::PROJECTILE)
 			{
-				proj->SetIsDone(true);
-				this->velocity += proj->GetVelocity() * proj->GetMass();;
+				if ((proj->GetPosition() - this->position).LengthSquared() < 200)
+				{
+					proj->SetIsDone(true);
+					this->velocity += proj->GetVelocity() * proj->GetMass();;
+				}
 			}
 		}
+		Vector3 temp = (Cohesion(this) + Alignment(this) + Separation(this));
+		if (!temp.IsZero())
+		{
+			this->velocity += temp.Normalized();
+		}
 	}
-	Vector3 temp = (Cohesion(this) + Alignment(this) + Separation(this));
-	if (!temp.IsZero())
-	{
-		this->velocity += temp.Normalized();
-	}
-
 }
 
 Vector3 Enemy2D::Cohesion(Enemy2D* enemy)

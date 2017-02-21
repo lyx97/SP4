@@ -1,46 +1,49 @@
-c:\users\155118a\desktop\sp4\sp4\base\debug\vc120.pdb
-c:\users\155118a\desktop\sp4\sp4\base\debug\vc120.idb
-c:\users\155118a\desktop\sp4\sp4\base\debug\playerinfo.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\grenade.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\projectile.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\scenegraph.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\scenenode.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\transform.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\updatetransformation.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\scenetext.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\skyboxentity.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\grid.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\spatialpartition.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\spriteentity.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\textentity.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\waypoint.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\waypointmanager.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\grenadethrow.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\laser.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\laserblaster.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\pistol.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\weaponinfo.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\application.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\camera.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\enemy.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\entitymanager.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\flocking.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\fpscamera.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\introstate.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\menustate.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\genericentity.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\groundentity.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\levelofdetails.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\light.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\luainterface.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\main.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\objmesh.obj
-c:\users\155118a\desktop\sp4\sp4\base\debug\enemy2d.obj
-c:\users\155118a\desktop\sp4\sp4\debug\base.exe
-c:\users\155118a\desktop\sp4\sp4\debug\base.pdb
-c:\users\155118a\desktop\sp4\sp4\base\debug\base.tlog\cl.command.1.tlog
-c:\users\155118a\desktop\sp4\sp4\base\debug\base.tlog\cl.read.1.tlog
-c:\users\155118a\desktop\sp4\sp4\base\debug\base.tlog\cl.write.1.tlog
-c:\users\155118a\desktop\sp4\sp4\base\debug\base.tlog\link.command.1.tlog
-c:\users\155118a\desktop\sp4\sp4\base\debug\base.tlog\link.read.1.tlog
-c:\users\155118a\desktop\sp4\sp4\base\debug\base.tlog\link.write.1.tlog
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\vc120.pdb
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\vc120.idb
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\playerinfo.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\grenade.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\projectile.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\scenegraph.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\scenenode.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\transform.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\updatetransformation.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\scenetext.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\skyboxentity.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\grid.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\spatialpartition.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\spriteentity.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\textentity.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\waypoint.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\waypointmanager.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\grenadethrow.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\laser.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\laserblaster.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\pistol.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\weaponinfo.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\application.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\camera.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\chaser.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\enemy.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\enemy2d.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\entitymanager.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\fpscamera.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\helpstate.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\introstate.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\menustate.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\optionstate.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\genericentity.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\groundentity.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\items.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\levelofdetails.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\light.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\luainterface.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\main.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\objmesh.obj
+c:\users\jenny liang\desktop\sp4\sp4\debug\base.exe
+c:\users\jenny liang\desktop\sp4\sp4\debug\base.pdb
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\base.tlog\cl.command.1.tlog
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\base.tlog\cl.read.1.tlog
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\base.tlog\cl.write.1.tlog
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\base.tlog\link.command.1.tlog
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\base.tlog\link.read.1.tlog
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\base.tlog\link.write.1.tlog

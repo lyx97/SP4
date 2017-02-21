@@ -1,42 +1,30 @@
-﻿Build started 19-Feb-17 11:28:17 PM.
-     1>Project "C:\Users\SHEEP\Desktop\SP_04\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
+﻿Build started 21/2/2017 9:25:21 AM.
+     1>Project "C:\Users\Jenny Liang\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         A:\Visual Studio\VC\bin\CL.exe /c /IC:\Users\SHEEP\Desktop\SP_04\SP4\/Common/Source /IC:\Users\SHEEP\Desktop\SP_04\SP4\/glfw/include /IC:\Users\SHEEP\Desktop\SP_04\SP4\/glew/include /IC:\Users\SHEEP\Desktop\SP_04\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Application.cpp Source\Camera\Camera.cpp Source\Items\Items.cpp Source\PlayerInfo\PlayerInfo.cpp Source\Projectile\Grenade.cpp Source\SceneText.cpp
-         SceneText.cpp
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\scenetext.h(23): warning C4099: 'Color' : type name first seen using 'struct' now seen using 'class'
-                 c:\users\sheep\desktop\sp_04\sp4\common\source\vertex.h(14) : see declaration of 'Color'
-     1>c:\users\sheep\desktop\sp_04\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\scenetext.cpp(241): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\scenetext.cpp(242): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\scenetext.cpp(246): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\scenetext.cpp(250): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\scenetext.cpp(315): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/Common/Source" /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glfw/include" /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glew/include" /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/Base/Source/Lua" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\PlayerInfo\PlayerInfo.cpp
          PlayerInfo.cpp
-     1>c:\users\sheep\desktop\sp_04\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\playerinfo.cpp(75): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\playerinfo.cpp(76): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\playerinfo.cpp(94): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\playerinfo.cpp(95): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\playerinfo.cpp(96): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\playerinfo.cpp(97): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\playerinfo.cpp(314): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\playerinfo.cpp(349): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\playerinfo.cpp(358): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         Grenade.cpp
-         Items.cpp
-         Camera.cpp
-         Application.cpp
+     1>c:\users\jenny liang\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(77): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(78): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(96): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(97): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(98): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(99): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(328): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(363): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(372): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
        Link:
-         A:\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\SHEEP\Desktop\SP_04\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\SHEEP\Desktop\SP_04\SP4\Debug /LIBPATH:"C:\Users\SHEEP\Desktop\SP_04\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\SHEEP\Desktop\SP_04\SP4\/glew/lib /LIBPATH:C:\Users\SHEEP\Desktop\SP_04\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\SHEEP\Desktop\SP_04\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\SHEEP\Desktop\SP_04\SP4\Debug\Base.lib" /MACHINE:X86 Debug\Application.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Jenny Liang\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\Jenny Liang\Desktop\SP4\SP4\Debug" /LIBPATH:"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glew/lib" /LIBPATH:"C:\Users\Jenny Liang\Desktop\SP4\SP4\/Lua/lib" Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Jenny Liang\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Jenny Liang\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 Debug\Application.obj
          Debug\Camera.obj
+         Debug\Chaser.obj
          Debug\Enemy.obj
          Debug\Enemy2D.obj
          Debug\EntityManager.obj
          Debug\FPSCamera.obj
+         Debug\HelpState.obj
          Debug\IntroState.obj
          Debug\MenuState.obj
+         Debug\OptionState.obj
          Debug\GenericEntity.obj
          Debug\GroundEntity.obj
          Debug\Items.obj
@@ -67,9 +55,9 @@
          Debug\WeaponInfo.obj
      1>Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
      1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-         Base.vcxproj -> C:\Users\SHEEP\Desktop\SP_04\SP4\Debug\Base.exe
-     1>Done Building Project "C:\Users\SHEEP\Desktop\SP_04\SP4\Base\Base.vcxproj" (Build target(s)).
+         Base.vcxproj -> C:\Users\Jenny Liang\Desktop\SP4\SP4\Debug\Base.exe
+     1>Done Building Project "C:\Users\Jenny Liang\Desktop\SP4\SP4\Base\Base.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.22
+Time Elapsed 00:00:02.13

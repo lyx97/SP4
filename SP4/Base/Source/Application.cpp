@@ -42,12 +42,12 @@ void resize_callback(GLFWwindow* window, int w, int h)
 
 bool Application::IsKeyPressed(unsigned short key)
 {
-    return ((GetAsyncKeyState(key) & 0x8001) != 0);
+	return ((GetAsyncKeyState(key) & 0x8001) != 0);
 }
 
 Application::Application()
-    : m_window_width(640)
-    , m_window_height(480)
+	: m_window_width(640)
+	, m_window_height(480)
 {
 }
 
@@ -57,65 +57,64 @@ Application::~Application()
 
 void Application::InitDisplay(void)
 {
-    currProg = GraphicsManager::GetInstance()->LoadShader("default", "Shader//Texture.vertexshader", "Shader//Texture.fragmentshader");
-      
-    // Tell the shader program to store these uniform locations
-    currProg->AddUniform("MVP");
-    currProg->AddUniform("MV");
-    currProg->AddUniform("MV_inverse_transpose");
-    currProg->AddUniform("material.kAmbient");
-    currProg->AddUniform("material.kDiffuse");
-    currProg->AddUniform("material.kSpecular");
-    currProg->AddUniform("material.kShininess");
-    currProg->AddUniform("lightEnabled");
-    currProg->AddUniform("numLights");
-    currProg->AddUniform("lights[0].type");
-    currProg->AddUniform("lights[0].position_cameraspace");
-    currProg->AddUniform("lights[0].color");
-    currProg->AddUniform("lights[0].power");
-    currProg->AddUniform("lights[0].kC");
-    currProg->AddUniform("lights[0].kL");
-    currProg->AddUniform("lights[0].kQ");
-    currProg->AddUniform("lights[0].spotDirection");
-    currProg->AddUniform("lights[0].cosCutoff");
-    currProg->AddUniform("lights[0].cosInner");
-    currProg->AddUniform("lights[0].exponent");
-    currProg->AddUniform("lights[1].type");
-    currProg->AddUniform("lights[1].position_cameraspace");
-    currProg->AddUniform("lights[1].color");
-    currProg->AddUniform("lights[1].power");
-    currProg->AddUniform("lights[1].kC");
-    currProg->AddUniform("lights[1].kL");
-    currProg->AddUniform("lights[1].kQ");
-    currProg->AddUniform("lights[1].spotDirection");
-    currProg->AddUniform("lights[1].cosCutoff");
-    currProg->AddUniform("lights[1].cosInner");
-    currProg->AddUniform("lights[1].exponent");
-    currProg->AddUniform("colorTextureEnabled");
-    currProg->AddUniform("colorTexture");
-    currProg->AddUniform("textEnabled");
-    currProg->AddUniform("textColor");
-    
-    // Tell the graphics manager to use the shader we just loaded
-    GraphicsManager::GetInstance()->SetActiveShader("default");
+	currProg = GraphicsManager::GetInstance()->LoadShader("default", "Shader//Texture.vertexshader", "Shader//Texture.fragmentshader");
 
-    currProg->UpdateInt("numLights", 1);
-    currProg->UpdateInt("textEnabled", 0);
+	// Tell the shader program to store these uniform locations
+	currProg->AddUniform("MVP");
+	currProg->AddUniform("MV");
+	currProg->AddUniform("MV_inverse_transpose");
+	currProg->AddUniform("material.kAmbient");
+	currProg->AddUniform("material.kDiffuse");
+	currProg->AddUniform("material.kSpecular");
+	currProg->AddUniform("material.kShininess");
+	currProg->AddUniform("lightEnabled");
+	currProg->AddUniform("numLights");
+	currProg->AddUniform("lights[0].type");
+	currProg->AddUniform("lights[0].position_cameraspace");
+	currProg->AddUniform("lights[0].color");
+	currProg->AddUniform("lights[0].power");
+	currProg->AddUniform("lights[0].kC");
+	currProg->AddUniform("lights[0].kL");
+	currProg->AddUniform("lights[0].kQ");
+	currProg->AddUniform("lights[0].spotDirection");
+	currProg->AddUniform("lights[0].cosCutoff");
+	currProg->AddUniform("lights[0].cosInner");
+	currProg->AddUniform("lights[0].exponent");
+	currProg->AddUniform("lights[1].type");
+	currProg->AddUniform("lights[1].position_cameraspace");
+	currProg->AddUniform("lights[1].color");
+	currProg->AddUniform("lights[1].power");
+	currProg->AddUniform("lights[1].kC");
+	currProg->AddUniform("lights[1].kL");
+	currProg->AddUniform("lights[1].kQ");
+	currProg->AddUniform("lights[1].spotDirection");
+	currProg->AddUniform("lights[1].cosCutoff");
+	currProg->AddUniform("lights[1].cosInner");
+	currProg->AddUniform("lights[1].exponent");
+	currProg->AddUniform("colorTextureEnabled");
+	currProg->AddUniform("colorTexture");
+	currProg->AddUniform("textEnabled");
+	currProg->AddUniform("textColor");
+
+	// Tell the graphics manager to use the shader we just loaded
+	GraphicsManager::GetInstance()->SetActiveShader("default");
+
+	currProg->UpdateInt("numLights", 1);
+	currProg->UpdateInt("textEnabled", 0);
 }
-
 
 void Application::Init()
 {
-    // Initialise the Lua system
-    CLuaInterface::GetInstance()->Init();
+	// Initialise the Lua system
+	CLuaInterface::GetInstance()->Init();
 
-    // Get the OpenGL resolution
-    m_window_width = CLuaInterface::GetInstance()->getIntValue("width");
-    m_window_height = CLuaInterface::GetInstance()->getIntValue("height");
+	// Get the OpenGL resolution
+	m_window_width = CLuaInterface::GetInstance()->getIntValue("width");
+	m_window_height = CLuaInterface::GetInstance()->getIntValue("height");
 
-    CLuaInterface::GetInstance()->Run();
-    CLuaInterface::GetInstance()->saveFloatValue("Player1", 200.1000, true);
-    CLuaInterface::GetInstance()->saveIntValue("Player2", 100);
+	CLuaInterface::GetInstance()->Run();
+	CLuaInterface::GetInstance()->saveFloatValue("Player1", 200.1000, true);
+	CLuaInterface::GetInstance()->saveIntValue("Player2", 100);
 
 	//Set the error callback
 	glfwSetErrorCallback(error_callback);
@@ -131,7 +130,7 @@ void Application::Init()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //Request a specific OpenGL version
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); //Request a specific OpenGL version
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL 
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL
 
 	//Create a window and create its OpenGL context
 	m_window = glfwCreateWindow(m_window_width, m_window_height, "NYP Framework", NULL, NULL);
@@ -139,12 +138,12 @@ void Application::Init()
 	//If the window couldn't be created
 	if (!m_window)
 	{
-		fprintf( stderr, "Failed to open GLFW window.\n" );
+		fprintf(stderr, "Failed to open GLFW window.\n");
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
 
-	//This function makes the context of the specified window current on the calling thread. 
+	//This function makes the context of the specified window current on the calling thread.
 	glfwMakeContextCurrent(m_window);
 
 	//Sets the key callback
@@ -156,7 +155,7 @@ void Application::Init()
 	GLenum err = glewInit();
 
 	//If GLEW hasn't initialized
-	if (err != GLEW_OK) 
+	if (err != GLEW_OK)
 	{
 		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
 		//return -1;
@@ -170,18 +169,20 @@ void Application::Init()
 	// Init systems
 	GraphicsManager::GetInstance()->Init();
 
-    // Create the Game States
-    SceneManager::GetInstance()->AddScene("IntroState", new CIntroState());
-    SceneManager::GetInstance()->AddScene("MenuState", new CMenuState());
-    SceneManager::GetInstance()->AddScene("GameState", new SceneText());
+	// Create the Game States
+	SceneManager::GetInstance()->AddScene("IntroState", new CIntroState());
+	SceneManager::GetInstance()->AddScene("MenuState", new CMenuState());
+	SceneManager::GetInstance()->AddScene("HelpState", new CHelpState());
+	SceneManager::GetInstance()->AddScene("OptionState", new COptionState());
+	SceneManager::GetInstance()->AddScene("GameState", new SceneText());
 
-    // Set the active scene
-    SceneManager::GetInstance()->SetActiveScene("IntroState");
+	// Set the active scene
+	SceneManager::GetInstance()->SetActiveScene("IntroState");
 }
 
 void Application::Run()
 {
-    InitDisplay();
+	InitDisplay();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
@@ -197,8 +198,8 @@ void Application::Run()
 		glfwSwapBuffers(m_window);
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
 
-        m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.   
-		
+		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.
+
 		PostInputUpdate();
 	}
 	SceneManager::GetInstance()->Exit();
@@ -206,8 +207,8 @@ void Application::Run()
 
 void Application::Exit()
 {
-    // Drop the Lua system
-    CLuaInterface::GetInstance()->Drop();
+	// Drop the Lua system
+	CLuaInterface::GetInstance()->Drop();
 	//Close OpenGL window and terminate GLFW
 	glfwDestroyWindow(m_window);
 	//Finalize and clean up GLFW
@@ -270,7 +271,7 @@ int Application::GetWindowWidth()
 Vector3 Application::GetWorldBasedMousePos()
 {
 	Vector3 result;
-	
+
 	glfwGetFramebufferSize(m_window, &m_window_width, &m_window_height);
 	result.Set(
 		(MouseController::GetInstance()->GetMousePosition().x - (m_window_width * 0.5f)),
