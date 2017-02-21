@@ -12,6 +12,7 @@ CProjectile::CProjectile(void)
 	, m_fLifetime(-1.0f)
 	, m_fSpeed(10.0f)
 	, theSource(NULL)
+	, damage(10)
 {
 }
 
@@ -22,6 +23,7 @@ CProjectile::CProjectile(Mesh* _modelMesh)
 	, m_fLifetime(-1)
 	, m_fSpeed(10.0f)
 	, theSource(NULL)
+	, damage(10)
 {
 }
 
@@ -118,10 +120,9 @@ void CProjectile::Update(double dt)
 	}
 
 	// Update Position
-	position += velocity * dt * m_fSpeed;
-	//position.Set(	position.x + (float)(theDirection.x * dt * m_fSpeed),
-	//				position.y + (float)(theDirection.y * dt * m_fSpeed),
-	//				position.z + (float)(theDirection.z * dt * m_fSpeed));
+	position.Set(	position.x + (float)(theDirection.x * dt * m_fSpeed),
+					position.y + (float)(theDirection.y * dt * m_fSpeed),
+					position.z + (float)(theDirection.z * dt * m_fSpeed));
 }
 
 
@@ -159,6 +160,7 @@ CProjectile* Create::Projectile(const std::string& _meshName,
 	result->SetStatus(true);
 	result->SetCollider(true);
 	result->SetSource(_source);
+	result->SetDamage(10);
 	EntityManager::GetInstance()->AddEntity(result);
 
 	return result;

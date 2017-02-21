@@ -1,84 +1,14 @@
-﻿Build started 21/2/2017 10:24:13 AM.
+﻿Build started 21/2/2017 12:58:02 PM.
      1>Project "C:\Users\Jenny Liang\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/Common/Source" /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glfw/include" /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glew/include" /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/Base/Source/Lua" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Application.cpp Source\Camera\Camera.cpp Source\Enemy\Chaser.cpp Source\Enemy\Enemy.cpp Source\Enemy\Enemy2D.cpp Source\EntityManager.cpp Source\GameStateManagement\HelpState.cpp Source\GameStateManagement\IntroState.cpp Source\GameStateManagement\MenuState.cpp Source\GameStateManagement\OptionState.cpp Source\GenericEntity.cpp Source\GroundEntity.cpp Source\Items\Items.cpp Source\LevelOfDetails\LevelOfDetails.cpp Source\PlayerInfo\PlayerInfo.cpp Source\Projectile\Grenade.cpp Source\Projectile\Projectile.cpp Source\SceneGraph\SceneGraph.cpp Source\SceneGraph\SceneNode.cpp Source\SceneText.cpp Source\SkyBox\SkyBoxEntity.cpp Source\SpatialPartition\Grid.cpp Source\SpatialPartition\SpatialPartition.cpp Source\SpriteEntity.cpp Source\TextEntity.cpp Source\WeaponInfo\GrenadeThrow.cpp Source\WeaponInfo\Laser.cpp Source\WeaponInfo\LaserBlaster.cpp Source\WeaponInfo\WeaponInfo.cpp Source\main.cpp
-         main.cpp
-         WeaponInfo.cpp
-         LaserBlaster.cpp
-         Laser.cpp
-         GrenadeThrow.cpp
-         TextEntity.cpp
-         SpriteEntity.cpp
-         SpatialPartition.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\spatialpartition\spatialpartition.cpp(69): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\spatialpartition\spatialpartition.cpp(148): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\spatialpartition\spatialpartition.cpp(170): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\spatialpartition\spatialpartition.cpp(172): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-         Grid.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\spatialpartition\grid.cpp(42): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\spatialpartition\grid.cpp(43): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\spatialpartition\grid.cpp(112): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\spatialpartition\grid.cpp(125): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\spatialpartition\grid.cpp(164): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\spatialpartition\grid.cpp(220): warning C4018: '<' : signed/unsigned mismatch
-         SkyBoxEntity.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/Common/Source" /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glfw/include" /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glew/include" /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/Base/Source/Lua" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\SceneText.cpp
          SceneText.cpp
      1>c:\users\jenny liang\desktop\sp4\sp4\base\source\scenetext.h(24): warning C4099: 'Color' : type name first seen using 'struct' now seen using 'class'
                  c:\users\jenny liang\desktop\sp4\sp4\common\source\vertex.h(14) : see declaration of 'Color'
      1>c:\users\jenny liang\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\scenetext.cpp(243): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\scenetext.cpp(244): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\scenetext.cpp(248): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\scenetext.cpp(252): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\scenetext.cpp(319): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-         SceneNode.cpp
-         SceneGraph.cpp
-         Projectile.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\projectile\projectile.cpp(121): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         Grenade.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\projectile\grenade.cpp(47): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\projectile\grenade.cpp(63): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\projectile\grenade.cpp(67): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         PlayerInfo.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(77): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(78): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(96): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(97): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(98): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(99): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(328): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(363): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(372): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         LevelOfDetails.cpp
-         Items.cpp
-         GroundEntity.cpp
-         GenericEntity.cpp
-         Generating Code...
-         Compiling...
-         OptionState.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         MenuState.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         IntroState.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         HelpState.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         EntityManager.cpp
-         Enemy2D.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\enemy\enemy2d.cpp(41): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         Enemy.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\enemy\enemy.cpp(154): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         Chaser.cpp
-         Camera.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\camera\camera.cpp(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         Application.cpp
-     1>c:\users\jenny liang\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\scenetext.h(24): warning C4099: 'Color' : type name first seen using 'struct' now seen using 'class'
-                 c:\users\jenny liang\desktop\sp4\sp4\common\source\vertex.h(14) : see declaration of 'Color'
-     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\application.cpp(116): warning C4305: 'argument' : truncation from 'double' to 'const float'
-         Generating Code...
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\scenetext.cpp(235): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\scenetext.cpp(236): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\jenny liang\desktop\sp4\sp4\base\source\scenetext.cpp(322): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Jenny Liang\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\Jenny Liang\Desktop\SP4\SP4\Debug" /LIBPATH:"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glew/lib" /LIBPATH:"C:\Users\Jenny Liang\Desktop\SP4\SP4\/Lua/lib" Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Jenny Liang\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Jenny Liang\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 Debug\Application.obj
          Debug\Camera.obj
@@ -93,7 +23,8 @@
          Debug\OptionState.obj
          Debug\GenericEntity.obj
          Debug\GroundEntity.obj
-         Debug\Items.obj
+         Debug\Powerup.obj
+         Debug\Skill.obj
          Debug\LevelOfDetails.obj
          Debug\Light.obj
          Debug\LuaInterface.obj
@@ -126,4 +57,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:21.75
+Time Elapsed 00:00:05.28

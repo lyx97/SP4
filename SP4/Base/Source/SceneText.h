@@ -14,7 +14,7 @@
 #include "../Lua/LuaInterface.h"
 #include "Enemy/Enemy.h"
 #include "Enemy\Enemy2D.h"
-#include "Items\Items.h"
+#include "../Items/Powerup.h"
 #include "Font/LoadFontData.h"
 #include "Enemy/Chaser.h"
 
@@ -52,7 +52,7 @@ private:
 	CChaser* chaser;
 	CEnemy* theEnemy;
 
-	Items* test;
+	bool GamePaused = false;
 };
 
 #endif

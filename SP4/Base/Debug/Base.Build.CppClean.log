@@ -22,9 +22,7 @@ c:\users\jenny liang\desktop\sp4\sp4\base\debug\pistol.obj
 c:\users\jenny liang\desktop\sp4\sp4\base\debug\weaponinfo.obj
 c:\users\jenny liang\desktop\sp4\sp4\base\debug\application.obj
 c:\users\jenny liang\desktop\sp4\sp4\base\debug\camera.obj
-c:\users\jenny liang\desktop\sp4\sp4\base\debug\chaser.obj
 c:\users\jenny liang\desktop\sp4\sp4\base\debug\enemy.obj
-c:\users\jenny liang\desktop\sp4\sp4\base\debug\enemy2d.obj
 c:\users\jenny liang\desktop\sp4\sp4\base\debug\entitymanager.obj
 c:\users\jenny liang\desktop\sp4\sp4\base\debug\fpscamera.obj
 c:\users\jenny liang\desktop\sp4\sp4\base\debug\helpstate.obj
@@ -39,6 +37,10 @@ c:\users\jenny liang\desktop\sp4\sp4\base\debug\light.obj
 c:\users\jenny liang\desktop\sp4\sp4\base\debug\luainterface.obj
 c:\users\jenny liang\desktop\sp4\sp4\base\debug\main.obj
 c:\users\jenny liang\desktop\sp4\sp4\base\debug\objmesh.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\enemy2d.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\chaser.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\skill.obj
+c:\users\jenny liang\desktop\sp4\sp4\base\debug\powerup.obj
 c:\users\jenny liang\desktop\sp4\sp4\debug\base.exe
 c:\users\jenny liang\desktop\sp4\sp4\debug\base.pdb
 c:\users\jenny liang\desktop\sp4\sp4\base\debug\base.tlog\cl.command.1.tlog

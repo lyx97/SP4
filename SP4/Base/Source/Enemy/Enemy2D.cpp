@@ -3,7 +3,7 @@
 Enemy2D::Enemy2D()
 	: GenericEntity(NULL)
 {
-	EntityManager::GetInstance()->AddEntity(this, true);
+	EntityManager::GetInstance()->AddEntity(this);
 	this->position = Vector3(0, 0, 0);
 	this->scale = Vector3(1, 3, 1);
 
@@ -21,57 +21,63 @@ Enemy2D::Enemy2D()
 
 	this->speed = 1.0f;
 	this->scale.Set(10, 10, 10);
+	this->maxHealth = 100;
+	this->health = this->maxHealth;
 }
 
 Enemy2D::~Enemy2D()
 {
 }
 
-void Enemy2D::Init()
-{
-}
-
 void Enemy2D::Update(double _dt)
 {
-	if (!GamePaused)
+	if (this->velocity.LengthSquared() > ENEMY_MAX_SPEED * ENEMY_MAX_SPEED)
+		velocity = velocity.Normalized() * ENEMY_MAX_SPEED;
+
+	this->position += this->velocity * _dt * speed;
+
+	if (this->position.x > Application::GetInstance().GetWindowWidth() * 0.5f)
 	{
-		if (this->velocity.LengthSquared() > ENEMY_MAX_SPEED * ENEMY_MAX_SPEED)
-			velocity = velocity.Normalized() * ENEMY_MAX_SPEED;
-
-		this->position += this->velocity * _dt * speed;
-
-		if (this->position.x > Application::GetInstance().GetWindowWidth() * 0.5f)
+		this->position.x -= Application::GetInstance().GetWindowWidth();
+	}
+	else if (this->position.x < -Application::GetInstance().GetWindowWidth() * 0.5f)
+	{
+		this->position.x += Application::GetInstance().GetWindowWidth();
+	}
+	if (this->position.z > Application::GetInstance().GetWindowHeight() * 0.5f)
+	{
+		this->position.z -= Application::GetInstance().GetWindowHeight();
+	}
+	else if (this->position.z < -Application::GetInstance().GetWindowHeight() * 0.5f)
+	{
+		this->position.z += Application::GetInstance().GetWindowHeight();
+	}
+	for (auto entity : EntityManager::GetInstance()->GetEntityList())
+	{
+		if (entity->GetEntityType() == EntityBase::PROJECTILE)
 		{
-			this->position.x -= Application::GetInstance().GetWindowWidth();
-		}
-		else if (this->position.x < -Application::GetInstance().GetWindowWidth() * 0.5f)
-		{
-			this->position.x += Application::GetInstance().GetWindowWidth();
-		}
-		if (this->position.z > Application::GetInstance().GetWindowHeight() * 0.5f)
-		{
-			this->position.z -= Application::GetInstance().GetWindowHeight();
-		}
-		else if (this->position.z < -Application::GetInstance().GetWindowHeight() * 0.5f)
-		{
-			this->position.z += Application::GetInstance().GetWindowHeight();
-		}
-		for (auto proj : EntityManager::GetInstance()->GetEntityList())
-		{
-			if (proj->GetEntityType() == EntityBase::PROJECTILE)
+			CProjectile* proj = dynamic_cast<CProjectile*>(entity);
+			if ((proj->GetPosition() - this->position).LengthSquared() < 200)
 			{
-				if ((proj->GetPosition() - this->position).LengthSquared() < 200)
-				{
-					proj->SetIsDone(true);
-					this->velocity += proj->GetVelocity() * proj->GetMass();;
-				}
+				this->velocity += proj->GetVelocity() * proj->GetMass();
+				this->health -= proj->GetDamage();
+				proj->SetIsDone(true);
 			}
 		}
-		Vector3 temp = (Cohesion(this) + Alignment(this) + Separation(this));
-		if (!temp.IsZero())
+	}
+	Vector3 temp = (Cohesion(this) + Alignment(this) + Separation(this));
+	if (!temp.IsZero())
+	{
+		this->velocity += temp.Normalized();
+	}
+	if (this->health <= 0)
+	{
+		float randomNo = Math::RandFloatMinMax(0, 100);
+		if (randomNo < CHANCE_OF_DROPPING_POWERUP)
 		{
-			this->velocity += temp.Normalized();
+			Powerup* newPowerup = new Powerup(this->position);
 		}
+		isDone = true;
 	}
 }
 

@@ -24,7 +24,8 @@
     <ClCompile Include="Source\GameStateManagement\OptionState.cpp" />
     <ClCompile Include="Source\GenericEntity.cpp" />
     <ClCompile Include="Source\GroundEntity.cpp" />
-    <ClCompile Include="Source\Items\Items.cpp" />
+    <ClCompile Include="Source\Items\Powerup.cpp" />
+    <ClCompile Include="Source\Items\Skill.cpp" />
     <ClCompile Include="Source\LevelOfDetails\LevelOfDetails.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Lua\LuaInterface.cpp" />
@@ -65,7 +66,8 @@
     <ClInclude Include="Source\GameStateManagement\OptionState.h" />
     <ClInclude Include="Source\GenericEntity.h" />
     <ClInclude Include="Source\GroundEntity.h" />
-    <ClInclude Include="Source\Items\Items.h" />
+    <ClInclude Include="Source\Items\Powerup.h" />
+    <ClInclude Include="Source\Items\Skill.h" />
     <ClInclude Include="Source\LevelOfDetails\LevelOfDetails.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\Lua\lauxlib.h" />

@@ -132,6 +132,38 @@ void SceneText::Init()
 	aCube->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
 	aCube->InitLOD("cube", "sphere", "cubeSG");
 
+	// Create a Waypoint inside WaypointManager
+	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_1");
+	int aWayPoint = CWaypointManager::GetInstance()->AddWaypoint(
+		Vector3(
+		CLuaInterface::GetInstance()->GetField("x"),
+		CLuaInterface::GetInstance()->GetField("y"),
+		CLuaInterface::GetInstance()->GetField("z")
+		));
+
+	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_2");
+	int anotherWayPoint = CWaypointManager::GetInstance()->AddWaypoint(
+		aWayPoint,
+		Vector3(
+		CLuaInterface::GetInstance()->GetField("x"),
+		CLuaInterface::GetInstance()->GetField("y"),
+		CLuaInterface::GetInstance()->GetField("z")
+		));
+
+	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_3");
+	CWaypointManager::GetInstance()->AddWaypoint(
+		anotherWayPoint,
+		Vector3(
+		CLuaInterface::GetInstance()->GetField("x"),
+		CLuaInterface::GetInstance()->GetField("y"),
+		CLuaInterface::GetInstance()->GetField("z")
+		));
+
+	CWaypointManager::GetInstance()->PrintSelf();
+
+	// Create a CEnemy instance
+	//chaser = new CChaser();
+
 	// Add the pointer to this new entity to the Scene Graph
 	CSceneNode* theNode = CSceneGraph::GetInstance()->AddNode(aCube);
 	if (theNode == NULL)
@@ -165,44 +197,6 @@ void SceneText::Init()
 	aRotateMtx->SetSteps(-120, 60);
 	grandchildNode->SetUpdateTransformation(aRotateMtx);
 
-	// Create a Waypoint inside WaypointManager
-	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_1");
-	int aWayPoint = CWaypointManager::GetInstance()->AddWaypoint(
-		Vector3(
-		CLuaInterface::GetInstance()->GetField("x"),
-		CLuaInterface::GetInstance()->GetField("y"),
-		CLuaInterface::GetInstance()->GetField("z")
-		));
-
-	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_2");
-	int anotherWayPoint = CWaypointManager::GetInstance()->AddWaypoint(
-		aWayPoint,
-		Vector3(
-		CLuaInterface::GetInstance()->GetField("x"),
-		CLuaInterface::GetInstance()->GetField("y"),
-		CLuaInterface::GetInstance()->GetField("z")
-		));
-
-	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_3");
-	CWaypointManager::GetInstance()->AddWaypoint(
-		anotherWayPoint,
-		Vector3(
-		CLuaInterface::GetInstance()->GetField("x"),
-		CLuaInterface::GetInstance()->GetField("y"),
-		CLuaInterface::GetInstance()->GetField("z")
-		));
-
-	CWaypointManager::GetInstance()->PrintSelf();
-
-	// Create a CEnemy instance
-	enemy2D = new Enemy2D();
-	enemy2D->Init();
-
-	chaser = new CChaser();
-
-	test = new Items();
-	test->Init();
-
 	groundEntity = Create::Ground("GRASS_DARKGREEN", "GEO_GRASS_LIGHTGREEN");
 	// Create::Text3DObject("text", Vector3(0.0f, 0.0f, 0.0f), "DM2210", Vector3(10.0f, 10.0f, 10.0f), Color(0, 1, 1));
 	//Create::Sprite2DObject("crosshair", Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f));
@@ -234,22 +228,21 @@ void SceneText::Init()
 
 void SceneText::Update(double dt)
 {
-	// Update our entities
-	EntityManager::GetInstance()->Update(dt);
-
 	{//handles required mouse calculations
-		double x, z;
-		MouseController::GetInstance()->GetMousePosition(x, z);
+		float x, z;
+		x = Application::GetInstance().GetWorldBasedMousePos().x;
+		z = Application::GetInstance().GetWorldBasedMousePos().z;
 		float w = Application::GetInstance().GetWindowWidth();
 		float h = Application::GetInstance().GetWindowHeight();
 		x = m_orthoWidth * (x / w);
-		z = -(m_orthoHeight * (h - z) / h);
+		//z = -(m_orthoHeight * (h - z) / h);
+		z = m_orthoHeight * (z / h);
 
 		mousePos_screenBased.Set(x, 0, z);
 		mousePos_worldBased.Set(
-			x + camera.GetCameraPos().x - (m_orthoWidth * 0.5f),
-			0,
-			z + camera.GetCameraPos().z + (m_orthoHeight * 0.5f));
+			x + camera.GetCameraTarget().x,
+			camera.GetCameraTarget().y,
+			z + camera.GetCameraTarget().z);
 	}
 
 	// THIS WHOLE CHUNK TILL <THERE> CAN REMOVE INTO ENTITIES LOGIC! Or maybe into a scene function to keep the update clean
@@ -275,6 +268,14 @@ void SceneText::Update(double dt)
 		lights[0]->type = Light::LIGHT_SPOT;
 	}
 
+	if (KeyboardController::GetInstance()->IsKeyDown('P'))
+	{
+		if (GamePaused)
+			GamePaused = false;
+		else
+			GamePaused = true;
+	}
+
 	//if (KeyboardController::GetInstance()->IsKeyDown('I'))
 	//	lights[0]->position.z -= (float)(10.f * dt);
 	//if (KeyboardController::GetInstance()->IsKeyDown('K'))
@@ -290,6 +291,9 @@ void SceneText::Update(double dt)
 
 	if (!GamePaused)
 	{
+		// Update our entities
+		EntityManager::GetInstance()->Update(dt);
+
 		// if the left mouse button was released
 		if (MouseController::GetInstance()->IsButtonDown(MouseController::LMB))
 		{
@@ -297,11 +301,10 @@ void SceneText::Update(double dt)
 		}
 		if (MouseController::GetInstance()->IsButtonPressed(MouseController::RMB))
 		{
-			Items* newItem = new Items();
+			// player's dash, done in player class itself
 		}
 		if (MouseController::GetInstance()->IsButtonReleased(MouseController::MMB))
 		{
-			cout << "added" << endl;
 			Enemy2D* newEnemy = new Enemy2D();
 		}
 		if (KeyboardController::GetInstance()->IsKeyDown('N'))
@@ -327,7 +330,7 @@ void SceneText::Update(double dt)
 	// Eg. FPSRenderEntity or inside RenderUI for LightEntity
 	std::ostringstream ss;
 	ss.precision(5);
-	float fps = (float)(1.f / dt);
+	double fps = (1.f / dt);
 	ss << "FPS: " << fps;
 	textObj[1]->SetText(ss.str());
 }
@@ -355,13 +358,21 @@ void SceneText::Render()
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 	EntityManager::GetInstance()->Render();
 
+	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
+	GraphicsManager::GetInstance()->GetModelStack().Translate(
+		mousePos_worldBased.x,
+		mousePos_worldBased.y,
+		mousePos_worldBased.z);
+	GraphicsManager::GetInstance()->GetModelStack().Scale(10, 10, 10);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("crosshair"));
+	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
+
 	GraphicsManager::GetInstance()->SetOrthographicProjection(-halfWindowWidth, halfWindowWidth, -halfWindowHeight, halfWindowHeight, -10, 10000);
 	GraphicsManager::GetInstance()->DetachCamera();
 	EntityManager::GetInstance()->RenderUI();
 
 	std::ostringstream ss;
-	ss.precision(3);
-	ss << "Player:" << playerInfo->GetPosition();
+	ss << "Player:" << playerInfo->GetHealth() << " : " << playerInfo->GetMaxSpeed();
 	textObj[2]->SetText(ss.str());
 }
 
@@ -381,4 +392,4 @@ void SceneText::Exit()
 	// Delete the lights
 	delete lights[0];
 	delete lights[1];
-	}
+}

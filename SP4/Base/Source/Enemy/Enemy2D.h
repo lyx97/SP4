@@ -8,8 +8,11 @@
 #include "RenderHelper.h"
 #include "MeshBuilder.h"
 #include "../PlayerInfo/PlayerInfo.h"
+#include "../Projectile/Projectile.h"
+#include "../Items/Powerup.h"
 
 static const float ENEMY_MAX_SPEED = 50.0f;
+static const float CHANCE_OF_DROPPING_POWERUP = 30.0f;
 
 class Enemy2D : public GenericEntity
 {
@@ -17,7 +20,6 @@ public:
 	Enemy2D();
 	virtual ~Enemy2D();
 
-	void Init();
 	virtual void Update(double _dt);
 	virtual void Render();
 
@@ -27,4 +29,6 @@ public:
 
 protected:
 	float speed;
+	unsigned int health;
+	unsigned int maxHealth;
 };

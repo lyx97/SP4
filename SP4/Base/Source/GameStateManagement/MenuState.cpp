@@ -75,8 +75,6 @@ void CMenuState::Update(double dt)
 	else if (MousePosX >= 277 && MousePosX < 529 && MousePosY <= 405 && MousePosY >= 340 && MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
 	{
 	}
-
-	cout << MousePosX << ", " << MousePosY << endl;
 }
 
 void CMenuState::Render()
