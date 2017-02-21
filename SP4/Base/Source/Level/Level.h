@@ -47,4 +47,7 @@ public:
     void SetDoor(CRoom* room);
 
     void CleanRoomList(void);
+
+    inline int GetNumRoom(void) { return roomList.size(); }
+    inline std::vector<Vector3> GetRoomIndex(void) { return roomIndexList; }
 };

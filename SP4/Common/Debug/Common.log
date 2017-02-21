@@ -1,5 +1,10 @@
+<<<<<<< 15c48b5adb6f8c7e04ca55bd572ce004e00ca091
 ﻿Build started 2/21/2017 5:52:45 PM.
      1>Project "C:\Users\155118A\Desktop\SP4\SP4\Common\Common.vcxproj" on node 2 (Build target(s)).
+=======
+﻿Build started 2/21/2017 5:56:13 PM.
+     1>Project "C:\Users\155117g\Desktop\SP4\SP4\Common\Common.vcxproj" on node 2 (Rebuild target(s)).
+>>>>>>> a7901cd28547c745da0b39847fb8ae0d54133638
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155118A\Desktop\SP4\SP4\/glew/include /IC:\Users\155118A\Desktop\SP4\SP4\/glfw/include /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\MeshBuilder.cpp
          MeshBuilder.cpp
@@ -26,9 +31,18 @@
          Debug\Vector2.obj
          Debug\Vector3.obj
          Debug\Win32Input.obj
+<<<<<<< 15c48b5adb6f8c7e04ca55bd572ce004e00ca091
          Common.vcxproj -> C:\Users\155118A\Desktop\SP4\SP4\Debug\Common.lib
      1>Done Building Project "C:\Users\155118A\Desktop\SP4\SP4\Common\Common.vcxproj" (Build target(s)).
 
 Build succeeded.
 
 Time Elapsed 00:00:00.84
+=======
+         Common.vcxproj -> C:\Users\155117g\Desktop\SP4\SP4\Debug\Common.lib
+     1>Done Building Project "C:\Users\155117g\Desktop\SP4\SP4\Common\Common.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:10.13
+>>>>>>> a7901cd28547c745da0b39847fb8ae0d54133638

@@ -315,17 +315,14 @@ Add a new object model
 ********************************************************************************/
 void CSpatialPartition::Add(EntityBase* theObject)
 {
-    if (!theObject->IsDone())
+    // Get the indices of the object's position
+    int xIndex = (((int)theObject->GetPosition().x + (xSize >> 1) - xPos) / xGridSize);
+    int zIndex = (((int)theObject->GetPosition().z + (zSize >> 1) - zPos) / zGridSize);
+    // Add them to each grid
+    if (((xIndex >= 0) && (xIndex < xNumOfGrid)) && ((zIndex >= 0) && (zIndex < zNumOfGrid)))
     {
-        // Get the indices of the object's position
-        int xIndex = (((int)theObject->GetPosition().x + (xSize >> 1) - xPos) / xGridSize);
-        int zIndex = (((int)theObject->GetPosition().z + (zSize >> 1) - zPos) / zGridSize);
-        // Add them to each grid
-        if (((xIndex >= 0) && (xIndex < xNumOfGrid)) && ((zIndex >= 0) && (zIndex < zNumOfGrid)))
-        {
-            theObject->SetIndex(xIndex, zIndex);
-            theGrid[xIndex*zNumOfGrid + zIndex].Add(theObject);
-        }
+        theObject->SetIndex(xIndex, zIndex);
+        theGrid[xIndex*zNumOfGrid + zIndex].Add(theObject);
     }
 }
 
