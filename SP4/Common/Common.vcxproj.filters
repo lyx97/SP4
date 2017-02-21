@@ -12,9 +12,6 @@
     <Filter Include="Collider">
       <UniqueIdentifier>{512a2aec-0fb3-4599-86d8-e551c7edff75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Font">
-      <UniqueIdentifier>{7eb91231-1d06-4fbb-89e0-fcb57e6051b2}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MatrixStack.cpp">
@@ -82,12 +79,6 @@
     </ClCompile>
     <ClCompile Include="Source\Mesh.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Font\FontData.cpp">
-      <Filter>Font</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Font\LoadFontData.cpp">
-      <Filter>Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,12 +162,6 @@
     </ClInclude>
     <ClInclude Include="Source\Mesh.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Font\FontData.h">
-      <Filter>Font</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Font\LoadFontData.h">
-      <Filter>Font</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

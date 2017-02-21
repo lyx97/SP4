@@ -5,7 +5,6 @@
 #include "Vector3.h"
 #include "Vertex.h"
 #include <string>
-#include "Font/LoadFontData.h"
 
 
 class Mesh;
@@ -46,7 +45,6 @@ private:
 	std::string text;
 	TEXT_RENDERMODE mode;
 	Color color;
-    FontData fontData;
 };
 
 namespace Create

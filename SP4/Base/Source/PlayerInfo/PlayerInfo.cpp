@@ -8,13 +8,13 @@
 #include "../Projectile/Projectile.h"
 #include "../WeaponInfo/Pistol.h"
 #include "../WeaponInfo/LaserBlaster.h"
-#include "../WeaponInfo/GrenadeThrow.h"
 #include "../Lua/LuaInterface.h"
 #include "../EntityManager.h"
 #include "../Application.h"
 #include "RenderHelper.h"
 #include "GraphicsManager.h"
 #include "MeshBuilder.h"
+#include "../Level/Level.h"
 
 // Allocating and initializing CPlayerInfo's static data member.
 // The pointer is allocated but not the object's constructor.
@@ -22,6 +22,8 @@ CPlayerInfo *CPlayerInfo::s_instance = 0;
 
 CPlayerInfo::CPlayerInfo(void)
 	: GenericEntity(NULL)
+    , m_iCurrentRoom(0)
+    , prevIndex(Vector3(0, 0, 0))
 	, m_dSpeed(40.0)
 	, m_dAcceleration(10.0)
 	, m_bJumpUpwards(false)
@@ -31,7 +33,6 @@ CPlayerInfo::CPlayerInfo(void)
 	, m_dFallSpeed(0.0)
 	, m_dFallAcceleration(-10.0)
 	, attachedCamera(NULL)
-	, m_pTerrain(NULL)
 	, primaryWeapon(NULL)
 	, secondaryWeapon(NULL)
 	, keyMoveForward('W')
@@ -61,7 +62,6 @@ CPlayerInfo::~CPlayerInfo(void)
 		delete primaryWeapon;
 		primaryWeapon = NULL;
 	}
-	m_pTerrain = NULL;
 }
 
 // Initialise this class instance
@@ -87,73 +87,51 @@ void CPlayerInfo::Init(void)
 	// Set the pistol as the primary weapon
 	primaryWeapon = new CPistol();
 	primaryWeapon->Init();
-	// Set the laser blaster as the secondary weapon
-	secondaryWeapon = new CLaserBlaster();
-	secondaryWeapon->Init();
-	//secondaryWeapon = new CGrenadeThrow();
-	//secondaryWeapon->Init();
+    // Set the laser blaster as the secondary weapon
+    secondaryWeapon = new CLaserBlaster();
+    secondaryWeapon->Init();
+    //secondaryWeapon = new CGrenadeThrow();
+    //secondaryWeapon->Init();
 
-	// Initialise the custom keyboard inputs
-	keyMoveForward = CLuaInterface::GetInstance()->getCharValue("moveForward");
-	keyMoveBackward = CLuaInterface::GetInstance()->getCharValue("moveBackward");
-	keyMoveLeft = CLuaInterface::GetInstance()->getCharValue("moveLeft");
-	keyMoveRight = CLuaInterface::GetInstance()->getCharValue("moveRight");
+    // Initialise the custom keyboard inputs
+    keyMoveForward = CLuaInterface::GetInstance()->getCharValue("moveForward");
+    keyMoveBackward = CLuaInterface::GetInstance()->getCharValue("moveBackward");
+    keyMoveLeft = CLuaInterface::GetInstance()->getCharValue("moveLeft");
+    keyMoveRight = CLuaInterface::GetInstance()->getCharValue("moveRight");
 
-	float distanceSquare = CLuaInterface::GetInstance()->getDistanceSquareValue("CalculateDistanceSquare", Vector3(0, 0, 0), Vector3(10, 10, 10));
+    //float distanceSquare = CLuaInterface::GetInstance()->getDistanceSquareValue("CalculateDistanceSquare", Vector3(0, 0, 0), Vector3(10, 10, 10));
 
-	int a = 1, b = 2, c = 3, d = 4;
-	CLuaInterface::GetInstance()->getVariableValues("GetMinMax", a, b, c, d);
+    //int a = 1, b = 2, c = 3, d = 4;
+    //CLuaInterface::GetInstance()->getVariableValues("GetMinMax", a, b, c, d);
 
-	EntityManager::GetInstance()->AddEntity(this);
-}
+    EntityManager::GetInstance()->AddEntity(this, m_iCurrentRoom);
 
-// Returns true if the player is on ground
-bool CPlayerInfo::isOnGround(void)
-{
-	if (m_bJumpUpwards == false && m_bFallDownwards == false)
-		return true;
+    // Init heatmap
+    int xSize = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax();
+    int zSize = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax();
 
-	return false;
-}
+    heatmap = new CHeatmap*[xSize];
+    for (int x = 0; x <= xSize; ++x)
+        heatmap[x] = new CHeatmap[zSize + 1];
 
-// Returns true if the player is jumping upwards
-bool CPlayerInfo::isJumpUpwards(void)
-{
-	if (m_bJumpUpwards == true && m_bFallDownwards == false)
-		return true;
+    // Generate
+    CGenerateHeatmap::GetInstance()->GenerateHeatmap(heatmap, xSize, zSize, index.x, index.z);
+    CGenerateHeatmap::GetInstance()->CalculateDirection(heatmap, xSize, zSize);
 
-	return false;
-}
+    int xIndex = index.x;
+    int zIndex = index.z;
 
-// Returns true if the player is on freefall
-bool CPlayerInfo::isFreeFall(void)
-{
-	if (m_bJumpUpwards == false && m_bFallDownwards == true)
-		return true;
+    prevIndex = index;
 
-	return false;
-}
+    // Spawn location -- Fixed to room size of 19
+    SpawnLocation[0] = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(xSize - 1, zSize >> 1);
+    SpawnLocation[1] = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(1, zSize >> 1);
+    SpawnLocation[2] = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(xSize >> 1, zSize - 1);
+    SpawnLocation[3] = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(xSize >> 1, 1);
 
-// Set the player's status to free fall mode
-void CPlayerInfo::SetOnFreeFall(bool isOnFreeFall)
-{
-	if (isOnFreeFall == true)
-	{
-		m_bJumpUpwards = false;
-		m_bFallDownwards = true;
-		m_dFallSpeed = 0.0;
-	}
-}
-
-// Set the player to jumping upwards
-void CPlayerInfo::SetToJumpUpwards(bool isOnJumpUpwards)
-{
-	if (isOnJumpUpwards == true)
-	{
-		m_bJumpUpwards = true;
-		m_bFallDownwards = false;
-		m_dJumpSpeed = 4.0;
-	}
+    // Boundary
+    minBoundary.Set(CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(1, 1) - Vector3(GRIDSIZE, 0, GRIDSIZE));
+    maxBoundary.Set(CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(xSize - 1, zSize - 1) + Vector3(GRIDSIZE, 0, GRIDSIZE));
 }
 
 // Set target
@@ -168,47 +146,11 @@ void CPlayerInfo::SetUp(const Vector3& up)
 	this->up = up;
 }
 
-// Set m_dJumpAcceleration of the player
-void CPlayerInfo::SetJumpAcceleration(const double m_dJumpAcceleration)
-{
-	this->m_dJumpAcceleration = m_dJumpAcceleration;
-}
-
-// Set Fall Acceleration of the player
-void CPlayerInfo::SetFallAcceleration(const double m_dFallAcceleration)
-{
-	this->m_dFallAcceleration = m_dFallAcceleration;
-}
-
 // Set the boundary for the player info
 void CPlayerInfo::SetBoundary(Vector3 max, Vector3 min)
 {
 	maxBoundary = max;
 	minBoundary = min;
-}
-
-// Set the terrain for the player info
-void CPlayerInfo::SetTerrain(GroundEntity* m_pTerrain)
-{
-	if (m_pTerrain != NULL)
-	{
-		this->m_pTerrain = m_pTerrain;
-
-		SetBoundary(this->m_pTerrain->GetMaxBoundary(), this->m_pTerrain->GetMinBoundary());
-	}
-}
-
-// Get the terrain for the player info
-GroundEntity* CPlayerInfo::GetTerrain(void)
-{
-	return m_pTerrain;
-}
-
-// Stop the player's movement
-void CPlayerInfo::StopVerticalMovement(void)
-{
-	m_bJumpUpwards = false;
-	m_bFallDownwards = false;
 }
 
 // Reset this player instance to default
@@ -218,9 +160,6 @@ void CPlayerInfo::Reset(void)
 	position = defaultPosition;
 	target = defaultTarget;
 	up = defaultUp;
-
-	// Stop vertical movement too
-	StopVerticalMovement();
 }
 
 // Get target
@@ -234,74 +173,28 @@ Vector3 CPlayerInfo::GetUp(void) const
 	return up;
 }
 
-// Get m_dJumpAcceleration of the player
-double CPlayerInfo::GetJumpAcceleration(void) const
-{
-	return m_dJumpAcceleration;
-}
-
-// Update Jump Upwards
-void CPlayerInfo::UpdateJumpUpwards(double dt)
-{
-	if (m_bJumpUpwards == false)
-		return;
-
-	// Update position and target y values
-	// Use SUVAT equation to update the change in position and target
-	// s = u * t + 0.5 * a * t ^ 2
-	position.y += (float)(m_dJumpSpeed * dt + 0.5 * m_dJumpAcceleration * dt * dt);
-	target.y += (float)(m_dJumpSpeed*dt + 0.5 * m_dJumpAcceleration * dt * dt);
-	// Use this equation to calculate final velocity, v
-	// SUVAT: v = u + a * t;
-	// v is m_dJumpSpeed AFTER updating using SUVAT where u is the initial speed and is equal to m_dJumpSpeed
-	m_dJumpSpeed = m_dJumpSpeed + m_dJumpAcceleration * dt;
-	// Check if the jump speed is less than zero, then it should be falling
-	if (m_dJumpSpeed < 0.0)
-	{
-		m_dJumpSpeed = 0.0;
-		m_bJumpUpwards = false;
-		m_dFallSpeed = 0.0;
-		m_bFallDownwards = true;
-	}
-}
-
-// Update FreeFall
-void CPlayerInfo::UpdateFreeFall(double dt)
-{
-	if (m_bFallDownwards == false)
-		return;
-
-	// Update position and target y values
-	// Use SUVAT equation to update the change in position and target
-	// s = u * t + 0.5 * a * t ^ 2
-	position.y += (float)(m_dFallSpeed * dt + 0.5 * m_dJumpAcceleration * dt * dt);
-	target.y += (float)(m_dFallSpeed * dt + 0.5 * m_dJumpAcceleration * dt * dt);
-	// Use this equation to calculate final velocity, v
-	// SUVAT: v = u + a * t;
-	// v is m_dJumpSpeed AFTER updating using SUVAT where u is the initial speed and is equal to m_dJumpSpeed
-	m_dFallSpeed = m_dFallSpeed + m_dFallAcceleration * dt;
-	// Check if the jump speed is below terrain, then it should be reset to terrain height
-	if (position.y < m_pTerrain->GetTerrainHeight(position))
-	{
-		Vector3 viewDirection = target - position;
-		position.y = m_pTerrain->GetTerrainHeight(position);
-		target = position + viewDirection;
-		m_dFallSpeed = 0.0;
-		m_bFallDownwards = false;
-	}
-}
-
 /********************************************************************************
 Hero Update
 ********************************************************************************/
 void CPlayerInfo::Update(double dt)
 {
-	//double mouse_diff_x, mouse_diff_y;
-	//MouseController::GetInstance()->GetMouseDelta(mouse_diff_x, mouse_diff_y);
+    int xSize = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax();
+    int zSize = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax();
+    if (prevIndex != index)
+    {
+        CGenerateHeatmap::GetInstance()->GenerateHeatmap(heatmap, xSize, zSize, index.x, index.z);
+        CGenerateHeatmap::GetInstance()->CalculateDirection(heatmap, xSize, zSize);
+        prevIndex = index;
+    }
 
-	//double camera_yaw = mouse_diff_x * 0.0174555555555556 * 10;		// 3.142 / 180.0
-	//double camera_pitch = mouse_diff_y * 0.0174555555555556 * 10;	// 3.142 / 180.0
 
+    //if (index.x == 1 && index.z < zSize || 
+    //    index.x == xSize - 1 && index.z < zSize ||
+    //    index.z == 1 && index.x < xSize ||
+    //    index.z == zSize - 1 && index.x < xSize)
+    //{
+    //    cout << "EDGE" << endl;
+    //}
 	position += velocity * (float)dt;
 	if (!Application::GetInstance().GetWorldBasedMousePos().IsZero())
 		front.Set(Vector3(position - Application::GetInstance().GetWorldBasedMousePos()).Normalized());
@@ -312,6 +205,37 @@ void CPlayerInfo::Update(double dt)
 		velocity *= 0.9f;
 	}
 
+    if (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomCleared() &&
+        CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridType(index.x, index.z) == GRID_TYPE::DOOR)
+    {
+        int previousRoom = m_iCurrentRoom;
+
+        if (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMin() == index.x && (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax() >> 1) == index.z)
+        {
+            m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(0);
+            position = SpawnLocation[0];
+        }
+        if (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax() == index.x && (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax() >> 1) == index.z)
+        {
+            m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(1);
+            position = SpawnLocation[1];
+        }
+        if ((CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax() >> 1) == index.x && CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMin() == index.z)
+        {
+            m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(2);
+            position = SpawnLocation[2];
+        }
+        if ((CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax() >> 1) == index.x && CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax() == index.z)
+        {
+            m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(3);
+            position = SpawnLocation[3];
+        }
+
+        EntityManager::GetInstance()->GetSetSpatialPartition(m_iCurrentRoom)->Add(this);
+        EntityManager::GetInstance()->GetSetSpatialPartition(previousRoom)->Remove(this);
+    }
+
+    // Dash cooldown
 	if (isDashed)
 	{
 		dashCooldownTimer -= dt;
@@ -320,6 +244,7 @@ void CPlayerInfo::Update(double dt)
 			isDashed = false;
 		}
 	}
+	// Health regeneration cooldown
 	healthregenCooldownTimer -= dt;
 	if (healthregenCooldownTimer <= 0)
 	{
@@ -330,6 +255,8 @@ void CPlayerInfo::Update(double dt)
 
 		healthregenCooldownTimer = 1;
 	}
+
+	// Key input for movement
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward) ||
 		KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward) ||
 		KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft) ||
@@ -337,24 +264,24 @@ void CPlayerInfo::Update(double dt)
 	{
 		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
 		{
-			forceDir.z -= 1;
+            //cout << CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(2) << endl;
+            //if (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridType(index.x, index.z - 1) == GRID_TYPE::PATH)
+                //m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(2);
+            forceDir.z -= 1;
 		}
 		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward))
 		{
-			forceDir.z += 1;
+            forceDir.z += 1;
 		}
 		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
 		{
-			forceDir.x -= 1;
+            forceDir.x -= 1;
 		}
 		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
 		{
-			forceDir.x += 1;
+            forceDir.x += 1;
 		}
 
-		if (!forceDir.IsZero())
-		{
-			forceDir.Normalized();
 			if (velocity.LengthSquared() < maxSpeed * maxSpeed)
 			{
 				isMoving = true;
@@ -379,135 +306,6 @@ void CPlayerInfo::Update(double dt)
 		}
 		Constrain();
 	}
-
-	//if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward) ||
-	//	KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward) ||
-	//	KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft) ||
-	//	KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
-	//{
-	//	Vector3 viewVector = target - position;
-	//	Vector3 rightUV;
-	//       if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
-	//	{
-	//		Vector3 temp(viewVector);
-	//		temp.y = 0;
-	//		position += temp.Normalized() * (float)m_dSpeed * (float)dt;
-	//	}
-	//       else if (KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward))
-	//	{
-	//		Vector3 temp(viewVector);
-	//		temp.y = 0;
-	//		position -= temp.Normalized() * (float)m_dSpeed * (float)dt;
-	//	}
-	//       if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
-	//	{
-	//		rightUV = (viewVector.Normalized()).Cross(up);
-	//		rightUV.y = 0;
-	//		rightUV.Normalize();
-	//		position -= rightUV * (float)m_dSpeed * (float)dt;
-	//	}
-	//       else if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
-	//	{
-	//		rightUV = (viewVector.Normalized()).Cross(up);
-	//		rightUV.y = 0;
-	//		rightUV.Normalize();
-	//		position += rightUV * (float)m_dSpeed * (float)dt;
-	//	}
-	//	// Constrain the position
-	//	Constrain();
-	//	// Update the target
-	//	target = position + viewVector;
-	//}
-
-	// Rotate the view direction
-	/*if (KeyboardController::GetInstance()->IsKeyDown(VK_LEFT) ||
-	KeyboardController::GetInstance()->IsKeyDown(VK_RIGHT) ||
-	KeyboardController::GetInstance()->IsKeyDown(VK_UP) ||
-	KeyboardController::GetInstance()->IsKeyDown(VK_DOWN))
-	{
-	Vector3 viewUV = (target - position).Normalized();
-	Vector3 rightUV;
-	if (KeyboardController::GetInstance()->IsKeyDown(VK_LEFT))
-	{
-	float yaw = (float)m_dSpeed * (float)dt;
-	Mtx44 rotation;
-	rotation.SetToRotation(yaw, 0, 1, 0);
-	viewUV = rotation * viewUV;
-	target = position + viewUV;
-	rightUV = viewUV.Cross(up);
-	rightUV.y = 0;
-	rightUV.Normalize();
-	up = rightUV.Cross(viewUV).Normalized();
-	}
-	else if (KeyboardController::GetInstance()->IsKeyDown(VK_RIGHT))
-	{
-	float yaw = (float)(-m_dSpeed * (float)dt);
-	Mtx44 rotation;
-	rotation.SetToRotation(yaw, 0, 1, 0);
-	viewUV = rotation * viewUV;
-	target = position + viewUV;
-	rightUV = viewUV.Cross(up);
-	rightUV.y = 0;
-	rightUV.Normalize();
-	up = rightUV.Cross(viewUV).Normalized();
-	}
-	if (KeyboardController::GetInstance()->IsKeyDown(VK_UP))
-	{
-	float pitch = (float)(m_dSpeed * (float)dt);
-	rightUV = viewUV.Cross(up);
-	rightUV.y = 0;
-	rightUV.Normalize();
-	up = rightUV.Cross(viewUV).Normalized();
-	Mtx44 rotation;
-	rotation.SetToRotation(pitch, rightUV.x, rightUV.y, rightUV.z);
-	viewUV = rotation * viewUV;
-	target = position + viewUV;
-	}
-	else if (KeyboardController::GetInstance()->IsKeyDown(VK_DOWN))
-	{
-	float pitch = (float)(-m_dSpeed * (float)dt);
-	rightUV = viewUV.Cross(up);
-	rightUV.y = 0;
-	rightUV.Normalize();
-	up = rightUV.Cross(viewUV).Normalized();
-	Mtx44 rotation;
-	rotation.SetToRotation(pitch, rightUV.x, rightUV.y, rightUV.z);
-	viewUV = rotation * viewUV;
-	target = position + viewUV;
-	}
-	}*/
-
-	//Update the camera direction based on mouse move
-	//{
-	//	Vector3 viewUV = (target - position).Normalized();
-	//	Vector3 rightUV;
-
-	//	{
-	//		float yaw = (float)(-m_dSpeed * camera_yaw * (float)dt);
-	//		Mtx44 rotation;
-	//		rotation.SetToRotation(yaw, 0, 1, 0);
-	//		viewUV = rotation * viewUV;
-	//		target = position + viewUV;
-	//		rightUV = viewUV.Cross(up);
-	//		rightUV.y = 0;
-	//		rightUV.Normalize();
-	//		up = rightUV.Cross(viewUV).Normalized();
-	//	}
-	//	{
-	//		float pitch = (float)(-m_dSpeed * camera_pitch * (float)dt);
-	//		rightUV = viewUV.Cross(up);
-	//		rightUV.y = 0;
-	//		rightUV.Normalize();
-	//		up = rightUV.Cross(viewUV).Normalized();
-	//		Mtx44 rotation;
-	//		rotation.SetToRotation(pitch, rightUV.x, rightUV.y, rightUV.z);
-	//		viewUV = rotation * viewUV;
-	//           if (viewUV.y <= 0.9f && viewUV.y >= -0.6f)
-	//           {
-	//               target = position + viewUV;
-	//           }
-	//	}
-	//}
 
 	// Update the weapons
 	if (KeyboardController::GetInstance()->IsKeyReleased('R'))
@@ -573,33 +371,52 @@ void CPlayerInfo::Render()
 		this->scale.z);
 	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("sphere"));
 	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
+
+    //for (int x = 0; x <= CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax(); ++x)
+    //{
+    //    for (int z = 0; z <= CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax(); ++z)
+    //    {
+    //        GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
+    //        Vector3 temp = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(x, z);
+    //        Vector3 dir = heatmap[x][z].GetDir();
+    //        GraphicsManager::GetInstance()->GetModelStack().Translate(temp.x, 1, temp.z);
+    //        GraphicsManager::GetInstance()->GetModelStack().Rotate(-90, 1, 0, 0);
+    //        GraphicsManager::GetInstance()->GetModelStack().Rotate(Math::RadianToDegree(atan2(dir.x, dir.z)), 0, 0, 1);
+    //        GraphicsManager::GetInstance()->GetModelStack().Scale(scale.x, scale.y, scale.z);
+    //        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("direction"));
+    //        GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
+    //    }
+    //}
 }
 
 // Constrain the position within the borders
 void CPlayerInfo::Constrain(void)
 {
 	// Constrain player within the boundary
-	if (position.x > maxBoundary.x - 1.0f)
-		position.x = maxBoundary.x - 1.0f;
+    if (position.x > maxBoundary.x - 1.0f)
+    {
+        position.x = maxBoundary.x - 1.0f; 
+        velocity.x = 0;
+    }
 	//if (position.y > maxBoundary.y - 1.0f)
 	//	position.y = maxBoundary.y - 1.0f;
-	if (position.z > maxBoundary.z - 1.0f)
-		position.z = maxBoundary.z - 1.0f;
-	if (position.x < minBoundary.x + 1.0f)
-		position.x = minBoundary.x + 1.0f;
-	//if (position.y < minBoundary.y + 1.0f)
+    if (position.z > maxBoundary.z - 1.0f)
+    {
+        position.z = maxBoundary.z - 1.0f; 
+        velocity.z = 0;
+    }
+    if (position.x < minBoundary.x + 1.0f)
+    {
+        position.x = minBoundary.x + 1.0f;
+        velocity.x = 0;
+    }
+    //if (position.y < minBoundary.y + 1.0f)
 	//	position.y = minBoundary.y + 1.0f;
-	if (position.z < minBoundary.z + 1.0f)
-		position.z = minBoundary.z + 1.0f;
-
-	// if the player is not jumping nor falling, then adjust his y position
-	if ((m_bJumpUpwards == false) && (m_bFallDownwards == false))
-	{
-		// if the y position is not equal to terrain height at that position,
-		// then update y position to the terrain height
-		if (position.y != m_pTerrain->GetTerrainHeight(position))
-			position.y = m_pTerrain->GetTerrainHeight(position);
-	}
+    if (position.z < minBoundary.z + 1.0f)
+    {
+        position.z = minBoundary.z + 1.0f;
+        velocity.z = 0;
+    }
 }
 
 void CPlayerInfo::AttachCamera(Camera* _cameraPtr)

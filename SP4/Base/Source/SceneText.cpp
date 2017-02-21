@@ -15,12 +15,11 @@
 #include "EntityManager.h"
 
 #include "GenericEntity.h"
-#include "GroundEntity.h"
 #include "TextEntity.h"
 #include "SpriteEntity.h"
 #include "Light.h"
-#include "SkyBox/SkyBoxEntity.h"
 #include "RenderHelper.h"
+#include "Level/Level.h"
 
 #include <iostream>
 using namespace std;
@@ -31,9 +30,8 @@ SceneText::SceneText()
 
 SceneText::~SceneText()
 {
-	CWaypointManager::GetInstance()->DropInstance();
-	CSpatialPartition::GetInstance()->RemoveCamera();
-	CSceneGraph::GetInstance()->Destroy();
+    CWaypointManager::GetInstance()->DropInstance();
+    CSceneGraph::GetInstance()->Destroy();
 }
 
 void SceneText::Init()
@@ -63,8 +61,6 @@ void SceneText::Init()
 
 	// Create the playerinfo instance, which manages all information about the player
 	camera.Init(Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(0, 1, -1));
-	playerInfo = CPlayerInfo::GetInstance();
-	playerInfo->Init();
 
 	// Create and attach the camera to the scene
 	//World Space
@@ -113,104 +109,79 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GetMesh("SKYBOX_RIGHT")->textureID = LoadTGA("Image//SkyBox//skybox_right.tga");
 	MeshBuilder::GetInstance()->GetMesh("SKYBOX_TOP")->textureID = LoadTGA("Image//SkyBox//skybox_top.tga");
 	MeshBuilder::GetInstance()->GetMesh("SKYBOX_BOTTOM")->textureID = LoadTGA("Image//SkyBox//skybox_bottom.tga");
-	MeshBuilder::GetInstance()->GenerateRay("laser", 10.0f);
-	MeshBuilder::GetInstance()->GenerateCube("cubeSG", Color(1.0f, 0.64f, 0.0f), 1.0f);
-	MeshBuilder::GetInstance()->GenerateQuad("GRIDMESH", Color(1.0f, 1.0f, 1.0f), 10.f);
+    MeshBuilder::GetInstance()->GenerateRay("laser", 10.0f);
+    MeshBuilder::GetInstance()->GenerateCube("cubeSG", Color(1.0f, 0.64f, 0.0f), 1.0f);
+    MeshBuilder::GetInstance()->GenerateQuad("GRIDMESH", Color(1.0f, 1.0f, 1.0f), 1.f);
+    MeshBuilder::GetInstance()->GenerateQuad("direction", Color(1.0f, 1.0f, 1.0f), 1.f);
+    MeshBuilder::GetInstance()->GetMesh("direction")->textureID = LoadTGA("Image//direction.tga");
+    MeshBuilder::GetInstance()->GenerateQuad("wall", Color(1.0f, 1.0f, 1.0f), 1.f);
+    MeshBuilder::GetInstance()->GetMesh("wall")->textureID = LoadTGA("Image//Tile//wall.tga");
+    // Set up the Spatial Partition and pass it to the EntityManager to manage
+    //CSpatialPartition* spa1 = new CSpatialPartition();
 
-	// Set up the Spatial Partition and pass it to the EntityManager to manage
-	CSpatialPartition::GetInstance()->Init(100, 100, 10, 10);
-	//CSpatialPartition::GetInstance()->SetMesh("GRIDMESH");
-	CSpatialPartition::GetInstance()->SetCamera(&camera);
-	CSpatialPartition::GetInstance()->SetLevelOfDetails(40000.0f, 160000.0f);
-	EntityManager::GetInstance()->SetSpatialPartition(CSpatialPartition::GetInstance());
+    //spa1->Init(20, 20, 10, 10, 0, 0);
+    ////spa1->SetMesh("GRIDMESH");
+    ////CSpatialPartition::GetInstance()->SetCamera(&camera);
+    //EntityManager::GetInstance()->SetSpatialPartition(spa1);
+
+    unsigned seed = time(NULL);
+    srand(seed);
+    cout << "Current Seed: " << seed << endl;
+
+    CLevel::GetInstance()->Init(100);
+
+    // Create the playerinfo instance, which manages all information about the player
+    playerInfo = CPlayerInfo::GetInstance();
+    playerInfo->Init();
+
+    //EntityManager::GetInstance()->AddEntity(playerInfo, 1);
+    //EntityManager::GetInstance()->RemoveEntity(playerInfo, 0);
+    playerInfo->SetRoomID(0);
+    //cout << "Test" << playerInfo->GetRoomID() << endl;
+
+    //cout << "Test" << CLevel::GetInstance()->GetRoom(1)->GetRoomID() << endl;
 
 	// Create entities into the scene
-	Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
-	Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
-	GenericEntity* aCube = Create::Entity("cube", Vector3(-20.0f, 0.0f, -20.0f));
-	aCube->SetCollider(true);
-	aCube->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
-	aCube->InitLOD("cube", "sphere", "cubeSG");
+	//Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
+	//Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
 
-	// Create a Waypoint inside WaypointManager
-	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_1");
-	int aWayPoint = CWaypointManager::GetInstance()->AddWaypoint(
-		Vector3(
-		CLuaInterface::GetInstance()->GetField("x"),
-		CLuaInterface::GetInstance()->GetField("y"),
-		CLuaInterface::GetInstance()->GetField("z")
-		));
+    // Create a Waypoint inside WaypointManager
+    //lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_1");
+    //int aWayPoint = CWaypointManager::GetInstance()->AddWaypoint(
+    //    Vector3(
+    //    CLuaInterface::GetInstance()->GetField("x"),
+    //    CLuaInterface::GetInstance()->GetField("y"),
+    //    CLuaInterface::GetInstance()->GetField("z")
+    //    ));
 
-	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_2");
-	int anotherWayPoint = CWaypointManager::GetInstance()->AddWaypoint(
-		aWayPoint,
-		Vector3(
-		CLuaInterface::GetInstance()->GetField("x"),
-		CLuaInterface::GetInstance()->GetField("y"),
-		CLuaInterface::GetInstance()->GetField("z")
-		));
+    //lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_2");
+    //int anotherWayPoint = CWaypointManager::GetInstance()->AddWaypoint(
+    //    aWayPoint,
+    //    Vector3(
+    //    CLuaInterface::GetInstance()->GetField("x"),
+    //    CLuaInterface::GetInstance()->GetField("y"),
+    //    CLuaInterface::GetInstance()->GetField("z")
+    //    ));
 
-	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_3");
-	CWaypointManager::GetInstance()->AddWaypoint(
-		anotherWayPoint,
-		Vector3(
-		CLuaInterface::GetInstance()->GetField("x"),
-		CLuaInterface::GetInstance()->GetField("y"),
-		CLuaInterface::GetInstance()->GetField("z")
-		));
+    //lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_3");
+    //CWaypointManager::GetInstance()->AddWaypoint(
+    //    anotherWayPoint,
+    //    Vector3(
+    //    CLuaInterface::GetInstance()->GetField("x"),
+    //    CLuaInterface::GetInstance()->GetField("y"),
+    //    CLuaInterface::GetInstance()->GetField("z")
+    //    ));
 
-	CWaypointManager::GetInstance()->PrintSelf();
+    //CWaypointManager::GetInstance()->PrintSelf();
 
-	// Create a CEnemy instance
-	//chaser = new CChaser();
+    // Create a CEnemy instance
+    //enemy2D = new Enemy2D();
+    //enemy2D->Init();
 
-	// Add the pointer to this new entity to the Scene Graph
-	CSceneNode* theNode = CSceneGraph::GetInstance()->AddNode(aCube);
-	if (theNode == NULL)
-		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
-
-	GenericEntity* anotherCube = Create::Entity("cube", Vector3(-20.0f, 1.1f, -20.0f));
-	anotherCube->SetCollider(true);
-	anotherCube->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
-	CSceneNode* anotherNode = theNode->AddChild(anotherCube);
-	if (anotherCube == NULL)
-		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
-
-	GenericEntity* baseCube = Create::Asset("cube", Vector3(0.0f, 0.0f, 0.0f));
-	CSceneNode* baseNode = CSceneGraph::GetInstance()->AddNode(baseCube);
-
-	CUpdateTransformation* baseMtx = new CUpdateTransformation();
-	baseMtx->ApplyUpdate(1.0f, 0.0f, 0.0f, 1.0f);
-	baseMtx->SetSteps(-60, 60);
-	baseNode->SetUpdateTransformation(baseMtx);
-
-	GenericEntity* childCube = Create::Asset("cubeSG", Vector3(0.0f, 0.0f, 0.0f));
-	CSceneNode* childNode = baseNode->AddChild(childCube);
-	childNode->ApplyTranslate(0.0f, 1.0f, 0.0f);
-
-	GenericEntity* grandchildCube = Create::Asset("cubeSG", Vector3(0.0f, 0.0f, 0.0f));
-	CSceneNode* grandchildNode = childNode->AddChild(grandchildCube);
-	grandchildNode->ApplyTranslate(0.0f, 0.0f, 1.0f);
-
-	CUpdateTransformation* aRotateMtx = new CUpdateTransformation();
-	aRotateMtx->ApplyUpdate(1.0f, 0.0f, 0.0f, 1.0f);
-	aRotateMtx->SetSteps(-120, 60);
-	grandchildNode->SetUpdateTransformation(aRotateMtx);
-
-	groundEntity = Create::Ground("GRASS_DARKGREEN", "GEO_GRASS_LIGHTGREEN");
-	// Create::Text3DObject("text", Vector3(0.0f, 0.0f, 0.0f), "DM2210", Vector3(10.0f, 10.0f, 10.0f), Color(0, 1, 1));
 	//Create::Sprite2DObject("crosshair", Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f));
 
-	SkyBoxEntity* theSkyBox = Create::SkyBox("SKYBOX_FRONT", "SKYBOX_BACK",
-		"SKYBOX_LEFT", "SKYBOX_RIGHT",
-		"SKYBOX_TOP", "SKYBOX_BOTTOM");
-
-	// Customise the ground entity
-	groundEntity->SetPosition(Vector3(0, -10, 0));
-	groundEntity->SetScale(Vector3(100.0f, 100.0f, 100.0f));
-	groundEntity->SetGrids(Vector3(10.0f, 1.0f, 10.0f));
-	playerInfo->SetTerrain(groundEntity);
-	//theEnemy->SetTerrain(groundEntity);
+    minimap = new CMinimap();
+    minimap->Init();
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;

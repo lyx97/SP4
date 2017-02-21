@@ -18,7 +18,7 @@
 #include "../Lua/LuaInterface.h"
 
 GLFWwindow* m_window;
-const unsigned char FPS = 60; // FPS of this game
+const unsigned char FPS = 90; // FPS of this game
 const unsigned int frameTime = 1000 / FPS; // time for each frame
 
 //Define an error callback
@@ -271,7 +271,7 @@ int Application::GetWindowWidth()
 Vector3 Application::GetWorldBasedMousePos()
 {
 	Vector3 result;
-
+	
 	glfwGetFramebufferSize(m_window, &m_window_width, &m_window_height);
 	result.Set(
 		(MouseController::GetInstance()->GetMousePosition().x - (m_window_width * 0.5f)),

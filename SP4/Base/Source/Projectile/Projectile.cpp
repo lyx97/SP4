@@ -4,6 +4,7 @@
 #include "../EntityManager.h"
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
+#include "../PlayerInfo/PlayerInfo.h"
 
 CProjectile::CProjectile(void)
 	: modelMesh(NULL)
@@ -161,7 +162,7 @@ CProjectile* Create::Projectile(const std::string& _meshName,
 	result->SetCollider(true);
 	result->SetSource(_source);
 	result->SetDamage(10);
-	EntityManager::GetInstance()->AddEntity(result);
+    EntityManager::GetInstance()->AddEntity(result, CPlayerInfo::GetInstance()->GetRoomID());
 
 	return result;
 }

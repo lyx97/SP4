@@ -16,6 +16,13 @@ protected:
 	static CPlayerInfo *s_instance;
 	CPlayerInfo(void);
 
+    int m_iCurrentRoom;
+
+    Vector3 prevIndex;
+    Vector3 SpawnLocation[4];
+
+    CHeatmap** heatmap;
+
 public:
 	static CPlayerInfo *GetInstance()
 	{
@@ -37,57 +44,25 @@ public:
 
 	// Initialise this class instance
 	void Init(void);
-	// Returns true if the player is on ground
-	bool isOnGround(void);
-	// Returns true if the player is jumping upwards
-	bool isJumpUpwards(void);
-	// Returns true if the player is on freefall
-	bool isFreeFall(void);
-	// Set the player's status to free fall mode
-	void SetOnFreeFall(bool isOnFreeFall);
-	// Set the player to jumping upwards
-	void SetToJumpUpwards(bool isOnJumpUpwards);
-	// Stop the player's vertical movement
-	void StopVerticalMovement(void);
 	// Reset this player instance to default
 	void Reset(void);
 
 	// Set target
 	void SetTarget(const Vector3& target);
 	// Set Up
-	void SetUp(const Vector3& up);
-	// Set m_dJumpSpeed of the player
-	void SetJumpSpeed(const double m_dJumpSpeed);
-	// Set m_dJumpAcceleration of the player
-	void SetJumpAcceleration(const double m_dJumpAcceleration);
-	// Set Fall Speed of the player
-	void SetFallSpeed(const double m_dFallSpeed);
-	// Set Fall Acceleration of the player
-	void SetFallAcceleration(const double m_dFallAcceleration);
-	// Set the boundary for the player info
+	void SetUp(const Vector3& up);	
+    // Set boundary
 	void SetBoundary(Vector3 max, Vector3 min);
-	// Set the terrain for the player info
-	void SetTerrain(GroundEntity* m_pTerrain);
-	// Get the terrain for the player info
-	GroundEntity* GetTerrain(void);
 
 	// Get target
 	Vector3 GetTarget(void) const;
 	// Get Up
 	Vector3 GetUp(void) const;
-	// Get Jump Speed of the player
-	double GetJumpSpeed(void) const;
-	// Get Jump Acceleration of the player
-	double GetJumpAcceleration(void) const;
-	// Get Fall Speed of the player
-	double GetFallSpeed(void) const;
-	// Get Fall Acceleration of the player
-	double GetFallAcceleration(void) const;
 
-	// Update Jump Upwards
-	void UpdateJumpUpwards(double dt = 0.0333f);
-	// Update FreeFall
-	void UpdateFreeFall(double dt = 0.0333f);
+    // Room
+    inline const int GetRoomID(void) { return m_iCurrentRoom; }
+    inline void SetRoomID(const int& roomID) { m_iCurrentRoom = roomID; }
+
 	// Update
 	void Update(double dt = 0.0333f);
 	void Render();
@@ -113,11 +88,12 @@ public:
 	inline float GetHealthRegen(){ return healthRegen; };
 	inline void SetHealthRegen(float healthRegen){ this->healthRegen = healthRegen; };
 
+    inline CHeatmap** GetHeatmap() { return heatmap; }
+	
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
 	Vector3 target, up;
 	Vector3 maxBoundary, minBoundary;
-	GroundEntity* m_pTerrain;
 
 	double m_dSpeed;
 	double m_dAcceleration;

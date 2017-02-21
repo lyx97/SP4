@@ -23,7 +23,10 @@ public:
 	virtual void RenderUI();
 
 	inline void SetPosition(const Vector3& _value){ position = _value; };
-	inline Vector3 GetPosition(){ return position; };
+ 	inline Vector3 GetPosition(){ return position; };
+
+    inline void SetIndex(const int& _valueX, const int& _valueZ){ index.x = _valueX; index.z = _valueZ; };
+    inline Vector3 GetIndex(){ return index; };
 
 	inline void SetScale(const Vector3& _value){ scale = _value; };
 	inline Vector3 GetScale(){ return scale; };
@@ -57,9 +60,19 @@ public:
 	inline void SetMass(const float& _value){ mass = _value; };
 	inline float GetMass(){ return mass; };
 
+	inline void SetVelocity(const Vector3& _value){ velocity = _value; };
+	inline Vector3 GetVelocity(){ return velocity; };
+
+	inline void SetFront(const Vector3& _value){ front = _value; };
+	inline Vector3 GetFront(){ return front; };
+
+	inline void SetMass(const float& _value){ mass = _value; };
+	inline float GetMass(){ return mass; };
+
 protected:
 	Vector3 position;
 	Vector3 scale;
+    Vector3 index;
 
 	bool isDone;
 	bool m_bCollider;

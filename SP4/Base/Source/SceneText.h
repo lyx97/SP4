@@ -4,7 +4,6 @@
 #include "Scene.h"
 #include "Mtx44.h"
 #include "PlayerInfo/PlayerInfo.h"
-#include "GroundEntity.h"
 #include "../Camera/Camera.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
@@ -13,10 +12,11 @@
 #include "Waypoint/WaypointManager.h"
 #include "../Lua/LuaInterface.h"
 #include "Enemy/Enemy.h"
-#include "Enemy\Enemy2D.h"
+#include "Enemy/Enemy2D.h"
 #include "../Items/Powerup.h"
 #include "Font/LoadFontData.h"
 #include "Enemy/Chaser.h"
+#include "Level/Minimap.h"
 
 class SceneManager;
 class TextEntity;
@@ -36,9 +36,8 @@ public:
 
 private:
 	CPlayerInfo* playerInfo;
-	GroundEntity* groundEntity;
 
-	Camera camera;
+    Camera camera;
 	float m_worldWidth, m_worldHeight;
 	float m_orthoWidth, m_orthoHeight;
 	Vector3 mousePos_screenBased;
@@ -48,11 +47,14 @@ private:
 	Light* lights[2];
 
 	GenericEntity* theCube;
+	CEnemy* theEnemy;
 	Enemy2D* enemy2D;
 	CChaser* chaser;
-	CEnemy* theEnemy;
+
 
 	bool GamePaused = false;
+	
+    CMinimap* minimap;
 };
 
 #endif

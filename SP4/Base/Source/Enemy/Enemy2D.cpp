@@ -1,9 +1,12 @@
 #include "Enemy2D.h"
+#include "GraphicsManager.h"
+#include "RenderHelper.h"
+#include "MeshBuilder.h"
+#include "../PlayerInfo/PlayerInfo.h"
 
 Enemy2D::Enemy2D()
 	: GenericEntity(NULL)
 {
-	EntityManager::GetInstance()->AddEntity(this);
 	this->position = Vector3(0, 0, 0);
 	this->scale = Vector3(1, 3, 1);
 
@@ -23,6 +26,8 @@ Enemy2D::Enemy2D()
 	this->scale.Set(10, 10, 10);
 	this->maxHealth = 100;
 	this->health = this->maxHealth;
+
+    EntityManager::GetInstance()->AddEntity(this, true);
 }
 
 Enemy2D::~Enemy2D()

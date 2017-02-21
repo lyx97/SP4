@@ -3,6 +3,8 @@
 #include "Collider/Collider.h"
 #include "../Source/WeaponInfo/Laser.h"
 #include "Enemy\Enemy2D.h"
+#include "PlayerInfo/PlayerInfo.h"
+#include "Particle/Particle.h"
 
 #include <iostream>
 using namespace std;
@@ -10,42 +12,43 @@ using namespace std;
 // Update all entities
 void EntityManager::Update(double _dt)
 {
-	// Update all entities
-	std::list<EntityBase*>::iterator it, end;
-	end = entityList.end();
-	for (it = entityList.begin(); it != end; ++it)
-	{
-		(*it)->Update(_dt);
-	}
+    // Update all entities
+    std::list<EntityBase*>::iterator it, end;
+    end = entityList.end();
+    for (it = entityList.begin(); it != end; ++it)
+    {
+        (*it)->Update(_dt);
+    }
 
-	// Update the Scene Graph
-	CSceneGraph::GetInstance()->Update();
+    // Update the Scene Graph
+    //CSceneGraph::GetInstance()->Update();
 
-	// Render the Spatial Partition
-	if (theSpatialPartition)
-		theSpatialPartition->Update();
+    // Render the Spatial Partition
+    if (partitionList.size() > 0)
+        partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Update();
 
-	// Check for Collision amongst entities with collider properties
+    //if (theSpatialPartition)
+    //    theSpatialPartition->Update();
 
-	//CheckForCollision();
+    // Check for Collision amongst entities with collider properties
+    //CheckForCollision();
 
-	// Clean up entities that are done
-	it = entityList.begin();
-	while (it != end)
-	{
-		if ((*it)->IsDone())
-		{
-			// Delete if done
-			if (*it)
-				delete *it;
-			it = entityList.erase(it);
-		}
-		else
-		{
-			// Move on otherwise
-			++it;
-		}
-	}
+    // Clean up entities that are done
+    it = entityList.begin();
+    while (it != end)
+    {
+        if ((*it)->IsDone())
+        {
+            // Delete if done
+            delete *it;
+            it = entityList.erase(it);
+        }
+        else
+        {
+            // Move on otherwise
+            ++it;
+        }
+    }
 }
 
 // Render all entities
@@ -59,12 +62,14 @@ void EntityManager::Render()
 		(*it)->Render();
 	}
 
-	// Render the Scene Graph
-	CSceneGraph::GetInstance()->Render();
+    // Render the Scene Graph
+    //CSceneGraph::GetInstance()->Render();
 
-	// Render the Spatial Partition
-	//if (theSpatialPartition)
-	//    theSpatialPartition->Render();
+    // Render the Spatial Partition
+    if (partitionList.size() > 0)
+        partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Render();
+    //if (theSpatialPartition)
+    //    theSpatialPartition->Render();
 }
 
 // Render the UI entities
@@ -80,17 +85,17 @@ void EntityManager::RenderUI()
 }
 
 // Add an entity to this EntityManager
-void EntityManager::AddEntity(EntityBase* _newEntity, bool bAddToSpatialPartition)
+void EntityManager::AddEntity(EntityBase* _newEntity, const int _roomID)
 {
 	entityList.push_back(_newEntity);
 
-	// Add to the Spatial Partition
-	if (theSpatialPartition && bAddToSpatialPartition)
-		theSpatialPartition->Add(_newEntity);
+    // Add to the Spatial Partition
+     if (_roomID != -1 && partitionList.size() > 0)
+        partitionList[_roomID]->Add(_newEntity);
 }
 
 // Remove an entity from this EntityManager
-bool EntityManager::RemoveEntity(EntityBase* _existingEntity)
+bool EntityManager::RemoveEntity(EntityBase* _existingEntity, const int _roomID)
 {
 	// Find the entity's iterator
 	std::list<EntityBase*>::iterator findIter = std::find(entityList.begin(), entityList.end(), _existingEntity);
@@ -101,19 +106,19 @@ bool EntityManager::RemoveEntity(EntityBase* _existingEntity)
 		delete *findIter;
 		findIter = entityList.erase(findIter);
 
-		// Remove from SceneNode too
-		if (CSceneGraph::GetInstance()->DeleteNode(_existingEntity))
-		{
-			cout << "EntityManager::RemoveEntity: Unable to remove entity";
-		}
-		else
-		{
-			// Remove from the Spatial Partition
-			if (theSpatialPartition)
-				theSpatialPartition->Remove(_existingEntity);
-		}
+        // Remove from SceneNode too
+        if (CSceneGraph::GetInstance()->DeleteNode(_existingEntity))
+        {
+            cout << "EntityManager::RemoveEntity: Unable to remove entity";
+        }
+        else
+        {
+            // Remove from the Spatial Partition
+            if (_roomID != -1)
+                partitionList[_roomID]->Remove(_existingEntity);
+        }
 
-		return true;
+		return true;	
 	}
 	// Return false if not found
 	return false;
@@ -135,10 +140,46 @@ bool EntityManager::MarkForDeletion(EntityBase* _existingEntity)
 	return false;
 }
 
+// Add a particle to this EntityManager
+void EntityManager::AddParticle(Particle* _newParticle)
+{
+    particleList.push_back(_newParticle);
+}
+
+void EntityManager::ReuseParticle(Particle* _newParticle)
+{
+    if (particleList.size() > 0)
+    {
+        cout << particleList.size() << endl;
+        std::list<Particle*>::iterator it, end;
+        end = particleList.end();
+        for (it = particleList.begin(); it != end; ++it)
+        {
+            if ((*it)->IsDone())
+            {
+                (*it)->SetIsDone(false);
+                (*it) = _newParticle;
+                return;
+            }
+        }
+
+        AddParticle(_newParticle);
+    }
+    else
+    {
+        AddParticle(_newParticle);
+    }
+}
+
+CSpatialPartition* EntityManager::GetSetSpatialPartition(const int roomID)
+{
+    return partitionList[roomID];
+}
+
 // Set a handle to the Spatial Partition to this class
 void EntityManager::SetSpatialPartition(CSpatialPartition* theSpatialPartition)
 {
-	this->theSpatialPartition = theSpatialPartition;
+    partitionList.push_back(theSpatialPartition);
 }
 
 // Constructor

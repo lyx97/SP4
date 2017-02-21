@@ -24,13 +24,7 @@ void GenericEntity::Render()
 	modelStack.PushMatrix();
 	modelStack.Translate(position.x, position.y, position.z);
 	modelStack.Scale(scale.x, scale.y, scale.z);
-    if (GetLODStatus())
-    {
-        if (theDetailLevel != NO_DETAILS)
-            RenderHelper::RenderMesh(GetLODMesh());
-    }
-    else
-        RenderHelper::RenderMesh(modelMesh);
+    RenderHelper::RenderMesh(modelMesh);
 	modelStack.PopMatrix();
 }
 
@@ -53,7 +47,7 @@ GenericEntity* Create::Entity(	const std::string& _meshName,
 	result->SetPosition(_position);
 	result->SetScale(_scale);
 	result->SetCollider(false);
-	EntityManager::GetInstance()->AddEntity(result, true);
+	EntityManager::GetInstance()->AddEntity(result);
 	return result;
 }
 

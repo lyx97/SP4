@@ -19,20 +19,11 @@
     <Filter Include="Projectile">
       <UniqueIdentifier>{e55b5c68-9d98-4cde-ba44-f0d28d0cf437}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SkyBox">
-      <UniqueIdentifier>{37a125cd-b9e3-4b31-923e-1226145f54a1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="WeaponInfo">
       <UniqueIdentifier>{7dbec654-2f78-40a8-a3ff-38691d57358e}</UniqueIdentifier>
     </Filter>
     <Filter Include="SceneGraph">
       <UniqueIdentifier>{0a4178da-1f14-43f4-84df-91bd17930f12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SpatialPartition">
-      <UniqueIdentifier>{a3955714-59d7-498f-872c-bac9a5e090e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="LevelOfDetails">
-      <UniqueIdentifier>{86be5ef7-d1a3-4faa-a153-41d96badd4ca}</UniqueIdentifier>
     </Filter>
     <Filter Include="Enemy">
       <UniqueIdentifier>{b90d843d-5b19-4b8a-8c31-0239ce073764}</UniqueIdentifier>
@@ -49,8 +40,16 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{e34d0bf2-e68e-4c7b-98bd-93d79a13dd5f}</UniqueIdentifier>
     </Filter>
+<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
     <Filter Include="Items">
       <UniqueIdentifier>{40006d02-8a10-426d-a97d-6002ca85cabe}</UniqueIdentifier>
+=======
+    <Filter Include="Particle">
+      <UniqueIdentifier>{5bdc3593-94bc-4329-a4a4-643451ada070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{89f781bc-fe86-473e-aac9-41537103db2a}</UniqueIdentifier>
+>>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -69,9 +68,6 @@
     <ClCompile Include="Source\OBJMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GroundEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TextEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -86,9 +82,6 @@
     </ClCompile>
     <ClCompile Include="Source\Projectile\Projectile.cpp">
       <Filter>Projectile</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SkyBox\SkyBoxEntity.cpp">
-      <Filter>SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="Source\WeaponInfo\Pistol.cpp">
       <Filter>WeaponInfo</Filter>
@@ -117,23 +110,8 @@
     <ClCompile Include="Source\SceneGraph\UpdateTransformation.cpp">
       <Filter>SceneGraph</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SpatialPartition\Grid.cpp">
-      <Filter>SpatialPartition</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SpatialPartition\SpatialPartition.cpp">
-      <Filter>SpatialPartition</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WeaponInfo\GrenadeThrow.cpp">
-      <Filter>WeaponInfo</Filter>
-    </ClCompile>
     <ClCompile Include="Source\WeaponInfo\Laser.cpp">
       <Filter>Projectile</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Projectile\Grenade.cpp">
-      <Filter>Projectile</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LevelOfDetails\LevelOfDetails.cpp">
-      <Filter>LevelOfDetails</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy\Enemy.cpp">
       <Filter>Enemy</Filter>
@@ -156,6 +134,7 @@
     <ClCompile Include="Source\Camera\Camera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
+<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
     <ClCompile Include="Source\Enemy\Enemy2D.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
@@ -174,6 +153,35 @@
     <ClCompile Include="Source\Enemy\Chaser.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+=======
+    <ClCompile Include="Source\Level\GenerateHeatmap.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Level\Grid.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Level\Heatmap.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Level\Level.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Level\Minimap.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Level\Room.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Level\SpatialPartition.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Enemy2D.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Particle\Particle.cpp">
+      <Filter>Particle</Filter>
+    </ClCompile>
+>>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -186,9 +194,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\OBJMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GroundEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\TextEntity.h">
@@ -205,9 +210,6 @@
     </ClInclude>
     <ClInclude Include="Source\Projectile\Projectile.h">
       <Filter>Projectile</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SkyBox\SkyBoxEntity.h">
-      <Filter>SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="Source\WeaponInfo\Pistol.h">
       <Filter>WeaponInfo</Filter>
@@ -236,23 +238,8 @@
     <ClInclude Include="Source\SceneGraph\UpdateTransformation.h">
       <Filter>SceneGraph</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SpatialPartition\Grid.h">
-      <Filter>SpatialPartition</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SpatialPartition\SpatialPartition.h">
-      <Filter>SpatialPartition</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WeaponInfo\GrenadeThrow.h">
-      <Filter>WeaponInfo</Filter>
-    </ClInclude>
     <ClInclude Include="Source\WeaponInfo\Laser.h">
       <Filter>Projectile</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Projectile\Grenade.h">
-      <Filter>Projectile</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LevelOfDetails\LevelOfDetails.h">
-      <Filter>LevelOfDetails</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy\Enemy.h">
       <Filter>Enemy</Filter>
@@ -290,6 +277,7 @@
     <ClInclude Include="Source\Camera\Camera.h">
       <Filter>Camera</Filter>
     </ClInclude>
+<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
     <ClInclude Include="Source\Enemy\Enemy2D.h">
       <Filter>Enemy</Filter>
     </ClInclude>
@@ -308,5 +296,34 @@
     <ClInclude Include="Source\Enemy\Chaser.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="Source\Level\GenerateHeatmap.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Level\Grid.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Level\Heatmap.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Level\Level.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Level\Minimap.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Level\Room.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Level\SpatialPartition.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Enemy2D.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Particle\Particle.h">
+      <Filter>Particle</Filter>
+    </ClInclude>
+>>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
   </ItemGroup>
 </Project>

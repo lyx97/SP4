@@ -5,9 +5,11 @@
 #include <list>
 #include "Vector3.h"
 #include "SceneGraph/SceneGraph.h"
-#include "SpatialPartition\SpatialPartition.h"
+#include "Level/SpatialPartition.h"
 
 class EntityBase;
+class CPlayerInfo;
+class Particle;
 
 class EntityManager : public Singleton<EntityManager>
 {
@@ -17,12 +19,16 @@ public:
 	void Render();
     void RenderUI();
 
-    void AddEntity(EntityBase* _newEntityy, bool bAddToSpatialPartition = false);
-	bool RemoveEntity(EntityBase* _existingEntity);
+    void AddEntity(EntityBase* _newEntity, const int _roomID = -1);
+    bool RemoveEntity(EntityBase* _existingEntity, const int _roomID = -1);
     bool MarkForDeletion(EntityBase* _existingEntity);
 
-	inline std::list<EntityBase*> GetEntityList() { return entityList; };
+    void AddParticle(Particle* _newParticle);
+    void ReuseParticle(Particle* _newParticle);
 
+	std::list<EntityBase*> GetEntityList() { return entityList; };
+
+    CSpatialPartition* GetSetSpatialPartition(const int roomID);
     void SetSpatialPartition(CSpatialPartition* theSpatialPartition);
 
 private:
@@ -47,9 +53,10 @@ private:
 	bool CheckForCollision(void);
 
 	std::list<EntityBase*> entityList;
+    std::list<Particle*> particleList;
 
     // Handler to Spatial Partition
-    CSpatialPartition* theSpatialPartition;
+    std::vector<CSpatialPartition*> partitionList;
 };
 
 #endif // ENTITY_MANAGER_H

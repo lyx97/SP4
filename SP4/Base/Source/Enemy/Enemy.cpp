@@ -3,6 +3,9 @@
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
 #include "../Waypoint/WaypointManager.h"
+#include "MeshBuilder.h"
+#include "../Level/Level.h"
+#include "../PlayerInfo/PlayerInfo.h"
 
 CEnemy::CEnemy(void)
     : GenericEntity(NULL)
@@ -13,7 +16,6 @@ CEnemy::CEnemy(void)
     , up(Vector3(0.0f, 0.0f, 0.0f))
     , maxBoundary(Vector3(0.0f, 0.0f, 0.0f))
     , minBoundary(Vector3(0.0f, 0.0f, 0.0f))
-    , m_pTerrain(NULL)
     , m_iWayPointIndex(-1)
 {
     listOfWaypoints.clear();
@@ -55,13 +57,11 @@ void CEnemy::Init(void)
     m_dSpeed = 1.0;
     // Set Entity Type
     m_eEntityType = EntityBase::ENEMY;
-    // Initialise the LOD meshes
-    InitLOD("cube", "sphere", "cubeSG");
     // Initialise the Collider
     this->SetCollider(true);
     this->SetAABB(Vector3(1, 1, 1), Vector3(-1, -1, -1));
     // Add to EntityManager
-    EntityManager::GetInstance()->AddEntity(this, true);
+    EntityManager::GetInstance()->AddEntity(this, CPlayerInfo::GetInstance()->GetRoomID());
 }
 
 // Reset this player instance to default
@@ -98,16 +98,6 @@ void CEnemy::SetBoundary(Vector3 max, Vector3 min)
     minBoundary = min;
 }
 
-// Set the terrain for the player info
-void CEnemy::SetTerrain(GroundEntity* m_pTerrain)
-{
-    if (m_pTerrain != NULL)
-    {
-        this->m_pTerrain = m_pTerrain;
-
-        SetBoundary(this->m_pTerrain->GetMaxBoundary(), this->m_pTerrain->GetMinBoundary());
-    }
-}
 
 // Get position
 Vector3 CEnemy::GetPos(void) const
@@ -125,12 +115,6 @@ Vector3 CEnemy::GetTarget(void) const
 Vector3 CEnemy::GetUp(void) const
 {
     return this->up;
-}
-
-// Get the terrain for the player info
-GroundEntity* CEnemy::GetTerrain(void)
-{
-    return this->m_pTerrain;
 }
 
 // Get next Waypoint for this CEnemy
@@ -157,10 +141,10 @@ void CEnemy::Update(double dt)
     //Constrain();
 
     // Update the target
-    if (position.z > 400.0f)
-        target.z = position.z * -1;
-    else if (position.z < -400.0f)
-        target.z = position.z * -1;
+    //if (position.z > 400.0f)
+    //    target.z = position.z * -1;
+    //else if (position.z < -400.0f)
+    //    target.z = position.z * -1;
 
     //if ((target - position).LengthSquared() < 25.0f)
     //{
@@ -184,11 +168,6 @@ void CEnemy::Constrain(void)
         position.x = minBoundary.x + 1.0f;
     if (position.z < minBoundary.z + 1.0f)
         position.z = minBoundary.z + 1.0f;
-
-    // if the y position is not equal to terrain height at that position;
-    // then update y position to the terrain height
-    if (position.y != m_pTerrain->GetTerrainHeight(position))
-        position.y = m_pTerrain->GetTerrainHeight(position);
 }
 
 // Render
@@ -198,13 +177,6 @@ void CEnemy::Render(void)
     modelStack.PushMatrix();
     modelStack.Translate(position.x, position.y, position.z);
     modelStack.Scale(scale.x, scale.y, scale.z);
-    if (GetLODStatus() == true)
-    {
-        if (theDetailLevel != NO_DETAILS)
-        {
-            // cout << theDetailLevel << endl;
-            RenderHelper::RenderMesh(GetLODMesh());
-        }
-    }
+    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("cube"));;
     modelStack.PopMatrix();
 }
