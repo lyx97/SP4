@@ -636,6 +636,7 @@ void MeshBuilder::Init()
 	GetMesh("direction")->textureID = LoadTGA("Image//direction.tga");
 	GenerateQuad("wall", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("wall")->textureID = LoadTGA("Image//Tile//wall.tga");
+    GenerateQuad("room", Color(0.5f, 0.5f, 0.5f), 1.f);
 	GenerateQuad("powerup_health", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("powerup_health")->textureID = LoadTGA("Image//Powerups//powerup_health.tga");
 }
