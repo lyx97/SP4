@@ -276,7 +276,8 @@ void SceneText::Update(double dt)
 		}
 		if (MouseController::GetInstance()->IsButtonReleased(MouseController::MMB))
 		{
-			Enemy2D* newEnemy = new Enemy2D();
+            for (int i = 0; i < 10; i++)
+			    Enemy2D* newEnemy = new Enemy2D();
 		}
 		if (KeyboardController::GetInstance()->IsKeyDown('N'))
 		{

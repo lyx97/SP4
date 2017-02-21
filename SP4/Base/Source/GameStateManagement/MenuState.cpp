@@ -49,17 +49,17 @@ void CMenuState::Update(double dt)
 	//Play
 	if (MousePosX >= 257 && MousePosX < 529 && MousePosY <= 216 && MousePosY >= 153)
 	{
-		MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//main_play.tga");
+		MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//UI//main_play.tga");
 	}
 	//Option
 	else if (MousePosX >= 207 && MousePosX < 586 && MousePosY <= 306 && MousePosY >= 244)
 	{
-		MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//main_option.tga");
+		MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//UI//main_option.tga");
 	}
 	//Exit
 	else if (MousePosX >= 277 && MousePosX < 529 && MousePosY <= 405 && MousePosY >= 340)
 	{
-		MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//main_exit.tga");
+		MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//UI//main_exit.tga");
 	}
 
 	if (MousePosX >= 257 && MousePosX < 529 && MousePosY <= 216 && MousePosY >= 153 && MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))

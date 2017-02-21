@@ -60,15 +60,6 @@ public:
 	inline void SetMass(const float& _value){ mass = _value; };
 	inline float GetMass(){ return mass; };
 
-	inline void SetVelocity(const Vector3& _value){ velocity = _value; };
-	inline Vector3 GetVelocity(){ return velocity; };
-
-	inline void SetFront(const Vector3& _value){ front = _value; };
-	inline Vector3 GetFront(){ return front; };
-
-	inline void SetMass(const float& _value){ mass = _value; };
-	inline float GetMass(){ return mass; };
-
 protected:
 	Vector3 position;
 	Vector3 scale;

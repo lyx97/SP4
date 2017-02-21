@@ -51,7 +51,7 @@ void CIntroState::Update(double dt)
 	//Play
 	if (MousePosX >= 327 && MousePosX < 471 && MousePosY <= 359 && MousePosY >= 299)
 	{
-		MeshBuilder::GetInstance()->GetMesh("INTROSTATE_BKGROUND")->textureID = LoadTGA("Image//intro_go.tga");
+		MeshBuilder::GetInstance()->GetMesh("INTROSTATE_BKGROUND")->textureID = LoadTGA("Image//UI//intro_go.tga");
 		if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
 		{
 			cout << "Loading CMenuState" << endl;

@@ -2,10 +2,10 @@
 
 #include "Vector3.h"
 #include "../Camera/Camera.h"
-#include "../GroundEntity.h"
 #include "../WeaponInfo/WeaponInfo.h"
 #include "../GenericEntity.h"
 #include "../TextEntity.h"
+#include "../Level/GenerateHeatmap.h"
 
 static const float DASH_DISTANCE = 50.0f;
 static const float DASH_COOLDOWN = 2.f;

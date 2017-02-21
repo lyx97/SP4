@@ -23,9 +23,9 @@ void EntityManager::Update(double _dt)
     // Update the Scene Graph
     //CSceneGraph::GetInstance()->Update();
 
-    // Render the Spatial Partition
-    if (partitionList.size() > 0)
-        partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Update();
+    // Update the Spatial Partition
+    //if (partitionList.size() > 0)
+    //    partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Update();
 
     //if (theSpatialPartition)
     //    theSpatialPartition->Update();
@@ -45,6 +45,23 @@ void EntityManager::Update(double _dt)
         }
         else
         {
+            //Vector3 position = (*it)->GetPosition();
+            //Vector3 index = (*it)->GetIndex();
+            //Vector3 min = partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->GetGrid(index.x, index.z).GetMin();
+            //Vector3 max = partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->GetGrid(index.x, index.z).GetMax();
+
+            //if (((min.x <= position.x) && (position.x <= max.x)) &&
+            //    ((min.z <= position.z) && (position.z <= max.z)))
+            //{
+            //    // Move on otherwise
+            //    ++it;
+            //}
+            //else
+            //{
+            //    partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->MigrationList->push_back(*it);
+            //    // Remove from this Grid
+            //    it = ListOfObjects.erase(it);
+            //}
             // Move on otherwise
             ++it;
         }
@@ -68,8 +85,6 @@ void EntityManager::Render()
     // Render the Spatial Partition
     if (partitionList.size() > 0)
         partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Render();
-    //if (theSpatialPartition)
-    //    theSpatialPartition->Render();
 }
 
 // Render the UI entities

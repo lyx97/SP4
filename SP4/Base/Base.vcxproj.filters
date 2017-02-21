@@ -1,159 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="PlayerInfo">
-      <UniqueIdentifier>{ee63a848-364d-4119-9628-05cc3d6a4b17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Projectile">
-      <UniqueIdentifier>{e55b5c68-9d98-4cde-ba44-f0d28d0cf437}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WeaponInfo">
-      <UniqueIdentifier>{7dbec654-2f78-40a8-a3ff-38691d57358e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SceneGraph">
-      <UniqueIdentifier>{0a4178da-1f14-43f4-84df-91bd17930f12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Enemy">
-      <UniqueIdentifier>{b90d843d-5b19-4b8a-8c31-0239ce073764}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameStateManagement">
-      <UniqueIdentifier>{9a960827-d5ab-426d-9d94-0b9916a52d8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua">
-      <UniqueIdentifier>{4c4025b2-791f-4655-8f5e-cccbb129941a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Waypoint">
-      <UniqueIdentifier>{a508ce9a-8735-4d4a-a2c2-03a812de3954}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Camera">
-      <UniqueIdentifier>{e34d0bf2-e68e-4c7b-98bd-93d79a13dd5f}</UniqueIdentifier>
-    </Filter>
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
-    <Filter Include="Items">
-      <UniqueIdentifier>{40006d02-8a10-426d-a97d-6002ca85cabe}</UniqueIdentifier>
-=======
-    <Filter Include="Particle">
-      <UniqueIdentifier>{5bdc3593-94bc-4329-a4a4-643451ada070}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Level">
-      <UniqueIdentifier>{89f781bc-fe86-473e-aac9-41537103db2a}</UniqueIdentifier>
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="Source\Enemy\Enemy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Enemy2D.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\main.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\Camera\Camera.cpp">
+      <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneText.cpp">
+    <ClCompile Include="Source\Enemy\Chaser.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\FPSCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\OBJMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TextEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SpriteEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Light.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PlayerInfo\PlayerInfo.cpp">
-      <Filter>PlayerInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Projectile\Projectile.cpp">
-      <Filter>Projectile</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WeaponInfo\Pistol.cpp">
-      <Filter>WeaponInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WeaponInfo\WeaponInfo.cpp">
-      <Filter>WeaponInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EntityManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GenericEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WeaponInfo\LaserBlaster.cpp">
-      <Filter>WeaponInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneGraph\SceneGraph.cpp">
-      <Filter>SceneGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneGraph\SceneNode.cpp">
-      <Filter>SceneGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneGraph\Transform.cpp">
-      <Filter>SceneGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneGraph\UpdateTransformation.cpp">
-      <Filter>SceneGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WeaponInfo\Laser.cpp">
-      <Filter>Projectile</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\Enemy.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameStateManagement\IntroState.cpp">
-      <Filter>GameStateManagement</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameStateManagement\MenuState.cpp">
-      <Filter>GameStateManagement</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Lua\LuaInterface.cpp">
-      <Filter>Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Waypoint\Waypoint.cpp">
-      <Filter>Waypoint</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Waypoint\WaypointManager.cpp">
-      <Filter>Waypoint</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Camera\Camera.cpp">
-      <Filter>Camera</Filter>
-    </ClCompile>
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
-    <ClCompile Include="Source\Enemy\Enemy2D.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Items\Powerup.cpp">
-      <Filter>Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Items\Skill.cpp">
-      <Filter>Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameStateManagement\HelpState.cpp">
-      <Filter>GameStateManagement</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameStateManagement\OptionState.cpp">
-      <Filter>GameStateManagement</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\Chaser.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
-=======
     <ClCompile Include="Source\Level\GenerateHeatmap.cpp">
       <Filter>Level</Filter>
     </ClCompile>
@@ -166,8 +34,62 @@
     <ClCompile Include="Source\Level\Level.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GenericEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\HelpState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\IntroState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\MenuState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Particle\Particle.cpp">
+      <Filter>Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WeaponInfo\Pistol.cpp">
+      <Filter>WeaponInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\OBJMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WeaponInfo\LaserBlaster.cpp">
+      <Filter>WeaponInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Lua\LuaInterface.cpp">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Level\Minimap.cpp">
       <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\OptionState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerInfo\PlayerInfo.cpp">
+      <Filter>PlayerInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WeaponInfo\Laser.cpp">
+      <Filter>Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Projectile\Projectile.cpp">
+      <Filter>Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneGraph\SceneGraph.cpp">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneGraph\SceneNode.cpp">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneText.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Level\Room.cpp">
       <Filter>Level</Filter>
@@ -175,128 +97,56 @@
     <ClCompile Include="Source\Level\SpatialPartition.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\Enemy2D.cpp">
-      <Filter>Enemy</Filter>
+    <ClCompile Include="Source\SceneGraph\Transform.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Particle\Particle.cpp">
-      <Filter>Particle</Filter>
+    <ClCompile Include="Source\TextEntity.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
+    <ClCompile Include="Source\SpriteEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneGraph\UpdateTransformation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Waypoint\Waypoint.cpp">
+      <Filter>Waypoint</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Waypoint\WaypointManager.cpp">
+      <Filter>Waypoint</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WeaponInfo\WeaponInfo.cpp">
+      <Filter>WeaponInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Items\Powerup.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Items\Skill.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Enemy\Enemy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Enemy2D.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneText.h">
+    <ClInclude Include="Source\Enemy\Chaser.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\FPSCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\OBJMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TextEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SpriteEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PlayerInfo\PlayerInfo.h">
-      <Filter>PlayerInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Projectile\Projectile.h">
-      <Filter>Projectile</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WeaponInfo\Pistol.h">
-      <Filter>WeaponInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WeaponInfo\WeaponInfo.h">
-      <Filter>WeaponInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EntityManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GenericEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WeaponInfo\LaserBlaster.h">
-      <Filter>WeaponInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneGraph\SceneGraph.h">
-      <Filter>SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneGraph\SceneNode.h">
-      <Filter>SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneGraph\Transform.h">
-      <Filter>SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneGraph\UpdateTransformation.h">
-      <Filter>SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WeaponInfo\Laser.h">
-      <Filter>Projectile</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\Enemy.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameStateManagement\IntroState.h">
-      <Filter>GameStateManagement</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameStateManagement\MenuState.h">
-      <Filter>GameStateManagement</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Lua\lauxlib.h">
-      <Filter>Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Lua\lua.h">
-      <Filter>Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Lua\lua.hpp">
-      <Filter>Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Lua\luaconf.h">
-      <Filter>Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Lua\lualib.h">
-      <Filter>Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Lua\LuaInterface.h">
-      <Filter>Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Waypoint\Waypoint.h">
-      <Filter>Waypoint</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Waypoint\WaypointManager.h">
-      <Filter>Waypoint</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Camera\Camera.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
-    <ClInclude Include="Source\Enemy\Enemy2D.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Items\Powerup.h">
-      <Filter>Items</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Items\Skill.h">
-      <Filter>Items</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameStateManagement\HelpState.h">
-      <Filter>GameStateManagement</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameStateManagement\OptionState.h">
-      <Filter>GameStateManagement</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\Chaser.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
-=======
     <ClInclude Include="Source\Level\GenerateHeatmap.h">
       <Filter>Level</Filter>
     </ClInclude>
@@ -309,8 +159,74 @@
     <ClInclude Include="Source\Level\Level.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GenericEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\HelpState.h">
+      <Filter>GameStateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\IntroState.h">
+      <Filter>GameStateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\MenuState.h">
+      <Filter>GameStateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Particle\Particle.h">
+      <Filter>Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WeaponInfo\Pistol.h">
+      <Filter>WeaponInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WeaponInfo\LaserBlaster.h">
+      <Filter>WeaponInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Lua\lauxlib.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Lua\lua.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Lua\lua.hpp">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Lua\luaconf.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Lua\LuaInterface.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Lua\lualib.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Level\Minimap.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OBJMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\OptionState.h">
+      <Filter>GameStateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerInfo\PlayerInfo.h">
+      <Filter>PlayerInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WeaponInfo\Laser.h">
+      <Filter>Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile\Projectile.h">
+      <Filter>Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneGraph\SceneGraph.h">
+      <Filter>SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneGraph\SceneNode.h">
+      <Filter>SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneText.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Level\Room.h">
       <Filter>Level</Filter>
@@ -318,12 +234,79 @@
     <ClInclude Include="Source\Level\SpatialPartition.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\Enemy2D.h">
-      <Filter>Enemy</Filter>
+    <ClInclude Include="Source\Waypoint\Waypoint.h">
+      <Filter>Waypoint</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Particle\Particle.h">
-      <Filter>Particle</Filter>
+    <ClInclude Include="Source\Waypoint\WaypointManager.h">
+      <Filter>Waypoint</Filter>
     </ClInclude>
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
+    <ClInclude Include="Source\WeaponInfo\WeaponInfo.h">
+      <Filter>WeaponInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TextEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpriteEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneGraph\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneGraph\UpdateTransformation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Items\Powerup.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Items\Skill.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{1e165096-ecbe-4e91-a47b-b02a1be0cc2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{f5e5eafe-2b27-4b31-bd7d-4706eba6d78d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{3a98b0aa-24be-4f9c-8302-c63abf6819f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{ef126319-d273-4869-9fb6-b060943c5b7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{c41b9451-8bd3-46ee-99a6-921c57b836b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{f3997367-48f0-4682-b872-df5c815bc1a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayerInfo">
+      <UniqueIdentifier>{0352d000-1ae1-42be-908a-812dc8e9c02c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Projectile">
+      <UniqueIdentifier>{788f182a-8eeb-4a04-a889-8c551b347699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneGraph">
+      <UniqueIdentifier>{a9e8d191-27c9-48cf-a828-1dd9c7ba6e6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStateManagement">
+      <UniqueIdentifier>{f21c3275-cc77-4b81-b782-e60b490a0d4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{22690a5f-a5a8-4ac8-b875-ed8a68bbfa6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Waypoint">
+      <UniqueIdentifier>{e9e74d12-1f17-42c7-ae5d-0153ad8e82ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WeaponInfo">
+      <UniqueIdentifier>{9f299c88-7044-4ad5-8118-0fb8c3737175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{8d35496c-7e97-45eb-9163-975b72921092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle">
+      <UniqueIdentifier>{a07cdc8b-c123-4b80-9959-83843b5945da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

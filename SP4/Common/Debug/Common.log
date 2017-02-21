@@ -1,34 +1,19 @@
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
-﻿Build started 21/2/2017 12:51:20 PM.
-     1>Project "C:\Users\Jenny Liang\Desktop\SP4\SP4\Common\Common.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glew/include" /I"C:\Users\Jenny Liang\Desktop\SP4\SP4\/glfw/include" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\CameraBase.cpp Source\Collider\Collider.cpp Source\EntityBase.cpp Source\Font\FontData.cpp Source\Font\LoadFontData.cpp Source\GraphicsManager.cpp Source\KeyboardController.cpp Source\LightBase.cpp Source\LoadOBJ.cpp Source\LoadTGA.cpp Source\MathUtility.cpp Source\MatrixStack.cpp Source\Mesh.cpp Source\MeshBuilder.cpp Source\MouseController.cpp Source\Mtx44.cpp Source\RenderHelper.cpp Source\SceneManager.cpp Source\ShaderProgram.cpp Source\timer.cpp Source\Utility.cpp Source\Vector2.cpp Source\Vector3.cpp Source\Win32Input.cpp
-=======
-﻿Build started 2/21/2017 9:22:44 AM.
+﻿Build started 2/21/2017 2:07:13 PM.
      1>Project "C:\Users\155117g\Desktop\SP4\SP4\Common\Common.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\CameraBase.cpp Source\Collider\Collider.cpp Source\EntityBase.cpp Source\GraphicsManager.cpp Source\KeyboardController.cpp Source\LightBase.cpp Source\LoadOBJ.cpp Source\LoadTGA.cpp Source\MathUtility.cpp Source\MatrixStack.cpp Source\Mesh.cpp Source\MeshBuilder.cpp Source\MouseController.cpp Source\Mtx44.cpp Source\RenderHelper.cpp Source\SceneManager.cpp Source\ShaderProgram.cpp Source\Utility.cpp Source\Vector2.cpp Source\Vector3.cpp Source\Win32Input.cpp Source\timer.cpp
-         timer.cpp
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\CameraBase.cpp Source\Collider\Collider.cpp Source\EntityBase.cpp Source\GraphicsManager.cpp Source\KeyboardController.cpp Source\LightBase.cpp Source\LoadOBJ.cpp Source\LoadTGA.cpp Source\MathUtility.cpp Source\MatrixStack.cpp Source\Mesh.cpp Source\MeshBuilder.cpp Source\MouseController.cpp Source\Mtx44.cpp Source\RenderHelper.cpp Source\SceneManager.cpp Source\ShaderProgram.cpp Source\timer.cpp Source\Utility.cpp Source\Vector2.cpp Source\Vector3.cpp Source\Win32Input.cpp
          Win32Input.cpp
          Vector3.cpp
          Vector2.cpp
          Utility.cpp
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
          timer.cpp
-=======
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
          ShaderProgram.cpp
          SceneManager.cpp
          RenderHelper.cpp
          Mtx44.cpp
          MouseController.cpp
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
-     1>c:\users\jenny liang\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-=======
      1>c:\users\155117g\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(27): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(28): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
          MeshBuilder.cpp
          Mesh.cpp
          MatrixStack.cpp
@@ -38,27 +23,15 @@
          LightBase.cpp
          KeyboardController.cpp
          GraphicsManager.cpp
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
-         LoadFontData.cpp
+         EntityBase.cpp
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(28): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
          Generating Code...
          Compiling...
-         FontData.cpp
-         EntityBase.cpp
-=======
-         EntityBase.cpp
-     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(27): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
-         Generating Code...
-         Compiling...
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
          Collider.cpp
          CameraBase.cpp
          Generating Code...
        Lib:
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\Users\Jenny Liang\Desktop\SP4\SP4\Debug\Common.lib" /NOLOGO Debug\CameraBase.obj
-=======
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Common.lib" /NOLOGO Debug\CameraBase.obj
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
          Debug\Collider.obj
          Debug\EntityBase.obj
          Debug\GraphicsManager.obj
@@ -80,18 +53,9 @@
          Debug\Vector2.obj
          Debug\Vector3.obj
          Debug\Win32Input.obj
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
-         Common.vcxproj -> C:\Users\Jenny Liang\Desktop\SP4\SP4\Debug\Common.lib
-     1>Done Building Project "C:\Users\Jenny Liang\Desktop\SP4\SP4\Common\Common.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:12.49
-=======
          Common.vcxproj -> C:\Users\155117g\Desktop\SP4\SP4\Debug\Common.lib
      1>Done Building Project "C:\Users\155117g\Desktop\SP4\SP4\Common\Common.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:13.00
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
+Time Elapsed 00:00:09.80

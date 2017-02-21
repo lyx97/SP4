@@ -13,10 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Camera\Camera.cpp" />
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
     <ClCompile Include="Source\Enemy\Chaser.cpp" />
-=======
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
     <ClCompile Include="Source\Enemy\Enemy.cpp" />
     <ClCompile Include="Source\Enemy\Enemy2D.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
@@ -26,12 +23,8 @@
     <ClCompile Include="Source\GameStateManagement\MenuState.cpp" />
     <ClCompile Include="Source\GameStateManagement\OptionState.cpp" />
     <ClCompile Include="Source\GenericEntity.cpp" />
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
-    <ClCompile Include="Source\GroundEntity.cpp" />
     <ClCompile Include="Source\Items\Powerup.cpp" />
     <ClCompile Include="Source\Items\Skill.cpp" />
-    <ClCompile Include="Source\LevelOfDetails\LevelOfDetails.cpp" />
-=======
     <ClCompile Include="Source\Level\GenerateHeatmap.cpp" />
     <ClCompile Include="Source\Level\Grid.cpp" />
     <ClCompile Include="Source\Level\Heatmap.cpp" />
@@ -39,7 +32,6 @@
     <ClCompile Include="Source\Level\Minimap.cpp" />
     <ClCompile Include="Source\Level\Room.cpp" />
     <ClCompile Include="Source\Level\SpatialPartition.cpp" />
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Lua\LuaInterface.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -64,10 +56,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Camera\Camera.h" />
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
     <ClInclude Include="Source\Enemy\Chaser.h" />
-=======
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
     <ClInclude Include="Source\Enemy\Enemy.h" />
     <ClInclude Include="Source\Enemy\Enemy2D.h" />
     <ClInclude Include="Source\EntityManager.h" />
@@ -77,12 +66,8 @@
     <ClInclude Include="Source\GameStateManagement\MenuState.h" />
     <ClInclude Include="Source\GameStateManagement\OptionState.h" />
     <ClInclude Include="Source\GenericEntity.h" />
-<<<<<<< 9305c969d6bced003479ef0078241be1b25d411f
-    <ClInclude Include="Source\GroundEntity.h" />
     <ClInclude Include="Source\Items\Powerup.h" />
     <ClInclude Include="Source\Items\Skill.h" />
-    <ClInclude Include="Source\LevelOfDetails\LevelOfDetails.h" />
-=======
     <ClInclude Include="Source\Level\GenerateHeatmap.h" />
     <ClInclude Include="Source\Level\Grid.h" />
     <ClInclude Include="Source\Level\Heatmap.h" />
@@ -90,7 +75,6 @@
     <ClInclude Include="Source\Level\Minimap.h" />
     <ClInclude Include="Source\Level\Room.h" />
     <ClInclude Include="Source\Level\SpatialPartition.h" />
->>>>>>> cbe74a236b8559a2d392b34409c8cd9ef52ee008
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\Lua\lauxlib.h" />
     <ClInclude Include="Source\Lua\lua.h" />

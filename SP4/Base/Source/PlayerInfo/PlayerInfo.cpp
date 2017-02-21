@@ -256,56 +256,48 @@ void CPlayerInfo::Update(double dt)
 		healthregenCooldownTimer = 1;
 	}
 
-	// Key input for movement
-	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward) ||
-		KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward) ||
-		KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft) ||
-		KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
+	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
 	{
-		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
-		{
-            //cout << CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(2) << endl;
-            //if (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridType(index.x, index.z - 1) == GRID_TYPE::PATH)
-                //m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(2);
-            forceDir.z -= 1;
-		}
-		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward))
-		{
-            forceDir.z += 1;
-		}
-		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
-		{
-            forceDir.x -= 1;
-		}
-		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
-		{
-            forceDir.x += 1;
-		}
-
-			if (velocity.LengthSquared() < maxSpeed * maxSpeed)
-			{
-				isMoving = true;
-				forceMagnitude = maxSpeed;
-				this->ApplyForce(forceDir, forceMagnitude * dt);
-			}
-		}
-
-		if (MouseController::GetInstance()->IsButtonPressed(MouseController::RMB))
-		{
-			if (!forceDir.IsZero() && !isDashed)
-			{
-				forceMagnitude = maxSpeed * DASH_DISTANCE;
-				this->ApplyForce(forceDir, forceMagnitude * dt);
-				isDashed = true;
-				dashCooldownTimer = DASH_COOLDOWN;
-			}
-		}
-		if (KeyboardController::GetInstance()->IsKeyPressed('E'))
-		{
-			this->health -= 5;
-		}
-		Constrain();
+        //cout << CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(2) << endl;
+        //if (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridType(index.x, index.z - 1) == GRID_TYPE::PATH)
+            //m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(2);
+        forceDir.z -= 1;
 	}
+	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward))
+	{
+        forceDir.z += 1;
+	}
+	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
+	{
+        forceDir.x -= 1;
+	}
+	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
+	{
+        forceDir.x += 1;
+	}
+
+	if (velocity.LengthSquared() < maxSpeed * maxSpeed)
+	{
+		isMoving = true;
+		forceMagnitude = maxSpeed;
+		this->ApplyForce(forceDir, forceMagnitude * dt);
+	}
+
+	if (MouseController::GetInstance()->IsButtonPressed(MouseController::RMB))
+	{
+		if (!forceDir.IsZero() && !isDashed)
+		{
+			forceMagnitude = maxSpeed * DASH_DISTANCE;
+			this->ApplyForce(forceDir, forceMagnitude * dt);
+			isDashed = true;
+			dashCooldownTimer = DASH_COOLDOWN;
+		}
+	}
+	if (KeyboardController::GetInstance()->IsKeyPressed('E'))
+	{
+		this->health -= 5;
+	}
+	Constrain();
 
 	// Update the weapons
 	if (KeyboardController::GetInstance()->IsKeyReleased('R'))

@@ -86,10 +86,12 @@ public:
 
     Vector3 GetPos(void) const;
 
+    inline Vector3 GetMin(void) const { return min; }
+    inline Vector3 GetMax(void) const { return max; }
+
     // Type
     GRID_TYPE GetType(void) const;
     void SetType(const GRID_TYPE type);
-
 
 	// PrintSelf
 	void PrintSelf();

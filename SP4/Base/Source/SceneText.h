@@ -14,7 +14,6 @@
 #include "Enemy/Enemy.h"
 #include "Enemy/Enemy2D.h"
 #include "../Items/Powerup.h"
-#include "Font/LoadFontData.h"
 #include "Enemy/Chaser.h"
 #include "Level/Minimap.h"
 

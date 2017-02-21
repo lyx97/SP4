@@ -13,7 +13,6 @@ Enemy2D::Enemy2D()
 	this->isDone = false;
 	this->m_bCollider = true;
 	this->m_bLaser = false;
-	this->m_bActive = false;
 
 	this->m_eEntityType = EntityBase::ENEMY;
 
@@ -66,14 +65,15 @@ void Enemy2D::Update(double _dt)
 			{
 				this->velocity += proj->GetVelocity() * proj->GetMass();
 				this->health -= proj->GetDamage();
-				proj->SetIsDone(true);
+				//proj->SetIsDone(true);
+                this->SetIsDone(true);
 			}
 		}
 	}
-	Vector3 temp = (Cohesion(this) + Alignment(this) + Separation(this));
-	if (!temp.IsZero())
+	//Vector3 temp = (Cohesion(this) + Alignment(this) + Separation(this));
+	//if (!temp.IsZero())
 	{
-		this->velocity += temp.Normalized();
+		//this->velocity += temp.Normalized();
 	}
 	if (this->health <= 0)
 	{
