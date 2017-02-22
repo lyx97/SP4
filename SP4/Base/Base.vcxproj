@@ -44,6 +44,7 @@
     <ClCompile Include="Source\SceneGraph\Transform.cpp" />
     <ClCompile Include="Source\SceneGraph\UpdateTransformation.cpp" />
     <ClCompile Include="Source\SceneText.cpp" />
+    <ClCompile Include="Source\SpriteAnimation\SpriteAnimation.cpp" />
     <ClCompile Include="Source\SpriteEntity.cpp" />
     <ClCompile Include="Source\TextEntity.cpp" />
     <ClCompile Include="Source\Waypoint\Waypoint.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="Source\SceneGraph\Transform.h" />
     <ClInclude Include="Source\SceneGraph\UpdateTransformation.h" />
     <ClInclude Include="Source\SceneText.h" />
+    <ClInclude Include="Source\SpriteAnimation\SpriteAnimation.h" />
     <ClInclude Include="Source\SpriteEntity.h" />
     <ClInclude Include="Source\TextEntity.h" />
     <ClInclude Include="Source\Waypoint\Waypoint.h" />
@@ -152,6 +154,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);$(SolutionDir)/glfw/lib-msvc100;$(SolutionDir)/glew/lib;$(SolutionDir)/Lua/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Common.lib;winmm.lib;opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

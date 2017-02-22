@@ -1,8 +1,8 @@
-﻿Build started 2/21/2017 5:52:45 PM.
+﻿Build started 2/22/2017 5:51:12 PM.
      1>Project "C:\Users\155118A\Desktop\SP4\SP4\Common\Common.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155118A\Desktop\SP4\SP4\/glew/include /IC:\Users\155118A\Desktop\SP4\SP4\/glfw/include /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\MeshBuilder.cpp
-         MeshBuilder.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155118A\Desktop\SP4\SP4\/glew/include /IC:\Users\155118A\Desktop\SP4\SP4\/glfw/include /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\RenderHelper.cpp
+         RenderHelper.cpp
        Lib:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Common.lib" /NOLOGO Debug\CameraBase.obj
          Debug\Collider.obj
@@ -31,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.84
+Time Elapsed 00:00:02.99

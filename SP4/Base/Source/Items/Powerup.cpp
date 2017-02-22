@@ -83,25 +83,28 @@ void Powerup::Render()
 	{
 	case Powerup::HEALTH_RECOVER:
 	{
-		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_health"));
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_healthrecover"));
 	}
 		break;
 	case Powerup::HEALTH_INCREASE:
 	{
-
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_health"));
 	}
 		break;
 	case Powerup::SPEED_INCREASE:
 	{
-
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_speed"));
 	}
 		break;
 	case Powerup::HEALTHREGEN_INCREASE:
 	{
-
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_healthregen"));
 	}
 		break;
 	default:
+	{
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
+	}
 		break;
 	}
 	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();

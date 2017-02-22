@@ -138,8 +138,8 @@ void SceneText::Init()
 
 	//Create::Sprite2DObject("crosshair", Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f));
 
-    minimap = new CMinimap();
-    minimap->Init();
+    //minimap = new CMinimap();
+    //minimap->Init();
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
@@ -234,7 +234,7 @@ void SceneText::Update(double dt)
 		}
 		if (MouseController::GetInstance()->IsButtonReleased(MouseController::MMB))
 		{
-            for (int i = 0; i < 10; i++)
+            //for (int i = 0; i < 10; i++)
 			    Enemy2D* newEnemy = new Enemy2D();
 		}
 		if (KeyboardController::GetInstance()->IsKeyDown('N'))

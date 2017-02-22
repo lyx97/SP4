@@ -67,7 +67,7 @@ CPlayerInfo::~CPlayerInfo(void)
 // Initialise this class instance
 void CPlayerInfo::Init(void)
 {
-	this->scale.Set(3, 3, 3);
+	this->scale.Set(15, 25, 15);
 	// Set the default values
 	defaultPosition.Set(0, 0, 10);
 	defaultTarget.Set(0, 0, 0);
@@ -92,6 +92,29 @@ void CPlayerInfo::Init(void)
     secondaryWeapon->Init();
     //secondaryWeapon = new CGrenadeThrow();
     //secondaryWeapon->Init();
+
+	playerMeshes[0] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_down");		// idle
+	playerMeshes[1] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");		// up
+	playerMeshes[2] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_down");		// down
+	playerMeshes[3] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_left");		// left
+	playerMeshes[4] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_right");	// right
+	//playerMeshes[5] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");		// shoot up
+	//playerMeshes[6] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");		// shoot down
+	//playerMeshes[7] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");		// shoot left
+	//playerMeshes[8] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");		// shoot right
+
+	for (int i = 0; i < 5; ++i)
+	{
+		playerMeshes[i]->m_anim = new Animation;
+		playerMeshes[i]->m_anim->Set(0, 13, 1, 1.f, true);
+	}
+	playerMesh = playerMeshes[0];
+	spriteAnimation = (SpriteAnimation*)(MeshBuilder::GetInstance()->GetMesh("player_up"));
+	if (spriteAnimation)
+	{
+		spriteAnimation->m_anim = new Animation();
+		spriteAnimation->m_anim->Set(0, 13, 1, 1.f, true);
+	}
 
     // Initialise the custom keyboard inputs
     keyMoveForward = CLuaInterface::GetInstance()->getCharValue("moveForward");
@@ -187,14 +210,12 @@ void CPlayerInfo::Update(double dt)
         prevIndex = index;
     }
 
+	if (playerMesh)
+	{
+		playerMesh->m_anim->animActive = true;
+		playerMesh->Update(dt);
+	}
 
-    //if (index.x == 1 && index.z < zSize || 
-    //    index.x == xSize - 1 && index.z < zSize ||
-    //    index.z == 1 && index.x < xSize ||
-    //    index.z == zSize - 1 && index.x < xSize)
-    //{
-    //    cout << "EDGE" << endl;
-    //}
 	position += velocity * (float)dt;
 	if (!Application::GetInstance().GetWorldBasedMousePos().IsZero())
 		front.Set(Vector3(position - Application::GetInstance().GetWorldBasedMousePos()).Normalized());
@@ -258,22 +279,23 @@ void CPlayerInfo::Update(double dt)
 
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
 	{
-        //cout << CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(2) << endl;
-        //if (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridType(index.x, index.z - 1) == GRID_TYPE::PATH)
-            //m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(2);
         forceDir.z -= 1;
+		playerMesh = playerMeshes[1];
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward))
 	{
         forceDir.z += 1;
+		playerMesh = playerMeshes[2];
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
 	{
         forceDir.x -= 1;
+		playerMesh = playerMeshes[4];
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
 	{
         forceDir.x += 1;
+		playerMesh = playerMeshes[3];
 	}
 
 	if (velocity.LengthSquared() < maxSpeed * maxSpeed)
@@ -361,7 +383,7 @@ void CPlayerInfo::Render()
 		this->scale.x,
 		this->scale.y,
 		this->scale.z);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("sphere"));
+	RenderHelper::RenderMesh(playerMesh);
 	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
 
     //for (int x = 0; x <= CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax(); ++x)
@@ -425,6 +447,7 @@ void CPlayerInfo::Shoot(Vector3 dir)
 {
 	if (secondaryWeapon)
 		secondaryWeapon->Discharge(this->position, dir, this);
+	cout << Math::RadianToDegree(atan2f(dir.z, dir.x)) << endl;
 }
 
 void CPlayerInfo::RecoverHealth()

@@ -559,6 +559,63 @@ Mesh* MeshBuilder::GenerateRay(const std::string &meshName, const float length)
     return mesh;
 }
 
+SpriteAnimation* MeshBuilder::GenerateSpriteAnimation(const std::string &meshName, unsigned numRow, unsigned numCol)
+{
+	Vertex v;
+	std::vector<Vertex> vertex_buffer_data;
+	std::vector<GLuint> index_buffer_data;
+
+	float width = 1.f / numCol;
+	float height = 1.f / numRow;
+	int offset = 0;
+	for (unsigned i = 0; i < numRow; ++i)
+	{
+		for (unsigned j = 0; j < numCol; ++j)
+		{
+			float u1 = j * width;
+			float v1 = 1.f - height - i * height;
+			v.pos.Set(-0.5f, -0.5f, 0);
+			v.texCoord.Set(u1, v1);
+			vertex_buffer_data.push_back(v);
+
+			v.pos.Set(0.5f, -0.5f, 0);
+			v.texCoord.Set(u1 + width, v1);
+			vertex_buffer_data.push_back(v);
+
+			v.pos.Set(0.5f, 0.5f, 0);
+			v.texCoord.Set(u1 + width, v1 + height);
+			vertex_buffer_data.push_back(v);
+
+			v.pos.Set(-0.5f, 0.5f, 0);
+			v.texCoord.Set(u1, v1 + height);
+			vertex_buffer_data.push_back(v);
+
+			index_buffer_data.push_back(offset + 0);
+			index_buffer_data.push_back(offset + 1);
+			index_buffer_data.push_back(offset + 2);
+			index_buffer_data.push_back(offset + 0);
+			index_buffer_data.push_back(offset + 2);
+			index_buffer_data.push_back(offset + 3);
+			offset += 4;
+		}
+	}
+
+	SpriteAnimation *animation = new SpriteAnimation(meshName, numRow, numCol);
+
+	animation->mode = Mesh::DRAW_TRIANGLES;
+
+	glBindBuffer(GL_ARRAY_BUFFER, animation->vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex), &vertex_buffer_data[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, animation->indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint), &index_buffer_data[0], GL_STATIC_DRAW);
+
+	animation->indexSize = index_buffer_data.size();
+
+	AddMesh(meshName, animation);
+
+	return animation;
+}
+
 Mesh* MeshBuilder::GetMesh(const std::string& _meshName)
 {
 	if (meshMap.count(_meshName) != 0)
@@ -636,6 +693,21 @@ void MeshBuilder::Init()
 	GetMesh("direction")->textureID = LoadTGA("Image//direction.tga");
 	GenerateQuad("wall", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("wall")->textureID = LoadTGA("Image//Tile//wall.tga");
-	GenerateQuad("powerup_health", Color(1.0f, 1.0f, 1.0f), 1.f);
-	GetMesh("powerup_health")->textureID = LoadTGA("Image//Powerups//powerup_health.tga");
+	GenerateQuad("powerup_maxhealth", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("powerup_maxhealth")->textureID = LoadTGA("Image//Powerups//powerup_maxhealth.tga");
+	GenerateQuad("powerup_healthrecover", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("powerup_healthrecover")->textureID = LoadTGA("Image//Powerups//powerup_healthrecover.tga");
+	GenerateQuad("powerup_healthregen", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("powerup_healthregen")->textureID = LoadTGA("Image//Powerups//powerup_healthregen.tga");
+	GenerateQuad("powerup_speed", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("powerup_speed")->textureID = LoadTGA("Image//Powerups//powerup_speed.tga");
+
+	GenerateSpriteAnimation("player_up", 1, 14);
+	GetMesh("player_up")->textureID = LoadTGA("Image//Player//player_up.tga");
+	GenerateSpriteAnimation("player_down", 1, 14);
+	GetMesh("player_down")->textureID = LoadTGA("Image//Player//player_down.tga");
+	GenerateSpriteAnimation("player_left", 1, 14);
+	GetMesh("player_left")->textureID = LoadTGA("Image//Player//player_left.tga");
+	GenerateSpriteAnimation("player_right", 1, 14);
+	GetMesh("player_right")->textureID = LoadTGA("Image//Player//player_right.tga");
 }

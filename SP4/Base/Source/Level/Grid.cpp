@@ -142,13 +142,30 @@ void CGrid::Render(void)
     //RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));;
     //modelStack.PopMatrix();
 
-    if (m_eGridType == GRID_TYPE::WALL)
-    {
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        //RenderHelper::RenderMesh(theMesh);
-        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("wall"));
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    }
+	switch (m_eGridType)
+	{
+	case DEFAULT:
+	{
+
+	}
+		break;
+	case PATH:
+	{
+
+	}
+		break;
+	case WALL:
+	{
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("wall"));
+	}
+		break;
+	case DOOR:
+	{
+
+	}
+		break;
+	}
+
     //else
     //{
     //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

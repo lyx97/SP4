@@ -124,6 +124,9 @@
     <ClCompile Include="Source\Items\Skill.cpp">
       <Filter>Items</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SpriteAnimation\SpriteAnimation.cpp">
+      <Filter>SpriteAnimation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Enemy\Enemy.h">
@@ -261,6 +264,9 @@
     <ClInclude Include="Source\Items\Skill.h">
       <Filter>Items</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SpriteAnimation\SpriteAnimation.h">
+      <Filter>SpriteAnimation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">
@@ -307,6 +313,9 @@
     </Filter>
     <Filter Include="Particle">
       <UniqueIdentifier>{a07cdc8b-c123-4b80-9959-83843b5945da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpriteAnimation">
+      <UniqueIdentifier>{564f550c-98ed-4288-ae5c-a457202f1892}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

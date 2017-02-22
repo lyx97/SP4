@@ -8,7 +8,7 @@ Enemy2D::Enemy2D()
 	: GenericEntity(NULL)
 {
 	this->position = Vector3(0, 0, 0);
-	this->scale = Vector3(1, 3, 1);
+	this->scale = Vector3(1, 20, 1);
 
 	this->isDone = false;
 	this->m_bCollider = true;
@@ -22,7 +22,6 @@ Enemy2D::Enemy2D()
 		Math::RandFloatMinMax(-100, 100));
 
 	this->speed = 1.0f;
-	this->scale.Set(10, 10, 10);
 	this->maxHealth = 100;
 	this->health = this->maxHealth;
 
@@ -65,12 +64,11 @@ void Enemy2D::Update(double _dt)
 			{
 				this->velocity += proj->GetVelocity() * proj->GetMass();
 				this->health -= proj->GetDamage();
-				//proj->SetIsDone(true);
                 this->SetIsDone(true);
 			}
 		}
 	}
-	Vector3 temp = (Cohesion(this) + Alignment(this) + Separation(this));
+	Vector3 temp = (Cohesion(this) +Alignment(this) + Separation(this));
 	if (!temp.IsZero())
 	{
 		this->velocity += temp.Normalized();
@@ -97,7 +95,7 @@ void Enemy2D::Render()
 		this->scale.x,
 		this->scale.y,
 		this->scale.z);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("cube"));
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("cone"));
 	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
 }
 
