@@ -138,12 +138,7 @@ void SceneText::Init()
 
 	//Create::Sprite2DObject("crosshair", Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f));
 
-<<<<<<< HEAD
-    //minimap = new CMinimap();
-    //minimap->Init();
-=======
     minimap = new CMinimap();
->>>>>>> 89480599483e3f8c837f2f824f0433c4ce11a457
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;

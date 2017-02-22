@@ -693,7 +693,8 @@ void MeshBuilder::Init()
 	GetMesh("direction")->textureID = LoadTGA("Image//direction.tga");
 	GenerateQuad("wall", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("wall")->textureID = LoadTGA("Image//Tile//wall.tga");
-<<<<<<< HEAD
+	GenerateQuad("room", Color(0.5f, 0.5f, 0.5f), 1.f);
+
 	GenerateQuad("powerup_maxhealth", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("powerup_maxhealth")->textureID = LoadTGA("Image//Powerups//powerup_maxhealth.tga");
 	GenerateQuad("powerup_healthrecover", Color(1.0f, 1.0f, 1.0f), 1.f);
@@ -711,9 +712,6 @@ void MeshBuilder::Init()
 	GetMesh("player_left")->textureID = LoadTGA("Image//Player//player_left.tga");
 	GenerateSpriteAnimation("player_right", 1, 14);
 	GetMesh("player_right")->textureID = LoadTGA("Image//Player//player_right.tga");
-=======
-    GenerateQuad("room", Color(0.5f, 0.5f, 0.5f), 1.f);
 	GenerateQuad("powerup_health", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("powerup_health")->textureID = LoadTGA("Image//Powerups//powerup_health.tga");
->>>>>>> 89480599483e3f8c837f2f824f0433c4ce11a457
 }
