@@ -6,12 +6,14 @@
 #include "RenderHelper.h"
 #include "GL/glew.h"
 #include "../PlayerInfo/PlayerInfo.h"
+#include "../Level/Level.h"
 
 #include <iostream>
 using namespace std;
 
 CLaser::CLaser(void)
 	: CProjectile(NULL)
+    , prevIndex(Vector3(0, 0, 0))
 	, m_fLength(0.0)
 	, angle_x(0.0)
 	, angle_y(0.0)
@@ -21,6 +23,7 @@ CLaser::CLaser(void)
 
 CLaser::CLaser(Mesh* _modelMesh)
 	: CProjectile(_modelMesh)
+    , prevIndex(Vector3(0, 0, 0))
 	, m_fLength(0.0)
 	, angle_x(0.0)
 	, angle_y(0.0)
@@ -66,14 +69,32 @@ void CLaser::Update(double dt)
 	if (m_bStatus == false)
 		return;
 
+    if (prevIndex != index)
+    {
+        if (CLevel::GetInstance()->
+            GetRoom(CPlayerInfo::GetInstance()
+            ->GetRoomID())
+            ->GetSpatialPartition()
+            ->GetGrid(index.x, index.z)
+            .GetType() == GRID_TYPE::WALL)
+        {
+            SetStatus(false);
+            SetIsDone(true);
+            return;
+        }
+        prevIndex = index;
+    }
+
 	// Update TimeLife of projectile. Set to inactive if too long
 	m_fLifetime -= (float)dt;
-	if (m_fLifetime < 0.0f)
+    if (m_fLifetime < 0.0f)
 	{
 		SetStatus(false);
 		SetIsDone(true);	// This method is to inform the EntityManager that it should remove this instance
 		return;
 	}
+
+
 
 	// Update Position
 	position.Set(position.x + (float)(theDirection.x * dt * m_fSpeed),
@@ -95,7 +116,7 @@ void CLaser::Render(void)
 	// Reset the model stack
 	modelStack.LoadIdentity();
 	// We introduce a small offset to y position so that we can see the laser beam.
-	modelStack.Translate(position.x, position.y - 0.001f, position.z);
+	modelStack.Translate(position.x, position.y - 1.f, position.z);
 	//modelStack.Scale(scale.x, scale.y, scale.z);
 	modelStack.PushMatrix();
 	modelStack.Rotate(180 / Math::PI * angle_z, 0.0f, 1.0f, 0.0f);

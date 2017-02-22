@@ -86,7 +86,7 @@ void SceneText::Init()
     srand(seed);
     cout << "Current Seed: " << seed << endl;
 
-    CLevel::GetInstance()->Init(100);
+    CLevel::GetInstance()->Init(10000);
 
     // Create the playerinfo instance, which manages all information about the player
     playerInfo = CPlayerInfo::GetInstance();
@@ -138,8 +138,12 @@ void SceneText::Init()
 
 	//Create::Sprite2DObject("crosshair", Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f));
 
+<<<<<<< HEAD
     //minimap = new CMinimap();
     //minimap->Init();
+=======
+    minimap = new CMinimap();
+>>>>>>> 89480599483e3f8c837f2f824f0433c4ce11a457
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;

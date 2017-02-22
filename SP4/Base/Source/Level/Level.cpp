@@ -1,6 +1,5 @@
 #include "Level.h"
 #include "../Application.h"
-#include <math.h>
 
 CLevel::CLevel()
     : m_iRoomID(0)
@@ -94,10 +93,11 @@ void CLevel::CreateRoom(const int roomID,
     if (roomList.size() > 0)
         tempRoomID--;
 
+    int tempBias = m_fRoomBias;
     for (int i = 0; i < 4; ++i)
     {
         roomMap[roomID][i] = -1;
-        if (m_fRoomBias >= Math::RandFloatMinMax(0, 100))
+        if (m_fRoomBias >= Math::RandFloatMinMax(0,100))
         {
             // Init
             Vector3 ExpandListData = Vector3(0, 0, 0);

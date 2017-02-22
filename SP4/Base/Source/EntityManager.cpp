@@ -23,9 +23,9 @@ void EntityManager::Update(double _dt)
     // Update the Scene Graph
     //CSceneGraph::GetInstance()->Update();
 
-
     // Check for Collision amongst entities with collider properties
     //CheckForCollision();
+
 
     // Clean up entities that are done
     it = entityList.begin();
@@ -34,8 +34,7 @@ void EntityManager::Update(double _dt)
         if ((*it)->IsDone())
         {
             // Delete if done
-			Vector3 index = (*it)->GetIndex();
-			partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Remove(*it);
+            partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Remove(*it);
             delete *it;
             it = entityList.erase(it);
         }

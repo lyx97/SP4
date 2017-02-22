@@ -8,7 +8,7 @@ CRoom::CRoom()
     , m_iMin_Z(-1)
     , m_iMax_Z(-1)
     , m_iPreviousID(-1)
-    , m_bCleared(false)
+    , m_bCleared(true)
     , index(Vector3(-1, -1, -1))
     , roomSpatial(NULL)
 {

@@ -6,6 +6,7 @@
 
 class Mesh;
 class CPlayerInfo;
+class CLevel;
 
 class CLaser : public CProjectile
 {
@@ -23,6 +24,8 @@ public:
 	// Render this projectile
 	void Render(void);
 private:
+    Vector3 prevIndex;
+
 	float m_fLength;
 	float angle_x, angle_y, angle_z;
 };

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 2/22/2017 5:51:15 PM.
      1>Project "C:\Users\155118A\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -17,6 +18,22 @@
      1>c:\users\155118a\desktop\sp4\sp4\base\source\level\grid.cpp(348): warning C4018: '<' : signed/unsigned mismatch
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\Debug /LIBPATH:"C:\Users\155118A\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 /PROFILE Debug\Application.obj
+=======
+﻿Build started 2/21/2017 6:19:31 PM.
+     1>Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/Common/Source /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Level\Minimap.cpp
+         Minimap.cpp
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(28): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.h(80): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\minimap.cpp(19): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\minimap.cpp(31): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\minimap.cpp(51): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\minimap.cpp(68): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\minimap.cpp(75): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\Debug /LIBPATH:"C:\Users\155117g\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 Debug\Application.obj
+>>>>>>> 89480599483e3f8c837f2f824f0433c4ce11a457
          Debug\Camera.obj
          Debug\Chaser.obj
          Debug\Enemy.obj
@@ -60,9 +77,13 @@
          Debug\WeaponInfo.obj
      1>Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
      1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-         Base.vcxproj -> C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.exe
-     1>Done Building Project "C:\Users\155118A\Desktop\SP4\SP4\Base\Base.vcxproj" (Build target(s)).
+         Base.vcxproj -> C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.exe
+     1>Done Building Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" (Build target(s)).
 
 Build succeeded.
 
+<<<<<<< HEAD
 Time Elapsed 00:00:01.93
+=======
+Time Elapsed 00:00:01.67
+>>>>>>> 89480599483e3f8c837f2f824f0433c4ce11a457

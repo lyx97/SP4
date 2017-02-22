@@ -4,24 +4,28 @@
 #include "EntityBase.h"
 #include "Mesh.h"
 
+const int BGSCALE = 150;
+const int ROOMSCALE = 15;
+const int PLAYERSCALE = 10;
+
 class Application;
+class CPlayerInfo;
+class CLevel;
 
 class CMinimap : public EntityBase
 {
 protected:
-    Vector3 position;
-    Vector3 scale;
-
     Mesh* Border;
     Mesh* Background;
-    Mesh* Rooms;
+    Mesh* Path;
+    Mesh* Room;
     Mesh* Player;
+
+    Vector3 position;
 
 public:
     CMinimap();
     virtual ~CMinimap();
-
-    void Init(void);
 
     void Update(double dt = 0.0333f);
     void RenderUI(void);
