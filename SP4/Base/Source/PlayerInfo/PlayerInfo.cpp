@@ -339,8 +339,15 @@ void CPlayerInfo::Update(double dt)
 		}
 		else
 		{
-			cout << "USED TREASURE" << endl;
-			cout << treasure->GetCooldown() << endl;
+			if (this->killCount >= treasure->GetCooldown())
+			{
+				cout << "USED TREASURE" << endl;
+				killCount = 0;
+			}
+			else
+			{
+				cout << "NOT ENOUGH KILLS" << endl;
+			}
 		}
 	}
 	Constrain();

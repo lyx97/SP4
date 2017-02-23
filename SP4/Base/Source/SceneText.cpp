@@ -305,7 +305,10 @@ void SceneText::Render()
 	EntityManager::GetInstance()->RenderUI();
 
 	std::ostringstream ss;
-	ss << "Player:" << playerInfo->GetHealth() << " : " << playerInfo->GetMaxSpeed();
+	ss << 
+		"Player:" << playerInfo->GetHealth() << " / " << playerInfo->GetMaxHealth() <<
+		" Speed: " << playerInfo->GetMaxSpeed() <<
+		" Kills: " << playerInfo->killCount << " / " << playerInfo->GetTreasure()->GetCooldown();
 	textObj[2]->SetText(ss.str());
 }
 

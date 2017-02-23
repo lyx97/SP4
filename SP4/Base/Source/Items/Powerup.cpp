@@ -83,12 +83,13 @@ void Powerup::Render()
 	{
 	case Powerup::HEALTH_RECOVER:
 	{
+		// change to be dropped by every enemy
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_healthrecover"));
 	}
 		break;
 	case Powerup::HEALTH_INCREASE:
 	{
-		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_health"));
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_maxhealth"));
 	}
 		break;
 	case Powerup::SPEED_INCREASE:

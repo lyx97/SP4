@@ -730,10 +730,10 @@ void MeshBuilder::Init()
 	GenerateSpriteAnimation("player_shootingupleft", 1, 4);
 	GetMesh("player_shootingupleft")->textureID = LoadTGA("Image//Player//player_shootingupleft.tga");
 
-	GenerateOBJ("player_body", "OBJ//Player//player_body.obj");
-	GenerateOBJ("player_leg", "OBJ//Player//player_leg.obj");
-	GenerateOBJ("player_arm", "OBJ//Player//player_arm.obj");
-	GetMesh("player_body")->textureID = LoadTGA("Image//Player//player_texture.tga");
-	GetMesh("player_leg")->textureID = LoadTGA("Image//Player//player_texture.tga");
-	GetMesh("player_arm")->textureID = LoadTGA("Image//Player//player_texture.tga");
+	//GenerateOBJ("player_body", "OBJ//Player//player_body.obj");
+	//GenerateOBJ("player_leg", "OBJ//Player//player_leg.obj");
+	//GenerateOBJ("player_arm", "OBJ//Player//player_arm.obj");
+	//GetMesh("player_body")->textureID = LoadTGA("Image//Player//player_texture.tga");
+	//GetMesh("player_leg")->textureID = LoadTGA("Image//Player//player_texture.tga");
+	//GetMesh("player_arm")->textureID = LoadTGA("Image//Player//player_texture.tga");
 }

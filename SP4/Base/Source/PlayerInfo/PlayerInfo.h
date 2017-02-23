@@ -93,6 +93,7 @@ public:
 
     inline CHeatmap** GetHeatmap() { return heatmap; }
 
+	inline Treasure* GetTreasure() { return this->treasure; };
 	int killCount;
 	
 private:

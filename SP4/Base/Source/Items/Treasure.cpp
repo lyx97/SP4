@@ -12,11 +12,9 @@ Treasure::Treasure()
 	this->m_bLaser = false;
 	this->m_bCollider = true;
 
-	cooldown = 0;
-
 	treasure = NONE;
 
-	random = Math::RandIntMinMax(0, NUM_TREASURE - 1);
+	random = Math::RandIntMinMax(1, NUM_TREASURE - 1);
 }
 
 Treasure::Treasure(int type)
@@ -31,11 +29,7 @@ Treasure::Treasure(int type)
 	this->m_bLaser = false;
 	this->m_bCollider = true;
 
-	cooldown = 0;
-
-	treasure = NONE;
-
-	random = Math::RandIntMinMax(0, NUM_TREASURE - 1);
+	treasure = (TREASURES)type;
 }
 
 Treasure::~Treasure()
