@@ -121,11 +121,11 @@
     <ClCompile Include="Source\Items\Powerup.cpp">
       <Filter>Items</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Items\Skill.cpp">
-      <Filter>Items</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SpriteAnimation\SpriteAnimation.cpp">
       <Filter>SpriteAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Items\Treasure.cpp">
+      <Filter>Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -261,11 +261,11 @@
     <ClInclude Include="Source\Items\Powerup.h">
       <Filter>Items</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Items\Skill.h">
-      <Filter>Items</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SpriteAnimation\SpriteAnimation.h">
       <Filter>SpriteAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Items\Treasure.h">
+      <Filter>Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

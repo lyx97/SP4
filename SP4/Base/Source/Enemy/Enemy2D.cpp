@@ -64,7 +64,6 @@ void Enemy2D::Update(double _dt)
 			{
 				this->velocity += proj->GetVelocity() * proj->GetMass();
 				this->health -= proj->GetDamage();
-                this->SetIsDone(true);
 			}
 		}
 	}
@@ -75,12 +74,16 @@ void Enemy2D::Update(double _dt)
 	}
 	if (this->health <= 0)
 	{
+		isDone = true;
+	}
+	if (isDone)
+	{
 		float randomNo = Math::RandFloatMinMax(0, 100);
 		if (randomNo < CHANCE_OF_DROPPING_POWERUP)
 		{
 			Powerup* newPowerup = new Powerup(this->position);
 		}
-		isDone = true;
+		CPlayerInfo::GetInstance()->killCount++;
 	}
 }
 

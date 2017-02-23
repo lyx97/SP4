@@ -66,8 +66,8 @@ void EntityManager::Render()
     //CSceneGraph::GetInstance()->Render();
 
     // Render the Spatial Partition
-    if (partitionList.size() > 0)
-        partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Render();
+    //if (partitionList.size() > 0)
+    //    partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Render();
 }
 
 // Render the UI entities

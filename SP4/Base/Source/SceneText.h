@@ -14,6 +14,7 @@
 #include "Enemy/Enemy.h"
 #include "Enemy/Enemy2D.h"
 #include "../Items/Powerup.h"
+#include "../Items/Treasure.h"
 #include "Enemy/Chaser.h"
 #include "Level/Minimap.h"
 
@@ -49,7 +50,6 @@ private:
 	CEnemy* theEnemy;
 	Enemy2D* enemy2D;
 	CChaser* chaser;
-
 
 	bool GamePaused = false;
 	

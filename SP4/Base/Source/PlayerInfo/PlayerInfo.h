@@ -7,9 +7,9 @@
 #include "../TextEntity.h"
 #include "../Level/GenerateHeatmap.h"
 #include "../SpriteAnimation/SpriteAnimation.h"
+#include "../Items/Treasure.h"
 
-static const float DASH_DISTANCE = 50.0f;
-static const float DASH_COOLDOWN = 2.f;
+class Treasure;
 
 class CPlayerInfo : public GenericEntity
 {
@@ -74,9 +74,8 @@ public:
 	// Handling Camera
 	void AttachCamera(Camera* _cameraPtr);
 	void DetachCamera();
-
-	void Shoot(Vector3 dir);
 	void RecoverHealth();
+	void Shoot(Vector3 dir);
 	inline float GetHealth(){ return health; };
 	inline void SetHealth(float health){ this->health = health; };
 
@@ -86,10 +85,15 @@ public:
 	inline float GetMaxSpeed(){ return maxSpeed; };
 	inline void SetMaxSpeed(float maxSpeed){ this->maxSpeed = maxSpeed; }
 
-	inline float GetHealthRegen(){ return healthRegen; };
-	inline void SetHealthRegen(float healthRegen){ this->healthRegen = healthRegen; };
+	inline float GetHealthRegen(){ return healthregen; };
+	inline void SetHealthRegen(float healthregen){ this->healthregen = healthregen; };
+
+	void AddTreasures(int type);
+	void UpdateTreasures(double dt);
 
     inline CHeatmap** GetHeatmap() { return heatmap; }
+
+	int killCount;
 	
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
@@ -113,7 +117,7 @@ private:
 	CWeaponInfo* secondaryWeapon;
 
 	SpriteAnimation* spriteAnimation;
-	SpriteAnimation* playerMeshes[5];
+	SpriteAnimation* playerMeshes[13];
 	SpriteAnimation* playerMesh;
 
 	// Key to move the player
@@ -131,7 +135,12 @@ private:
 	float maxHealth;
 	float health;
 	float maxSpeed;
-	float healthRegen;
+	float dashDistance;
+	float dashCooldown;
 	float dashCooldownTimer;
+	float healthregen;
+	float healthregenCooldown;
 	float healthregenCooldownTimer;
+
+	Treasure* treasure;
 };

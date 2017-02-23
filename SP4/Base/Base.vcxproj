@@ -24,7 +24,7 @@
     <ClCompile Include="Source\GameStateManagement\OptionState.cpp" />
     <ClCompile Include="Source\GenericEntity.cpp" />
     <ClCompile Include="Source\Items\Powerup.cpp" />
-    <ClCompile Include="Source\Items\Skill.cpp" />
+    <ClCompile Include="Source\Items\Treasure.cpp" />
     <ClCompile Include="Source\Level\GenerateHeatmap.cpp" />
     <ClCompile Include="Source\Level\Grid.cpp" />
     <ClCompile Include="Source\Level\Heatmap.cpp" />
@@ -68,7 +68,7 @@
     <ClInclude Include="Source\GameStateManagement\OptionState.h" />
     <ClInclude Include="Source\GenericEntity.h" />
     <ClInclude Include="Source\Items\Powerup.h" />
-    <ClInclude Include="Source\Items\Skill.h" />
+    <ClInclude Include="Source\Items\Treasure.h" />
     <ClInclude Include="Source\Level\GenerateHeatmap.h" />
     <ClInclude Include="Source\Level\Grid.h" />
     <ClInclude Include="Source\Level\Heatmap.h" />

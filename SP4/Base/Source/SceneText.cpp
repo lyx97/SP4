@@ -246,6 +246,10 @@ void SceneText::Update(double dt)
 			m_orthoHeight++;
 			m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 		}
+		if (KeyboardController::GetInstance()->IsKeyPressed('J'))
+		{
+			Treasure* newTreasure = new Treasure();
+		}
 		// <THERE>
 		camera.Update(dt);
 		camera.Constrain(playerInfo, 50.0f);

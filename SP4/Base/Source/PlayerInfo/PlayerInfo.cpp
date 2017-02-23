@@ -44,9 +44,13 @@ CPlayerInfo::CPlayerInfo(void)
 	, maxHealth(100.0f)
 	, health(90.0f)
 	, maxSpeed(300.0f)
-	, healthRegen(0.5f)
+	, dashDistance(50.0f)
+	, dashCooldown(2.f)
 	, dashCooldownTimer(0)
+	, healthregen(2.5f)
+	, healthregenCooldown(5)
 	, healthregenCooldownTimer(0)
+	, killCount(0)
 {
 }
 
@@ -93,20 +97,31 @@ void CPlayerInfo::Init(void)
     //secondaryWeapon = new CGrenadeThrow();
     //secondaryWeapon->Init();
 
-	playerMeshes[0] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_down");		// idle
-	playerMeshes[1] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");		// up
-	playerMeshes[2] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_down");		// down
-	playerMeshes[3] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_left");		// left
-	playerMeshes[4] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_right");	// right
-	//playerMeshes[5] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");		// shoot up
-	//playerMeshes[6] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");		// shoot down
-	//playerMeshes[7] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");		// shoot left
-	//playerMeshes[8] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");		// shoot right
+	treasure = new Treasure();
+
+	playerMeshes[0] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_down");					// idle
+	playerMeshes[1] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");					// up
+	playerMeshes[2] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_down");					// down
+	playerMeshes[3] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_left");					// left
+	playerMeshes[4] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_right");				// right
+	playerMeshes[5] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingup");			// shoot up
+	playerMeshes[6] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingupright");		// shoot up right
+	playerMeshes[7] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingright");		// shoot right
+	playerMeshes[8] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingdownright");	// shoot down right
+	playerMeshes[9] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingdown");			// shoot down
+	playerMeshes[10] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingdownleft");	// shoot down left
+	playerMeshes[11] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingleft");		// shoot left
+	playerMeshes[12] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingupleft");		// shoot up left
 
 	for (int i = 0; i < 5; ++i)
 	{
 		playerMeshes[i]->m_anim = new Animation;
 		playerMeshes[i]->m_anim->Set(0, 13, 1, 1.f, true);
+	}
+	for (int i = 5; i < 13; ++i)
+	{
+		playerMeshes[i]->m_anim = new Animation;
+		playerMeshes[i]->m_anim->Set(0, 3, 1, 1.f, true);
 	}
 	playerMesh = playerMeshes[0];
 	spriteAnimation = (SpriteAnimation*)(MeshBuilder::GetInstance()->GetMesh("player_up"));
@@ -190,6 +205,7 @@ Vector3 CPlayerInfo::GetTarget(void) const
 {
 	return target;
 }
+
 // Get Up
 Vector3 CPlayerInfo::GetUp(void) const
 {
@@ -213,7 +229,7 @@ void CPlayerInfo::Update(double dt)
 	if (playerMesh)
 	{
 		playerMesh->m_anim->animActive = true;
-		playerMesh->Update(dt);
+		playerMesh->Update(dt * 1.5f);
 	}
 
 	position += velocity * (float)dt;
@@ -269,12 +285,12 @@ void CPlayerInfo::Update(double dt)
 	healthregenCooldownTimer -= dt;
 	if (healthregenCooldownTimer <= 0)
 	{
-		if (health + healthRegen > maxHealth)
+		if (health + healthregen > maxHealth)
 			health = maxHealth;
 		else
-			health += healthRegen;
+			health += healthregen;
 
-		healthregenCooldownTimer = 1;
+		healthregenCooldownTimer = healthregenCooldown;
 	}
 
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
@@ -309,48 +325,30 @@ void CPlayerInfo::Update(double dt)
 	{
 		if (!forceDir.IsZero() && !isDashed)
 		{
-			forceMagnitude = maxSpeed * DASH_DISTANCE;
+			forceMagnitude = maxSpeed * dashDistance;
 			this->ApplyForce(forceDir, forceMagnitude * dt);
 			isDashed = true;
-			dashCooldownTimer = DASH_COOLDOWN;
+			dashCooldownTimer = dashCooldown;
 		}
 	}
 	if (KeyboardController::GetInstance()->IsKeyPressed('E'))
 	{
-		this->health -= 5;
+		if (treasure->treasure == 0)
+		{
+			cout << "NO TREASURE" << endl;
+		}
+		else
+		{
+			cout << "USED TREASURE" << endl;
+			cout << treasure->GetCooldown() << endl;
+		}
 	}
 	Constrain();
 
-	// Update the weapons
-	if (KeyboardController::GetInstance()->IsKeyReleased('R'))
-	{
-		if (primaryWeapon)
-		{
-			//primaryWeapon->Reload();
-			//primaryWeapon->PrintSelf();
-		}
-		if (secondaryWeapon)
-		{
-			//secondaryWeapon->Reload();
-			//secondaryWeapon->PrintSelf();
-		}
-	}
 	if (primaryWeapon)
 		primaryWeapon->Update(dt);
 	if (secondaryWeapon)
 		secondaryWeapon->Update(dt);
-
-	// if Mouse Buttons were activated, then act on them
-	if (MouseController::GetInstance()->IsButtonDown(MouseController::LMB))
-	{
-		//if (primaryWeapon)
-		//	primaryWeapon->Discharge(this->position, target, this);
-	}
-	if (MouseController::GetInstance()->IsButtonDown(MouseController::RMB))
-	{
-		//if (secondaryWeapon)
-		//	secondaryWeapon->Discharge(this->position, target, this);
-	}
 
 	// If the user presses R key, then reset the view to default values
 	if (KeyboardController::GetInstance()->IsKeyDown('P'))
@@ -447,7 +445,31 @@ void CPlayerInfo::Shoot(Vector3 dir)
 {
 	if (secondaryWeapon)
 		secondaryWeapon->Discharge(this->position, dir, this);
-	cout << Math::RadianToDegree(atan2f(dir.z, dir.x)) << endl;
+
+	if (-120 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+		Math::RadianToDegree(atan2f(dir.z, dir.x)) < -60)
+		playerMesh = playerMeshes[5];
+	else if (-60 < Math::RadianToDegree(atan2f(dir.z, dir.x)) && 
+		Math::RadianToDegree(atan2f(dir.z, dir.x)) < -30)
+		playerMesh = playerMeshes[6];
+	else if (-30 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+		Math::RadianToDegree(atan2f(dir.z, dir.x)) < 30)
+		playerMesh = playerMeshes[7];
+	else if (30 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+		Math::RadianToDegree(atan2f(dir.z, dir.x)) < 60)
+		playerMesh = playerMeshes[8];
+	else if (60 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+		Math::RadianToDegree(atan2f(dir.z, dir.x)) < 120)
+		playerMesh = playerMeshes[9];
+	else if (120 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+		Math::RadianToDegree(atan2f(dir.z, dir.x)) < 165)
+		playerMesh = playerMeshes[10];
+	else if (165 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+		Math::RadianToDegree(atan2f(dir.z, dir.x)) < -165)
+		playerMesh = playerMeshes[11];
+	else if (-165 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+		Math::RadianToDegree(atan2f(dir.z, dir.x)) < -120)
+		playerMesh = playerMeshes[12];
 }
 
 void CPlayerInfo::RecoverHealth()
@@ -456,4 +478,18 @@ void CPlayerInfo::RecoverHealth()
 		health = maxHealth;
 	else
 		health += 10;
+}
+
+void CPlayerInfo::AddTreasures(int type)
+{
+	this->treasure->treasure = (Treasure::TREASURES)(type);
+	treasure->Init();
+}
+
+void CPlayerInfo::UpdateTreasures(double dt)
+{
+	if (treasure)
+	{
+		treasure->GetCooldown();
+	}
 }

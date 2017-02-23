@@ -21,6 +21,8 @@ public:
 		NUM_POWERUP
 	}powerup;
 
+
+
 	Powerup();	
 	Powerup(Vector3 pos);
 	virtual ~Powerup();

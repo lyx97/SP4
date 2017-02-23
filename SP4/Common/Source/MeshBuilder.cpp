@@ -712,6 +712,28 @@ void MeshBuilder::Init()
 	GetMesh("player_left")->textureID = LoadTGA("Image//Player//player_left.tga");
 	GenerateSpriteAnimation("player_right", 1, 14);
 	GetMesh("player_right")->textureID = LoadTGA("Image//Player//player_right.tga");
-	GenerateQuad("powerup_health", Color(1.0f, 1.0f, 1.0f), 1.f);
-	GetMesh("powerup_health")->textureID = LoadTGA("Image//Powerups//powerup_health.tga");
+
+	GenerateSpriteAnimation("player_shootingup", 1, 4);
+	GetMesh("player_shootingup")->textureID = LoadTGA("Image//Player//player_shootingup.tga");
+	GenerateSpriteAnimation("player_shootingupright", 1, 4);
+	GetMesh("player_shootingupright")->textureID = LoadTGA("Image//Player//player_shootingupright.tga");
+	GenerateSpriteAnimation("player_shootingright", 1, 4);
+	GetMesh("player_shootingright")->textureID = LoadTGA("Image//Player//player_shootingright.tga");
+	GenerateSpriteAnimation("player_shootingdownright", 1, 4);
+	GetMesh("player_shootingdownright")->textureID = LoadTGA("Image//Player//player_shootingdownright.tga");
+	GenerateSpriteAnimation("player_shootingdown", 1, 4);
+	GetMesh("player_shootingdown")->textureID = LoadTGA("Image//Player//player_shootingdown.tga");
+	GenerateSpriteAnimation("player_shootingdownleft", 1, 4);
+	GetMesh("player_shootingdownleft")->textureID = LoadTGA("Image//Player//player_shootingdownleft.tga");
+	GenerateSpriteAnimation("player_shootingleft", 1, 4);
+	GetMesh("player_shootingleft")->textureID = LoadTGA("Image//Player//player_shootingleft.tga");
+	GenerateSpriteAnimation("player_shootingupleft", 1, 4);
+	GetMesh("player_shootingupleft")->textureID = LoadTGA("Image//Player//player_shootingupleft.tga");
+
+	GenerateOBJ("player_body", "OBJ//Player//player_body.obj");
+	GenerateOBJ("player_leg", "OBJ//Player//player_leg.obj");
+	GenerateOBJ("player_arm", "OBJ//Player//player_arm.obj");
+	GetMesh("player_body")->textureID = LoadTGA("Image//Player//player_texture.tga");
+	GetMesh("player_leg")->textureID = LoadTGA("Image//Player//player_texture.tga");
+	GetMesh("player_arm")->textureID = LoadTGA("Image//Player//player_texture.tga");
 }

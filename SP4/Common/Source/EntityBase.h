@@ -12,6 +12,7 @@ public:
 		ENEMY,
 		ITEM,
 		PROJECTILE,
+
 		NUM_ENTITYTYPE
 	};
 

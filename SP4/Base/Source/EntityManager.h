@@ -6,10 +6,12 @@
 #include "Vector3.h"
 #include "SceneGraph/SceneGraph.h"
 #include "Level/SpatialPartition.h"
+#include "Enemy\Enemy2D.h"
 
 class EntityBase;
 class CPlayerInfo;
 class Particle;
+class Enemy2D;
 
 class EntityManager : public Singleton<EntityManager>
 {
@@ -54,6 +56,7 @@ private:
 
 	std::list<EntityBase*> entityList;
     std::list<Particle*> particleList;
+	std::list<Enemy2D*> enemyList;
 
     // Handler to Spatial Partition
     std::vector<CSpatialPartition*> partitionList;
