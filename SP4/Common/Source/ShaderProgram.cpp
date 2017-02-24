@@ -38,6 +38,10 @@ unsigned int ShaderProgram::AddUniform(const std::string& _name)
 
 unsigned int ShaderProgram::GetUniform(const std::string& _name)
 {
+    std::map<std::string, unsigned int>::iterator it = uniformMap.find(_name);
+    if (it == uniformMap.end())
+        return SHADER_ERROR;
+    return it->second;
 	// Return error code if the uniform does not exist
 	if (uniformMap.count(_name) == 0)
 		return SHADER_ERROR;

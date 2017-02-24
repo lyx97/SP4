@@ -1,5 +1,9 @@
 #include "Level.h"
 #include "../Application.h"
+#include "GraphicsManager.h"
+#include "RenderHelper.h"
+#include "MeshBuilder.h"
+#include "../PlayerInfo/PlayerInfo.h"
 
 CLevel::CLevel()
     : m_iRoomID(0)
@@ -7,8 +11,6 @@ CLevel::CLevel()
     , roomIndexList(NULL)
     , roomList(NULL)
 {
-    //for (int i = 0; i < 4; ++i)
-    //    SConnectedPath::m_iConnected[i] = -1;
 }
 
 CLevel::~CLevel()
@@ -18,6 +20,11 @@ CLevel::~CLevel()
 
 void CLevel::Init(const float room_bias)
 {
+    roomIndexList.clear();
+    roomList.clear();
+    roomMap.clear();
+
+    m_iRoomID = 0;
     m_fRoomBias = room_bias;
 
     roomIndexList.push_back(Vector3(0, 0, 0));
@@ -36,6 +43,55 @@ void CLevel::Init(const float room_bias)
     {
         SetDoor(it);
     }
+}
+
+void CLevel::Render()
+{
+    CRoom* room = GetRoom(CPlayerInfo::GetInstance()->GetRoomID());
+
+    MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+    //modelStack.PushMatrix();
+    //modelStack.Translate(0, 0, -200);
+    //modelStack.Scale(room->GetRoomXMax() * GRIDSIZE, room->GetRoomZMax() * GRIDSIZE, 1);
+    //RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("nightmare"));
+    //modelStack.PopMatrix();
+
+    if (room->GetDoorToRoomID(0) >= 0)
+    {
+        modelStack.PushMatrix();
+        modelStack.Translate(-((room->GetRoomXMax() * GRIDSIZE) >> 1), 0, 0);
+        modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
+        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
+        modelStack.PopMatrix();
+    }
+
+    if (room->GetDoorToRoomID(1) >= 0)
+    {
+        modelStack.PushMatrix();
+        modelStack.Translate(((room->GetRoomXMax() * GRIDSIZE) >> 1), 0, 0);
+        modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
+        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
+        modelStack.PopMatrix();
+    }
+
+    if (room->GetDoorToRoomID(2) >= 0)
+    {
+        modelStack.PushMatrix();
+        modelStack.Translate(0, ((room->GetRoomZMax() * GRIDSIZE) >> 1), 0);
+        modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
+        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
+        modelStack.PopMatrix();
+    }
+
+    if (room->GetDoorToRoomID(3) >= 0)
+    {
+        modelStack.PushMatrix();
+        modelStack.Translate(0, -((room->GetRoomZMax() * GRIDSIZE) >> 1), 0);
+        modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
+        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
+        modelStack.PopMatrix();
+    }
+
 }
 
 const bool CLevel::CompareOverlap(Vector3 index)
@@ -169,7 +225,6 @@ void CLevel::ExpandRoom(void)
         expandList.pop();
     }
 }
-
 
 void CLevel::SetDoor(CRoom* room)
 {

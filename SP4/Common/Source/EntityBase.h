@@ -61,6 +61,9 @@ public:
 	inline void SetMass(const float& _value){ mass = _value; };
 	inline float GetMass(){ return mass; };
 
+    inline int GetRoomID(void) const { return roomID; }
+    inline void SetRoomID(const int& roomid) { roomID = roomid; }
+
 protected:
 	Vector3 position;
 	Vector3 scale;
@@ -76,6 +79,8 @@ protected:
 	float mass;
 	Vector3 velocity;
 	Vector3 front;
+
+    int roomID;
 };
 
 #endif // ENTITY_BASE_H

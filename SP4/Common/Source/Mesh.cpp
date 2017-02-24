@@ -3,6 +3,8 @@
 #include "GL\glew.h"
 #include "Vertex.h"
 
+int Mesh::countTest = 0;
+
 Mesh::Mesh(const std::string &meshName)
 	: name(meshName)
 	, mode(DRAW_TRIANGLES)
@@ -91,4 +93,14 @@ void Mesh::Render(unsigned offset, unsigned count)
 	{
 		glDisableVertexAttribArray(3);
 	}
+}
+
+void Mesh::RenderParticle()
+{
+    if (mode == DRAW_LINES)
+        glDrawElements(GL_LINES, indexSize, GL_UNSIGNED_INT, 0);
+    else if (mode == DRAW_TRIANGLE_STRIP)
+        glDrawElements(GL_TRIANGLE_STRIP, indexSize, GL_UNSIGNED_INT, 0);
+    else
+        glDrawElements(GL_TRIANGLES, indexSize, GL_UNSIGNED_INT, 0);
 }

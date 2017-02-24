@@ -12,7 +12,7 @@
 #include "../Items/Powerup.h"
 
 static const float ENEMY_MAX_SPEED = 50.0f;
-static const float CHANCE_OF_DROPPING_POWERUP = 30.0f;
+static const float CHANCE_OF_DROPPING_POWERUP = 100.0f;
 
 class Enemy2D : public GenericEntity
 {

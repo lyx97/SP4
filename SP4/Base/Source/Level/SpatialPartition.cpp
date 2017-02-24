@@ -161,8 +161,6 @@ void CSpatialPartition::Render(Vector3* theCameraPosition)
             modelStack.PushMatrix();
             modelStack.Scale(xGridSize, 1.0f, zGridSize);
             modelStack.Rotate(-90, 1, 0, 0);
-            //Vector3 dir = temp[i][j].GetDir();
-            //modelStack.Rotate(Math::RadianToDegree(atan2(dir.x, dir.z)), 0, 0, 1);
             theGrid[i*zNumOfGrid + j].Render();
             modelStack.PopMatrix();
             modelStack.PopMatrix();

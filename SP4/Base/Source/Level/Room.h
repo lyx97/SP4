@@ -6,6 +6,7 @@
 static const int GRIDSIZE = 20;
 
 class EntityManager;
+class Powerup;
 
 enum ROOM_TYPE
 {
@@ -27,10 +28,6 @@ protected:
     int m_iMax_X;
     int m_iMin_Z;
     int m_iMax_Z;
-
-    //Vector3 positionInitial;
-    //Vector3 positionMin;
-    //Vector3 positionMax;
      
     // Store for previous room ID
     int m_iPreviousID;
@@ -51,6 +48,8 @@ public:
              const int& xNum, const int& zNum,
              const int& xIndex, const int& zIndex,
              bool firstRoom = false);
+
+    void Spawn(void);
 
     inline const ROOM_TYPE GetRoomType(void) { return m_eRoomType; }
     inline void SetRoomType(ROOM_TYPE roomType) { m_eRoomType = roomType; }

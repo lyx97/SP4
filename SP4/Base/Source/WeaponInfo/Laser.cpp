@@ -156,6 +156,7 @@ CLaser* Create::Laser(const std::string& _meshName,
 	result->SetSource(_source);
 	result->SetEntityType(EntityBase::PROJECTILE);
 	result->SetVelocity(_direction); // to get the velocity outside the class
+    result->SetRoomID(CPlayerInfo::GetInstance()->GetRoomID());
     EntityManager::GetInstance()->AddEntity(result, CPlayerInfo::GetInstance()->GetRoomID());
 
 	Vector3 base = Vector3(1.0f, 0.0f, 0.0f);

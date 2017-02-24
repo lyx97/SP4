@@ -54,6 +54,8 @@ private:
 	bool GamePaused = false;
 	
     CMinimap* minimap;
+
+    double test;
 };
 
 #endif

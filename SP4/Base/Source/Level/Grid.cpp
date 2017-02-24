@@ -68,6 +68,8 @@ Update the grid
 ********************************************************************************/
 void CGrid::Update(vector<EntityBase*>* migrationList)
 {
+    //if (index.x == 9 && index.z == 9)
+    //cout << ListOfObjects.size() << endl;
     // Check each object to see if they are no longer in this grid
     std::vector<EntityBase*>::iterator it;
     it = ListOfObjects.begin();

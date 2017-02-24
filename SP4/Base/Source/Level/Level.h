@@ -10,6 +10,8 @@
 
 static const int ROOMSIZE = 19;
 
+class CPlayerInfo;
+
 class CLevel : public Singleton<CLevel>
 {
     friend Singleton<CLevel>;
@@ -18,6 +20,8 @@ protected:
     int m_iRoomID;
 
     float m_fRoomBias;
+
+    bool m_bLevelChanged;
 
     std::vector<Vector3> roomIndexList;
     std::vector<CRoom*> roomList;
@@ -31,6 +35,8 @@ public:
     virtual ~CLevel();
 
     void Init(const float room_bias);
+
+    void Render();
 
     CRoom* GetRoom(const int roomID);
     int GetRoom(const int xIndex, const int zIndex);
@@ -50,4 +56,7 @@ public:
 
     inline int GetNumRoom(void) { return roomList.size(); }
     inline std::vector<Vector3> GetRoomIndex(void) { return roomIndexList; }
+
+    inline bool GetLevelChanged(void) { return m_bLevelChanged; }
+    inline void SetLevelChanged(bool levelchange) { this->m_bLevelChanged = levelchange; }
 };

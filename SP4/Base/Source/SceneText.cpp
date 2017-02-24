@@ -10,7 +10,6 @@
 #include "MouseController.h"
 #include "SceneManager.h"
 #include "GraphicsManager.h"
-//#include "ShaderProgram.h"
 #include "EntityManager.h"
 
 #include "GenericEntity.h"
@@ -19,6 +18,7 @@
 #include "Light.h"
 #include "RenderHelper.h"
 #include "Level/Level.h"
+#include "Particle/Particle.h"
 
 #include <iostream>
 using namespace std;
@@ -86,18 +86,12 @@ void SceneText::Init()
     srand(seed);
     cout << "Current Seed: " << seed << endl;
 
-    CLevel::GetInstance()->Init(10000);
+    CLevel::GetInstance()->Init(100);
 
     // Create the playerinfo instance, which manages all information about the player
     playerInfo = CPlayerInfo::GetInstance();
-    playerInfo->Init();
-
-    //EntityManager::GetInstance()->AddEntity(playerInfo, 1);
-    //EntityManager::GetInstance()->RemoveEntity(playerInfo, 0);
     playerInfo->SetRoomID(0);
-    //cout << "Test" << playerInfo->GetRoomID() << endl;
-
-    //cout << "Test" << CLevel::GetInstance()->GetRoom(1)->GetRoomID() << endl;
+    playerInfo->Init();
 
 	// Create entities into the scene
 	//Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
@@ -139,6 +133,17 @@ void SceneText::Init()
 	//Create::Sprite2DObject("crosshair", Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f));
 
     minimap = new CMinimap();
+
+    for (int i = 0; i < 400; ++i)
+    {
+        Particle* particle = EntityManager::GetInstance()->GetParticle();
+        particle->Init();
+        particle->SetIsDone(false);
+        particle->AddEffect(Particle::GRAVITY);
+        //particle->AddEffect(Particle::SHRINK);
+    }
+
+    test = 0.0;
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
@@ -204,6 +209,28 @@ void SceneText::Update(double dt)
 			GamePaused = true;
 	}
 
+    //test += dt;
+
+    //int halfWindowWidth = Application::GetInstance().GetWindowWidth() >> 2;
+    //int halfWindowHeight = Application::GetInstance().GetWindowHeight() >> 2;
+
+    //if (test >= 10.0)
+    //{
+    //    for (int i = 0; i < 300; ++i)
+    //    {
+    //        Particle* particle = EntityManager::GetInstance()->GetParticle();
+    //        particle->Init();
+    //        particle->SetPosition(
+    //            Vector3(Math::RandIntMinMax(-halfWindowWidth, halfWindowWidth),
+    //            0,
+    //            Math::RandIntMinMax(-halfWindowHeight, halfWindowHeight)));
+    //        particle->SetIsDone(false);
+    //        particle->AddEffect(Particle::GRAVITY);
+    //    }
+
+    //    test = 0.0;
+    //}
+
 	//if (KeyboardController::GetInstance()->IsKeyDown('I'))
 	//	lights[0]->position.z -= (float)(10.f * dt);
 	//if (KeyboardController::GetInstance()->IsKeyDown('K'))
@@ -216,6 +243,8 @@ void SceneText::Update(double dt)
 	//	lights[0]->position.y -= (float)(10.f * dt);
 	//if (KeyboardController::GetInstance()->IsKeyDown('P'))
 	//	lights[0]->position.y += (float)(10.f * dt);
+
+    playerInfo->SetDirection(mousePos_screenBased);
 
 	if (!GamePaused)
 	{
@@ -251,6 +280,14 @@ void SceneText::Update(double dt)
 			Treasure* newTreasure = new Treasure();
 			newTreasure->Init();
 		}
+        if (KeyboardController::GetInstance()->IsKeyDown('L'))
+        {
+            EntityManager::GetInstance()->GetSpatialPartition(CPlayerInfo::GetInstance()->GetRoomID())->Remove(playerInfo);
+            EntityManager::GetInstance()->RemoveSpatialPartition();
+            CLevel::GetInstance()->Init(100);
+            playerInfo->SetRoomID(0);  
+            EntityManager::GetInstance()->GetSpatialPartition(CPlayerInfo::GetInstance()->GetRoomID())->Add(playerInfo);
+        }
 		// <THERE>
 		camera.Update(dt);
 		camera.Constrain(playerInfo, 50.0f);
@@ -276,8 +313,8 @@ void SceneText::Render()
 	GraphicsManager::GetInstance()->UpdateLightUniforms();
 
 	// Setup 2D pipeline then render 2D
-	int halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2;
-	int halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2;
+    int halfWindowWidth = Application::GetInstance().GetWindowWidth() >> 1;
+    int halfWindowHeight = Application::GetInstance().GetWindowHeight() >> 1;
 
 	GraphicsManager::GetInstance()->SetOrthographicProjection(-m_orthoWidth * 0.5f, m_orthoWidth * 0.5f, -m_orthoHeight * 0.5f, m_orthoHeight * 0.5f, -1000, 10000);
 
@@ -290,6 +327,7 @@ void SceneText::Render()
 	//GraphicsManager::GetInstance()->SetPerspectiveProjection(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
 
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
+    CLevel::GetInstance()->Render();
 	EntityManager::GetInstance()->Render();
 
 	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();

@@ -22,7 +22,6 @@ CPlayerInfo *CPlayerInfo::s_instance = 0;
 
 CPlayerInfo::CPlayerInfo(void)
 	: GenericEntity(NULL)
-    , m_iCurrentRoom(0)
     , prevIndex(Vector3(0, 0, 0))
 	, m_dSpeed(40.0)
 	, m_dAcceleration(10.0)
@@ -54,6 +53,9 @@ CPlayerInfo::CPlayerInfo(void)
 	, defaultHealthRegenCooldown(5)
 	, defaultSpeed(300.f)
 	, killCount(0)
+    , rotateLeftLeg(Vector3(0, 0, 0))
+    , rotateRightLeg(Vector3(0, 0, 0))
+    , rotateLLUP(false)
 {
 }
 
@@ -74,7 +76,7 @@ CPlayerInfo::~CPlayerInfo(void)
 // Initialise this class instance
 void CPlayerInfo::Init(void)
 {
-	this->scale.Set(15, 25, 15);
+	this->scale.Set(3, 3, 3);
 	// Set the default values
 	defaultPosition.Set(0, 0, 10);
 	defaultTarget.Set(0, 0, 0);
@@ -86,6 +88,7 @@ void CPlayerInfo::Init(void)
 	position.z = CLuaInterface::GetInstance()->getIntValue("PlayerPos_z");
 	target.Set(0, 0, 0);
 	up.Set(0, 1, 0);
+    direction.Set(0, 0, 0);
 
 	// Set Boundary
 	maxBoundary.Set(1, 1, 1);
@@ -141,11 +144,12 @@ void CPlayerInfo::Init(void)
     //int a = 1, b = 2, c = 3, d = 4;
     //CLuaInterface::GetInstance()->getVariableValues("GetMinMax", a, b, c, d);
 
-    EntityManager::GetInstance()->AddEntity(this, m_iCurrentRoom);
+
+    EntityManager::GetInstance()->AddEntity(this, roomID);
 
     // Init heatmap
-    int xSize = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax();
-    int zSize = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax();
+    int xSize = CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax();
+    int zSize = CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax();
 
     heatmap = new CHeatmap*[xSize];
     for (int x = 0; x <= xSize; ++x)
@@ -161,14 +165,14 @@ void CPlayerInfo::Init(void)
     prevIndex = index;
 
     // Spawn location -- Fixed to room size of 19
-    SpawnLocation[0] = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(xSize - 1, zSize >> 1);
-    SpawnLocation[1] = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(1, zSize >> 1);
-    SpawnLocation[2] = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(xSize >> 1, zSize - 1);
-    SpawnLocation[3] = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(xSize >> 1, 1);
+    SpawnLocation[0] = CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(xSize - 1, zSize >> 1);
+    SpawnLocation[1] = CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(1, zSize >> 1);
+    SpawnLocation[2] = CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(xSize >> 1, zSize - 1);
+    SpawnLocation[3] = CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(xSize >> 1, 1);
 
     // Boundary
-    minBoundary.Set(CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(1, 1) - Vector3(GRIDSIZE, 0, GRIDSIZE));
-    maxBoundary.Set(CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(xSize - 1, zSize - 1) + Vector3(GRIDSIZE, 0, GRIDSIZE));
+    minBoundary.Set(CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(1, 1) - Vector3(GRIDSIZE, 0, GRIDSIZE));
+    maxBoundary.Set(CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(xSize - 1, zSize - 1) + Vector3(GRIDSIZE, 0, GRIDSIZE));
 }
 
 // Set target
@@ -216,8 +220,9 @@ Hero Update
 ********************************************************************************/
 void CPlayerInfo::Update(double dt)
 {
-    int xSize = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax();
-    int zSize = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax();
+    int xSize = CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax();
+    int zSize = CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax();
+
     if (prevIndex != index)
     {
         CGenerateHeatmap::GetInstance()->GenerateHeatmap(heatmap, xSize, zSize, index.x, index.z);
@@ -225,11 +230,11 @@ void CPlayerInfo::Update(double dt)
         prevIndex = index;
     }
 
-	if (playerMesh)
-	{
-		playerMesh->m_anim->animActive = true;
-		playerMesh->Update(dt * 1.5f);
-	}
+	//if (playerMesh)
+	//{
+	//	playerMesh->m_anim->animActive = true;
+	//	playerMesh->Update(dt * 1.5f);
+	//}
 
 	position += velocity * (float)dt;
 	if (!Application::GetInstance().GetWorldBasedMousePos().IsZero())
@@ -241,35 +246,45 @@ void CPlayerInfo::Update(double dt)
 		velocity *= 0.9f;
 	}
 
-    if (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomCleared() &&
-        CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridType(index.x, index.z) == GRID_TYPE::DOOR)
+    if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomCleared() &&
+        CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridType(index.x, index.z) == GRID_TYPE::DOOR)
     {
-        int previousRoom = m_iCurrentRoom;
+        int previousRoom = roomID;
 
-        if (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMin() == index.x && (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax() >> 1) == index.z)
+        if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMin() == index.x && (CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax() >> 1) == index.z)
         {
-            m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(0);
+            roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(0);
             position = SpawnLocation[0];
         }
-        if (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax() == index.x && (CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax() >> 1) == index.z)
+        if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax() == index.x && (CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax() >> 1) == index.z)
         {
-            m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(1);
+            roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(1);
             position = SpawnLocation[1];
         }
-        if ((CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax() >> 1) == index.x && CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMin() == index.z)
+        if ((CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax() >> 1) == index.x && CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMin() == index.z)
         {
-            m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(2);
+            roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(2);
             position = SpawnLocation[2];
         }
-        if ((CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax() >> 1) == index.x && CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax() == index.z)
+        if ((CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax() >> 1) == index.x && CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax() == index.z)
         {
-            m_iCurrentRoom = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetDoorToRoomID(3);
+            roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(3);
             position = SpawnLocation[3];
         }
 
-        EntityManager::GetInstance()->GetSetSpatialPartition(m_iCurrentRoom)->Add(this);
-        EntityManager::GetInstance()->GetSetSpatialPartition(previousRoom)->Remove(this);
+        EntityManager::GetInstance()->GetSpatialPartition(roomID)->Add(this);
+        EntityManager::GetInstance()->GetSpatialPartition(previousRoom)->Remove(this);
     }
+
+    //if (CLevel::GetInstance()->GetLevelChanged())
+    //{
+    //    int previousRoom = m_iCurrentRoom;
+
+    //    EntityManager::GetInstance()->GetSpatialPartition(m_iCurrentRoom)->Add(this);
+    //    EntityManager::GetInstance()->GetSpatialPartition(previousRoom)->Remove(this);
+
+    //    CLevel::GetInstance()->SetLevelChanged(false);
+    //}
 
     // Dash cooldown
 	if (isDashed)
@@ -295,22 +310,22 @@ void CPlayerInfo::Update(double dt)
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
 	{
         forceDir.z -= 1;
-		playerMesh = playerMeshes[1];
+		//playerMesh = playerMeshes[1];
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward))
 	{
         forceDir.z += 1;
-		playerMesh = playerMeshes[2];
+		//playerMesh = playerMeshes[2];
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
 	{
         forceDir.x -= 1;
-		playerMesh = playerMeshes[4];
+		//playerMesh = playerMeshes[4];
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
 	{
         forceDir.x += 1;
-		playerMesh = playerMeshes[3];
+		//playerMesh = playerMeshes[3];
 	}
 
 	if (velocity.LengthSquared() < maxSpeed * maxSpeed)
@@ -391,21 +406,78 @@ void CPlayerInfo::Update(double dt)
 		//Treasure* newTreasure = new Treasure();
 		//newTreasure->SpawnTreasure(this->position, this->treasure->treasure);
 	}
+    if (rotateLeftLeg.z <= -10)
+    {
+        rotateLLUP = true;
+    }
+    else if (rotateLeftLeg.z >= 10)
+    {
+        rotateLLUP = false;
+    }
+
+    if (rotateLLUP)
+    {
+        rotateLeftLeg.z += dt * 100;
+        rotateRightLeg.z -= dt * 100;
+    }
+    else if (!rotateLLUP)
+    {
+        rotateLeftLeg.z -= dt * 100;
+        rotateRightLeg.z += dt * 100;
+    }
 }
 
 void CPlayerInfo::Render()
 {
-	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
-	GraphicsManager::GetInstance()->GetModelStack().Translate(
-		this->position.x,
-		this->position.y,
-		this->position.z);
-	GraphicsManager::GetInstance()->GetModelStack().Scale(
-		this->scale.x,
-		this->scale.y,
-		this->scale.z);
-	RenderHelper::RenderMesh(playerMesh);
-	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
+	//GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
+	//GraphicsManager::GetInstance()->GetModelStack().Translate(
+	//	this->position.x,
+	//	this->position.y,
+	//	this->position.z);
+	//GraphicsManager::GetInstance()->GetModelStack().Scale(
+	//	this->scale.x,
+	//	this->scale.y,
+	//	this->scale.z);
+	//RenderHelper::RenderMesh(playerMesh);
+	//GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
+    MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(this->position.x, this->position.y, this->position.z);
+    modelStack.Rotate(Math::RadianToDegree(atan2(direction.z, direction.x)), 0, -1, 0);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("body"));
+
+    modelStack.PushMatrix();
+    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("head"));
+    modelStack.PopMatrix();
+
+    modelStack.PushMatrix();
+    modelStack.Rotate(rotateLeftLeg.z, 0, 0, -1);
+    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("leftleg"));
+    modelStack.PopMatrix();
+
+    modelStack.PushMatrix();
+    modelStack.Rotate(rotateRightLeg.z, 0, 0, -1);
+    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("rightleg"));
+    modelStack.PopMatrix();
+
+    modelStack.PopMatrix();
+
+    //for (int x = 0; x <= CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax(); ++x)
+    //{
+    //    for (int z = 0; z <= CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax(); ++z)
+    //    {
+    //        GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
+    //        Vector3 temp = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(x, z);
+    //        Vector3 dir = heatmap[x][z].GetDir();
+    //        GraphicsManager::GetInstance()->GetModelStack().Translate(temp.x, 1, temp.z);
+    //        GraphicsManager::GetInstance()->GetModelStack().Rotate(-90, 1, 0, 0);
+    //        GraphicsManager::GetInstance()->GetModelStack().Rotate(Math::RadianToDegree(atan2(dir.x, dir.z)), 0, 0, 1);
+    //        GraphicsManager::GetInstance()->GetModelStack().Scale(scale.x, scale.y, scale.z);
+    //        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("direction"));
+    //        GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
+    //    }
+    //}
 }
 
 // Constrain the position within the borders
@@ -449,30 +521,30 @@ void CPlayerInfo::Shoot(Vector3 dir)
 	if (secondaryWeapon)
 		secondaryWeapon->Discharge(this->position, dir, this);
 
-	if (-120 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-		Math::RadianToDegree(atan2f(dir.z, dir.x)) < -60)
-		playerMesh = playerMeshes[5];
-	else if (-60 < Math::RadianToDegree(atan2f(dir.z, dir.x)) && 
-		Math::RadianToDegree(atan2f(dir.z, dir.x)) < -30)
-		playerMesh = playerMeshes[6];
-	else if (-30 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-		Math::RadianToDegree(atan2f(dir.z, dir.x)) < 30)
-		playerMesh = playerMeshes[7];
-	else if (30 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-		Math::RadianToDegree(atan2f(dir.z, dir.x)) < 60)
-		playerMesh = playerMeshes[8];
-	else if (60 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-		Math::RadianToDegree(atan2f(dir.z, dir.x)) < 120)
-		playerMesh = playerMeshes[9];
-	else if (120 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-		Math::RadianToDegree(atan2f(dir.z, dir.x)) < 165)
-		playerMesh = playerMeshes[10];
-	else if (165 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-		Math::RadianToDegree(atan2f(dir.z, dir.x)) < -165)
-		playerMesh = playerMeshes[11];
-	else if (-165 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-		Math::RadianToDegree(atan2f(dir.z, dir.x)) < -120)
-		playerMesh = playerMeshes[12];
+	//if (-120 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < -60)
+	//	playerMesh = playerMeshes[5];
+	//else if (-60 < Math::RadianToDegree(atan2f(dir.z, dir.x)) && 
+	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < -30)
+	//	playerMesh = playerMeshes[6];
+	//else if (-30 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < 30)
+	//	playerMesh = playerMeshes[7];
+	//else if (30 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < 60)
+	//	playerMesh = playerMeshes[8];
+	//else if (60 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < 120)
+	//	playerMesh = playerMeshes[9];
+	//else if (120 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < 165)
+	//	playerMesh = playerMeshes[10];
+	//else if (165 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < -165)
+	//	playerMesh = playerMeshes[11];
+	//else if (-165 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
+	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < -120)
+	//	playerMesh = playerMeshes[12];
 }
 
 void CPlayerInfo::RecoverHealth()
