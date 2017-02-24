@@ -93,7 +93,8 @@ void Particle::Render(void)
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
     modelStack.PushMatrix();
     modelStack.Translate(position.x, position.y, position.z);
-    modelStack.Scale(scale.x, scale.y, scale.z);
-    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
+    //modelStack.Scale(scale.x, scale.y, scale.z);
+    RenderHelper::StoreParticlesMVP();
+    //RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
     modelStack.PopMatrix();
 }

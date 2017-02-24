@@ -1,11 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-<<<<<<< aba8c4d537db9dffdb6a40834ac3669d9b185d83
-VisualStudioVersion = 12.0.30501.0
-=======
 VisualStudioVersion = 12.0.40629.0
->>>>>>> ae95efd4330904f532c04a38806ee3a1c713b179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Base", "Base\Base.vcxproj", "{9B172635-4E2B-46F1-A403-08F4194D00F5}"
 	ProjectSection(ProjectDependencies) = postProject

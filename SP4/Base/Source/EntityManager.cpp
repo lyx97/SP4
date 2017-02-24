@@ -74,13 +74,13 @@ void EntityManager::Update(double _dt)
 void EntityManager::Render()
 {
 	// Render all entities
-	std::list<EntityBase*>::iterator it, end;
-	end = entityList.end();
-	for (it = entityList.begin(); it != end; ++it)
-	{
-        if ((*it)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
-		    (*it)->Render();
-	}
+	//std::list<EntityBase*>::iterator it, end;
+	//end = entityList.end();
+	//for (it = entityList.begin(); it != end; ++it)
+	//{
+ //       if ((*it)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
+	//	    (*it)->Render();
+	//}
 
     // Render the Scene Graph
     //CSceneGraph::GetInstance()->Render();
@@ -96,6 +96,8 @@ void EntityManager::Render()
     {
         (*it2)->Render();
     }
+    if (particleList_Active.size() > 0)
+        RenderHelper::RenderParticleMesh(MeshBuilder::GetInstance()->GetMesh("particle"));
 }
 
 // Render the UI entities

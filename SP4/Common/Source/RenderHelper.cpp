@@ -2,8 +2,9 @@
 #include "Mesh.h"
 #include "GraphicsManager.h"
 #include "ShaderProgram.h"
-#include "MatrixStack.h"
 #include "GL\glew.h"
+
+std::list<Mtx44> RenderHelper::MVPList;
 
 void RenderHelper::RenderMesh(Mesh* _mesh)
 {
@@ -117,7 +118,76 @@ void RenderHelper::RenderText(Mesh* _mesh, const std::string& _text, Color _colo
     glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 }
 
-//void RenderHelper::SetFontData(FontData& fontdata)
-//{
-//    fontData = fontdata;
-//}
+void RenderHelper::StoreParticlesMVP(void)
+{
+    Mtx44 MVP;
+    MVP = GraphicsManager::GetInstance()->GetProjectionMatrix() * GraphicsManager::GetInstance()->GetViewMatrix() * GraphicsManager::GetInstance()->GetModelStack().Top();
+    MVPList.push_back(MVP);
+}
+
+void RenderHelper::RenderParticleMesh(Mesh* _mesh)
+{
+    ShaderProgram* currProg = GraphicsManager::GetInstance()->GetActiveShader();
+
+    // Disable lighting stuff
+    currProg->UpdateInt("lightEnabled", 0);
+
+    // Update textures first if available
+    if (_mesh->textureID > 0)
+    {
+        currProg->UpdateInt("colorTextureEnabled", 1);
+        GraphicsManager::GetInstance()->UpdateTexture(0, _mesh->textureID);
+        currProg->UpdateInt("colorTexture", 0);
+    }
+    else
+    {
+        currProg->UpdateInt("colorTextureEnabled", 0);
+    }
+
+    // VertexAttribArray
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
+
+    glBindBuffer(GL_ARRAY_BUFFER, _mesh->vertexBuffer);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Position));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Position) + sizeof(Color)));
+    
+    if (_mesh->textureID > 0)
+    {
+        glEnableVertexAttribArray(3);
+        glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Position) + sizeof(Color) + sizeof(Vector3)));
+    }
+
+    //glDrawArrays(GL_TRIANGLES, 0, 3);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _mesh->indexBuffer);
+
+    // Get all our transform matrices & update shader
+    std::list<Mtx44>::iterator it, end = MVPList.end();
+
+    for (it = MVPList.begin(); it != end; ++it)
+    {
+        currProg->UpdateMatrix44("MVP", &(*it).a[0]);
+
+        // Do actual rendering
+        _mesh->RenderParticle();
+    }
+
+    if (_mesh->textureID > 0)
+    {
+        glDisableVertexAttribArray(3);
+    }
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
+
+    // Unbind texture for safety (in case next render call uses it by accident)
+    if (_mesh->textureID > 0)
+    {
+        GraphicsManager::GetInstance()->UnbindTexture(0);
+    }
+
+    MVPList.clear();
+}

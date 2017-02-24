@@ -134,16 +134,16 @@ void SceneText::Init()
 
     minimap = new CMinimap();
 
-    //for (int i = 0; i < 1000; ++i)
-    //{
-    //    Particle* particle = EntityManager::GetInstance()->GetParticle();
-    //    particle->Init();
-    //    particle->SetIsDone(false);
-    //    particle->AddEffect(Particle::GRAVITY);
-    //    //particle->AddEffect(Particle::SHRINK);
-    //}
+    for (int i = 0; i < 400; ++i)
+    {
+        Particle* particle = EntityManager::GetInstance()->GetParticle();
+        particle->Init();
+        particle->SetIsDone(false);
+        particle->AddEffect(Particle::GRAVITY);
+        //particle->AddEffect(Particle::SHRINK);
+    }
 
-    //test = 0.0;
+    test = 0.0;
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
@@ -209,14 +209,14 @@ void SceneText::Update(double dt)
 			GamePaused = true;
 	}
 
-    test += dt;
+    //test += dt;
 
-    int halfWindowWidth = Application::GetInstance().GetWindowWidth() >> 2;
-    int halfWindowHeight = Application::GetInstance().GetWindowHeight() >> 2;
+    //int halfWindowWidth = Application::GetInstance().GetWindowWidth() >> 2;
+    //int halfWindowHeight = Application::GetInstance().GetWindowHeight() >> 2;
 
-    //if (test >= 2.0)
+    //if (test >= 10.0)
     //{
-    //    for (int i = 0; i < 200; ++i)
+    //    for (int i = 0; i < 300; ++i)
     //    {
     //        Particle* particle = EntityManager::GetInstance()->GetParticle();
     //        particle->Init();
