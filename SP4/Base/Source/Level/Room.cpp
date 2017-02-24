@@ -1,5 +1,6 @@
 #include "Room.h"
 #include "../EntityManager.h"
+#include "../Items/Powerup.h"
 
 CRoom::CRoom()
     : m_iRoomID(-1)
@@ -21,15 +22,38 @@ CRoom::~CRoom()
 
 }
 
+void CRoom::Spawn(void)
+{
+    switch (m_eRoomType)
+    {
+    case ROOM_TYPE::STARTROOM:
+
+        break;
+    case ROOM_TYPE::ENEMYROOM:
+
+        break;
+    case ROOM_TYPE::SHOPROOM:
+
+        break;
+    case ROOM_TYPE::PUZZLEROOM:
+
+        break;
+    case ROOM_TYPE::TREASUREROOM:
+        break;
+    }
+}
+
 void CRoom::Add(const int& roomID,
                 const int& xNum, const int& zNum,
                 const int& xIndex, const int& zIndex,
                 bool firstRoom)
 {
+    // Create a new spatial partition for the room
     roomSpatial = new CSpatialPartition();
     roomSpatial->Init(GRIDSIZE, GRIDSIZE, xNum, zNum, 0, 0);
     EntityManager::GetInstance()->SetSpatialPartition(roomSpatial);
 
+    // Set room type
     if (firstRoom)
         m_eRoomType = ROOM_TYPE::STARTROOM;
     else
@@ -52,16 +76,19 @@ void CRoom::Add(const int& roomID,
         }
     }
 
-    m_iRoomID = roomID;
-    //positionInitial = Vector3(xPos, 0, zPos);
-    //positionMax = Vector3(xPos + (GRIDSIZE * xNum * 0.5), 0, zPos + (GRIDSIZE * zNum * 0.5));
-    //positionMin = Vector3(xPos - (GRIDSIZE * xNum * 0.5), 0, zPos - (GRIDSIZE * zNum * 0.5));
+    // Spawn entities based on room
+    Spawn();
 
+    // Set room ID
+    m_iRoomID = roomID;
+
+    // Set number of grids
     m_iMin_X = 0;
     m_iMax_X = xNum - 1;
     m_iMin_Z = 0;
     m_iMax_Z = zNum - 1;
 
+    // Set room index
     index = Vector3(xIndex, 0, zIndex);
 
     for (int x = m_iMin_X; x <= m_iMax_X; ++x)
@@ -77,31 +104,6 @@ void CRoom::Add(const int& roomID,
                 roomSpatial->SetGridType(x, z, GRID_TYPE::PATH);
         }
     }
-
-
-    //for (int x = m_iMin_X; x <= m_iMax_X; ++x)
-    //{
-    //    for (int z = m_iMin_Z; z <= m_iMax_Z; ++z)
-    //    {
-    //        cout << heatmap[x][z].GetDir() << endl;
-    //    }
-    //}
-
-    //for (int i = 0; i < m_iMax_X * m_iMax _Z; ++i)
-    //{
-    //    for (int x = 0; x <= m_iMax_X; ++x)
-    //    {
-    //        for (int z = 0; z <= m_iMax_Z; ++z)
-    //        {
-    //            heatmap[(x*m_iMax_Z + z) + (i*m_iMax_X*m_iMax_Z)] = new CHeatmap();
-
-    //        }
-    //    }
-    //}
-
-    //CGenerateHeatmap::GetInstance()->GenerateHeatmap(heatmap, m_iMax_X, m_iMax_Z);
-    //CGenerateHeatmap::GetInstance()->CalculateDirection(heatmap, m_iMax_X, m_iMax_Z);
-
 
     cout << "Room Created: " << m_iRoomID << endl;
 }

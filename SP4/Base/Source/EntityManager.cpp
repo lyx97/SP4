@@ -17,7 +17,8 @@ void EntityManager::Update(double _dt)
     end = entityList.end();
     for (it = entityList.begin(); it != end; ++it)
     {
-        (*it)->Update(_dt);
+        if ((*it)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
+            (*it)->Update(_dt);
     }
 
     // Update the Scene Graph
@@ -25,7 +26,6 @@ void EntityManager::Update(double _dt)
 
     // Check for Collision amongst entities with collider properties
     //CheckForCollision();
-
 
     // Clean up entities that are done
     it = entityList.begin();
@@ -49,6 +49,25 @@ void EntityManager::Update(double _dt)
 	if (partitionList.size() > 0)
 		partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Update();
 
+    // Update particles
+    std::list<Particle*>::iterator it2, end2;
+    end2 = particleList_Active.end();
+    for (it2 = particleList_Active.begin(); it2 != end2; ++it2)
+    {
+        (*it2)->Update(_dt);
+        if ((*it2)->IsDone())
+            SpliceQueue.push(it2);
+    }
+
+    while (SpliceQueue.size() > 0)
+    {
+        std::list<Particle*>::iterator particle = SpliceQueue.front();
+        // To active or inactive list
+        Splice(particle, (*particle)->IsDone());
+        SpliceQueue.pop();
+    }
+
+    //cout << particleList_Active.size() + particleList_Inactive.size() << endl;
 }
 
 // Render all entities
@@ -59,7 +78,8 @@ void EntityManager::Render()
 	end = entityList.end();
 	for (it = entityList.begin(); it != end; ++it)
 	{
-		(*it)->Render();
+        if ((*it)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
+		    (*it)->Render();
 	}
 
     // Render the Scene Graph
@@ -68,6 +88,14 @@ void EntityManager::Render()
     // Render the Spatial Partition
     //if (partitionList.size() > 0)
     //    partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Render();
+
+    // Render particles
+    std::list<Particle*>::iterator it2, end2;
+    end2 = particleList_Active.end();
+    for (it2 = particleList_Active.begin(); it2 != end2; ++it2)
+    {
+        (*it2)->Render();
+    }
 }
 
 // Render the UI entities
@@ -138,38 +166,84 @@ bool EntityManager::MarkForDeletion(EntityBase* _existingEntity)
 	return false;
 }
 
-// Add a particle to this EntityManager
-void EntityManager::AddParticle(Particle* _newParticle)
+// Add a particle to active list
+void EntityManager::AddParticleActive(void)
 {
-    particleList.push_back(_newParticle);
+    Particle* particle = new Particle();
+    particleList_Active.push_back(particle);
 }
 
-void EntityManager::ReuseParticle(Particle* _newParticle)
+// Add a particle to inactive list
+void EntityManager::AddParticleInactive(void)
 {
-    if (particleList.size() > 0)
+    Particle* particle = new Particle();
+    particle->Init();
+    particleList_Inactive.push_back(particle);
+}
+
+void EntityManager::RemoveParticleActive(Particle* _Particle)
+{
+    std::list<Particle*>::iterator findIter = std::find(particleList_Active.begin(), particleList_Active.end(), _Particle);
+
+    // Delete the entity if found
+    if (findIter != particleList_Active.end())
     {
-        cout << particleList.size() << endl;
-        std::list<Particle*>::iterator it, end;
-        end = particleList.end();
-        for (it = particleList.begin(); it != end; ++it)
+        delete *findIter;
+        findIter = particleList_Active.erase(findIter);
+
+        return;
+    }
+}
+
+Particle* EntityManager::GetParticle(void)
+{
+    if (particleList_Inactive.size() > 0)
+    {
+        std::list<Particle*>::iterator it = particleList_Inactive.begin();
+        if ((*it)->IsDone())
         {
-            if ((*it)->IsDone())
-            {
-                (*it)->SetIsDone(false);
-                (*it) = _newParticle;
-                return;
-            }
+            (*it)->SetIsDone(false);
+            SpliceQueue.push(it);
+            return *it;
         }
 
-        AddParticle(_newParticle);
+
+        //std::list<Particle*>::iterator it, end;
+        ////end = particleList_Inactive.end();
+        ////for (it = particleList_Inactive.begin(); it != end; ++it)
+        ////{
+        ////    if ((*it)->IsDone())
+        ////    {
+        ////        (*it)->SetIsDone(false);
+        ////        SpliceQueue.push(it);
+        ////        return *it;
+        ////    }
+        ////}
+
+        Particle* particle = new Particle();
+        particleList_Active.push_back(particle);
+        return particle;
     }
     else
     {
-        AddParticle(_newParticle);
+        for (int i = 0; i < 10; ++i)
+            AddParticleInactive();
+
+        Particle* particle = new Particle();
+        particleList_Active.push_back(particle);
+        return particle;
     }
 }
 
-CSpatialPartition* EntityManager::GetSetSpatialPartition(const int roomID)
+void EntityManager::Splice(std::list<Particle*>::iterator _particle, bool _IsDone)
+{
+    if (_IsDone)
+        particleList_Inactive.splice(particleList_Inactive.end(), particleList_Active, _particle);
+    else
+        particleList_Active.splice(particleList_Active.end(), particleList_Inactive, _particle);
+}
+
+CSpatialPartition* EntityManager::GetSpatialPartition(const int roomID)
 {
     return partitionList[roomID];
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <list>
 #include "Vector3.h"
 #include "../Camera/Camera.h"
 #include "../WeaponInfo/WeaponInfo.h"
@@ -11,18 +12,19 @@
 
 class Treasure;
 
+enum ANIMATION
+{
+    WALK,
+    SHOOT,
+
+    NUM_ANIMATION
+};
+
 class CPlayerInfo : public GenericEntity
 {
 protected:
 	static CPlayerInfo *s_instance;
 	CPlayerInfo(void);
-
-    int m_iCurrentRoom;
-
-    Vector3 prevIndex;
-    Vector3 SpawnLocation[4];
-
-    CHeatmap** heatmap;
 
 public:
 	static CPlayerInfo *GetInstance()
@@ -60,10 +62,6 @@ public:
 	// Get Up
 	Vector3 GetUp(void) const;
 
-    // Room
-    inline const int GetRoomID(void) { return m_iCurrentRoom; }
-    inline void SetRoomID(const int& roomID) { m_iCurrentRoom = roomID; }
-
 	// Update
 	void Update(double dt = 0.0333f);
 	void Render();
@@ -74,6 +72,10 @@ public:
 	// Handling Camera
 	void AttachCamera(Camera* _cameraPtr);
 	void DetachCamera();
+
+    inline Vector3 GetDirection(void) const { return direction; }
+    inline void SetDirection(Vector3 dir) { direction = dir; }
+    
 	void RecoverHealth();
 	void Shoot(Vector3 dir);
 	inline float GetHealth(){ return health; };
@@ -100,6 +102,7 @@ private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
 	Vector3 target, up;
 	Vector3 maxBoundary, minBoundary;
+    Vector3 direction;
 
 	double m_dSpeed;
 	double m_dAcceleration;
@@ -143,5 +146,20 @@ private:
 	float healthregenCooldown;
 	float healthregenCooldownTimer;
 
+	// Treasure
 	Treasure* treasure;
+	
+    // Room
+    Vector3 prevIndex;
+    Vector3 SpawnLocation[4];
+
+    CHeatmap** heatmap;
+
+    // Animation
+    Vector3 rotateLeftLeg;
+    Vector3 rotateRightLeg;
+
+    bool rotateLLUP;
+
+    std::list<ANIMATION> animationList;
 };

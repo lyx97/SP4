@@ -3,6 +3,7 @@
 
 #include "SingletonTemplate.h"
 #include <list>
+#include <queue>
 #include "Vector3.h"
 #include "SceneGraph/SceneGraph.h"
 #include "Level/SpatialPartition.h"
@@ -25,13 +26,17 @@ public:
     bool RemoveEntity(EntityBase* _existingEntity, const int _roomID = -1);
     bool MarkForDeletion(EntityBase* _existingEntity);
 
-    void AddParticle(Particle* _newParticle);
-    void ReuseParticle(Particle* _newParticle);
+    void AddParticleActive(void);
+    void AddParticleInactive(void);
+    void RemoveParticleActive(Particle* _Particle);
+    Particle* GetParticle(void);
 
 	std::list<EntityBase*> GetEntityList() { return entityList; };
 
-    CSpatialPartition* GetSetSpatialPartition(const int roomID);
+    CSpatialPartition* GetSpatialPartition(const int roomID);
     void SetSpatialPartition(CSpatialPartition* theSpatialPartition);
+
+    inline void RemoveSpatialPartition(void) { partitionList.clear(); }
 
 private:
 	EntityManager();
@@ -55,8 +60,12 @@ private:
 	bool CheckForCollision(void);
 
 	std::list<EntityBase*> entityList;
-    std::list<Particle*> particleList;
-	std::list<Enemy2D*> enemyList;
+    std::list<Particle*> particleList_Active;
+    std::list<Particle*> particleList_Inactive;
+
+    std::queue<std::list<Particle*>::iterator> SpliceQueue;
+
+    void Splice(std::list<Particle*>::iterator _particle, bool _IsDone);
 
     // Handler to Spatial Partition
     std::vector<CSpatialPartition*> partitionList;

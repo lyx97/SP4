@@ -9,7 +9,6 @@ Powerup::Powerup()
 Powerup::Powerup(Vector3 pos)
 	: GenericEntity(NULL)
 {
-	EntityManager::GetInstance()->AddEntity(this);
 	this->position.Set(pos);
 	this->velocity.Set(0, 0, 0);
 	this->scale.Set(10, 10, 10);
@@ -19,6 +18,10 @@ Powerup::Powerup(Vector3 pos)
 	this->m_bCollider = true;
 
 	random = Math::RandIntMinMax(0, NUM_POWERUP - 1);
+
+    this->roomID = 0;
+
+    EntityManager::GetInstance()->AddEntity(this, 0);
 }
 
 Powerup::~Powerup()

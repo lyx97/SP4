@@ -1,3 +1,4 @@
+<<<<<<< aba8c4d537db9dffdb6a40834ac3669d9b185d83
 ﻿Build started 24-Feb-17 12:32:51 AM.
      1>Project "C:\Users\SHEEP\Desktop\SP_04\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -20,6 +21,24 @@
          Heatmap.cpp
        Link:
          A:\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\SHEEP\Desktop\SP_04\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\SHEEP\Desktop\SP_04\SP4\Debug /LIBPATH:"C:\Users\SHEEP\Desktop\SP_04\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\SHEEP\Desktop\SP_04\SP4\/glew/lib /LIBPATH:C:\Users\SHEEP\Desktop\SP_04\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\SHEEP\Desktop\SP_04\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\SHEEP\Desktop\SP_04\SP4\Debug\Base.lib" /MACHINE:X86 /PROFILE Debug\Application.obj
+=======
+﻿Build started 2/24/2017 9:08:05 AM.
+     1>Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/Common/Source /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\SceneText.cpp
+         SceneText.cpp
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(28): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\scenetext.h(23): warning C4099: 'Color' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\155117g\desktop\sp4\sp4\common\source\vertex.h(14) : see declaration of 'Color'
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.h(79): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\scenetext.cpp(85): warning C4244: 'initializing' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\scenetext.cpp(168): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\scenetext.cpp(169): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\scenetext.cpp(288): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\Debug /LIBPATH:"C:\Users\155117g\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 /PROFILE Debug\Application.obj
+>>>>>>> ae95efd4330904f532c04a38806ee3a1c713b179
          Debug\Camera.obj
          Debug\Chaser.obj
          Debug\Enemy.obj
@@ -68,4 +87,8 @@
 
 Build succeeded.
 
+<<<<<<< aba8c4d537db9dffdb6a40834ac3669d9b185d83
 Time Elapsed 00:00:01.48
+=======
+Time Elapsed 00:00:36.89
+>>>>>>> ae95efd4330904f532c04a38806ee3a1c713b179

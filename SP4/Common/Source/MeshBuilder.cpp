@@ -736,4 +736,15 @@ void MeshBuilder::Init()
 	//GetMesh("player_body")->textureID = LoadTGA("Image//Player//player_texture.tga");
 	//GetMesh("player_leg")->textureID = LoadTGA("Image//Player//player_texture.tga");
 	//GetMesh("player_arm")->textureID = LoadTGA("Image//Player//player_texture.tga");
+
+    // PLAYER
+    GenerateOBJ("body", "OBJ//Player//player_body.obj");
+    GetMesh("body")->textureID = LoadTGA("Image//bed.tga");
+
+    GenerateOBJ("head", "OBJ//Player//player_head.obj");
+    GetMesh("head")->textureID = LoadTGA("Image//color.tga");
+    GenerateOBJ("leftleg", "OBJ//Player//player_leftleg.obj");
+    GetMesh("leftleg")->textureID = LoadTGA("Image//chair.tga");
+    GenerateOBJ("rightleg", "OBJ//Player//player_rightleg.obj");
+    GetMesh("rightleg")->textureID = LoadTGA("Image//chair.tga");
 }

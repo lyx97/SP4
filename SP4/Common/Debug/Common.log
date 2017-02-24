@@ -1,3 +1,4 @@
+<<<<<<< aba8c4d537db9dffdb6a40834ac3669d9b185d83
 ﻿Build started 24-Feb-17 12:29:48 AM.
      1>Project "C:\Users\SHEEP\Desktop\SP_04\SP4\Common\Common.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -26,6 +27,13 @@
          GraphicsManager.cpp
          Collider.cpp
          CameraBase.cpp
+=======
+﻿Build started 2/23/2017 5:08:16 PM.
+     1>Project "C:\Users\155117g\Desktop\SP4\SP4\Common\Common.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\ShaderProgram.cpp
+         ShaderProgram.cpp
+>>>>>>> ae95efd4330904f532c04a38806ee3a1c713b179
        Lib:
          A:\Visual Studio\VC\bin\Lib.exe /OUT:"C:\Users\SHEEP\Desktop\SP_04\SP4\Debug\Common.lib" /NOLOGO Debug\CameraBase.obj
          Debug\Collider.obj
@@ -54,4 +62,8 @@
 
 Build succeeded.
 
+<<<<<<< aba8c4d537db9dffdb6a40834ac3669d9b185d83
 Time Elapsed 00:00:00.72
+=======
+Time Elapsed 00:00:01.16
+>>>>>>> ae95efd4330904f532c04a38806ee3a1c713b179

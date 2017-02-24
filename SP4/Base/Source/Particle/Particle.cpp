@@ -13,7 +13,7 @@ Particle::Particle(void)
     , m_fExpandSpeed(1.0f)
     , m_fShrinkSpeed(1.0f)
     , m_fMinSize(Math::EPSILON)
-    , m_fMaxSize(10)
+    , m_fMaxSize(10.f)
 {
 
 }
@@ -25,14 +25,15 @@ Particle::~Particle(void)
 
 void Particle::Init(void)
 {
-    position = Vector3(0, 0, 0);
+    isDone = true;
+
+    position = Vector3(0, 20, 0);
     scale = Vector3(1, 1, 1);
+
+    m_dLifetime = 10.0;
 
     velocity.x = Math::RandFloatMinMax(-20.f, 20.f);
     velocity.z = Math::RandFloatMinMax(-20.f, 20.f);
-
-
-    EntityManager::GetInstance()->ReuseParticle(this);
 }
 
 void Particle::AddEffect(PARTICLE_EFFECT effect)
@@ -53,8 +54,8 @@ void Particle::Update(double dt)
         {
             position.y -= m_fGravity * dt;
 
-            if (position.y < -10.f)
-                SetIsDone(true);
+            //if (position.y < -10.f)
+            //    SetIsDone(true);
         }
         if ((*it) == Particle::SHRINK)
         {
@@ -79,6 +80,11 @@ void Particle::Update(double dt)
                 SetIsDone(true);
         }
     }
+
+
+    m_dLifetime -= dt;
+    if (m_dLifetime <= 0.0)
+        SetIsDone(true);
 }
 
 // Render
@@ -87,8 +93,7 @@ void Particle::Render(void)
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
     modelStack.PushMatrix();
     modelStack.Translate(position.x, position.y, position.z);
-    //modelStack.Rotate(-90, 1, 0, 0);
     modelStack.Scale(scale.x, scale.y, scale.z);
-    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("particle"));
+    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
     modelStack.PopMatrix();
 }
