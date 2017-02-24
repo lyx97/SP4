@@ -2,34 +2,10 @@
 
 Treasure::Treasure()
 	: GenericEntity(NULL)
+	, treasure(NONE)
+	, duration(0)
+	, cooldown(0)
 {
-	EntityManager::GetInstance()->AddEntity(this);
-
-	this->position.Set(0, 0, 0);
-	this->scale.Set(10, 10, 10);
-
-	this->m_eEntityType = EntityBase::ITEM;
-	this->m_bLaser = false;
-	this->m_bCollider = true;
-
-	treasure = NONE;
-
-	random = Math::RandIntMinMax(1, NUM_TREASURE - 1);
-}
-
-Treasure::Treasure(int type)
-	: GenericEntity(NULL)
-{
-	EntityManager::GetInstance()->AddEntity(this);
-
-	this->position.Set(0, 0, 0);
-	this->scale.Set(10, 10, 10);
-
-	this->m_eEntityType = EntityBase::ITEM;
-	this->m_bLaser = false;
-	this->m_bCollider = true;
-
-	treasure = (TREASURES)type;
 }
 
 Treasure::~Treasure()
@@ -38,61 +14,63 @@ Treasure::~Treasure()
 
 void Treasure::Init()
 {
-	switch (treasure)
-	{
-	case Treasure::NONE:
-	{
-		cout << "NO TREASURE" << endl;
-	}
-	break;
-	case Treasure::HEALTH_INCREASE:
-	{	
-		cout << "Increase health CD 10" << endl;
-		cooldown = 10;
-	}
-	break;
-	case Treasure::SPEED_INCREASE:
-	{
-		cout << "Increase Speed CD 15" << endl;
-		cooldown = 15;
-	}
-	break;
-	case Treasure::HEALTHREGEN_INCREASE:
-	{
-		cout << "Increase Health Regen CD 20" << endl;		
-		cooldown = 20;
-	}
-	break;
-	default:
-		break;
-	}
+	EntityManager::GetInstance()->AddEntity(this, CPlayerInfo::GetInstance()->GetRoomID());
+
+	this->position.Set(0, 0, 0);
+	this->scale.Set(10, 10, 10);
+
+	this->m_eEntityType = EntityBase::ITEM;
+	this->m_bLaser = false;
+	this->m_bCollider = true;
+
+	random = Math::RandIntMinMax(1, NUM_TREASURE - 1);
+}
+
+void Treasure::SpawnTreasure(Vector3 pos, TREASURES type)
+{
+	EntityManager::GetInstance()->AddEntity(this, CPlayerInfo::GetInstance()->GetRoomID());
+
+	this->position.Set(pos);
+	this->scale.Set(10, 10, 10);
+
+	this->m_eEntityType = EntityBase::ITEM;
+	this->m_bLaser = false;
+	this->m_bCollider = true;
+
+	random = type;
 }
 
 void Treasure::Update(double _dt)
 {
-	if ((this->position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() < 100)
+	if ((this->position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() < 100 &&
+		KeyboardController::GetInstance()->IsKeyPressed('Q'))
 	{
+		CPlayerInfo::GetInstance()->DropTreasure();
 		switch (random)
 		{
-		case Treasure::HEALTH_INCREASE:
-		{
-			cout << "Increase Health" << endl;
-			CPlayerInfo::GetInstance()->AddTreasures(HEALTH_INCREASE);
-		}
-		break;
-		case Treasure::SPEED_INCREASE:
-		{
-			cout << "Increase Speed" << endl;
-			CPlayerInfo::GetInstance()->AddTreasures(SPEED_INCREASE);
-		}
-		break;
-		case Treasure::HEALTHREGEN_INCREASE:
-		{
-			cout << "Increase Health Regen" << endl;
-			CPlayerInfo::GetInstance()->AddTreasures(HEALTHREGEN_INCREASE);
-		}
-		break;
-		default:
+			case Treasure::RAPID_HEALTHREGEN:
+			{
+				cout << "RAPID HEALTH REGEN" << endl;
+				CPlayerInfo::GetInstance()->AddTreasures(RAPID_HEALTHREGEN);
+			}
+			break;
+			case Treasure::SPRINT:
+			{
+				cout << "SPRINT" << endl;
+				CPlayerInfo::GetInstance()->AddTreasures(SPRINT);
+			}
+			break;
+			case Treasure::ONE_HIT_KILL:
+			{
+				cout << "ONE SHOT KILL" << endl;
+				CPlayerInfo::GetInstance()->AddTreasures(ONE_HIT_KILL);
+			}
+			break;
+			case Treasure::INVINCIBLE:
+			{
+				cout << "INVINCIBLE" << endl;
+				CPlayerInfo::GetInstance()->AddTreasures(INVINCIBLE);
+			}
 			break;
 		}
 		this->SetIsDone(true);
@@ -113,4 +91,42 @@ void Treasure::Render()
 		this->scale.z);
 	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
 	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
+}
+
+void Treasure::SetValues()
+{
+	this->random = treasure;
+	// Setting the cooldowns and duration of the treasures
+	switch (treasure)
+	{
+		case Treasure::NONE:
+		{
+			cooldown = 0;
+			duration = 0;
+		}
+		break;
+		case Treasure::RAPID_HEALTHREGEN:
+		{
+			cooldown = 15;
+			duration = 5;
+		}
+		break;
+		case Treasure::SPRINT:
+		{
+			cooldown = 25;
+			duration = 20;
+		}
+		break;
+		case Treasure::ONE_HIT_KILL:
+		{
+			cooldown = 25;
+			duration = 7;
+		}
+		case Treasure::INVINCIBLE:
+		{
+			cooldown = 30;
+			duration = 3;
+		}
+		break;
+	}
 }

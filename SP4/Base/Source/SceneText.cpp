@@ -249,6 +249,7 @@ void SceneText::Update(double dt)
 		if (KeyboardController::GetInstance()->IsKeyPressed('J'))
 		{
 			Treasure* newTreasure = new Treasure();
+			newTreasure->Init();
 		}
 		// <THERE>
 		camera.Update(dt);
@@ -305,10 +306,11 @@ void SceneText::Render()
 	EntityManager::GetInstance()->RenderUI();
 
 	std::ostringstream ss;
-	ss << 
+	ss <<
 		"Player:" << playerInfo->GetHealth() << " / " << playerInfo->GetMaxHealth() <<
 		" Speed: " << playerInfo->GetMaxSpeed() <<
-		" Kills: " << playerInfo->killCount << " / " << playerInfo->GetTreasure()->GetCooldown();
+		" Kills: " << playerInfo->killCount << " / " << playerInfo->GetTreasure()->GetCooldown() <<
+		" Treasure!: " << playerInfo->GetTreasuseDuration() << endl;
 	textObj[2]->SetText(ss.str());
 }
 

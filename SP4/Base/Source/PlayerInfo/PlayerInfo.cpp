@@ -41,6 +41,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, keyMoveRight('D')
 	, isMoving(false)
 	, isDashed(false)
+	, usingTreasure(false)
 	, maxHealth(100.0f)
 	, health(90.0f)
 	, maxSpeed(300.0f)
@@ -48,8 +49,10 @@ CPlayerInfo::CPlayerInfo(void)
 	, dashCooldown(2.f)
 	, dashCooldownTimer(0)
 	, healthregen(2.5f)
-	, healthregenCooldown(5)
 	, healthregenCooldownTimer(0)
+	, treasureDurationTimer(0)
+	, defaultHealthRegenCooldown(5)
+	, defaultSpeed(300.f)
 	, killCount(0)
 {
 }
@@ -98,6 +101,8 @@ void CPlayerInfo::Init(void)
     //secondaryWeapon->Init();
 
 	treasure = new Treasure();
+	healthregenCooldown = defaultHealthRegenCooldown;
+	maxSpeed = defaultSpeed;
 
 	playerMeshes[0] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_down");					// idle
 	playerMeshes[1] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");					// up
@@ -124,12 +129,6 @@ void CPlayerInfo::Init(void)
 		playerMeshes[i]->m_anim->Set(0, 3, 1, 1.f, true);
 	}
 	playerMesh = playerMeshes[0];
-	spriteAnimation = (SpriteAnimation*)(MeshBuilder::GetInstance()->GetMesh("player_up"));
-	if (spriteAnimation)
-	{
-		spriteAnimation->m_anim = new Animation();
-		spriteAnimation->m_anim->Set(0, 13, 1, 1.f, true);
-	}
 
     // Initialise the custom keyboard inputs
     keyMoveForward = CLuaInterface::GetInstance()->getCharValue("moveForward");
@@ -331,27 +330,34 @@ void CPlayerInfo::Update(double dt)
 			dashCooldownTimer = dashCooldown;
 		}
 	}
+
 	if (KeyboardController::GetInstance()->IsKeyPressed('E'))
 	{
-		if (treasure->treasure == 0)
+		if (this->killCount >= treasure->GetCooldown())
 		{
-			cout << "NO TREASURE" << endl;
+			treasureDurationTimer = 0;
+			usingTreasure = true;
+			this->killCount = 0;
 		}
 		else
 		{
-			if (this->killCount >= treasure->GetCooldown())
-			{
-				cout << "USED TREASURE" << endl;
-				killCount = 0;
-			}
-			else
-			{
-				cout << "NOT ENOUGH KILLS" << endl;
-			}
+			cout << "NOT ENOUGH KILLS" << endl;
 		}
 	}
-	Constrain();
+	if (usingTreasure)
+	{
+		UpdateTreasures(dt);
+		treasureDurationTimer += dt;
+		if (treasureDurationTimer >= treasure->GetDuration())
+		{
+			usingTreasure = false;
+			treasureDurationTimer = 0;
+			// set back to default values
+			Revert();
+		}
+	}
 
+	Constrain();
 	if (primaryWeapon)
 		primaryWeapon->Update(dt);
 	if (secondaryWeapon)
@@ -375,6 +381,16 @@ void CPlayerInfo::Update(double dt)
 		//attachedCamera->SetCameraTarget(target);
 		//attachedCamera->SetCameraUp(up);
 	}
+	 // DEBUGGING TOOLS
+	if (KeyboardController::GetInstance()->IsKeyPressed('O'))
+	{
+		this->health -= 10;
+	}
+	if (treasure->treasure != Treasure::NONE)
+	{
+		//Treasure* newTreasure = new Treasure();
+		//newTreasure->SpawnTreasure(this->position, this->treasure->treasure);
+	}
 }
 
 void CPlayerInfo::Render()
@@ -390,22 +406,6 @@ void CPlayerInfo::Render()
 		this->scale.z);
 	RenderHelper::RenderMesh(playerMesh);
 	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
-
-    //for (int x = 0; x <= CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax(); ++x)
-    //{
-    //    for (int z = 0; z <= CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax(); ++z)
-    //    {
-    //        GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
-    //        Vector3 temp = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(x, z);
-    //        Vector3 dir = heatmap[x][z].GetDir();
-    //        GraphicsManager::GetInstance()->GetModelStack().Translate(temp.x, 1, temp.z);
-    //        GraphicsManager::GetInstance()->GetModelStack().Rotate(-90, 1, 0, 0);
-    //        GraphicsManager::GetInstance()->GetModelStack().Rotate(Math::RadianToDegree(atan2(dir.x, dir.z)), 0, 0, 1);
-    //        GraphicsManager::GetInstance()->GetModelStack().Scale(scale.x, scale.y, scale.z);
-    //        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("direction"));
-    //        GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
-    //    }
-    //}
 }
 
 // Constrain the position within the borders
@@ -417,8 +417,6 @@ void CPlayerInfo::Constrain(void)
         position.x = maxBoundary.x - 1.0f; 
         velocity.x = 0;
     }
-	//if (position.y > maxBoundary.y - 1.0f)
-	//	position.y = maxBoundary.y - 1.0f;
     if (position.z > maxBoundary.z - 1.0f)
     {
         position.z = maxBoundary.z - 1.0f; 
@@ -429,8 +427,6 @@ void CPlayerInfo::Constrain(void)
         position.x = minBoundary.x + 1.0f;
         velocity.x = 0;
     }
-    //if (position.y < minBoundary.y + 1.0f)
-	//	position.y = minBoundary.y + 1.0f;
     if (position.z < minBoundary.z + 1.0f)
     {
         position.z = minBoundary.z + 1.0f;
@@ -490,13 +486,52 @@ void CPlayerInfo::RecoverHealth()
 void CPlayerInfo::AddTreasures(int type)
 {
 	this->treasure->treasure = (Treasure::TREASURES)(type);
-	treasure->Init();
+	treasure->SetValues();
 }
 
 void CPlayerInfo::UpdateTreasures(double dt)
 {
-	if (treasure)
+	if (usingTreasure)
 	{
-		treasure->GetCooldown();
+		switch (treasure->treasure)
+		{
+		case Treasure::NONE:
+		{
+			cout << "NO TREASURE" << endl;
+		}
+		break;
+		case Treasure::RAPID_HEALTHREGEN:
+		{
+			healthregenCooldown = defaultHealthRegenCooldown * 0.1f;
+		}
+		break;
+		case Treasure::SPRINT:
+		{
+			maxSpeed = defaultSpeed * 2;
+		}
+		break;
+		case Treasure::ONE_HIT_KILL:
+		{
+			cout << "ONE SHOT KILL USED" << endl;
+		}
+		break;
+		case Treasure::INVINCIBLE:
+		{
+			cout << "INVINCIBLE USED" << endl;
+		}
+		break;
+		} // end of switch
 	}
+}
+
+void CPlayerInfo::Revert()
+{
+	healthregenCooldown = defaultHealthRegenCooldown;
+	maxSpeed = defaultSpeed;
+}
+
+void CPlayerInfo::DropTreasure()
+{
+	Treasure* newTreasure = new Treasure();
+	newTreasure->SpawnTreasure(this->position, this->treasure->treasure);
 }

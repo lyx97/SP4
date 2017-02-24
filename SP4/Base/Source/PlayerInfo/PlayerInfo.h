@@ -90,10 +90,13 @@ public:
 
 	void AddTreasures(int type);
 	void UpdateTreasures(double dt);
+	void Revert();
+	void DropTreasure();
 
     inline CHeatmap** GetHeatmap() { return heatmap; }
 
 	inline Treasure* GetTreasure() { return this->treasure; };
+	inline float GetTreasuseDuration() { return this->treasureDurationTimer; };
 	int killCount;
 	
 private:
@@ -131,6 +134,7 @@ private:
 	float forceMagnitude = 0;
 	bool isMoving;
 	bool isDashed;
+	bool usingTreasure;
 
 	// player stats
 	float maxHealth;
@@ -142,6 +146,9 @@ private:
 	float healthregen;
 	float healthregenCooldown;
 	float healthregenCooldownTimer;
+	float treasureDurationTimer;
 
 	Treasure* treasure;
+	float defaultHealthRegenCooldown;
+	float defaultSpeed;
 };

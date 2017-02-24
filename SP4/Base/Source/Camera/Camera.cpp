@@ -45,7 +45,7 @@ void Camera::Update(double dt)
 	temp = Application::GetInstance().GetWorldBasedMousePos() + CPlayerInfo::GetInstance()->GetPosition() + this->target;
 	temp.x = temp.x * 0.5f;
 	temp.z = temp.z * 0.5f;
-	this->target.Lerp(temp, 2 * dt);
+	//this->target.Lerp(temp, 2 * dt);
 	this->position = this->target;
 	this->position.z += 1; // the thing making the camera 45 degrees
 	this->position.y += 1;

@@ -27,7 +27,6 @@ Powerup::~Powerup()
 
 void Powerup::Init()
 {
-
 }
 
 void Powerup::Update(double _dt)
