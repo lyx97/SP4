@@ -39,8 +39,6 @@
     <ClCompile Include="Source\Particle\Particle.cpp" />
     <ClCompile Include="Source\PlayerInfo\PlayerInfo.cpp" />
     <ClCompile Include="Source\Projectile\Projectile.cpp" />
-    <ClCompile Include="Source\SceneGraph\SceneGraph.cpp" />
-    <ClCompile Include="Source\SceneGraph\SceneNode.cpp" />
     <ClCompile Include="Source\SceneGraph\Transform.cpp" />
     <ClCompile Include="Source\SceneGraph\UpdateTransformation.cpp" />
     <ClCompile Include="Source\SceneText.cpp" />
@@ -51,7 +49,6 @@
     <ClCompile Include="Source\Waypoint\WaypointManager.cpp" />
     <ClCompile Include="Source\WeaponInfo\Laser.cpp" />
     <ClCompile Include="Source\WeaponInfo\LaserBlaster.cpp" />
-    <ClCompile Include="Source\WeaponInfo\Pistol.cpp" />
     <ClCompile Include="Source\WeaponInfo\WeaponInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -87,8 +84,6 @@
     <ClInclude Include="Source\Particle\Particle.h" />
     <ClInclude Include="Source\PlayerInfo\PlayerInfo.h" />
     <ClInclude Include="Source\Projectile\Projectile.h" />
-    <ClInclude Include="Source\SceneGraph\SceneGraph.h" />
-    <ClInclude Include="Source\SceneGraph\SceneNode.h" />
     <ClInclude Include="Source\SceneGraph\Transform.h" />
     <ClInclude Include="Source\SceneGraph\UpdateTransformation.h" />
     <ClInclude Include="Source\SceneText.h" />
@@ -99,7 +94,6 @@
     <ClInclude Include="Source\Waypoint\WaypointManager.h" />
     <ClInclude Include="Source\WeaponInfo\Laser.h" />
     <ClInclude Include="Source\WeaponInfo\LaserBlaster.h" />
-    <ClInclude Include="Source\WeaponInfo\Pistol.h" />
     <ClInclude Include="Source\WeaponInfo\WeaponInfo.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

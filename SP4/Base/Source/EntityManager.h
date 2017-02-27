@@ -5,7 +5,6 @@
 #include <list>
 #include <queue>
 #include "Vector3.h"
-#include "SceneGraph/SceneGraph.h"
 #include "Level/SpatialPartition.h"
 #include "Enemy\Enemy2D.h"
 

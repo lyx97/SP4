@@ -2,7 +2,6 @@
 
 #include <list>
 #include "Vector3.h"
-#include "../Camera/Camera.h"
 #include "../WeaponInfo/WeaponInfo.h"
 #include "../GenericEntity.h"
 #include "../TextEntity.h"
@@ -52,17 +51,8 @@ public:
 	// Reset this player instance to default
 	void Reset(void);
 
-	// Set target
-	void SetTarget(const Vector3& target);
-	// Set Up
-	void SetUp(const Vector3& up);	
     // Set boundary
 	void SetBoundary(Vector3 max, Vector3 min);
-
-	// Get target
-	Vector3 GetTarget(void) const;
-	// Get Up
-	Vector3 GetUp(void) const;
 
 	// Update
 	void Update(double dt = 0.0333f);
@@ -72,15 +62,12 @@ public:
 	// Constrain the position within the borders
 	void Constrain(void);
 
-	// Handling Camera
-	void AttachCamera(Camera* _cameraPtr);
-	void DetachCamera();
-
     inline Vector3 GetDirection(void) const { return direction; }
     inline void SetDirection(Vector3 dir) { direction = dir; }
     
 	void RecoverHealth();
 	void Shoot(Vector3 dir);
+
 	inline float GetHealth(){ return health; };
 	inline void SetHealth(float health){ this->health = health; };
 
@@ -124,8 +111,7 @@ private:
 
 	Camera* attachedCamera;
 
-	CWeaponInfo* primaryWeapon;
-	CWeaponInfo* secondaryWeapon;
+	CWeaponInfo* weapon;
 
 	// Key to move the player
 	char keyMoveForward;
@@ -173,4 +159,6 @@ private:
 
 	TextEntity* textOBJ[4];
 	float fontSize = 25.0f;
+
+	bool onScreenUI;
 };

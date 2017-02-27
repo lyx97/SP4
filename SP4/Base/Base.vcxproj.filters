@@ -49,9 +49,6 @@
     <ClCompile Include="Source\Particle\Particle.cpp">
       <Filter>Particle</Filter>
     </ClCompile>
-    <ClCompile Include="Source\WeaponInfo\Pistol.cpp">
-      <Filter>WeaponInfo</Filter>
-    </ClCompile>
     <ClCompile Include="Source\OBJMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,12 +78,6 @@
     </ClCompile>
     <ClCompile Include="Source\Projectile\Projectile.cpp">
       <Filter>Projectile</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneGraph\SceneGraph.cpp">
-      <Filter>SceneGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneGraph\SceneNode.cpp">
-      <Filter>SceneGraph</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneText.cpp">
       <Filter>Source Files</Filter>
@@ -177,9 +168,6 @@
     <ClInclude Include="Source\Particle\Particle.h">
       <Filter>Particle</Filter>
     </ClInclude>
-    <ClInclude Include="Source\WeaponInfo\Pistol.h">
-      <Filter>WeaponInfo</Filter>
-    </ClInclude>
     <ClInclude Include="Source\WeaponInfo\LaserBlaster.h">
       <Filter>WeaponInfo</Filter>
     </ClInclude>
@@ -221,12 +209,6 @@
     </ClInclude>
     <ClInclude Include="Source\Projectile\Projectile.h">
       <Filter>Projectile</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneGraph\SceneGraph.h">
-      <Filter>SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneGraph\SceneNode.h">
-      <Filter>SceneGraph</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneText.h">
       <Filter>Header Files</Filter>
@@ -292,9 +274,6 @@
     </Filter>
     <Filter Include="Projectile">
       <UniqueIdentifier>{788f182a-8eeb-4a04-a889-8c551b347699}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SceneGraph">
-      <UniqueIdentifier>{a9e8d191-27c9-48cf-a828-1dd9c7ba6e6f}</UniqueIdentifier>
     </Filter>
     <Filter Include="GameStateManagement">
       <UniqueIdentifier>{f21c3275-cc77-4b81-b782-e60b490a0d4e}</UniqueIdentifier>

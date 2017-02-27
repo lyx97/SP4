@@ -6,7 +6,6 @@
 #include "KeyboardController.h"
 #include "Mtx44.h"
 #include "../Projectile/Projectile.h"
-#include "../WeaponInfo/Pistol.h"
 #include "../WeaponInfo/LaserBlaster.h"
 #include "../Lua/LuaInterface.h"
 #include "../EntityManager.h"
@@ -32,8 +31,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, m_dFallSpeed(0.0)
 	, m_dFallAcceleration(-10.0)
 	, attachedCamera(NULL)
-	, primaryWeapon(NULL)
-	, secondaryWeapon(NULL)
+	, weapon(NULL)
 	, keyMoveForward('W')
 	, keyMoveBackward('S')
 	, keyMoveLeft('A')
@@ -62,15 +60,10 @@ CPlayerInfo::CPlayerInfo(void)
 
 CPlayerInfo::~CPlayerInfo(void)
 {
-	if (secondaryWeapon)
+	if (weapon)
 	{
-		delete secondaryWeapon;
-		secondaryWeapon = NULL;
-	}
-	if (primaryWeapon)
-	{
-		delete primaryWeapon;
-		primaryWeapon = NULL;
+		delete weapon;
+		weapon = NULL;
 	}
 }
 
@@ -95,14 +88,9 @@ void CPlayerInfo::Init(void)
 	maxBoundary.Set(1, 1, 1);
 	minBoundary.Set(-1, -1, -1);
 
-	// Set the pistol as the primary weapon
-	primaryWeapon = new CPistol();
-	primaryWeapon->Init();
     // Set the laser blaster as the secondary weapon
-    secondaryWeapon = new CLaserBlaster();
-    secondaryWeapon->Init();
-    //secondaryWeapon = new CGrenadeThrow();
-    //secondaryWeapon->Init();
+	weapon = new CLaserBlaster();
+	weapon->Init();
 
 	treasure = new Treasure();
 	healthregenCooldown = defaultHealthRegenCooldown;
@@ -163,18 +151,6 @@ void CPlayerInfo::Init(void)
 	}
 }
 
-// Set target
-void CPlayerInfo::SetTarget(const Vector3& target)
-{
-	this->target = target;
-}
-
-// Set position
-void CPlayerInfo::SetUp(const Vector3& up)
-{
-	this->up = up;
-}
-
 // Set the boundary for the player info
 void CPlayerInfo::SetBoundary(Vector3 max, Vector3 min)
 {
@@ -189,18 +165,6 @@ void CPlayerInfo::Reset(void)
 	position = defaultPosition;
 	target = defaultTarget;
 	up = defaultUp;
-}
-
-// Get target
-Vector3 CPlayerInfo::GetTarget(void) const
-{
-	return target;
-}
-
-// Get Up
-Vector3 CPlayerInfo::GetUp(void) const
-{
-	return up;
 }
 
 /********************************************************************************
@@ -218,11 +182,6 @@ void CPlayerInfo::Update(double dt)
         prevIndex = index;
     }
 
-	//if (playerMesh)
-	//{
-	//	playerMesh->m_anim->animActive = true;
-	//	playerMesh->Update(dt * 1.5f);
-	//}
 	if (dreamBar > Math::EPSILON)
 		this->dreamBar -= 0.1 * dt;
 
@@ -265,16 +224,6 @@ void CPlayerInfo::Update(double dt)
         EntityManager::GetInstance()->GetSpatialPartition(roomID)->Add(this);
         EntityManager::GetInstance()->GetSpatialPartition(previousRoom)->Remove(this);
     }
-
-    //if (CLevel::GetInstance()->GetLevelChanged())
-    //{
-    //    int previousRoom = m_iCurrentRoom;
-
-    //    EntityManager::GetInstance()->GetSpatialPartition(m_iCurrentRoom)->Add(this);
-    //    EntityManager::GetInstance()->GetSpatialPartition(previousRoom)->Remove(this);
-
-    //    CLevel::GetInstance()->SetLevelChanged(false);
-    //}
 
     // Dash cooldown
 	if (isDashed)
@@ -384,10 +333,9 @@ void CPlayerInfo::Update(double dt)
 	}
 
 	Constrain();
-	if (primaryWeapon)
-		primaryWeapon->Update(dt);
-	if (secondaryWeapon)
-		secondaryWeapon->Update(dt);
+
+	if (weapon)
+		weapon->Update(dt);
 
 	// If the user presses R key, then reset the view to default values
 	if (KeyboardController::GetInstance()->IsKeyDown('P'))
@@ -607,20 +555,10 @@ void CPlayerInfo::Constrain(void)
     }
 }
 
-void CPlayerInfo::AttachCamera(Camera* _cameraPtr)
-{
-	attachedCamera = _cameraPtr;
-}
-
-void CPlayerInfo::DetachCamera()
-{
-	attachedCamera = nullptr;
-}
-
 void CPlayerInfo::Shoot(Vector3 dir)
 {
-	if (secondaryWeapon)
-		secondaryWeapon->Discharge(this->position, dir, this);
+	if (weapon)
+		weapon->Discharge(this->position, dir, this);
 }
 
 void CPlayerInfo::RecoverHealth()

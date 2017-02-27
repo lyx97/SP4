@@ -28,11 +28,6 @@ void Camera::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
     this->position = defaultPosition = pos;
     this->target = defaultTarget = target;
 	this->up = defaultUp = up;
-    //Vector3 view = (target - position).Normalized();
-    //Vector3 right = view.Cross(up);
-    //right.y = 0;
-    //right.Normalize();
-    //this->up = defaultUp = right.Cross(view).Normalized();
 	m_worldHeight = 100.0f;
 	m_worldWidth = m_worldHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 }
@@ -49,122 +44,6 @@ void Camera::Update(double dt)
 	this->position = this->target;
 	this->position.z += 1; // the thing making the camera 45 degrees
 	this->position.y += 1;
-
-    //double camera_yaw = mouse_diff_x * 0.0174555555555556;		// 3.142 / 180.0
-    //double camera_pitch = mouse_diff_y * 0.0174555555555556;	// 3.142 / 180.0
-
-    //if (KeyboardController::GetInstance()->IsKeyDown('J'))
-    //{
-    //    Vector3 view = (target - position).Normalized();
-    //    Vector3 right = view.Cross(up);
-    //    right.y = 0;
-    //    right.Normalize();
-    //    position -= right * CAMERA_SPEED * (float)dt;
-    //    target -= right * CAMERA_SPEED * (float)dt;
-    //}
-    //if (KeyboardController::GetInstance()->IsKeyDown('L'))
-    //{
-    //    Vector3 view = (target - position).Normalized();
-    //    Vector3 right = view.Cross(up);
-    //    right.y = 0;
-    //    right.Normalize();
-    //    position += right * CAMERA_SPEED * (float)dt;
-    //    target += right * CAMERA_SPEED * (float)dt;
-    //}
-    //if (KeyboardController::GetInstance()->IsKeyDown('I'))
-    //{
-    //    Vector3 view = (target - position).Normalized();
-    //    position += view * CAMERA_SPEED * (float)dt;
-    //    target += view * CAMERA_SPEED * (float)dt;
-    //}
-    //if (KeyboardController::GetInstance()->IsKeyDown('K'))
-    //{
-    //    Vector3 view = (target - position).Normalized();
-    //    position -= view * CAMERA_SPEED * (float)dt;
-    //    target -= view * CAMERA_SPEED * (float)dt;
-    //}
-    //if (KeyboardController::GetInstance()->IsKeyDown(VK_LEFT))
-    //{
-    //    Vector3 view = (target - position).Normalized();
-    //    float yaw = (float)(CAMERA_SPEED * (float)dt);
-    //    Mtx44 rotation;
-    //    rotation.SetToRotation(yaw, 0, 1, 0);
-    //    view = rotation * view;
-    //    target = position + view;
-    //    Vector3 right = view.Cross(up);
-    //    right.y = 0;
-    //    right.Normalize();
-    //    up = right.Cross(view).Normalized();
-    //}
-    //if (KeyboardController::GetInstance()->IsKeyDown(VK_RIGHT))
-    //{
-    //    Vector3 view = (target - position).Normalized();
-    //    float yaw = (float)(-CAMERA_SPEED * (float)dt);
-    //    Mtx44 rotation;
-    //    rotation.SetToRotation(yaw, 0, 1, 0);
-    //    view = rotation * view;
-    //    target = position + view;
-    //    Vector3 right = view.Cross(up);
-    //    right.y = 0;
-    //    right.Normalize();
-    //    up = right.Cross(view).Normalized();
-    //}
-    //if (KeyboardController::GetInstance()->IsKeyDown(VK_UP))
-    //{
-    //    float pitch = (float)(CAMERA_SPEED * (float)dt);
-    //    Vector3 view = (target - position).Normalized();
-    //    Vector3 right = view.Cross(up);
-    //    right.y = 0;
-    //    right.Normalize();
-    //    up = right.Cross(view).Normalized();
-    //    Mtx44 rotation;
-    //    rotation.SetToRotation(pitch, right.x, right.y, right.z);
-    //    view = rotation * view;
-    //    target = position + view;
-    //}
-    //if (KeyboardController::GetInstance()->IsKeyDown(VK_DOWN))
-    //{
-    //    float pitch = (float)(-CAMERA_SPEED * (float)dt);
-    //    Vector3 view = (target - position).Normalized();
-    //    Vector3 right = view.Cross(up);
-    //    right.y = 0;
-    //    right.Normalize();
-    //    up = right.Cross(view).Normalized();
-    //    Mtx44 rotation;
-    //    rotation.SetToRotation(pitch, right.x, right.y, right.z);
-    //    view = rotation * view;
-    //    target = position + view;
-    //}
-    //Update the camera direction based on mouse move
-    // left-right rotate
-    //{
-    //    Vector3 view = (target - position).Normalized();
-    //    float yaw = (float)(-CAMERA_SPEED * camera_yaw * (float)dt);
-    //    Mtx44 rotation;
-    //    rotation.SetToRotation(yaw, 0, 1, 0);
-    //    view = rotation * view;
-    //    target = position + view;
-    //    Vector3 right = view.Cross(up);
-    //    right.y = 0;
-    //    right.Normalize();
-    //    up = right.Cross(view).Normalized();
-    //}
-    //{
-    //    float pitch = (float)(-CAMERA_SPEED * camera_pitch * (float)dt);
-    //    Vector3 view = (target - position).Normalized();
-    //    Vector3 right = view.Cross(up);
-    //    right.y = 0;
-    //    right.Normalize();
-    //    up = right.Cross(view).Normalized();
-    //    Mtx44 rotation;
-    //    rotation.SetToRotation(pitch, right.x, right.y, right.z);
-    //    view = rotation * view;
-    //    target = position + view;
-    //}
-    //if (KeyboardController::GetInstance()->IsKeyDown('R'))
-    //{
-    //    Reset();
-    //}
 }
 
 void Camera::Constrain(EntityBase* constrain, int radius)

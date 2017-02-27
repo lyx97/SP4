@@ -8,7 +8,6 @@
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "GenericEntity.h"
-#include "SceneGraph/SceneNode.h"
 #include "Waypoint/WaypointManager.h"
 #include "../Lua/LuaInterface.h"
 #include "Enemy/Enemy.h"

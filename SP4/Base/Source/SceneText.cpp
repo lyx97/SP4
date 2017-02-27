@@ -30,7 +30,6 @@ SceneText::SceneText()
 SceneText::~SceneText()
 {
     CWaypointManager::GetInstance()->DropInstance();
-    CSceneGraph::GetInstance()->Destroy();
 }
 
 void SceneText::Init()
@@ -361,7 +360,6 @@ void SceneText::Exit()
 {
 	// Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();
-	playerInfo->DetachCamera();
 
 	if (playerInfo->DropInstance() == false)
 	{
