@@ -199,12 +199,9 @@ void SceneText::Update(double dt)
 		lights[0]->type = Light::LIGHT_SPOT;
 	}
 
-	if (KeyboardController::GetInstance()->IsKeyDown('P'))
+	if (KeyboardController::GetInstance()->IsKeyPressed('P'))
 	{
-		if (GamePaused)
-			GamePaused = false;
-		else
-			GamePaused = true;
+		GamePaused = !GamePaused;
 	}
 
     //test += dt;
@@ -242,10 +239,9 @@ void SceneText::Update(double dt)
 	//if (KeyboardController::GetInstance()->IsKeyDown('P'))
 	//	lights[0]->position.y += (float)(10.f * dt);
 
-    playerInfo->SetDirection(mousePos_screenBased);
-
 	if (!GamePaused)
 	{
+		playerInfo->SetDirection(mousePos_screenBased);
 		// Update our entities
 		EntityManager::GetInstance()->Update(dt);
 

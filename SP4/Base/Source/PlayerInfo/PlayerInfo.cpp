@@ -30,7 +30,6 @@ CPlayerInfo::CPlayerInfo(void)
 	, m_bFallDownwards(false)
 	, m_dFallSpeed(0.0)
 	, m_dFallAcceleration(-10.0)
-	, attachedCamera(NULL)
 	, weapon(NULL)
 	, keyMoveForward('W')
 	, keyMoveBackward('S')
@@ -336,25 +335,6 @@ void CPlayerInfo::Update(double dt)
 
 	if (weapon)
 		weapon->Update(dt);
-
-	// If the user presses R key, then reset the view to default values
-	if (KeyboardController::GetInstance()->IsKeyDown('P'))
-	{
-		Reset();
-	}
-	else
-	{
-		//UpdateJumpUpwards(dt);
-		//UpdateFreeFall(dt);
-	}
-
-	// If a camera is attached to this playerInfo class, then update it
-	if (attachedCamera)
-	{
-		//attachedCamera->SetCameraPos(position);
-		//attachedCamera->SetCameraTarget(target);
-		//attachedCamera->SetCameraUp(up);
-	}
 
 	if (rotateLeftLeg.z <= -10)
     {

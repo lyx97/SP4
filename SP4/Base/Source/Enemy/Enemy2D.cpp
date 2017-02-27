@@ -64,7 +64,7 @@ void Enemy2D::Update(double _dt)
 			{
 				this->velocity += proj->GetVelocity() * proj->GetMass();
 				this->health -= proj->GetDamage();
-				//proj->SetIsDone(true);
+				     proj->SetIsDone(true);
 				this->SetIsDone(true); // debugging
 			}
 		}
@@ -85,6 +85,7 @@ void Enemy2D::Update(double _dt)
 		if (randomNo < CHANCE_OF_DROPPING_POWERUP)
 		{
 			Powerup* newPowerup = new Powerup(this->position);
+			newPowerup->Init();
 		}
 		if (CPlayerInfo::GetInstance()->GetTreasure()->treasure_type != 0 &&
 			CPlayerInfo::GetInstance()->killCount < CPlayerInfo::GetInstance()->GetTreasure()->GetCooldown())

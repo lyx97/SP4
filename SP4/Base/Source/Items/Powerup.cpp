@@ -17,7 +17,7 @@ Powerup::Powerup(Vector3 pos)
 	this->m_bLaser = false;
 	this->m_bCollider = true;
 
-	random = Math::RandIntMinMax(0, NUM_POWERUP - 1);
+	random = Math::RandIntMinMax(HEALTH_INCREASE, NUM_POWERUP - 1);
 
     this->roomID = 0;
 
@@ -30,6 +30,7 @@ Powerup::~Powerup()
 
 void Powerup::Init()
 {
+	random = HEALTH_RECOVER;
 }
 
 void Powerup::Update(double _dt)
@@ -47,24 +48,22 @@ void Powerup::Update(double _dt)
 		case Powerup::HEALTH_INCREASE:
 		{
 			cout << "Increase Max Health" << endl;
-			CPlayerInfo::GetInstance()->SetMaxHealth(CPlayerInfo::GetInstance()->GetMaxHealth() + 5);
+			CPlayerInfo::GetInstance()->SetMaxHealth(CPlayerInfo::GetInstance()->GetMaxHealth() + 50);
 		}
 		break;
 		case Powerup::SPEED_INCREASE:
 		{
 			cout << "Increase Speed" << endl;
-			CPlayerInfo::GetInstance()->SetMaxSpeed(CPlayerInfo::GetInstance()->GetMaxSpeed() + 10);
+			CPlayerInfo::GetInstance()->SetMaxSpeed(CPlayerInfo::GetInstance()->GetMaxSpeed() + 50);
 		}
 		break;
 		case Powerup::HEALTHREGEN_INCREASE:
 		{
 			cout << "Increase Health Regen" << endl;
-			CPlayerInfo::GetInstance()->SetHealthRegen(CPlayerInfo::GetInstance()->GetHealthRegen() + 1);
+			CPlayerInfo::GetInstance()->SetHealthRegen(CPlayerInfo::GetInstance()->GetHealthRegen() + 5);
 		}
 		break;
-		default:
-			break;
-		}
+		} // end of break
 		this->SetIsDone(true);
 		return;
 	}

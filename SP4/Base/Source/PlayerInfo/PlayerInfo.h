@@ -109,8 +109,6 @@ private:
 	bool m_bFallDownwards;
 	double m_dFallAcceleration;
 
-	Camera* attachedCamera;
-
 	CWeaponInfo* weapon;
 
 	// Key to move the player
