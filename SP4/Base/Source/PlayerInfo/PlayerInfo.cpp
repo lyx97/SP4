@@ -52,6 +52,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, treasureDurationTimer(0)
 	, defaultHealthRegenCooldown(5)
 	, defaultSpeed(300.f)
+	, dreamBar(MAX_DREAMBAR * 0.5f)
 	, killCount(0)
     , rotateLeftLeg(Vector3(0, 0, 0))
     , rotateRightLeg(Vector3(0, 0, 0))
@@ -107,32 +108,6 @@ void CPlayerInfo::Init(void)
 	healthregenCooldown = defaultHealthRegenCooldown;
 	maxSpeed = defaultSpeed;
 
-	playerMeshes[0] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_down");					// idle
-	playerMeshes[1] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_up");					// up
-	playerMeshes[2] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_down");					// down
-	playerMeshes[3] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_left");					// left
-	playerMeshes[4] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_right");				// right
-	playerMeshes[5] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingup");			// shoot up
-	playerMeshes[6] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingupright");		// shoot up right
-	playerMeshes[7] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingright");		// shoot right
-	playerMeshes[8] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingdownright");	// shoot down right
-	playerMeshes[9] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingdown");			// shoot down
-	playerMeshes[10] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingdownleft");	// shoot down left
-	playerMeshes[11] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingleft");		// shoot left
-	playerMeshes[12] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_shootingupleft");		// shoot up left
-
-	for (int i = 0; i < 5; ++i)
-	{
-		playerMeshes[i]->m_anim = new Animation;
-		playerMeshes[i]->m_anim->Set(0, 13, 1, 1.f, true);
-	}
-	for (int i = 5; i < 13; ++i)
-	{
-		playerMeshes[i]->m_anim = new Animation;
-		playerMeshes[i]->m_anim->Set(0, 3, 1, 1.f, true);
-	}
-	playerMesh = playerMeshes[0];
-
     // Initialise the custom keyboard inputs
     keyMoveForward = CLuaInterface::GetInstance()->getCharValue("moveForward");
     keyMoveBackward = CLuaInterface::GetInstance()->getCharValue("moveBackward");
@@ -173,6 +148,19 @@ void CPlayerInfo::Init(void)
     // Boundary
     minBoundary.Set(CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(1, 1) - Vector3(GRIDSIZE, 0, GRIDSIZE));
     maxBoundary.Set(CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(xSize - 1, zSize - 1) + Vector3(GRIDSIZE, 0, GRIDSIZE));
+
+	float halfWindowWidth = Application::GetInstance().GetWindowWidth() * 0.5f;
+	float halfWindowHeight = Application::GetInstance().GetWindowHeight() * 0.5f;
+
+	for (int i = 0; i < 4; ++i)
+	{
+		textOBJ[i] = Create::Text2DObject(
+			"text",
+			Vector3(-Application::GetInstance().GetWindowWidth() * 0.5f, (Application::GetInstance().GetWindowHeight() * 0.5f) -fontSize* 0.5 - (fontSize * i), 0.0f),
+			"",
+			Vector3(fontSize, fontSize, fontSize),
+			Color(0.0f, 1.0f, 0.0f));
+	}
 }
 
 // Set target
@@ -216,7 +204,7 @@ Vector3 CPlayerInfo::GetUp(void) const
 }
 
 /********************************************************************************
-Hero Update
+Player Update
 ********************************************************************************/
 void CPlayerInfo::Update(double dt)
 {
@@ -235,6 +223,8 @@ void CPlayerInfo::Update(double dt)
 	//	playerMesh->m_anim->animActive = true;
 	//	playerMesh->Update(dt * 1.5f);
 	//}
+	if (dreamBar > Math::EPSILON)
+		this->dreamBar -= 0.1 * dt;
 
 	position += velocity * (float)dt;
 	if (!Application::GetInstance().GetWorldBasedMousePos().IsZero())
@@ -310,22 +300,18 @@ void CPlayerInfo::Update(double dt)
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
 	{
         forceDir.z -= 1;
-		//playerMesh = playerMeshes[1];
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward))
 	{
         forceDir.z += 1;
-		//playerMesh = playerMeshes[2];
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
 	{
         forceDir.x -= 1;
-		//playerMesh = playerMeshes[4];
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
 	{
         forceDir.x += 1;
-		//playerMesh = playerMeshes[3];
 	}
 
 	if (velocity.LengthSquared() < maxSpeed * maxSpeed)
@@ -421,11 +407,6 @@ void CPlayerInfo::Update(double dt)
 		//attachedCamera->SetCameraTarget(target);
 		//attachedCamera->SetCameraUp(up);
 	}
-	 // DEBUGGING TOOLS
-	if (KeyboardController::GetInstance()->IsKeyPressed('O'))
-	{
-		this->health -= 10;
-	}
 
 	if (rotateLeftLeg.z <= -10)
     {
@@ -446,21 +427,20 @@ void CPlayerInfo::Update(double dt)
         rotateLeftLeg.z -= dt * 100;
         rotateRightLeg.z += dt * 100;
     }
+
+	// DEBUGGING TOOLS
+	if (KeyboardController::GetInstance()->IsKeyPressed('O'))
+	{
+		this->health -= 10;
+	}
+	if (KeyboardController::GetInstance()->IsKeyPressed('I'))
+	{
+		this->dreamBar -= 10;
+	}
 }
 
 void CPlayerInfo::Render()
 {
-	//GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
-	//GraphicsManager::GetInstance()->GetModelStack().Translate(
-	//	this->position.x,
-	//	this->position.y,
-	//	this->position.z);
-	//GraphicsManager::GetInstance()->GetModelStack().Scale(
-	//	this->scale.x,
-	//	this->scale.y,
-	//	this->scale.z);
-	//RenderHelper::RenderMesh(playerMesh);
-	//GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 
 	modelStack.PushMatrix();
@@ -499,6 +479,106 @@ void CPlayerInfo::Render()
     //        GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
     //    }
     //}
+}
+
+void CPlayerInfo::RenderUI()
+{
+	for (int i = 0; i < 4; ++i)
+	{
+		textOBJ[i]->SetPosition(Vector3(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + 1, 
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - (fontSize * i) - fontSize * 0.5f,
+			1.0f));
+	}
+	std::ostringstream ss;
+	ss.precision(3);
+	ss << "  Health: " << endl;
+	textOBJ[0]->SetText(ss.str());
+	ss.str("");
+	ss << "    Dash: " << endl;
+	textOBJ[1]->SetText(ss.str());
+	ss.str("");
+	ss << "   Speed: " << this->maxSpeed << endl;
+	textOBJ[2]->SetText(ss.str());
+	ss.str("");
+	ss << "Dreambar: " << this->dreamBar << endl;
+	textOBJ[3]->SetText(ss.str());
+
+	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+	// HEALTH
+	modelStack.PushMatrix();
+	modelStack.Translate(
+		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
+		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 0.5f,
+		1);
+	modelStack.Translate(this->health - fontSize * 2, 0, 0);
+	modelStack.Scale(2, 2, 2);
+	modelStack.Scale(this->health, fontSize * 0.5f, 1);
+	float healthRatio = this->health / this->maxHealth;
+	if (healthRatio < 0.25f)
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_quad"));
+	else if (healthRatio < 0.5f)
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_half"));
+	else
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_full"));
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(
+		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
+		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 0.5f,
+		0.5f);
+	modelStack.Translate(this->maxHealth - fontSize * 2, 0, 0);
+	modelStack.Scale(2, 2, 2);
+	modelStack.Scale(this->maxHealth, fontSize * 0.5f, 1);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
+	modelStack.PopMatrix();
+
+	// DASH
+	modelStack.PushMatrix();
+	modelStack.Translate(
+		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
+		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 1.5f,
+		1);
+	modelStack.Translate(((this->dashCooldown - this->dashCooldownTimer) * 10 * this->dashCooldown) - fontSize * 2, 0, 0);
+	modelStack.Scale(2, 2, 2);
+	modelStack.Scale((this->dashCooldown - this->dashCooldownTimer) * 10 * this->dashCooldown, fontSize * 0.5f, 1);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dash"));
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(
+		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
+		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 1.5f,
+		0.5f);
+	modelStack.Translate((this->dashCooldown * 10 * this->dashCooldown) - fontSize * 2, 0, 0);
+	modelStack.Scale(2, 2, 2);
+	modelStack.Scale(this->dashCooldown * 10 * this->dashCooldown, fontSize * 0.5f, 1);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
+	modelStack.PopMatrix();
+
+	// DREAMBAR
+	modelStack.PushMatrix();
+	modelStack.Translate(
+		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
+		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 3.5f,
+		1);
+	modelStack.Translate(this->dreamBar - fontSize * 2, 0, 0);
+	modelStack.Scale(2, 2, 2);
+	modelStack.Scale(this->dreamBar, fontSize * 0.5f, 1);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dreambar"));
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(
+		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
+		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 3.5f,
+		0.5f);
+	modelStack.Translate(100 - fontSize * 2, 0, 0);
+	modelStack.Scale(2, 2, 2);
+	modelStack.Scale(100, fontSize * 0.5f, 1);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
+	modelStack.PopMatrix();
 }
 
 // Constrain the position within the borders
@@ -541,35 +621,10 @@ void CPlayerInfo::Shoot(Vector3 dir)
 {
 	if (secondaryWeapon)
 		secondaryWeapon->Discharge(this->position, dir, this);
-
-	//if (-120 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < -60)
-	//	playerMesh = playerMeshes[5];
-	//else if (-60 < Math::RadianToDegree(atan2f(dir.z, dir.x)) && 
-	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < -30)
-	//	playerMesh = playerMeshes[6];
-	//else if (-30 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < 30)
-	//	playerMesh = playerMeshes[7];
-	//else if (30 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < 60)
-	//	playerMesh = playerMeshes[8];
-	//else if (60 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < 120)
-	//	playerMesh = playerMeshes[9];
-	//else if (120 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < 165)
-	//	playerMesh = playerMeshes[10];
-	//else if (165 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < -165)
-	//	playerMesh = playerMeshes[11];
-	//else if (-165 < Math::RadianToDegree(atan2f(dir.z, dir.x)) &&
-	//	Math::RadianToDegree(atan2f(dir.z, dir.x)) < -120)
-	//	playerMesh = playerMeshes[12];
 }
 
 void CPlayerInfo::RecoverHealth()
-{
+{ 
 	if (health + 10 > maxHealth)
 		health = maxHealth;
 	else

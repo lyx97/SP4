@@ -20,6 +20,8 @@ enum ANIMATION
     NUM_ANIMATION
 };
 
+static const float MAX_DREAMBAR = 100.f;
+
 class CPlayerInfo : public GenericEntity
 {
 protected:
@@ -65,6 +67,7 @@ public:
 	// Update
 	void Update(double dt = 0.0333f);
 	void Render();
+	void RenderUI();
 
 	// Constrain the position within the borders
 	void Constrain(void);
@@ -97,6 +100,9 @@ public:
 
 	inline Treasure* GetTreasure() { return this->treasure; };
 	inline float GetTreasuseDuration() { return this->treasureDurationTimer; };
+
+	inline float GetDreamBar() { return this->dreamBar; };
+	inline void SetDreamBar(float dreamBar) { this->dreamBar = dreamBar; };
 	int killCount;
 	
 private:
@@ -121,10 +127,6 @@ private:
 	CWeaponInfo* primaryWeapon;
 	CWeaponInfo* secondaryWeapon;
 
-	SpriteAnimation* spriteAnimation;
-	SpriteAnimation* playerMeshes[13];
-	SpriteAnimation* playerMesh;
-
 	// Key to move the player
 	char keyMoveForward;
 	char keyMoveBackward;
@@ -148,6 +150,7 @@ private:
 	float healthregenCooldown;
 	float healthregenCooldownTimer;
 	float treasureDurationTimer;
+	float dreamBar;
 
 	// Treasure
 	Treasure* treasure;
@@ -167,4 +170,7 @@ private:
     bool rotateLLUP;
 
     std::list<ANIMATION> animationList;
+
+	TextEntity* textOBJ[4];
+	float fontSize = 25.0f;
 };

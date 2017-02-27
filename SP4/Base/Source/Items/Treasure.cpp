@@ -121,6 +121,7 @@ void Treasure::SetValues()
 			cooldown = 25;
 			duration = 7;
 		}
+		break;
 		case Treasure::INVINCIBLE:
 		{
 			cout << "INVINCIBLE" << endl;

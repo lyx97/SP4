@@ -29,9 +29,6 @@ CMinimap::~CMinimap()
 void CMinimap::Update(double dt)
 {
     position.Set(Vector3((Application::GetInstance().GetWindowWidth() >> 1) - 100, (Application::GetInstance().GetWindowHeight() >> 1) - 100, 0));
-
-
-
 }
 
 void CMinimap::RenderUI(void)

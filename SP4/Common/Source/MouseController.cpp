@@ -20,6 +20,16 @@ void MouseController::UpdateMousePosition(double _x, double _y)
 	curr_posY = _y;
 }
 
+void MouseController::UpdateMousePositionX(double _x)
+{
+	curr_posX = _x;
+}
+
+void MouseController::UpdateMousePositionY(double _y)
+{
+	curr_posY = _y;
+}
+
 void MouseController::UpdateMouseButtonPressed(int _slot)
 {
 	currBtnStatus |= 1 << _slot;

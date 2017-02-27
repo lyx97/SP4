@@ -25,6 +25,8 @@ public:
 
 	// System Interface
 	void UpdateMousePosition(double _x, double _y);
+	void UpdateMousePositionX(double _x);
+	void UpdateMousePositionY(double _y);
 	void UpdateMouseButtonPressed(int _slot);
 	void UpdateMouseButtonReleased(int _slot);
 	void UpdateMouseScroll(const double xoffset, const double yoffset);

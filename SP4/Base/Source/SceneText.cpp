@@ -59,7 +59,7 @@ void SceneText::Init()
 	lights[1]->name = "lights[1]";
 
 	// Create the playerinfo instance, which manages all information about the player
-	camera.Init(Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(0, 1, -1));
+	camera.Init(Vector3(0, 1, 0), Vector3(0, 1, 0), Vector3(0, 0, -1));
 
 	// Create and attach the camera to the scene
 	//World Space
@@ -154,7 +154,6 @@ void SceneText::Init()
 	{
 		textObj[i] = Create::Text2DObject("text", Vector3(-halfWindowWidth, -halfWindowHeight + fontSize*i + halfFontSize, 0.0f), "", Vector3(fontSize, fontSize, fontSize), Color(0.0f, 1.0f, 0.0f));
 	}
-	textObj[0]->SetText("HELLO WORLD");
 
 	cout << "GAME state loaded!\n" << endl;
 }
@@ -167,9 +166,9 @@ void SceneText::Update(double dt)
 		z = Application::GetInstance().GetWorldBasedMousePos().z;
 		float w = Application::GetInstance().GetWindowWidth();
 		float h = Application::GetInstance().GetWindowHeight();
-		x = m_orthoWidth * (x / w);
+		x = m_orthoWidth * (x / w) * 1.4f;
 		//z = -(m_orthoHeight * (h - z) / h);
-		z = m_orthoHeight * (z / h);
+		z = m_orthoHeight * (z / h) * 2;
 
 		mousePos_screenBased.Set(x, 0, z);
 		mousePos_worldBased.Set(
@@ -343,13 +342,19 @@ void SceneText::Render()
 	GraphicsManager::GetInstance()->DetachCamera();
 	EntityManager::GetInstance()->RenderUI();
 
-	std::ostringstream ss;
-	ss <<
-		"Player:" << playerInfo->GetHealth() << " / " << playerInfo->GetMaxHealth() <<
-		" Speed: " << playerInfo->GetMaxSpeed() <<
-		" Kills: " << playerInfo->killCount << " / " << playerInfo->GetTreasure()->GetCooldown() <<
-		" Treasure!: " << playerInfo->GetTreasuseDuration() << endl;
-	textObj[2]->SetText(ss.str());
+	//std::ostringstream ss;
+	//ss.precision(3);
+	//ss <<
+	//	"DREAMBAR: " << playerInfo->GetDreamBar() << endl;
+	//textObj[0]->SetText(ss.str());
+
+	//ss.str("");
+	//ss <<
+	//	"Player:" << playerInfo->GetHealth() << " / " << playerInfo->GetMaxHealth() <<
+	//	" Speed: " << playerInfo->GetMaxSpeed() <<
+	//	" Kills: " << playerInfo->killCount << " / " << playerInfo->GetTreasure()->GetCooldown() <<
+	//	" Treasure!: " << playerInfo->GetTreasuseDuration() << endl;
+	//textObj[2]->SetText(ss.str());
 }
 
 void SceneText::Exit()

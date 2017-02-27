@@ -8,7 +8,7 @@ Enemy2D::Enemy2D()
 	: GenericEntity(NULL)
 {
 	this->position = Vector3(0, 0, 0);
-	this->scale = Vector3(1, 20, 1);
+	this->scale = Vector3(1, 5, 1);
 
 	this->isDone = false;
 	this->m_bCollider = true;
@@ -69,6 +69,7 @@ void Enemy2D::Update(double _dt)
 			}
 		}
 	}
+	this->maxHealth = maxHealth / CPlayerInfo::GetInstance()->GetDreamBar();
 	Vector3 temp = (Cohesion(this) +Alignment(this) + Separation(this));
 	if (!temp.IsZero())
 	{
