@@ -13,7 +13,7 @@ Powerup::Powerup(Vector3 pos)
 	this->velocity.Set(0, 0, 0);
 	this->scale.Set(10, 10, 10);
 
-	this->m_eEntityType = EntityBase::ITEM;
+	this->m_eEntityType = EntityBase::POWERUP;
 	this->m_bLaser = false;
 	this->m_bCollider = true;
 
@@ -21,7 +21,7 @@ Powerup::Powerup(Vector3 pos)
 
     this->roomID = 0;
 
-    EntityManager::GetInstance()->AddEntity(this, 0);
+	EntityManager::GetInstance()->AddEntity(this, CPlayerInfo::GetInstance()->GetRoomID());
 }
 
 Powerup::~Powerup()

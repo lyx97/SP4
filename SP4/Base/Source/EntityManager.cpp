@@ -17,7 +17,7 @@ void EntityManager::Update(double _dt)
     end = entityList.end();
     for (it = entityList.begin(); it != end; ++it)
     {
-        if ((*it)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
+        //if ((*it)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
             (*it)->Update(_dt);
     }
 
@@ -74,20 +74,20 @@ void EntityManager::Update(double _dt)
 void EntityManager::Render()
 {
 	// Render all entities
-	//std::list<EntityBase*>::iterator it, end;
-	//end = entityList.end();
-	//for (it = entityList.begin(); it != end; ++it)
-	//{
- //       if ((*it)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
-	//	    (*it)->Render();
-	//}
+	std::list<EntityBase*>::iterator it, end;
+	end = entityList.end();
+	for (it = entityList.begin(); it != end; ++it)
+	{
+        //if ((*it)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
+		    (*it)->Render();
+	}
 
     // Render the Scene Graph
     //CSceneGraph::GetInstance()->Render();
 
     // Render the Spatial Partition
-    //if (partitionList.size() > 0)
-    //    partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Render();
+	//if (partitionList.size() > 0)
+	//	partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Render();
 
     // Render particles
     std::list<Particle*>::iterator it2, end2;

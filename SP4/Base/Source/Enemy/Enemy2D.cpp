@@ -85,7 +85,7 @@ void Enemy2D::Update(double _dt)
 		{
 			Powerup* newPowerup = new Powerup(this->position);
 		}
-		if (CPlayerInfo::GetInstance()->GetTreasure()->treasure != 0 &&
+		if (CPlayerInfo::GetInstance()->GetTreasure()->treasure_type != 0 &&
 			CPlayerInfo::GetInstance()->killCount < CPlayerInfo::GetInstance()->GetTreasure()->GetCooldown())
 			CPlayerInfo::GetInstance()->killCount++;
 	}

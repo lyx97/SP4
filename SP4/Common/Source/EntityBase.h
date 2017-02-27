@@ -10,7 +10,8 @@ public:
 	{
 		DEFAULT,
 		ENEMY,
-		ITEM,
+		POWERUP,
+		TREASURE,
 		PROJECTILE,
 
 		NUM_ENTITYTYPE

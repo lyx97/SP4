@@ -2,7 +2,7 @@
 
 Treasure::Treasure()
 	: GenericEntity(NULL)
-	, treasure(NONE)
+	, treasure_type(NONE)
 	, duration(0)
 	, cooldown(0)
 {
@@ -19,63 +19,59 @@ void Treasure::Init()
 	this->position.Set(0, 0, 0);
 	this->scale.Set(10, 10, 10);
 
-	this->m_eEntityType = EntityBase::ITEM;
+	this->m_eEntityType = EntityBase::TREASURE;
 	this->m_bLaser = false;
 	this->m_bCollider = true;
 
 	random = Math::RandIntMinMax(1, NUM_TREASURE - 1);
 }
 
-void Treasure::SpawnTreasure(Vector3 pos, TREASURES type)
+void Treasure::SpawnTreasure(Vector3 pos, unsigned int type)
 {
 	EntityManager::GetInstance()->AddEntity(this, CPlayerInfo::GetInstance()->GetRoomID());
 
 	this->position.Set(pos);
 	this->scale.Set(10, 10, 10);
 
-	this->m_eEntityType = EntityBase::ITEM;
+	this->m_eEntityType = EntityBase::TREASURE;
 	this->m_bLaser = false;
 	this->m_bCollider = true;
 
 	random = type;
 }
 
-void Treasure::Update(double _dt)
+void Treasure::Effects()
 {
-	if ((this->position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() < 100 &&
-		KeyboardController::GetInstance()->IsKeyPressed('Q'))
+	switch (treasure_type)
 	{
-		CPlayerInfo::GetInstance()->DropTreasure();
-		switch (random)
-		{
-			case Treasure::RAPID_HEALTHREGEN:
-			{
-				cout << "RAPID HEALTH REGEN" << endl;
-				CPlayerInfo::GetInstance()->AddTreasures(RAPID_HEALTHREGEN);
-			}
-			break;
-			case Treasure::SPRINT:
-			{
-				cout << "SPRINT" << endl;
-				CPlayerInfo::GetInstance()->AddTreasures(SPRINT);
-			}
-			break;
-			case Treasure::ONE_HIT_KILL:
-			{
-				cout << "ONE SHOT KILL" << endl;
-				CPlayerInfo::GetInstance()->AddTreasures(ONE_HIT_KILL);
-			}
-			break;
-			case Treasure::INVINCIBLE:
-			{
-				cout << "INVINCIBLE" << endl;
-				CPlayerInfo::GetInstance()->AddTreasures(INVINCIBLE);
-			}
-			break;
-		}
-		this->SetIsDone(true);
-		return;
+	case Treasure::NONE:
+	{
+		cout << "NO TREASURE" << endl;
 	}
+	break;
+	case Treasure::RAPID_HEALTHREGEN:
+	{
+		cout << "RAPID HEALTHREGEN USED" << endl;
+		CPlayerInfo::GetInstance()->SetHealthRegen(CPlayerInfo::GetInstance()->GetHealthRegen() * 0.1f);
+	}
+	break;
+	case Treasure::SPRINT:
+	{
+		cout << "SPRINT USED" << endl;
+		CPlayerInfo::GetInstance()->SetMaxSpeed(CPlayerInfo::GetInstance()->GetMaxSpeed() * 1.5f);
+	}
+	break;
+	case Treasure::ONE_HIT_KILL:
+	{
+		cout << "ONE SHOT KILL USED" << endl;
+	}
+	break;
+	case Treasure::INVINCIBLE:
+	{
+		cout << "INVINCIBLE USED" << endl;
+	}
+	break;
+	} // end of switch
 }
 
 void Treasure::Render()
@@ -95,9 +91,9 @@ void Treasure::Render()
 
 void Treasure::SetValues()
 {
-	this->random = treasure;
+	this->random = treasure_type;
 	// Setting the cooldowns and duration of the treasures
-	switch (treasure)
+	switch (treasure_type)
 	{
 		case Treasure::NONE:
 		{
@@ -107,23 +103,27 @@ void Treasure::SetValues()
 		break;
 		case Treasure::RAPID_HEALTHREGEN:
 		{
+			cout << "RAPID_HEALTHREGEN" << endl;
 			cooldown = 15;
 			duration = 5;
 		}
 		break;
 		case Treasure::SPRINT:
 		{
+			cout << "SPRINT" << endl;
 			cooldown = 25;
 			duration = 20;
 		}
 		break;
 		case Treasure::ONE_HIT_KILL:
 		{
+			cout << "ONE_HIT_KILL" << endl;
 			cooldown = 25;
 			duration = 7;
 		}
 		case Treasure::INVINCIBLE:
 		{
+			cout << "INVINCIBLE" << endl;
 			cooldown = 30;
 			duration = 3;
 		}

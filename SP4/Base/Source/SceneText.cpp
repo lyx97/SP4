@@ -134,14 +134,14 @@ void SceneText::Init()
 
     minimap = new CMinimap();
 
-    for (int i = 0; i < 400; ++i)
-    {
-        Particle* particle = EntityManager::GetInstance()->GetParticle();
-        particle->Init();
-        particle->SetIsDone(false);
-        particle->AddEffect(Particle::GRAVITY);
-        //particle->AddEffect(Particle::SHRINK);
-    }
+    //for (int i = 0; i < 400; ++i)
+    //{
+    //    Particle* particle = EntityManager::GetInstance()->GetParticle();
+    //    particle->Init();
+    //    particle->SetIsDone(false);
+    //    particle->AddEffect(Particle::GRAVITY);
+    //    //particle->AddEffect(Particle::SHRINK);
+    //}
 
     test = 0.0;
 

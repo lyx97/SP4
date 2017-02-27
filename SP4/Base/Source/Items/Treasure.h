@@ -12,7 +12,7 @@
 class Treasure : public GenericEntity
 {
 public:
-	enum TREASURES
+	enum TREASURES_TYPE
 	{
 		NONE,
 		RAPID_HEALTHREGEN,
@@ -21,23 +21,23 @@ public:
 		INVINCIBLE,
 
 		NUM_TREASURE
-	}treasure;
+	}treasure_type;
 
 	Treasure();
 	virtual ~Treasure();
 
 	void Init();
-	void SpawnTreasure(Vector3 pos, TREASURES type);
-	virtual void Update(double _dt);
+	void SpawnTreasure(Vector3 pos, unsigned int type);
+	void Effects();
 	virtual void Render();
 	void SetValues();
-	void SwapTreasures();
 
 	inline int GetCooldown() { return cooldown; };
-	inline int GetDuration() { return duration; };
+	inline float GetDuration() { return duration; };
+	unsigned int random;
 
 private:
-	unsigned int random;
-	int cooldown;
 	float duration;
+	int cooldown;
+
 };

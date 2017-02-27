@@ -91,9 +91,7 @@ public:
 	inline void SetHealthRegen(float healthregen){ this->healthregen = healthregen; };
 
 	void AddTreasures(int type);
-	void UpdateTreasures(double dt);
 	void Revert();
-	void DropTreasure();
 
     inline CHeatmap** GetHeatmap() { return heatmap; }
 

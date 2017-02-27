@@ -346,6 +346,31 @@ void CPlayerInfo::Update(double dt)
 		}
 	}
 
+	for (auto entity : EntityManager::GetInstance()->GetEntityList())
+	{
+		if (entity->GetEntityType() == TREASURE)
+		{
+			Treasure* newTreasure = dynamic_cast<Treasure*>(entity);
+			if ((newTreasure->GetPosition() - this->position).LengthSquared() < 100 &&
+				KeyboardController::GetInstance()->IsKeyPressed('Q'))
+			{
+				if (treasure->treasure_type == Treasure::NONE)
+				{
+					AddTreasures(newTreasure->random);
+					newTreasure->SetIsDone(true);
+				}
+				else
+				{
+					int tempType = this->treasure->treasure_type;
+					AddTreasures(newTreasure->random);
+					newTreasure->SetIsDone(true);
+					Treasure* spawnTreasure = new Treasure();
+					spawnTreasure->SpawnTreasure(this->position, tempType);
+				}
+			}
+		}
+	}
+
 	if (KeyboardController::GetInstance()->IsKeyPressed('E'))
 	{
 		if (this->killCount >= treasure->GetCooldown())
@@ -361,7 +386,7 @@ void CPlayerInfo::Update(double dt)
 	}
 	if (usingTreasure)
 	{
-		UpdateTreasures(dt);
+		treasure->Effects();
 		treasureDurationTimer += dt;
 		if (treasureDurationTimer >= treasure->GetDuration())
 		{
@@ -401,12 +426,8 @@ void CPlayerInfo::Update(double dt)
 	{
 		this->health -= 10;
 	}
-	if (treasure->treasure != Treasure::NONE)
-	{
-		//Treasure* newTreasure = new Treasure();
-		//newTreasure->SpawnTreasure(this->position, this->treasure->treasure);
-	}
-    if (rotateLeftLeg.z <= -10)
+
+	if (rotateLeftLeg.z <= -10)
     {
         rotateLLUP = true;
     }
@@ -557,53 +578,12 @@ void CPlayerInfo::RecoverHealth()
 
 void CPlayerInfo::AddTreasures(int type)
 {
-	this->treasure->treasure = (Treasure::TREASURES)(type);
-	treasure->SetValues();
-}
-
-void CPlayerInfo::UpdateTreasures(double dt)
-{
-	if (usingTreasure)
-	{
-		switch (treasure->treasure)
-		{
-		case Treasure::NONE:
-		{
-			cout << "NO TREASURE" << endl;
-		}
-		break;
-		case Treasure::RAPID_HEALTHREGEN:
-		{
-			healthregenCooldown = defaultHealthRegenCooldown * 0.1f;
-		}
-		break;
-		case Treasure::SPRINT:
-		{
-			maxSpeed = defaultSpeed * 2;
-		}
-		break;
-		case Treasure::ONE_HIT_KILL:
-		{
-			cout << "ONE SHOT KILL USED" << endl;
-		}
-		break;
-		case Treasure::INVINCIBLE:
-		{
-			cout << "INVINCIBLE USED" << endl;
-		}
-		break;
-		} // end of switch
-	}
+	treasure->treasure_type = (Treasure::TREASURES_TYPE)type;
+	this->treasure->SetValues();
 }
 
 void CPlayerInfo::Revert()
 {
 	healthregenCooldown = defaultHealthRegenCooldown;
 	maxSpeed = defaultSpeed;
-}
-
-void CPlayerInfo::DropTreasure()
-{
-	Treasure* newTreasure = new Treasure();
-	newTreasure->SpawnTreasure(this->position, this->treasure->treasure);
 }
