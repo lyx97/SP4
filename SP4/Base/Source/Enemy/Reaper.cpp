@@ -61,6 +61,11 @@ Reaper::Reaper(const int _roomID)
     smoke->m_anim = new Animation;
     smoke->m_anim->Set(0, 4, 1, 1.f, true);
 
+    scythe = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 2);
+    scythe->textureID = LoadTGA("Image//Boss//reaper_scythe.tga");
+    scythe->m_anim = new Animation;
+    scythe->m_anim->Set(0, 1, 1, 1.f, true);
+
     currentAnimation = moveLeft;
 
 	health = 100;
@@ -144,7 +149,6 @@ void Reaper::Update(double dt)
             CSpit* spit = Create::Spit(
                 position,
                 temp,
-                (abs(temp.x)),
                 60.f);
 
             m_bAttackAnimation = false;
@@ -170,7 +174,21 @@ void Reaper::Update(double dt)
             SetIsDone(true);
     }
 
-	Enemy2D::Update(dt);
+    if (scythe)
+    {
+        scythe->m_anim->animActive = true;
+        scythe->Update(dt * 1.f);
+    }
+
+    if (prevHP != health)
+    {
+        prevHP = health;
+        HPScale = ((float)health / 100.f) * 100.f;
+    }
+
+    bob += dt * 1000;
+
+    Enemy2D::Update(dt);
 }
 
 void Reaper::Render(float& _renderOrder)
@@ -185,7 +203,24 @@ void Reaper::Render(float& _renderOrder)
     modelStack.Translate(position.x, position.y + _renderOrder, position.z + 1);
     modelStack.Rotate(90, -1, 0, 0);
     modelStack.Scale(scale.x, scale.y, scale.z);
+    //RenderHelper::RenderMesh(smoke);
     RenderHelper::RenderMesh(currentAnimation);
+    modelStack.PopMatrix();
+
+    modelStack.PushMatrix();
+    modelStack.Translate(position.x, position.y + _renderOrder, position.z + 1);
+    modelStack.Rotate(bob, 0, 1, 0);
+    modelStack.Rotate(90, -1, 0, 0);    
+    modelStack.Scale(scale.x * 2, scale.y * 2, scale.z * 2);
+    //RenderHelper::RenderMesh(smoke);
+    RenderHelper::RenderMesh(scythe);
+    modelStack.PopMatrix();
+
+    // FOR HP BAR
+    modelStack.PushMatrix();
+    modelStack.Translate(position.x, position.y + (scale.y * 0.5f), position.z);
+    modelStack.Scale(HPScale, 20, 1);
+    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("wall"));
     modelStack.PopMatrix();
 
     glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);

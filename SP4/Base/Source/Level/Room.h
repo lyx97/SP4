@@ -38,7 +38,7 @@ protected:
 
     Vector3 index;
 
-    CSpatialPartition* roomSpatial;
+    CSpatialPartition* RoomSpatial;
 
 public:
     CRoom();
@@ -49,6 +49,7 @@ public:
              const int& xIndex, const int& zIndex,
              bool firstRoom = false);
 
+    // Spawn entities for each room generated
     void Spawn(void);
 
     inline const ROOM_TYPE GetRoomType(void) { return m_eRoomType; }
@@ -61,10 +62,6 @@ public:
     inline const int GetRoomXMax(void) { return m_iMax_X; }
     inline const int GetRoomZMin(void) { return m_iMin_Z; }
     inline const int GetRoomZMax(void) { return m_iMax_Z; }
-
-    //inline const Vector3 GetInitialPosition(void) { return positionInitial; }
-    //inline const Vector3 GetMinPosition(void) { return positionMin; }
-    //inline const Vector3 GetMaxPosition(void) { return positionMax; }
     
     inline const int GetDoorToRoomID(const int id) { return m_iStoredID[id]; }
     inline void SetDoorToRoomID(const int id, const int value) { m_iStoredID[id] = value; }
@@ -78,5 +75,5 @@ public:
     inline Vector3 GetIndex(void) { return index; }
     inline void SetIndex(const int xIndex, const int zIndex) { index = Vector3(xIndex, 0, zIndex); }
 
-    inline CSpatialPartition* GetSpatialPartition() { return roomSpatial; }
+    inline CSpatialPartition* GetSpatialPartition() { return RoomSpatial; }
 };

@@ -34,7 +34,5 @@ namespace Create
     CSpit* Spit(
         const Vector3& _position,
         const Vector3& _direction,
-        const float _upwardForce,
         const float m_fSpeed);
 };
-

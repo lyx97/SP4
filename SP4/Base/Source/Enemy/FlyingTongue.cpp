@@ -88,13 +88,16 @@ void FlyingTongue::Update(double dt)
 
     m_dResponseTime += dt;
 
-	if (health <= 0)
+    // length of this enemy to player
+    Vector3 temp = CPlayerInfo::GetInstance()->GetPosition() - position;
+
+    if (health <= 0)
     {
         fsm = FSM::DEAD;
     }
     else
     {
-        if ((position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() <= 10000
+        if (temp.LengthSquared() <= 10000
             && m_dResponseTime >= m_dResponse)
         {
             fsm = FSM::ATTACK;
@@ -112,13 +115,13 @@ void FlyingTongue::Update(double dt)
     case MOVE:
         position += velocity * dt * m_dSpeed;
 
-        if (velocity.x > 0)
+        if (temp.x > 0)
             currentAnimation = moveRight;
         else
             currentAnimation = moveLeft;
         break;
     case ATTACK:
-        if (velocity.x > 0)
+        if (temp.x > 0)
             currentAnimation = attackRight;
         else
             currentAnimation = attackLeft;
@@ -139,7 +142,7 @@ void FlyingTongue::Update(double dt)
 
         break;
     case DEAD:
-        if (velocity.x > 0)
+        if (temp.x > 0)
             currentAnimation = dieRight;
         else
             currentAnimation = dieLeft;

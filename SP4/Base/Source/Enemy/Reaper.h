@@ -12,10 +12,8 @@ private:
     enum FSM
     {
         MOVE,
-        ATTACK,
-        
+        ATTACK,   
         DEAD,
-
         NUM_FSM
     };
 
@@ -30,6 +28,11 @@ private:
     bool m_bAttackAnimation;
     bool m_bAlive;
 
+    float HPScale;
+    int prevHP;
+
+    float bob = 0;
+
     SpriteAnimation* currentAnimation;
 
     SpriteAnimation* moveLeft;
@@ -40,6 +43,7 @@ private:
     SpriteAnimation* dieRight;
 
     SpriteAnimation* smoke;
+    SpriteAnimation* scythe;
 
     FSM fsm;
 

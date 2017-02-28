@@ -109,7 +109,6 @@ void EntityManager::Render()
     if (particleList_Active.size() > 0)
     {
         MeshBuilder::GetInstance()->GenerateParticle("particle", Color(1.0f, 1.0f, 1.0f), 10.f);
-        MeshBuilder::GetInstance()->GetMesh("particle")->textureID = LoadTGA("Image//Tile//wall.tga");
         RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("particle"));
         particlePosList.clear();
     }
@@ -420,11 +419,17 @@ void EntityManager::CheckForCollision(void)
                 if ((*Other)->GetRoomID() != CPlayerInfo::GetInstance()->GetRoomID())
                     continue;
 
+                if ((*This)->IsDone())
+                    continue;
+
                 if ((*Other)->IsDone())
                     continue;
 
                 if ((*Other)->GetEntityType() == EntityBase::ENEMY)
                 {
+                    if ((*Other)->GetHP() <= 0)
+                        continue;
+
                     if ((*Other)->HasCollider())
                     {
                         if (CheckSphereCollision((*This), (*Other)))
@@ -433,11 +438,25 @@ void EntityManager::CheckForCollision(void)
                             (*Other)->SetHPDamaged(laser->GetDamage());
                             // EDIT MASS
 							(*Other)->SetVelocity((*Other)->GetVelocity() + ((*This)->GetVelocity() * (*This)->GetMass()));
+
+                        }
+                    }
+                }
+                else if ((*Other)->GetEntityType() == EntityBase::OBSTACLE)
+                {
+                    if ((*Other)->HasCollider())
+                    {
+                        if (CheckSphereCollision((*This), (*Other)))
+                        {
+                            (*This)->SetIsDone(true);
                         }
                     }
                 }
         	}
         }
+/********************************************************************************
+PLAYER
+********************************************************************************/
         else if ((*This)->GetEntityType() == EntityBase::PLAYER)
         {
             if ((*This)->GetRoomID() != CPlayerInfo::GetInstance()->GetRoomID())
@@ -460,11 +479,16 @@ void EntityManager::CheckForCollision(void)
                         if (CheckSphereCollision((*This), (*Other)))
                         {
                             (*Other)->SetIsDone(true);
+                            // PLAYER GET DAMAGED
+                            cout << "PLAYER DAMAGED" << endl;
                         }
                     }
                 }
                 else if ((*Other)->GetEntityType() == EntityBase::ENEMY)
                 {
+                    if ((*Other)->GetHP() <= 0)
+                        continue;
+
                     if ((*Other)->HasCollider())
                     {
 						if (CheckSphereCollision((*This), (*Other)) && !CPlayerInfo::GetInstance()->IsInvincible())
@@ -477,5 +501,84 @@ void EntityManager::CheckForCollision(void)
                 }
             }
         }
+/********************************************************************************
+OBSTACLE
+********************************************************************************/
+        else if ((*This)->GetEntityType() == EntityBase::OBSTACLE)
+        {
+            if ((*This)->GetRoomID() != CPlayerInfo::GetInstance()->GetRoomID())
+                continue;
+
+            // Check for collision with another collider class
+            OtherEnd = entityList.end();
+            for (Other = entityList.begin(); Other != OtherEnd; ++Other)
+            {
+                if (This == Other)
+                    continue;
+
+                if ((*Other)->GetRoomID() != CPlayerInfo::GetInstance()->GetRoomID())
+                    continue;
+
+                if ((*Other)->GetEntityType() == EntityBase::ENEMYPROJECTILE)
+                {
+                    if ((*Other)->HasCollider())
+                    {
+                        if (CheckSphereCollision((*This), (*Other)))
+                        {
+                            (*Other)->SetIsDone(true);
+                            cout << "OBSTACLE COLLIDED" << endl;
+                        }
+                    }
+                }
+                //else if ((*Other)->GetEntityType() == EntityBase::ENEMY)
+                //{
+                //    if ((*Other)->HasCollider())
+                //    {
+                //        if (CheckSphereCollision((*This), (*Other)))
+                //        {
+                //            // PLAYER GET DAMAGED
+                //            cout << "PLAYER DAMAGED" << endl;
+                //        }
+                //    }
+                //}
+            }
+        }
+/********************************************************************************
+ENEMY
+********************************************************************************/
+        //else if ((*This)->GetEntityType() == EntityBase::ENEMY)
+        //{
+        //    if ((*This)->GetRoomID() != CPlayerInfo::GetInstance()->GetRoomID())
+        //        continue;
+
+        //    if ((*This)->GetHP() <= 0)
+        //        continue;
+
+        //    // Check for collision with another collider class
+        //    OtherEnd = entityList.end();
+        //    for (Other = entityList.begin(); Other != OtherEnd; ++Other)
+        //    {
+        //        if (This == Other)
+        //            continue;
+
+        //        if ((*Other)->GetRoomID() != CPlayerInfo::GetInstance()->GetRoomID())
+        //            continue;
+
+        //        if ((*Other)->GetHP() <= 0)
+        //            continue;
+
+        //        if ((*Other)->GetEntityType() == EntityBase::ENEMY)
+        //        {
+        //            if ((*Other)->HasCollider())
+        //            {
+        //                if (CheckSphereCollision((*This), (*Other)))
+        //                {
+        //                    (*This)->SetPosition((*This)->GetPosition() - ((*Other)->GetPosition() - (*This)->GetPosition()).Normalized());
+        //                    (*Other)->SetPosition((*Other)->GetPosition() - ((*This)->GetPosition() - (*Other)->GetPosition()).Normalized());
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

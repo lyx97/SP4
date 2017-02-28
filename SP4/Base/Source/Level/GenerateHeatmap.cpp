@@ -75,7 +75,7 @@ void CGenerateHeatmap::StartBrushfire(CHeatmap** heatmap,
                 if (CLevel::GetInstance()->GetRoom(CPlayerInfo::GetInstance()->GetRoomID())->GetSpatialPartition()->GetGridType(x, z)
                     != GRID_TYPE::OBSTACLE)
                 {
-                    heatmap[x][z].SetValue(prevValue + 1);
+                    heatmap[x][z].SetValue(heatmap[x][z].GetValue() + prevValue + 1);
                     heatmap[x][z].SetMarked(true);
                     AddChild(x, z, prevValue + 1);
                 }
@@ -85,10 +85,10 @@ void CGenerateHeatmap::StartBrushfire(CHeatmap** heatmap,
                     heatmap[x][z].SetMarked(true);
                     heatmap[x][z].SetObstacle(true);
 
-                    //heatmap[x - 1][z].SetValue(heatmap[x - 1][z].GetValue() + 1);
-                    //heatmap[x + 1][z].SetValue(heatmap[x + 1][z].GetValue() + 1);
-                    //heatmap[x][z - 1].SetValue(heatmap[x][z - 1].GetValue() + 1);
-                    //heatmap[x][z + 1].SetValue(heatmap[x][z + 1].GetValue() + 1);
+                    //heatmap[x - 1][z - 1].SetValue(heatmap[x - 1][z - 1].GetValue() - 2);
+                    //heatmap[x + 1][z - 1].SetValue(heatmap[x + 1][z - 1].GetValue() - 2);
+                    //heatmap[x - 1][z + 1].SetValue(heatmap[x - 1][z + 1].GetValue() - 2);
+                    //heatmap[x + 1][z + 1].SetValue(heatmap[x + 1][z + 1].GetValue() - 2);
                 }
             }
 
@@ -127,20 +127,70 @@ void CGenerateHeatmap::CalculateDirection(CHeatmap** heatmap, const int xSize, c
         {
             //if (!heatmap[x][z].isObstacle())
             {
-                int lowest = 99999;
+                // Check if up/down/left/right of grid has obstacle
+                bool allowDiagonalPath = true;
                 for (int i = -1; i <= 1; ++i)
                 {
                     for (int j = -1; j <= 1; ++j)
                     {
+                        if (i == j || abs(i) == j || i == abs(j))
+                            continue;
+
+                        if (i == 0 && j == 0)
+                            continue;
+
                         if (x + i >= 0 && x + i <= xSize &&
                             z + j >= 0 && z + j <= zSize)
-                        { 
-                            int temp = heatmap[x + i][z + j].GetValue();
-                            if (lowest > temp)
+                        {
+                            if (heatmap[x + i][z + j].isObstacle())
+                                allowDiagonalPath = false;
+                        }
+                    }
+                }
+
+                int lowest = 99999;
+                if (allowDiagonalPath)
+                {
+                    for (int i = -1; i <= 1; ++i)
+                    {
+                        for (int j = -1; j <= 1; ++j)
+                        {
+                            if (x + i >= 0 && x + i <= xSize &&
+                                z + j >= 0 && z + j <= zSize)
                             {
-                                lowest = temp;
-                                if (!(heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()).IsZero())
-                                    heatmap[x][z].SetDir((heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()).Normalized());
+                                int temp = heatmap[x + i][z + j].GetValue();
+                                if (lowest > temp)
+                                {
+                                    lowest = temp;
+                                    if (!(heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()).IsZero())
+                                        heatmap[x][z].SetDir((heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()).Normalized());
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = -1; i <= 1; ++i)
+                    {
+                        for (int j = -1; j <= 1; ++j)
+                        {
+                            if (i == j || abs(i) == j || i == abs(j))
+                                continue;
+
+                            if (i == 0 && j == 0)
+                                continue;
+
+                            if (x + i >= 0 && x + i <= xSize &&
+                                z + j >= 0 && z + j <= zSize)
+                            {
+                                int temp = heatmap[x + i][z + j].GetValue();
+                                if (lowest > temp)
+                                {
+                                    lowest = temp;
+                                    if (!(heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()).IsZero())
+                                        heatmap[x][z].SetDir((heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()).Normalized());
+                                }
                             }
                         }
                     }

@@ -52,9 +52,9 @@ void CSpit::Update(double dt)
     }
 
     if (theDirection.y > 0)
-        theDirection.y -= 1.f;
+        theDirection.y -= dt * m_fSpeed;
     else if (position.y > 0)
-        theDirection.y -= 1.f;
+        theDirection.y -= dt * m_fSpeed;
 
 
     // Update Position
@@ -103,12 +103,11 @@ void CSpit::Render(float& _renderOrder)
 CSpit* Create::Spit(
     const Vector3& _position,
     const Vector3& _direction,
-    const float _upwardForce,
     const float m_fSpeed)
 {
     CSpit* result = new CSpit();
     result->Set(_position, _direction, 0, m_fSpeed);
-    result->AddUpwardForce(_upwardForce);
+    result->AddUpwardForce(_direction.Length() * 0.5f);
     result->SetMass(50);
     result->SetStatus(true);
     result->SetCollider(true);
@@ -117,7 +116,7 @@ CSpit* Create::Spit(
     result->SetRoomID(CPlayerInfo::GetInstance()->GetRoomID());
     result->SetCollider(true);
     int x = 15; int y = 15;
-    x = (x >> 1) - 5; y = (y >> 1) - 5;
+    x = (x >> 1) - 2; y = (y >> 1) - 2;
     result->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
 
     EntityManager::GetInstance()->AddEntity(result, CPlayerInfo::GetInstance()->GetRoomID());
