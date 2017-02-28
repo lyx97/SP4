@@ -241,22 +241,9 @@ void SceneText::Update(double dt)
     //    test = 0.0;
     //}
 
-	//if (KeyboardController::GetInstance()->IsKeyDown('I'))
-	//	lights[0]->position.z -= (float)(10.f * dt);
-	//if (KeyboardController::GetInstance()->IsKeyDown('K'))
-	//	lights[0]->position.z += (float)(10.f * dt);
-	//if (KeyboardController::GetInstance()->IsKeyDown('J'))
-	//	lights[0]->position.x -= (float)(10.f * dt);
-	//if (KeyboardController::GetInstance()->IsKeyDown('L'))
-	//	lights[0]->position.x += (float)(10.f * dt);
-	//if (KeyboardController::GetInstance()->IsKeyDown('O'))
-	//	lights[0]->position.y -= (float)(10.f * dt);
-	//if (KeyboardController::GetInstance()->IsKeyDown('P'))
-	//	lights[0]->position.y += (float)(10.f * dt);
-
 	if (!GamePaused)
 	{
-		playerInfo->SetDirection(mousePos_screenBased);
+		playerInfo->SetDirection(mousePos_worldBased);
 		// Update our entities
 		EntityManager::GetInstance()->Update(dt);
 
@@ -271,8 +258,6 @@ void SceneText::Update(double dt)
 		}
 		if (MouseController::GetInstance()->IsButtonReleased(MouseController::MMB))
 		{
-            //for (int i = 0; i < 10; i++)
-			    Enemy2D* newEnemy = new Enemy2D();
 		}
 		if (KeyboardController::GetInstance()->IsKeyDown('N'))
 		{
@@ -350,20 +335,6 @@ void SceneText::Render()
 	GraphicsManager::GetInstance()->SetOrthographicProjection(-halfWindowWidth, halfWindowWidth, -halfWindowHeight, halfWindowHeight, -10, 10000);
 	GraphicsManager::GetInstance()->DetachCamera();
 	EntityManager::GetInstance()->RenderUI();
-
-	//std::ostringstream ss;
-	//ss.precision(3);
-	//ss <<
-	//	"DREAMBAR: " << playerInfo->GetDreamBar() << endl;
-	//textObj[0]->SetText(ss.str());
-
-	//ss.str("");
-	//ss <<
-	//	"Player:" << playerInfo->GetHealth() << " / " << playerInfo->GetMaxHealth() <<
-	//	" Speed: " << playerInfo->GetMaxSpeed() <<
-	//	" Kills: " << playerInfo->killCount << " / " << playerInfo->GetTreasure()->GetCooldown() <<
-	//	" Treasure!: " << playerInfo->GetTreasuseDuration() << endl;
-	//textObj[2]->SetText(ss.str());
 }
 
 void SceneText::Exit()

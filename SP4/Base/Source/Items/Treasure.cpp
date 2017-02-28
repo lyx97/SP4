@@ -15,6 +15,7 @@ Treasure::Treasure(const int& _roomID)
 	, cooldown(0)
 {
     this->roomID = _roomID;	
+
     this->position.Set(0, 0, 0);
 	this->scale.Set(10, 10, 10);
 
@@ -34,7 +35,7 @@ Treasure::~Treasure()
 void Treasure::SpawnTreasure(Vector3 pos, unsigned int type, const int& _roomID)
 {
     this->roomID = _roomID;
-    this->position.Set(0, 0, 0);
+	this->position.Set(pos);
     this->scale.Set(10, 10, 10);
 
     this->m_eEntityType = EntityBase::TREASURE;

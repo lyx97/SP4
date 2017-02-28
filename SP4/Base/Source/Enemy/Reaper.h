@@ -1,14 +1,14 @@
 #pragma once
 
-#include "../GenericEntity.h"
 #include "../SpriteAnimation/SpriteAnimation.h"
 #include "../WeaponInfo/WeaponInfo.h"
 #include "../WeaponInfo/LaserBlaster.h"
+#include "Enemy2D.h"
 
 class CLevel;
 class CPlayerInfo;
 
-class Reaper : public GenericEntity
+class Reaper : public Enemy2D
 {
 private:
     enum FSM
@@ -32,9 +32,6 @@ private:
     bool m_bAttackAnimation;
     bool m_bAlive;
 
-    float HPScale;
-    int prevHP;
-
     SpriteAnimation* currentAnimation;
 
     SpriteAnimation* moveLeft;
@@ -56,7 +53,6 @@ public:
     virtual void Update(double dt = 0.0333f);
     // Render
     virtual void Render(float& _renderOrder);
-    virtual void RenderUI(void);
 
     // Constrain the position within the borders
     void Constrain(void);

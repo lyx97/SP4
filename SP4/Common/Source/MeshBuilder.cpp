@@ -853,7 +853,6 @@ void MeshBuilder::Init()
     GenerateQuad("ghast", Color(1.0f, 1.0f, 1.0f), 1.f);
     GetMesh("ghast")->textureID = LoadTGA("Image//Projectile//ghast.tga");
 
-
     // PLAYER
 	GenerateQuad("health_full", Color(0.0f, 0.5f, 0.0f), 1.f);
 	GenerateQuad("health_half", Color(0.5f, 0.5f, 0.0f), 1.f);
@@ -861,6 +860,14 @@ void MeshBuilder::Init()
 	GenerateQuad("dash", Color(0.0f, 0.0f, 1.0f), 1.f);
 	GenerateQuad("dreambar", Color(0.0f, 0.5f, 0.5f), 1.f);
 	GenerateQuad("border", Color(0.5f, 0.5f, 0.5f), 1.f);
+	GenerateQuad("healthicon", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("healthicon")->textureID = LoadTGA("Image//UI//health.tga");
+	GenerateQuad("speedicon", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("speedicon")->textureID = LoadTGA("Image//UI//speed.tga");
+	GenerateQuad("dashicon", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("dashicon")->textureID = LoadTGA("Image//UI//dash.tga");
+	GenerateQuad("dreambaricon", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("dreambaricon")->textureID = LoadTGA("Image//UI//dreambar.tga");
 
 	GenerateSpriteAnimation("player_walkleft", 1, 7);
 	GetMesh("player_walkleft")->textureID = LoadTGA("Image//Player//player_walkleft.tga");

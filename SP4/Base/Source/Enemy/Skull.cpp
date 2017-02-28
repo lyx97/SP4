@@ -6,8 +6,7 @@
 #include "LoadTGA.h"
 
 Skull::Skull(const int _roomID)
-    : GenericEntity(NULL)
-    , m_dSpeed(30.0)
+    : m_dSpeed(30.0)
     , m_dResponseTime(0.0)
     , m_bAttackAnimation(false)
     , m_bAlive(true)
@@ -15,12 +14,6 @@ Skull::Skull(const int _roomID)
     this->position = Vector3(100, 0, 50);
     this->scale = Vector3(30, 30, 0);
     this->velocity = Vector3(0, 0, 0);
-
-    this->isDone = false;
-    this->m_bCollider = true;
-    this->m_bLaser = false;
-
-    this->m_eEntityType = EntityBase::ENEMY;
 
     moveLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 4);
     moveLeft->textureID = LoadTGA("Image//Enemy//skull_moveleft.tga");
@@ -55,16 +48,18 @@ Skull::Skull(const int _roomID)
     dieRight->m_anim->Set(0, 6, 1, 1.f, true);
 
     currentAnimation = moveLeft;
-
-    HP = 15;
-    roomID = _roomID;
+	
+	this->maxHealth = 15;
+	this->health = this->maxHealth;
 
     this->SetCollider(true);
     int x = scale.x, y = scale.y;
     x = (x >> 1) - 5; y = (y >> 1) - 5;
     this->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
 
-    EntityManager::GetInstance()->AddEntity(this, roomID);
+	roomID = _roomID;
+
+	EntityManager::GetInstance()->AddEntity(this, roomID);
 }
 
 Skull::~Skull()
@@ -79,6 +74,7 @@ Skull::~Skull()
 
 void Skull::Update(double dt)
 {
+	//Enemy2D::Update(dt);
     CHeatmap** heatmap = CPlayerInfo::GetInstance()->GetHeatmap();
 
     int x = index.x;
@@ -88,7 +84,7 @@ void Skull::Update(double dt)
 
     m_dResponseTime += dt;
 
-    if (HP <= 0)
+    if (health <= 0)
     {
         fsm = FSM::DEAD;
     }
@@ -173,6 +169,8 @@ void Skull::Update(double dt)
 
 void Skull::Render(float& _renderOrder)
 {
+	Enemy2D::Render(_renderOrder);
+
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();

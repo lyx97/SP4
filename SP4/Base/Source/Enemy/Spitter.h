@@ -1,14 +1,14 @@
 #pragma once
 
-#include "../GenericEntity.h"
 #include "../SpriteAnimation/SpriteAnimation.h"
 #include "../WeaponInfo/WeaponInfo.h"
 #include "../WeaponInfo/LaserBlaster.h"
+#include "Enemy2D.h"
 
 class CLevel;
 class CPlayerInfo;
 
-class Spitter : public GenericEntity
+class Spitter : public Enemy2D
 {
 private:
     enum FSM

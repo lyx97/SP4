@@ -1,4 +1,3 @@
-<<<<<<< 63b8bc1b99484635fe52843898d3ce36abee3506
 c:\users\155118a\desktop\sp4\sp4\common\debug\vc120.pdb
 c:\users\155118a\desktop\sp4\sp4\common\debug\vc120.idb
 c:\users\155118a\desktop\sp4\sp4\common\debug\entitybase.obj
@@ -16,11 +15,11 @@ c:\users\155118a\desktop\sp4\sp4\common\debug\mtx44.obj
 c:\users\155118a\desktop\sp4\sp4\common\debug\renderhelper.obj
 c:\users\155118a\desktop\sp4\sp4\common\debug\scenemanager.obj
 c:\users\155118a\desktop\sp4\sp4\common\debug\shaderprogram.obj
-c:\users\155118a\desktop\sp4\sp4\common\debug\timer.obj
 c:\users\155118a\desktop\sp4\sp4\common\debug\utility.obj
 c:\users\155118a\desktop\sp4\sp4\common\debug\vector2.obj
 c:\users\155118a\desktop\sp4\sp4\common\debug\vector3.obj
 c:\users\155118a\desktop\sp4\sp4\common\debug\win32input.obj
+c:\users\155118a\desktop\sp4\sp4\common\debug\timer.obj
 c:\users\155118a\desktop\sp4\sp4\common\debug\camerabase.obj
 c:\users\155118a\desktop\sp4\sp4\common\debug\collider.obj
 c:\users\155118a\desktop\sp4\sp4\debug\common.lib
@@ -30,36 +29,3 @@ c:\users\155118a\desktop\sp4\sp4\common\debug\common.tlog\cl.write.1.tlog
 c:\users\155118a\desktop\sp4\sp4\common\debug\common.tlog\lib-link.read.1.tlog
 c:\users\155118a\desktop\sp4\sp4\common\debug\common.tlog\lib-link.write.1.tlog
 c:\users\155118a\desktop\sp4\sp4\common\debug\common.tlog\lib.command.1.tlog
-=======
-c:\users\155117g\desktop\sp4\sp4\common\debug\vc120.pdb
-c:\users\155117g\desktop\sp4\sp4\common\debug\vc120.idb
-c:\users\155117g\desktop\sp4\sp4\common\debug\entitybase.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\graphicsmanager.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\keyboardcontroller.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\lightbase.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\loadobj.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\loadtga.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\mathutility.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\matrixstack.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\mesh.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\meshbuilder.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\mousecontroller.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\mtx44.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\renderhelper.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\scenemanager.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\shaderprogram.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\utility.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\vector2.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\vector3.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\win32input.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\timer.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\camerabase.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\collider.obj
-c:\users\155117g\desktop\sp4\sp4\debug\common.lib
-c:\users\155117g\desktop\sp4\sp4\common\debug\common.tlog\cl.command.1.tlog
-c:\users\155117g\desktop\sp4\sp4\common\debug\common.tlog\cl.read.1.tlog
-c:\users\155117g\desktop\sp4\sp4\common\debug\common.tlog\cl.write.1.tlog
-c:\users\155117g\desktop\sp4\sp4\common\debug\common.tlog\lib-link.read.1.tlog
-c:\users\155117g\desktop\sp4\sp4\common\debug\common.tlog\lib-link.write.1.tlog
-c:\users\155117g\desktop\sp4\sp4\common\debug\common.tlog\lib.command.1.tlog
->>>>>>> 3be06b05b6721417886799b60a5e99d796a3ea5d

@@ -68,9 +68,12 @@ public:
     inline int GetRoomID(void) const { return roomID; }
     inline void SetRoomID(const int& roomid) { roomID = roomid; }
 
-    inline int GetHP(void) const { return HP; }
-    inline void SetHP(const int& hp) { HP = hp; }
-    inline void SetHPDamaged(const int& damage) { HP -= damage; }
+	inline int GetHP(void) const { return health; }
+	inline void SetHP(const int& health) { this->health = health; }
+	inline void SetHPDamaged(const int& damage) { health -= damage; }
+
+	inline int GetMaxHealth(void) const { return maxHealth; }
+	inline void SetMaxHealth(const int& maxHealth) { this->maxHealth = maxHealth; }
 
 protected:
 	Vector3 position;
@@ -90,7 +93,8 @@ protected:
 	Vector3 front;
 
     int roomID;
-    int HP;
+    int health;
+	int maxHealth;
 };
 
 #endif // ENTITY_BASE_H

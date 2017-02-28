@@ -7,8 +7,7 @@
 #include "LoadTGA.h"
 
 FlyingTongue::FlyingTongue(const int _roomID)
-    : GenericEntity(NULL)
-    , m_dSpeed(30.0)
+    : m_dSpeed(30.0)
     , m_dResponseTime(0.0)
     , m_bAttackAnimation(false)
     , m_bAlive(true)
@@ -57,7 +56,7 @@ FlyingTongue::FlyingTongue(const int _roomID)
 
     currentAnimation = moveLeft;
 
-    HP = 5;
+	health = 5;
     roomID = _roomID;
 
     this->SetCollider(true);
@@ -80,6 +79,7 @@ FlyingTongue::~FlyingTongue()
 
 void FlyingTongue::Update(double dt)
 {
+	Enemy2D::Update(dt);
     CHeatmap** heatmap = CPlayerInfo::GetInstance()->GetHeatmap();
 
     int x = index.x;
@@ -89,7 +89,7 @@ void FlyingTongue::Update(double dt)
 
     m_dResponseTime += dt;
 
-    if (HP <= 0)
+	if (health <= 0)
     {
         fsm = FSM::DEAD;
     }
@@ -159,6 +159,8 @@ void FlyingTongue::Update(double dt)
 
 void FlyingTongue::Render(float& _renderOrder)
 {
+	Enemy2D::Render(_renderOrder);
+
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();

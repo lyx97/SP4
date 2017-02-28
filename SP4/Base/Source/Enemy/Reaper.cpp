@@ -8,14 +8,11 @@
 #include "LoadTGA.h"
 
 Reaper::Reaper(const int _roomID)
-    : GenericEntity(NULL)
-    , targetPos(Vector3(0, 0, 0))
+    : targetPos(Vector3(0, 0, 0))
     , m_dSpeed(30.0)
     , m_dResponseTime(0.0)
     , m_bAttackAnimation(false)
     , m_bAlive(true)
-    , HPScale(0.f)
-    , prevHP(0)
 {
     this->position = Vector3(100, 0, 0);
     this->scale = Vector3(100, 100, 0);
@@ -66,7 +63,7 @@ Reaper::Reaper(const int _roomID)
 
     currentAnimation = moveLeft;
 
-    HP = 100;
+	health = 100;
     roomID = _roomID;
 
     this->SetCollider(true);
@@ -106,7 +103,7 @@ void Reaper::Update(double dt)
 
     m_dResponseTime += dt;
 
-    if (HP <= 0)
+	if (health <= 0)
     {
         fsm = FSM::DEAD;
     }
@@ -172,17 +169,12 @@ void Reaper::Update(double dt)
         if (fsm == FSM::DEAD && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
             SetIsDone(true);
     }
-
-    if (prevHP != HP)
-    {
-        prevHP = HP;
-        HPScale = ((float)HP / 100.f) * 100.f;
-        cout << HPScale << endl;
-    }
 }
 
 void Reaper::Render(float& _renderOrder)
 {
+	Enemy2D::Render(_renderOrder);
+
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
@@ -194,20 +186,7 @@ void Reaper::Render(float& _renderOrder)
     RenderHelper::RenderMesh(currentAnimation);
     modelStack.PopMatrix();
 
-    modelStack.PushMatrix();
-    modelStack.Translate(position.x, position.y + (scale.y * 0.5f), position.z);
-    modelStack.Scale(HPScale, 20, 1);
-    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("wall"));
-    modelStack.PopMatrix();
-
     glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
-}
-
-void Reaper::RenderUI(void)
-{
-    MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
-
-
 }
 
 void Reaper::Constrain()

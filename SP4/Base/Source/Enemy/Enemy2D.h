@@ -29,6 +29,7 @@ public:
 
 protected:
 	float speed;
-	unsigned int health;
-	unsigned int maxHealth;
+	float healthScale;
+	float healthRatio;
+	int prevHealth;
 };

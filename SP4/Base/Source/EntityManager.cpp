@@ -430,7 +430,7 @@ void EntityManager::CheckForCollision(void)
                         if (CheckSphereCollision((*This), (*Other)))
                         {
                             (*This)->SetIsDone(true);
-                            (*Other)->SetHPDamaged(5);
+                            (*Other)->SetHPDamaged(laser->GetDamage());
                             // EDIT MASS
                             (*Other)->SetPosition((*Other)->GetPosition() + ((*This)->GetVelocity() * 2));
                         }
@@ -460,7 +460,6 @@ void EntityManager::CheckForCollision(void)
                         if (CheckSphereCollision((*This), (*Other)))
                         {
                             (*Other)->SetIsDone(true);
-                            // PLAYER GET DAMAGED
                         }
                     }
                 }

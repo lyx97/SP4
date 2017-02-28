@@ -8,8 +8,7 @@
 #include "LoadTGA.h"
 
 Spitter::Spitter(const int _roomID)
-    : GenericEntity(NULL)
-    , targetPos(Vector3(0, 0, 0))
+    : targetPos(Vector3(0, 0, 0))
     , m_dSpeed(30.0)
     , m_dResponseTime(0.0)
     , m_bAttackAnimation(false)
@@ -69,7 +68,7 @@ Spitter::Spitter(const int _roomID)
 
     currentAnimation = moveLeft;
 
-    HP = 10;
+    health = 10;
     roomID = _roomID;
 
     this->SetCollider(true);
@@ -119,7 +118,7 @@ void Spitter::Update(double dt)
 
     //cout << velocity << endl;
 
-    if (HP <= 0)
+	if (health <= 0)
     {
         fsm = FSM::DEAD;
     }
@@ -196,6 +195,7 @@ void Spitter::Update(double dt)
 
 void Spitter::Render(float& _renderOrder)
 {
+	Enemy2D::Render(_renderOrder);
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();

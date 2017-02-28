@@ -155,4 +155,11 @@ private:
 	float fontSize = 25.0f;
 
 	bool onScreenUI;
+
+	int UIScale;
+	float prevHealth;
+	float healthRatio;
+	float healthScale;
+	float dashScale;
+	float dreambarScale;
 };

@@ -55,7 +55,6 @@ void CLaserBlaster::Discharge(Vector3 position, Vector3 target, CPlayerInfo* _so
 			aLaser->SetIsLaser(true);
 			aLaser->SetAABB(Vector3(0.5f, 0.5f, 0.5), Vector3(-0.5f, -0.5f, -0.5f));
 			bFire = false;
-			//magRounds--;
 		}
 	}
 }

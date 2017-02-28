@@ -1,14 +1,12 @@
 #pragma once
 
-#include "../GenericEntity.h"
 #include "../SpriteAnimation/SpriteAnimation.h"
-#include "../WeaponInfo/WeaponInfo.h"
-#include "../WeaponInfo/LaserBlaster.h"
+#include "Enemy2D.h"
 
 class CLevel;
 class CPlayerInfo;
 
-class Skull : public GenericEntity
+class Skull : public Enemy2D
 {
 private:
     enum FSM
@@ -40,8 +38,6 @@ private:
     SpriteAnimation* dieRight;
 
     FSM fsm;
-
-    CWeaponInfo* secondaryWeapon;
 
 public:
     Skull(const int _roomID);

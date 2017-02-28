@@ -21,8 +21,8 @@ CPlayerInfo *CPlayerInfo::s_instance = 0;
 
 CPlayerInfo::CPlayerInfo(void)
 	: GenericEntity(NULL)
-    , prevIndex(Vector3(0, 0, 0))
-    , prevPos(Vector3(0, 0, 0))
+	, prevIndex(Vector3(0, 0, 0))
+	, prevPos(Vector3(0, 0, 0))
 	, m_dSpeed(40.0)
 	, m_dAcceleration(10.0)
 	, weapon(NULL)
@@ -46,9 +46,16 @@ CPlayerInfo::CPlayerInfo(void)
 	, defaultSpeed(300.f)
 	, dreamBar(MAX_DREAMBAR * 0.5f)
 	, killCount(0)
-    , rotateLeftLeg(Vector3(0, 0, 0))
-    , rotateRightLeg(Vector3(0, 0, 0))
-    , rotateLLUP(false)
+	, rotateLeftLeg(Vector3(0, 0, 0))
+	, rotateRightLeg(Vector3(0, 0, 0))
+	, rotateLLUP(false)
+	, onScreenUI(true)
+	, UIScale(75)
+	, prevHealth(0)
+	, healthRatio(0)
+	, healthScale(0)
+	, dashScale(0)
+	, dreambarScale(0)
 {
 }
 
@@ -144,14 +151,14 @@ void CPlayerInfo::Init(void)
     minBoundary.Set(CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(1, 1) - Vector3(GRIDSIZE, 0, GRIDSIZE));
     maxBoundary.Set(CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(xSize - 1, zSize - 1) + Vector3(GRIDSIZE, 0, GRIDSIZE));
 
-	float halfWindowWidth = Application::GetInstance().GetWindowWidth() * 0.5f;
-	float halfWindowHeight = Application::GetInstance().GetWindowHeight() * 0.5f;
+	float halfWindowWidth = Application::GetInstance().GetWindowWidth() << 1;
+	float halfWindowHeight = Application::GetInstance().GetWindowHeight() << 1;
 
 	for (int i = 0; i < 4; ++i)
 	{
 		textOBJ[i] = Create::Text2DObject(
 			"text",
-			Vector3(-Application::GetInstance().GetWindowWidth() * 0.5f, (Application::GetInstance().GetWindowHeight() * 0.5f) -fontSize* 0.5 - (fontSize * i), 0.0f),
+			Vector3(-halfWindowWidth + 10, halfWindowHeight - (fontSize * (i * 1.5f)), 0),
 			"",
 			Vector3(fontSize, fontSize, fontSize),
 			Color(0.0f, 1.0f, 0.0f));
@@ -250,6 +257,7 @@ void CPlayerInfo::Update(double dt)
 		dashCooldownTimer -= dt;
 		if (dashCooldownTimer <= 0)
 		{
+			dashCooldownTimer = 0;
 			isDashed = false;
 		}
 	}
@@ -353,6 +361,11 @@ void CPlayerInfo::Update(double dt)
 		}
 	}
 
+	if (KeyboardController::GetInstance()->IsKeyPressed('U'))
+	{
+		onScreenUI = !onScreenUI;
+	}
+
 	Constrain();
 
 	if (weapon)
@@ -377,6 +390,14 @@ void CPlayerInfo::Update(double dt)
         rotateLeftLeg.z -= dt * 100;
         rotateRightLeg.z += dt * 100;
     }
+	if (this->prevHealth != health)
+	{
+		prevHealth = health;
+		healthRatio = this->health / this->maxHealth;
+		healthScale = (health / maxHealth) * UIScale;
+	}
+	dashScale = (dashCooldown - dashCooldownTimer / dashCooldown) * UIScale;
+	dreambarScale = (dreamBar / MAX_DREAMBAR) * UIScale;
 
 	// DEBUGGING TOOLS
 	if (KeyboardController::GetInstance()->IsKeyPressed('O'))
@@ -410,6 +431,65 @@ void CPlayerInfo::Render(float& _renderOrder)
     RenderHelper::RenderMesh(currentAnimation);
     modelStack.PopMatrix();
 
+	if (!onScreenUI)
+	{
+		// HEALTH
+		modelStack.PushMatrix();
+		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 25.f);
+		modelStack.Scale(0.5f, 0.5f, 1);
+		modelStack.Translate(healthScale * 0.5f, 0, 0);
+		modelStack.Scale(healthScale, fontSize * 0.5f, 1);
+		if (healthRatio < 0.25f)
+			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_quad"));
+		else if (healthRatio < 0.5f)
+			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_half"));
+		else
+			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_full"));
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 25.f);
+		modelStack.Scale(0.5f, 0.5f, 1);
+		modelStack.Translate(UIScale * 0.5f, 0, 0);
+		modelStack.Scale(UIScale, fontSize * 0.5f, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
+		modelStack.PopMatrix();
+
+		// DASH
+		modelStack.PushMatrix();
+		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 20.f);
+		modelStack.Scale(0.5f, 0.5f, 1);
+		modelStack.Translate((dashScale * this->dashCooldown) * 0.5f, 0, 0);
+		modelStack.Scale(dashScale * this->dashCooldown, fontSize * 0.5f, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dash"));
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 20.f);
+		modelStack.Scale(0.5f, 0.5f, 1);
+		modelStack.Translate(UIScale * 0.5f, 0, 0);
+		modelStack.Scale(UIScale, fontSize * 0.5f, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
+		modelStack.PopMatrix();
+
+		// DREAMBAR
+		modelStack.PushMatrix();
+		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 15.f);
+		modelStack.Scale(0.5f, 0.5f, 1);
+		modelStack.Translate(dreambarScale * 0.5f, 0, 0);
+		modelStack.Scale(dreambarScale, fontSize * 0.5f, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dreambar"));
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 15.f);
+		modelStack.Scale(0.5f, 0.5f, 1);
+		modelStack.Translate(UIScale * 0.5f, 0, 0);
+		modelStack.Scale(UIScale, fontSize * 0.5f, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
+		modelStack.PopMatrix();
+	}
+
     glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     //for (int x = 0; x <= CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax(); ++x)
@@ -434,99 +514,139 @@ void CPlayerInfo::RenderUI(void)
 	for (int i = 0; i < 4; ++i)
 	{
 		textOBJ[i]->SetPosition(Vector3(
-			-Application::GetInstance().GetWindowWidth() * 0.5f + 1, 
-			(Application::GetInstance().GetWindowHeight() * 0.5f) - (fontSize * i) - fontSize * 0.5f,
-			1.0f));
+			-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize * 2,
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - (fontSize * (i * 1.5f)) - fontSize,
+			2.0f));
 	}
-	std::ostringstream ss;
-	ss.precision(3);
-	ss << "  Health: " << endl;
-	textOBJ[0]->SetText(ss.str());
-	ss.str("");
-	ss << "    Dash: " << endl;
-	textOBJ[1]->SetText(ss.str());
-	ss.str("");
-	ss << "   Speed: " << this->maxSpeed << endl;
-	textOBJ[2]->SetText(ss.str());
-	ss.str("");
-	ss << "Dreambar: " << this->dreamBar << endl;
-	textOBJ[3]->SetText(ss.str());
+	if (onScreenUI)
+	{
+		std::ostringstream ss;
+		ss.precision(3);
+		ss << health << " / " << maxHealth << endl;
+		textOBJ[0]->SetText(ss.str());
+		ss.str("");
+		ss << dashCooldown - dashCooldownTimer << endl;
+		textOBJ[1]->SetText(ss.str());
+		ss.str("");
+		ss << dreamBar << " / " << MAX_DREAMBAR << endl;
+		textOBJ[2]->SetText(ss.str());
+		ss.str("");
+		ss << maxSpeed << endl;
+		textOBJ[3]->SetText(ss.str());
 
-	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
-	// HEALTH
-	modelStack.PushMatrix();
-	modelStack.Translate(
-		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
-		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 0.5f,
-		1);
-	modelStack.Translate(this->health - fontSize * 2, 0, 0);
-	modelStack.Scale(2, 2, 2);
-	modelStack.Scale(this->health, fontSize * 0.5f, 1);
-	float healthRatio = this->health / this->maxHealth;
-	if (healthRatio < 0.25f)
-		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_quad"));
-	else if (healthRatio < 0.5f)
-		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_half"));
-	else
-		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_full"));
-	modelStack.PopMatrix();
+		MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+		// HEALTH
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize,
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize,
+			0.5f);
+		modelStack.Scale(fontSize, fontSize, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("healthicon"));
+		modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(
-		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
-		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 0.5f,
-		0.5f);
-	modelStack.Translate(this->maxHealth - fontSize * 2, 0, 0);
-	modelStack.Scale(2, 2, 2);
-	modelStack.Scale(this->maxHealth, fontSize * 0.5f, 1);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
-	modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize,
+			1);
+		modelStack.Translate(healthScale - fontSize * 2, 0, 0);
+		modelStack.Scale(2, 2, 2);
+		modelStack.Scale(healthScale, fontSize * 0.5f, 1);
+		float healthRatio = this->health / this->maxHealth;
+		if (healthRatio < 0.25f)
+			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_quad"));
+		else if (healthRatio < 0.5f)
+			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_half"));
+		else
+			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_full"));
+		modelStack.PopMatrix();
 
-	// DASH
-	modelStack.PushMatrix();
-	modelStack.Translate(
-		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
-		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 1.5f,
-		1);
-	modelStack.Translate(((this->dashCooldown - this->dashCooldownTimer) * 10 * this->dashCooldown) - fontSize * 2, 0, 0);
-	modelStack.Scale(2, 2, 2);
-	modelStack.Scale((this->dashCooldown - this->dashCooldownTimer) * 10 * this->dashCooldown, fontSize * 0.5f, 1);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dash"));
-	modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize,
+			0.5f);
+		modelStack.Translate(UIScale - fontSize * 2, 0, 0);
+		modelStack.Scale(2, 2, 2);
+		modelStack.Scale(UIScale, fontSize * 0.5f, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
+		modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(
-		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
-		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 1.5f,
-		0.5f);
-	modelStack.Translate((this->dashCooldown * 10 * this->dashCooldown) - fontSize * 2, 0, 0);
-	modelStack.Scale(2, 2, 2);
-	modelStack.Scale(this->dashCooldown * 10 * this->dashCooldown, fontSize * 0.5f, 1);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
-	modelStack.PopMatrix();
+		// DASH
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize,
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 2.5f,
+			0.5f);
+		modelStack.Scale(fontSize, fontSize, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dashicon"));
+		modelStack.PopMatrix();
 
-	// DREAMBAR
-	modelStack.PushMatrix();
-	modelStack.Translate(
-		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
-		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 3.5f,
-		1);
-	modelStack.Translate(this->dreamBar - fontSize * 2, 0, 0);
-	modelStack.Scale(2, 2, 2);
-	modelStack.Scale(this->dreamBar, fontSize * 0.5f, 1);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dreambar"));
-	modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 2.5f,
+			1);
+		modelStack.Translate((dashScale * this->dashCooldown) - fontSize * 2, 0, 0);
+		modelStack.Scale(2, 2, 2);
+		modelStack.Scale(dashScale * this->dashCooldown, fontSize * 0.5f, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dash"));
+		modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(
-		-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 7.0f),
-		(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 3.5f,
-		0.5f);
-	modelStack.Translate(100 - fontSize * 2, 0, 0);
-	modelStack.Scale(2, 2, 2);
-	modelStack.Scale(100, fontSize * 0.5f, 1);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
-	modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 2.5f,
+			0.5f);
+		modelStack.Translate(UIScale - fontSize * 2, 0, 0);
+		modelStack.Scale(2, 2, 2);
+		modelStack.Scale(UIScale, fontSize * 0.5f, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
+		modelStack.PopMatrix();
+
+		// DREAMBAR
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize,
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 4,
+			0.5f);
+		modelStack.Scale(fontSize, fontSize, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dreambaricon"));
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 4,
+			1);
+		modelStack.Translate(dreambarScale - fontSize * 2, 0, 0);
+		modelStack.Scale(2, 2, 2);
+		modelStack.Scale(dreambarScale, fontSize * 0.5f, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dreambar"));
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 4,
+			0.5f);
+		modelStack.Translate(UIScale - fontSize * 2, 0, 0);
+		modelStack.Scale(2, 2, 2);
+		modelStack.Scale(UIScale, fontSize * 0.5f, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
+		modelStack.PopMatrix();
+
+		// speed
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize,
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 5.5f,
+			0.5f);
+		modelStack.Scale(fontSize, fontSize, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("speedicon"));
+		modelStack.PopMatrix();
+	}
 }
 
 // Constrain the position within the borders

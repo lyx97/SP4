@@ -16,16 +16,13 @@ Enemy2D::Enemy2D()
 
 	this->m_eEntityType = EntityBase::ENEMY;
 
-	this->velocity.Set(
-		Math::RandFloatMinMax(-100, 100),
-		0,
-		Math::RandFloatMinMax(-100, 100));
-
 	this->speed = 1.0f;
-	this->maxHealth = 100;
+	this->maxHealth = 1;
 	this->health = this->maxHealth;
 
-    EntityManager::GetInstance()->AddEntity(this, CPlayerInfo::GetInstance()->GetRoomID());
+	this->prevHealth = 0;
+	this->healthScale = 0.0f;
+	this->healthRatio = 0.0f;
 }
 
 Enemy2D::~Enemy2D()
@@ -34,41 +31,6 @@ Enemy2D::~Enemy2D()
 
 void Enemy2D::Update(double _dt)
 {
-	if (this->velocity.LengthSquared() > ENEMY_MAX_SPEED * ENEMY_MAX_SPEED)
-		velocity = velocity.Normalized() * ENEMY_MAX_SPEED;
-
-	this->position += this->velocity * _dt * speed;
-
-	if (this->position.x > Application::GetInstance().GetWindowWidth() * 0.5f)
-	{
-		this->position.x -= Application::GetInstance().GetWindowWidth();
-	}
-	else if (this->position.x < -Application::GetInstance().GetWindowWidth() * 0.5f)
-	{
-		this->position.x += Application::GetInstance().GetWindowWidth();
-	}
-	if (this->position.z > Application::GetInstance().GetWindowHeight() * 0.5f)
-	{
-		this->position.z -= Application::GetInstance().GetWindowHeight();
-	}
-	else if (this->position.z < -Application::GetInstance().GetWindowHeight() * 0.5f)
-	{
-		this->position.z += Application::GetInstance().GetWindowHeight();
-	}
-	//for (auto entity : EntityManager::GetInstance()->GetEntityList())
-	//{
-	//	if (entity->GetEntityType() == EntityBase::PROJECTILE)
-	//	{
-	//		CProjectile* proj = dynamic_cast<CProjectile*>(entity);
-	//		if ((proj->GetPosition() - this->position).LengthSquared() < 200)
-	//		{
-	//			this->velocity += proj->GetVelocity() * proj->GetMass();
-	//			this->health -= proj->GetDamage();
-	//			//proj->SetIsDone(true);
-	//			//this->SetIsDone(true); // debugging
-	//		}
-	//	}
-	//}
 	Vector3 temp = (Cohesion(this) +Alignment(this) + Separation(this));
 	if (!temp.IsZero())
 	{
@@ -90,21 +52,30 @@ void Enemy2D::Update(double _dt)
 			CPlayerInfo::GetInstance()->killCount < CPlayerInfo::GetInstance()->GetTreasure()->GetCooldown())
 			CPlayerInfo::GetInstance()->killCount++;
 	}
+	if (this->prevHealth != health)
+	{
+		prevHealth = health;
+		healthScale = ((float)health / maxHealth) * 10.f;
+		healthRatio = health / maxHealth;
+	}
 }
 
 void Enemy2D::Render(float& _renderOrder)
 {
-	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
-	GraphicsManager::GetInstance()->GetModelStack().Translate(
-		this->position.x,
-        this->position.y + _renderOrder,
-		this->position.z);
-	GraphicsManager::GetInstance()->GetModelStack().Scale(
-		this->scale.x,
-		this->scale.y,
-		this->scale.z);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("cone"));
-	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
+	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(position.x, position.y, position.z);
+	modelStack.Translate(healthScale, scale.y, 0);
+	modelStack.Scale(2, 2, 2);
+	modelStack.Scale(healthScale, 2, 1);
+	if (healthRatio <= 0.25)
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_quad"));
+	else if (healthRatio <= 0.5f)
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_half"));
+	else
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_full"));
+	modelStack.PopMatrix();
 }
 
 Vector3 Enemy2D::Cohesion(Enemy2D* enemy)

@@ -10,7 +10,7 @@ EntityBase::EntityBase()
 	, m_eEntityType(DEFAULT)
 	, mass(1.0f)
     , roomID(-1)
-    , HP(0)
+    , health(0)
 {
 }
 
