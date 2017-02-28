@@ -4,9 +4,7 @@
 #include "RenderHelper.h"
 #include "MeshBuilder.h"
 #include "../PlayerInfo/PlayerInfo.h"
-#include "../Enemy/FlyingTongue.h"
-#include "../Enemy/Skull.h"
-#include "../Obstacle/Obstacle.h"
+
 
 CLevel::CLevel()
     : m_iRoomID(0)
@@ -45,7 +43,6 @@ void CLevel::Init(const float room_bias)
     for (auto it : roomList)
     {
         SetDoor(it);
-        Spawn(it);
     }
 }
 
@@ -55,7 +52,7 @@ void CLevel::Render()
 
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
     modelStack.PushMatrix();
-    modelStack.Translate(0, -15, 0);
+    modelStack.Translate(0, -0.1f, 0);
     modelStack.Rotate(90, -1, 0, 0);
     modelStack.Scale(room->GetRoomXMax() * GRIDSIZE, room->GetRoomZMax() * GRIDSIZE, 1);
     RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("floor"));
@@ -276,58 +273,6 @@ void CLevel::SetDoor(CRoom* room)
     cout << "SIZE: " << xMin << " " << xMax << " " << zMin << " " << zMax << " ";
     cout << "ROOM ID: " << tempRoomID << " " << CLevel::GetInstance()->GetRoom(tempRoomIndex.x - 1, tempRoomIndex.z) << " " << CLevel::GetInstance()->GetRoom(tempRoomIndex.x + 1, tempRoomIndex.z) << " " <<
         CLevel::GetInstance()->GetRoom(tempRoomIndex.x, tempRoomIndex.z - 1) << " " << CLevel::GetInstance()->GetRoom(tempRoomIndex.x, tempRoomIndex.z + 1) << endl;
-}
-
-void CLevel::Spawn(CRoom* room)
-{
-    int xMin = room->GetRoomXMin();
-    int xMax = room->GetRoomXMax();
-    int zMin = room->GetRoomZMin();
-    int zMax = room->GetRoomZMax();
-
-    int tempRoomID = room->GetRoomID();
-    Vector3 tempRoomIndex = room->GetIndex();
-
-    float spawnbias = 10.f;
-
-    for (int x = xMin + 1; x <= xMax - 1; ++x)
-    {
-        for (int z = zMin + 1; z <= zMax - 1; ++z)
-        {
-            if (spawnbias >= Math::RandFloatMinMax(0, 100))
-            {
-                spawnbias *= 0.75f;
-
-                int randspawn = Math::RandIntMinMax(0, 2);
-
-                    Skull* skull = new Skull(room->GetRoomID());
-                    skull->SetPosition(room->GetSpatialPartition()->GetGridPos(x, z));
-
-                //switch (randspawn)
-                //{
-                //case 0:
-                //{                    
-                //    //Obstacle* obstacle = new Obstacle(room->GetRoomID());
-                //    //obstacle->SetPosition(room->GetSpatialPartition()->GetGridPos(x, z));
-                //    break;
-                //}
-                //case 1:
-                //{
-                //    FlyingTongue* flyingtongue = new FlyingTongue(room->GetRoomID());
-                //    flyingtongue->SetPosition(room->GetSpatialPartition()->GetGridPos(x, z));
-                //    break;
-                //}
-                //case 2:
-                //{
-                //    Skull* skull = new Skull(room->GetRoomID());
-                //    skull->SetPosition(room->GetSpatialPartition()->GetGridPos(x, z));
-                //    break;
-                //}
-                //}
-            }
-        }
-    }
-
 }
 
 void CLevel::CleanRoomList(void)

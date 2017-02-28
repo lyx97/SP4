@@ -110,7 +110,7 @@ CGhast* Create::Ghast(const std::string& _meshName,
     result->SetRoomID(CPlayerInfo::GetInstance()->GetRoomID());
     result->SetCollider(true);
     int x = 15; int y = 15;
-    x = (x >> 1) - 5; y = (y >> 1) - 5;
+    x = (x >> 1) - 2; y = (y >> 1) - 2;
     result->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
 
 

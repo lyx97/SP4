@@ -155,7 +155,8 @@ void SceneText::Init()
 
     //Spitter* spitter = new Spitter(0);
 
-    //Obstacle* obs = new Obstacle(0);
+    //Obstacle* obs = new Obstacle(Vector3(20, 0, 0), 0);
+    //CLevel::GetInstance()->GetRoom(0)->GetSpatialPartition()->GetGrid(obs->GetIndex().x, obs->GetIndex().z)->SetType(GRID_TYPE::OBSTACLE);
 
     //Reaper* reaper = new Reaper(0);
 

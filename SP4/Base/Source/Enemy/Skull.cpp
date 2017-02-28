@@ -85,13 +85,14 @@ void Skull::Update(double dt)
 
     m_dResponseTime += dt;
 
+    // length of this enemy to player
+    Vector3 temp = CPlayerInfo::GetInstance()->GetPosition() - position;
+
     if (health <= 0)
-    {
         fsm = FSM::DEAD;
-    }
     else
     {
-        if ((position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() <= 300
+        if (temp.LengthSquared() <= 300
             && m_dResponseTime >= m_dResponse)
         {
             fsm = FSM::ATTACK;
@@ -115,7 +116,7 @@ void Skull::Update(double dt)
     case MOVE:
         position += velocity * dt * m_dSpeed * 0.5f;
 
-        if (velocity.x > 0)
+        if (temp.x > 0)
             currentAnimation = moveRight;
         else
             currentAnimation = moveLeft;
@@ -123,30 +124,25 @@ void Skull::Update(double dt)
     case CHASE:
         position += velocity * dt * m_dSpeed * 2;
 
-        if (velocity.x > 0)
+        if (temp.x > 0)
             currentAnimation = moveRight;
         else
             currentAnimation = moveLeft;
         break;
     case ATTACK:
-        if (velocity.x > 0)
+        if (temp.x > 0)
             currentAnimation = attackRight;
         else
             currentAnimation = attackLeft;
 
         if (currentAnimation->GetAttack() && m_bAttackAnimation)
-        {
-            //if (secondaryWeapon)
-            //    secondaryWeapon->Discharge(this->position, CPlayerInfo::GetInstance()->GetPosition(), CPlayerInfo::GetInstance());
-
             m_bAttackAnimation = false;
-        }
         if (!currentAnimation->GetAttack())
             m_bAttackAnimation = true;
 
         break;
     case DEAD:
-        if (velocity.x > 0)
+        if (temp.x > 0)
             currentAnimation = dieRight;
         else
             currentAnimation = dieLeft;
@@ -160,6 +156,8 @@ void Skull::Update(double dt)
             currentAnimation->Update(dt * 6.0f);
         else if (fsm == FSM::ATTACK)
             currentAnimation->Update(dt * 2.0f);
+        else if (fsm == FSM::DEAD)
+            currentAnimation->Update(dt * 1.0f);
         else
             currentAnimation->Update(dt * 0.5f);
 

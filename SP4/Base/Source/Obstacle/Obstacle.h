@@ -14,9 +14,9 @@ class Obstacle : public GenericEntity
 private:
 
 public:
-    Obstacle(const int _roomID);
+    Obstacle(const Vector3 _pos, const int _roomID);
     virtual ~Obstacle();
 
     virtual void Update(double _dt);
-    virtual void Render();
+    virtual void Render(float& _renderOrder);
 };

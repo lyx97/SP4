@@ -5,10 +5,10 @@
 #include "../EntityManager.h"
 #include "../Level/Level.h"
 
-Obstacle::Obstacle(const int _roomID)
+Obstacle::Obstacle(const Vector3 _pos, const int _roomID)
     : GenericEntity(NULL)
 {
-    this->position = Vector3(20, 0, 0);
+    this->position = _pos;
     this->scale = Vector3(GRIDSIZE, GRIDSIZE, 0);
     this->velocity = Vector3(0, 0, 0);
 
@@ -26,8 +26,6 @@ Obstacle::Obstacle(const int _roomID)
     this->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
 
     EntityManager::GetInstance()->AddEntity(this, roomID);
-
-    CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGrid(index.x, index.z)->SetType(GRID_TYPE::OBSTACLE); 
 }
 
 Obstacle::~Obstacle()
@@ -40,11 +38,12 @@ void Obstacle::Update(double _dt)
 
 }
 
-void Obstacle::Render()
+void Obstacle::Render(float& _renderOrder)
 {
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
     modelStack.PushMatrix();
-    modelStack.Translate(position.x, position.y, position.z);
+    modelStack.Translate(position.x, position.y - 0.01f, position.z);
+    modelStack.Rotate(90, -1, 0, 0);
     modelStack.Scale(scale.x, scale.y, scale.z);
     RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("wall"));
     modelStack.PopMatrix();

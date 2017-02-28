@@ -124,7 +124,7 @@ void Spitter::Update(double dt)
     }
     else
     {
-        if ((position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() <= 16000
+        if ((position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() <= 40000
             && m_dResponseTime >= m_dResponse)
         {
             fsm = FSM::ATTACK;
@@ -137,37 +137,43 @@ void Spitter::Update(double dt)
         }
     }
 
+    // length of this enemy to player
+    Vector3 temp = CPlayerInfo::GetInstance()->GetPosition() - position;
+
     switch (fsm)
     {
     case IDLE:
-        if (position.x - CPlayerInfo::GetInstance()->GetPosition().x < 0)
+    {
+        if (temp.x > 0)
             currentAnimation = idleRight;
         else
             currentAnimation = idleLeft;
 
         break;
+    }
     case LUNGE:
+    {
         position += velocity.Normalized() * dt * m_dSpeed;
 
-        if (velocity.x > 0)
+        if (temp.x > 0)
             currentAnimation = moveRight;
         else
             currentAnimation = moveLeft;
         break;
+    }
     case ATTACK:
-        if (velocity.x > 0)
+    {
+        if (temp.x > 0)
             currentAnimation = attackRight;
         else
             currentAnimation = attackLeft;
 
         if (currentAnimation->GetAttack() && m_bAttackAnimation)
         {
-            Vector3 temp = CPlayerInfo::GetInstance()->GetPosition() - position;
             CSpit* spit = Create::Spit(
                 position,
                 temp,
-                (abs(temp.x)),
-                60.f);
+                100.f);
 
             m_bAttackAnimation = false;
         }
@@ -175,12 +181,15 @@ void Spitter::Update(double dt)
             m_bAttackAnimation = true;
 
         break;
+    }
     case DEAD:
-        if (velocity.x > 0)
+    {
+        if (temp.x > 0)
             currentAnimation = dieRight;
         else
             currentAnimation = dieLeft;
         break;
+    }
     }
 
     if (currentAnimation)

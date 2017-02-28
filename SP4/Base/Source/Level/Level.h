@@ -53,9 +53,6 @@ public:
     // Link room
     void SetDoor(CRoom* room);
 
-    // Spawn entities for each room generated
-    void Spawn(CRoom* room);
-
     void CleanRoomList(void);
 
     inline int GetNumRoom(void) { return roomList.size(); }
