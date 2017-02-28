@@ -1,17 +1,42 @@
-﻿Build started 2/28/2017 9:42:25 AM.
+﻿Build started 2/28/2017 10:13:37 AM.
      1>Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/Common/Source /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Enemy\Skull.cpp
-         Skull.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/Common/Source /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Items\Treasure.cpp Source\PlayerInfo\PlayerInfo.cpp
+         PlayerInfo.cpp
      1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
      1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
      1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\enemy\skull.cpp(63): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\enemy\skull.cpp(65): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\enemy\skull.cpp(84): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\enemy\skull.cpp(85): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\enemy\skull.cpp(119): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\enemy\skull.cpp(127): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.h(79): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(77): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(78): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(107): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(108): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(109): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(110): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(129): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(132): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(133): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(144): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(145): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(154): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(187): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(193): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(218): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(250): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(257): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(291): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(299): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(346): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(372): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(373): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(377): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(378): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+         Treasure.cpp
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\Debug /LIBPATH:"C:\Users\155117g\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 /PROFILE Debug\Application.obj
          Debug\Camera.obj
@@ -66,4 +91,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.95
+Time Elapsed 00:00:02.87

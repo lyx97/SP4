@@ -23,13 +23,13 @@ public:
 		NUM_TREASURE
 	}treasure_type;
 
-	Treasure();
+    Treasure(); // for player
+    Treasure(const int& _roomID); // for spawning
 	virtual ~Treasure();
 
-	void Init();
-	void SpawnTreasure(Vector3 pos, unsigned int type);
+    void SpawnTreasure(Vector3 pos, unsigned int type, const int& _roomID);
 	void Effects();
-	virtual void Render();
+	virtual void Render(float& _renderOrder);
 	void SetValues();
 
 	inline int GetCooldown() { return cooldown; };

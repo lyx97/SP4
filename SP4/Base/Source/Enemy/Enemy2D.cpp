@@ -83,7 +83,7 @@ void Enemy2D::Update(double _dt)
 		float randomNo = Math::RandFloatMinMax(0, 100);
 		if (randomNo < CHANCE_OF_DROPPING_POWERUP)
 		{
-			Powerup* newPowerup = new Powerup(this->position);
+			Powerup* newPowerup = new Powerup(this->position, CPlayerInfo::GetInstance()->GetRoomID());
 			newPowerup->Init();
 		}
 		if (CPlayerInfo::GetInstance()->GetTreasure()->treasure_type != 0 &&

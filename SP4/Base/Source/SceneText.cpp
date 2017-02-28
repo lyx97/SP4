@@ -286,8 +286,7 @@ void SceneText::Update(double dt)
 		}
 		if (KeyboardController::GetInstance()->IsKeyPressed('J'))
 		{
-			Treasure* newTreasure = new Treasure();
-			newTreasure->Init();
+			Treasure* newTreasure = new Treasure(CPlayerInfo::GetInstance()->GetRoomID());
 		}
         if (KeyboardController::GetInstance()->IsKeyDown('L'))
         {

@@ -321,7 +321,7 @@ void CPlayerInfo::Update(double dt)
 					AddTreasures(newTreasure->random);
 					newTreasure->SetIsDone(true);
 					Treasure* spawnTreasure = new Treasure();
-					spawnTreasure->SpawnTreasure(this->position, tempType);
+					spawnTreasure->SpawnTreasure(this->position, tempType, roomID);
 				}
 			}
 		}

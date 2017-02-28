@@ -21,15 +21,13 @@ public:
 		NUM_POWERUP
 	}powerup;
 
-
-
-	Powerup();	
-	Powerup(Vector3 pos);
+    Powerup(const int& _roomID);
+    Powerup(Vector3 pos, const int& _roomID);
 	virtual ~Powerup();
 
 	void Init();
 	virtual void Update(double _dt);
-	virtual void Render();
+	virtual void Render(float& _renderOrder);
 
 private:
 	unsigned int random;

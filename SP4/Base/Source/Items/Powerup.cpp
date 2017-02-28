@@ -1,12 +1,13 @@
 #include "Powerup.h"
 #include "../PlayerInfo/PlayerInfo.h"
 
-Powerup::Powerup()
+Powerup::Powerup(const int& _roomID)
 	: GenericEntity(NULL)
 {
+    this->roomID = _roomID;
 }
 
-Powerup::Powerup(Vector3 pos)
+Powerup::Powerup(Vector3 pos, const int& _roomID)
 	: GenericEntity(NULL)
 {
 	this->position.Set(pos);
@@ -19,9 +20,9 @@ Powerup::Powerup(Vector3 pos)
 
 	random = Math::RandIntMinMax(HEALTH_INCREASE, NUM_POWERUP - 1);
 
-    this->roomID = 0;
+    this->roomID = _roomID;
 
-	EntityManager::GetInstance()->AddEntity(this, CPlayerInfo::GetInstance()->GetRoomID());
+    EntityManager::GetInstance()->AddEntity(this, roomID);
 }
 
 Powerup::~Powerup()
@@ -69,17 +70,15 @@ void Powerup::Update(double _dt)
 	}
 }
 
-void Powerup::Render()
+void Powerup::Render(float& _renderOrder)
 {
-	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
-	GraphicsManager::GetInstance()->GetModelStack().Translate(
-		this->position.x,
-		this->position.y,
-		this->position.z);
-	GraphicsManager::GetInstance()->GetModelStack().Scale(
-		this->scale.x,
-		this->scale.y,
-		this->scale.z);
+    MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+
+    modelStack.PushMatrix();
+    modelStack.Translate(position.x, position.y + _renderOrder, position.z);
+    modelStack.Rotate(90, -1, 0, 0);
+    modelStack.Scale(scale.x, scale.y, scale.z);
+
 	switch (random)
 	{
 	case Powerup::HEALTH_RECOVER:

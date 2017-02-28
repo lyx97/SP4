@@ -1,22 +1,21 @@
 #include "Treasure.h"
 
 Treasure::Treasure()
+    : GenericEntity(NULL)
+    , treasure_type(NONE)
+    , duration(0)
+    , cooldown(0)
+{
+}
+
+Treasure::Treasure(const int& _roomID)
 	: GenericEntity(NULL)
 	, treasure_type(NONE)
 	, duration(0)
 	, cooldown(0)
 {
-}
-
-Treasure::~Treasure()
-{
-}
-
-void Treasure::Init()
-{
-	EntityManager::GetInstance()->AddEntity(this, CPlayerInfo::GetInstance()->GetRoomID());
-
-	this->position.Set(0, 0, 0);
+    this->roomID = _roomID;	
+    this->position.Set(0, 0, 0);
 	this->scale.Set(10, 10, 10);
 
 	this->m_eEntityType = EntityBase::TREASURE;
@@ -24,20 +23,27 @@ void Treasure::Init()
 	this->m_bCollider = true;
 
 	random = Math::RandIntMinMax(1, NUM_TREASURE - 1);
+
+    EntityManager::GetInstance()->AddEntity(this, roomID);
 }
 
-void Treasure::SpawnTreasure(Vector3 pos, unsigned int type)
+Treasure::~Treasure()
 {
-	EntityManager::GetInstance()->AddEntity(this, CPlayerInfo::GetInstance()->GetRoomID());
+}
 
-	this->position.Set(pos);
-	this->scale.Set(10, 10, 10);
+void Treasure::SpawnTreasure(Vector3 pos, unsigned int type, const int& _roomID)
+{
+    this->roomID = _roomID;
+    this->position.Set(0, 0, 0);
+    this->scale.Set(10, 10, 10);
 
-	this->m_eEntityType = EntityBase::TREASURE;
-	this->m_bLaser = false;
-	this->m_bCollider = true;
+    this->m_eEntityType = EntityBase::TREASURE;
+    this->m_bLaser = false;
+    this->m_bCollider = true;
 
-	random = type;
+    random = type;
+
+    EntityManager::GetInstance()->AddEntity(this, roomID);
 }
 
 void Treasure::Effects()
@@ -74,19 +80,16 @@ void Treasure::Effects()
 	} // end of switch
 }
 
-void Treasure::Render()
+void Treasure::Render(float& _renderOrder)
 {
-	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
-	GraphicsManager::GetInstance()->GetModelStack().Translate(
-		this->position.x,
-		this->position.y,
-		this->position.z);
-	GraphicsManager::GetInstance()->GetModelStack().Scale(
-		this->scale.x,
-		this->scale.y,
-		this->scale.z);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
-	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
+    MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+
+    modelStack.PushMatrix();
+    modelStack.Translate(position.x, position.y + _renderOrder, position.z);
+    modelStack.Rotate(90, -1, 0, 0);
+    modelStack.Scale(scale.x, scale.y, scale.z);
+    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
+    modelStack.PopMatrix();
 }
 
 void Treasure::SetValues()
