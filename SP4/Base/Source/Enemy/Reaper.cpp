@@ -180,10 +180,10 @@ void Reaper::Update(double dt)
         scythe->Update(dt * 1.f);
     }
 
-    if (prevHP != HP)
+    if (prevHP != health)
     {
-        prevHP = HP;
-        HPScale = ((float)HP / 100.f) * 100.f;
+        prevHP = health;
+        HPScale = ((float)health / 100.f) * 100.f;
     }
 
     bob += dt * 1000;
