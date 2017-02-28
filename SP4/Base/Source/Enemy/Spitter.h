@@ -1,8 +1,6 @@
 #pragma once
 
 #include "../SpriteAnimation/SpriteAnimation.h"
-#include "../WeaponInfo/WeaponInfo.h"
-#include "../WeaponInfo/LaserBlaster.h"
 #include "Enemy2D.h"
 
 class CLevel;

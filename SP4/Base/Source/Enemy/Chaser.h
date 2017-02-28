@@ -39,7 +39,7 @@ public:
 private:
 	CPlayerInfo* playerInfo;
 	CWaypointManager* ChaserWaypoint;
-	CWeaponInfo* ChaserBlast;
+	//CWeaponInfo* ChaserBlast;
 	int Chaser_State;
 	int hp;
 	int goToPosition;

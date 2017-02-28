@@ -191,11 +191,14 @@ void Spitter::Update(double dt)
         if (fsm == FSM::DEAD && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
             SetIsDone(true);
     }
+
+	Enemy2D::Update(dt);
 }
 
 void Spitter::Render(float& _renderOrder)
 {
 	Enemy2D::Render(_renderOrder);
+
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();

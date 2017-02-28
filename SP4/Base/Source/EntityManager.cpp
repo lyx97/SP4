@@ -1,7 +1,7 @@
 #include "EntityManager.h"
 #include "EntityBase.h"
 #include "Collider/Collider.h"
-#include "../Source/WeaponInfo/Laser.h"
+#include "../Source/Projectile/Laser.h"
 #include "Enemy\Enemy2D.h"
 #include "PlayerInfo/PlayerInfo.h"
 #include "Particle/Particle.h"
@@ -432,7 +432,7 @@ void EntityManager::CheckForCollision(void)
                             (*This)->SetIsDone(true);
                             (*Other)->SetHPDamaged(laser->GetDamage());
                             // EDIT MASS
-                            (*Other)->SetPosition((*Other)->GetPosition() + ((*This)->GetVelocity() * 2));
+							(*Other)->SetVelocity((*Other)->GetVelocity() + ((*This)->GetVelocity() * (*This)->GetMass()));
                         }
                     }
                 }

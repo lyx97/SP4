@@ -14,6 +14,7 @@ Skull::Skull(const int _roomID)
     this->position = Vector3(100, 0, 50);
     this->scale = Vector3(30, 30, 0);
     this->velocity = Vector3(0, 0, 0);
+	this->heatmapDir = Vector3(0, 0, 0);
 
     moveLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 4);
     moveLeft->textureID = LoadTGA("Image//Enemy//skull_moveleft.tga");
@@ -49,7 +50,7 @@ Skull::Skull(const int _roomID)
 
     currentAnimation = moveLeft;
 	
-	this->maxHealth = 15;
+	this->maxHealth = 50;
 	this->health = this->maxHealth;
 
     this->SetCollider(true);
@@ -74,13 +75,13 @@ Skull::~Skull()
 
 void Skull::Update(double dt)
 {
-	//Enemy2D::Update(dt);
     CHeatmap** heatmap = CPlayerInfo::GetInstance()->GetHeatmap();
 
     int x = index.x;
     int z = index.z;
 
-    velocity = heatmap[x][z].GetDir();
+	heatmapDir = heatmap[x][z].GetDir();
+	velocity += heatmapDir;
 
     m_dResponseTime += dt;
 
@@ -165,6 +166,10 @@ void Skull::Update(double dt)
         if (fsm == FSM::DEAD && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
             SetIsDone(true);
     }
+
+	Enemy2D::Update(dt);
+
+	velocity.SetZero();
 }
 
 void Skull::Render(float& _renderOrder)

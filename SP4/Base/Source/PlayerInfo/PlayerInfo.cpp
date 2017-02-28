@@ -5,8 +5,7 @@
 #include "MouseController.h"
 #include "KeyboardController.h"
 #include "Mtx44.h"
-#include "../Projectile/Projectile.h"
-#include "../WeaponInfo/LaserBlaster.h"
+#include "../Projectile/Laser.h"
 #include "../Lua/LuaInterface.h"
 #include "../EntityManager.h"
 #include "../Application.h"
@@ -14,6 +13,7 @@
 #include "GraphicsManager.h"
 #include "MeshBuilder.h"
 #include "../Level/Level.h"
+#include "../Projectile/Laser.h"
 
 // Allocating and initializing CPlayerInfo's static data member.
 // The pointer is allocated but not the object's constructor.
@@ -25,7 +25,6 @@ CPlayerInfo::CPlayerInfo(void)
 	, prevPos(Vector3(0, 0, 0))
 	, m_dSpeed(40.0)
 	, m_dAcceleration(10.0)
-	, weapon(NULL)
 	, keyMoveForward('W')
 	, keyMoveBackward('S')
 	, keyMoveLeft('A')
@@ -36,8 +35,8 @@ CPlayerInfo::CPlayerInfo(void)
 	, maxHealth(100.0f)
 	, health(90.0f)
 	, maxSpeed(300.0f)
-	, dashDistance(25.0f)
-	, dashCooldown(1.0f)
+	, dashDistance(30.0f)
+	, dashCooldown(0.6f)
 	, dashCooldownTimer(0)
 	, healthregen(2.5f)
 	, healthregenCooldownTimer(0)
@@ -45,6 +44,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, defaultHealthRegenCooldown(5)
 	, defaultSpeed(300.f)
 	, dreamBar(MAX_DREAMBAR * 0.5f)
+	, damage(5)
 	, killCount(0)
 	, rotateLeftLeg(Vector3(0, 0, 0))
 	, rotateRightLeg(Vector3(0, 0, 0))
@@ -56,16 +56,14 @@ CPlayerInfo::CPlayerInfo(void)
 	, healthScale(0)
 	, dashScale(0)
 	, dreambarScale(0)
+	, elapsedTime(0)
+	, timeBetweenShots(0.15f)
+	, fire(true)
 {
 }
 
 CPlayerInfo::~CPlayerInfo(void)
 {
-	if (weapon)
-	{
-		delete weapon;
-		weapon = NULL;
-	}
 }
 
 // Initialise this class instance
@@ -90,10 +88,6 @@ void CPlayerInfo::Init(void)
 	// Set Boundary
 	maxBoundary.Set(1, 1, 1);
 	minBoundary.Set(-1, -1, -1);
-
-    // Set the laser blaster as the secondary weapon
-	weapon = new CLaserBlaster();
-	weapon->Init();
 
 	treasure = new Treasure();
 	healthregenCooldown = defaultHealthRegenCooldown;
@@ -303,10 +297,10 @@ void CPlayerInfo::Update(double dt)
 	{
 		if (!forceDir.IsZero() && !isDashed)
 		{
+			dashCooldownTimer = dashCooldown;
 			forceMagnitude = maxSpeed * dashDistance;
 			this->ApplyForce(forceDir, forceMagnitude * dt);
 			isDashed = true;
-			dashCooldownTimer = dashCooldown;
 		}
 	}
 
@@ -368,9 +362,6 @@ void CPlayerInfo::Update(double dt)
 
 	Constrain();
 
-	if (weapon)
-		weapon->Update(dt);
-
 	if (rotateLeftLeg.z <= -10)
     {
         rotateLLUP = true;
@@ -393,11 +384,22 @@ void CPlayerInfo::Update(double dt)
 	if (this->prevHealth != health)
 	{
 		prevHealth = health;
-		healthRatio = this->health / this->maxHealth;
+		healthRatio = health / maxHealth;
 		healthScale = (health / maxHealth) * UIScale;
 	}
-	dashScale = (dashCooldown - dashCooldownTimer / dashCooldown) * UIScale;
+	dashScale = ((dashCooldown - dashCooldownTimer) / dashCooldown) * UIScale;
 	dreambarScale = (dreamBar / MAX_DREAMBAR) * UIScale;
+
+	// handling projectile
+	if (elapsedTime > timeBetweenShots)
+	{
+		fire = true;
+		elapsedTime = 0.0;
+	}
+	else
+	{
+		elapsedTime += dt;
+	}
 
 	// DEBUGGING TOOLS
 	if (KeyboardController::GetInstance()->IsKeyPressed('O'))
@@ -459,8 +461,8 @@ void CPlayerInfo::Render(float& _renderOrder)
 		modelStack.PushMatrix();
 		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 20.f);
 		modelStack.Scale(0.5f, 0.5f, 1);
-		modelStack.Translate((dashScale * this->dashCooldown) * 0.5f, 0, 0);
-		modelStack.Scale(dashScale * this->dashCooldown, fontSize * 0.5f, 1);
+		modelStack.Translate(dashScale * 0.5f, 0, 0);
+		modelStack.Scale(dashScale, fontSize * 0.5f, 1);
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dash"));
 		modelStack.PopMatrix();
 
@@ -525,7 +527,7 @@ void CPlayerInfo::RenderUI(void)
 		ss << health << " / " << maxHealth << endl;
 		textOBJ[0]->SetText(ss.str());
 		ss.str("");
-		ss << dashCooldown - dashCooldownTimer << endl;
+		//ss << dashCooldown - dashCooldownTimer << endl;
 		textOBJ[1]->SetText(ss.str());
 		ss.str("");
 		ss << dreamBar << " / " << MAX_DREAMBAR << endl;
@@ -588,9 +590,9 @@ void CPlayerInfo::RenderUI(void)
 			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
 			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 2.5f,
 			1);
-		modelStack.Translate((dashScale * this->dashCooldown) - fontSize * 2, 0, 0);
+		modelStack.Translate(dashScale - fontSize * 2, 0, 0);
 		modelStack.Scale(2, 2, 2);
-		modelStack.Scale(dashScale * this->dashCooldown, fontSize * 0.5f, 1);
+		modelStack.Scale(dashScale, fontSize * 0.5f, 1);
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dash"));
 		modelStack.PopMatrix();
 
@@ -677,8 +679,19 @@ void CPlayerInfo::Constrain(void)
 
 void CPlayerInfo::Shoot(Vector3 dir)
 {
-	if (weapon)
-		weapon->Discharge(this->position, dir, this);
+	if (fire)
+	{
+		Vector3 _direction = (dir - position).Normalized();
+		Create::Laser(
+			"laser",
+			position,
+			_direction,
+			100.0f,
+			2.0f,
+			500.0f,
+			damage);
+		fire = false;
+	}
 }
 
 void CPlayerInfo::RecoverHealth()

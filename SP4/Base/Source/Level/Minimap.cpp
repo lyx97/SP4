@@ -33,6 +33,8 @@ void CMinimap::Update(double dt)
 
 void CMinimap::RenderUI(void)
 {
+	position.Set(Vector3((Application::GetInstance().GetWindowWidth() >> 1) - 100, (Application::GetInstance().GetWindowHeight() >> 1) - 100, 0));
+
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 
     glEnable(GL_STENCIL_TEST);

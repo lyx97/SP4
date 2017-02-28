@@ -44,6 +44,7 @@
     <ClCompile Include="Source\Particle\Particle.cpp" />
     <ClCompile Include="Source\PlayerInfo\PlayerInfo.cpp" />
     <ClCompile Include="Source\Projectile\Ghast.cpp" />
+    <ClCompile Include="Source\Projectile\Laser.cpp" />
     <ClCompile Include="Source\Projectile\Projectile.cpp" />
     <ClCompile Include="Source\Projectile\Spit.cpp" />
     <ClCompile Include="Source\SceneGraph\Transform.cpp" />
@@ -54,9 +55,6 @@
     <ClCompile Include="Source\TextEntity.cpp" />
     <ClCompile Include="Source\Waypoint\Waypoint.cpp" />
     <ClCompile Include="Source\Waypoint\WaypointManager.cpp" />
-    <ClCompile Include="Source\WeaponInfo\Laser.cpp" />
-    <ClCompile Include="Source\WeaponInfo\LaserBlaster.cpp" />
-    <ClCompile Include="Source\WeaponInfo\WeaponInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
@@ -96,6 +94,7 @@
     <ClInclude Include="Source\Particle\Particle.h" />
     <ClInclude Include="Source\PlayerInfo\PlayerInfo.h" />
     <ClInclude Include="Source\Projectile\Ghast.h" />
+    <ClInclude Include="Source\Projectile\Laser.h" />
     <ClInclude Include="Source\Projectile\Projectile.h" />
     <ClInclude Include="Source\Projectile\Spit.h" />
     <ClInclude Include="Source\SceneGraph\Transform.h" />
@@ -106,9 +105,6 @@
     <ClInclude Include="Source\TextEntity.h" />
     <ClInclude Include="Source\Waypoint\Waypoint.h" />
     <ClInclude Include="Source\Waypoint\WaypointManager.h" />
-    <ClInclude Include="Source\WeaponInfo\Laser.h" />
-    <ClInclude Include="Source\WeaponInfo\LaserBlaster.h" />
-    <ClInclude Include="Source\WeaponInfo\WeaponInfo.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9B172635-4E2B-46F1-A403-08F4194D00F5}</ProjectGuid>

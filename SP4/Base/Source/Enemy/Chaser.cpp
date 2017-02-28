@@ -140,7 +140,7 @@ void CChaser::Respond()
 		break;
 
 	case ATTACK:
-		ChaserBlast->Discharge(this->position, playerInfo->GetPosition(), playerInfo);
+		//ChaserBlast->Discharge(this->position, playerInfo->GetPosition(), playerInfo);
 		break;
 
 	case ESCAPE:

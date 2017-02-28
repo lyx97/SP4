@@ -12,7 +12,7 @@ Powerup::Powerup(Vector3 pos, const int& _roomID)
 {
 	this->position.Set(pos);
 	this->velocity.Set(0, 0, 0);
-	this->scale.Set(10, 10, 10);
+	this->scale.Set(20, 20, 20);
 
 	this->m_eEntityType = EntityBase::POWERUP;
 	this->m_bLaser = false;
@@ -102,11 +102,6 @@ void Powerup::Render(float& _renderOrder)
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_healthregen"));
 	}
 		break;
-	default:
-	{
-		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
-	}
-		break;
-	}
+	} // end of switch
 	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
 }

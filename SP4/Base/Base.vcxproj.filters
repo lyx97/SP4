@@ -52,9 +52,6 @@
     <ClCompile Include="Source\OBJMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\WeaponInfo\LaserBlaster.cpp">
-      <Filter>WeaponInfo</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,12 +69,6 @@
     </ClCompile>
     <ClCompile Include="Source\PlayerInfo\PlayerInfo.cpp">
       <Filter>PlayerInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WeaponInfo\Laser.cpp">
-      <Filter>Projectile</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Projectile\Projectile.cpp">
-      <Filter>Projectile</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneText.cpp">
       <Filter>Source Files</Filter>
@@ -105,9 +96,6 @@
     </ClCompile>
     <ClCompile Include="Source\Waypoint\WaypointManager.cpp">
       <Filter>Waypoint</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WeaponInfo\WeaponInfo.cpp">
-      <Filter>WeaponInfo</Filter>
     </ClCompile>
     <ClCompile Include="Source\Items\Powerup.cpp">
       <Filter>Items</Filter>
@@ -138,6 +126,12 @@
     </ClCompile>
     <ClCompile Include="Source\Enemy\Reaper.cpp">
       <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Projectile\Laser.cpp">
+      <Filter>Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Projectile\Projectile.cpp">
+      <Filter>Projectile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,9 +183,6 @@
     <ClInclude Include="Source\Particle\Particle.h">
       <Filter>Particle</Filter>
     </ClInclude>
-    <ClInclude Include="Source\WeaponInfo\LaserBlaster.h">
-      <Filter>WeaponInfo</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Lua\lauxlib.h">
       <Filter>Lua</Filter>
     </ClInclude>
@@ -225,12 +216,6 @@
     <ClInclude Include="Source\PlayerInfo\PlayerInfo.h">
       <Filter>PlayerInfo</Filter>
     </ClInclude>
-    <ClInclude Include="Source\WeaponInfo\Laser.h">
-      <Filter>Projectile</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Projectile\Projectile.h">
-      <Filter>Projectile</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -245,9 +230,6 @@
     </ClInclude>
     <ClInclude Include="Source\Waypoint\WaypointManager.h">
       <Filter>Waypoint</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WeaponInfo\WeaponInfo.h">
-      <Filter>WeaponInfo</Filter>
     </ClInclude>
     <ClInclude Include="Source\TextEntity.h">
       <Filter>Header Files</Filter>
@@ -291,6 +273,12 @@
     <ClInclude Include="Source\Enemy\Reaper.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Projectile\Laser.h">
+      <Filter>Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile\Projectile.h">
+      <Filter>Projectile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">
@@ -325,9 +313,6 @@
     </Filter>
     <Filter Include="Waypoint">
       <UniqueIdentifier>{e9e74d12-1f17-42c7-ae5d-0153ad8e82ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WeaponInfo">
-      <UniqueIdentifier>{9f299c88-7044-4ad5-8118-0fb8c3737175}</UniqueIdentifier>
     </Filter>
     <Filter Include="Items">
       <UniqueIdentifier>{8d35496c-7e97-45eb-9163-975b72921092}</UniqueIdentifier>

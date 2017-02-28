@@ -79,7 +79,6 @@ FlyingTongue::~FlyingTongue()
 
 void FlyingTongue::Update(double dt)
 {
-	Enemy2D::Update(dt);
     CHeatmap** heatmap = CPlayerInfo::GetInstance()->GetHeatmap();
 
     int x = index.x;
@@ -155,6 +154,8 @@ void FlyingTongue::Update(double dt)
         if (fsm == FSM::DEAD && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
             SetIsDone(true);
     }
+
+	Enemy2D::Update(dt);
 }
 
 void FlyingTongue::Render(float& _renderOrder)

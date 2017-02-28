@@ -31,15 +31,12 @@ Enemy2D::~Enemy2D()
 
 void Enemy2D::Update(double _dt)
 {
-	Vector3 temp = (Cohesion(this) +Alignment(this) + Separation(this));
-	if (!temp.IsZero())
-	{
-		this->velocity += temp.Normalized();
-	}
-	if (this->health <= 0)
-	{
-		isDone = true;
-	}
+	//Vector3 temp = (Cohesion(this) +Alignment(this) + Separation(this));
+	//if (!temp.IsZero())
+	//{
+	//	this->velocity += temp.Normalized();
+	//}
+	//cout << isDone << endl;
 	if (isDone)
 	{
 		float randomNo = Math::RandFloatMinMax(0, 100);
@@ -55,7 +52,7 @@ void Enemy2D::Update(double _dt)
 	if (this->prevHealth != health)
 	{
 		prevHealth = health;
-		healthScale = ((float)health / maxHealth) * 10.f;
+		healthScale = ((float)health / maxHealth) * 30.f;
 		healthRatio = health / maxHealth;
 	}
 }
@@ -65,13 +62,13 @@ void Enemy2D::Render(float& _renderOrder)
 	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(position.x, position.y, position.z);
-	modelStack.Translate(healthScale, scale.y, 0);
-	modelStack.Scale(2, 2, 2);
-	modelStack.Scale(healthScale, 2, 1);
-	if (healthRatio <= 0.25)
+	modelStack.Translate(position.x - (30.f * 0.25f), 0.0f, position.z - 25.f);
+	modelStack.Scale(0.5f, 0.5f, 1);
+	modelStack.Translate(healthScale * 0.5f, 0, 0);
+	modelStack.Scale(healthScale, 7.0f, 1);
+	if (healthRatio < 0.25f)
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_quad"));
-	else if (healthRatio <= 0.5f)
+	else if (healthRatio < 0.5f)
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_half"));
 	else
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_full"));

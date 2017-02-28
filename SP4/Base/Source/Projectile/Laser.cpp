@@ -12,7 +12,7 @@
 using namespace std;
 
 CLaser::CLaser(void)
-	: CProjectile(NULL)
+	: GenericEntity(NULL)
     , prevIndex(Vector3(0, 0, 0))
 	, m_fLength(0.0)
 	, angle_x(0.0)
@@ -22,7 +22,7 @@ CLaser::CLaser(void)
 }
 
 CLaser::CLaser(Mesh* _modelMesh)
-	: CProjectile(_modelMesh)
+	: GenericEntity(_modelMesh)
     , prevIndex(Vector3(0, 0, 0))
 	, m_fLength(0.0)
 	, angle_x(0.0)
@@ -33,8 +33,6 @@ CLaser::CLaser(Mesh* _modelMesh)
 
 CLaser::~CLaser(void)
 {
-	modelMesh = NULL;
-	theSource = NULL;
 }
 
 // Set the length of the laser
@@ -78,7 +76,7 @@ void CLaser::Update(double dt)
             ->GetGridType(index.x, index.z)
             == GRID_TYPE::WALL)
         {
-            SetStatus(false);
+            m_bStatus = false;
             SetIsDone(true);
             return;
         }
@@ -89,17 +87,15 @@ void CLaser::Update(double dt)
 	m_fLifetime -= (float)dt;
     if (m_fLifetime < 0.0f)
 	{
-		SetStatus(false);
+		m_bStatus = false;
 		SetIsDone(true);	// This method is to inform the EntityManager that it should remove this instance
 		return;
 	}
 
-
-
 	// Update Position
 	position.Set(position.x + (float)(theDirection.x * dt * m_fSpeed),
-		position.y + (float)(theDirection.y * dt * m_fSpeed),
-		position.z + (float)(theDirection.z * dt * m_fSpeed));
+				position.y + (float)(theDirection.y * dt * m_fSpeed),
+				position.z + (float)(theDirection.z * dt * m_fSpeed));
 }
 
 // Render this projectile
@@ -125,12 +121,20 @@ void CLaser::Render(float& _renderOrder)
 	modelStack.PushMatrix();
 	modelStack.Rotate(180 / Math::PI * angle_y, 1.0f, 0.0f, 0.0f);
 	glLineWidth(5.0f);
-	RenderHelper::RenderMesh(modelMesh);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("laser"));
 	glLineWidth(1.0f);
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
+}
+
+void CLaser::Set(Vector3 theNewPosition, Vector3 theNewDirection, const float m_fLifetime, const float m_fSpeed)
+{
+	position = theNewPosition;
+	theDirection = theNewDirection;
+	this->m_fLifetime = m_fLifetime;
+	this->m_fSpeed = m_fSpeed;
 }
 
 // Create a projectile and add it into EntityManager
@@ -140,7 +144,7 @@ CLaser* Create::Laser(const std::string& _meshName,
 	const float m_fLength,
 	const float m_fLifetime,
 	const float m_fSpeed,
-	CPlayerInfo* _source)
+	const float m_fDamage)
 {
 	Mesh* modelMesh = MeshBuilder::GetInstance()->GetMesh(_meshName);
 	if (modelMesh == nullptr)
@@ -149,17 +153,17 @@ CLaser* Create::Laser(const std::string& _meshName,
 	CLaser* result = new CLaser(modelMesh);
 	result->Set(_position, _direction, m_fLifetime, m_fSpeed);
 	result->SetLength(m_fLength);
-	result->SetDamage(10);
-	result->SetMass(50);
+	result->SetDamage(m_fDamage);
 	result->SetStatus(true);
 	result->SetCollider(true);
-	result->SetSource(_source);
+	result->SetIsLaser(true);
+	result->SetMass(8);
+	result->SetAABB(Vector3(0.5f, 0.5f, 0.5), Vector3(-0.5f, -0.5f, -0.5f));
 	result->SetEntityType(EntityBase::PROJECTILE);
 	result->SetVelocity(_direction); // to get the velocity outside the class
     result->SetRoomID(CPlayerInfo::GetInstance()->GetRoomID());
     EntityManager::GetInstance()->AddEntity(result, CPlayerInfo::GetInstance()->GetRoomID());
 
-	Vector3 base = Vector3(1.0f, 0.0f, 0.0f);
 	result->CalculateAngles();
 	return result;
 }

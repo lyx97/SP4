@@ -169,6 +169,8 @@ void Reaper::Update(double dt)
         if (fsm == FSM::DEAD && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
             SetIsDone(true);
     }
+
+	Enemy2D::Update(dt);
 }
 
 void Reaper::Render(float& _renderOrder)

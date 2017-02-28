@@ -8,7 +8,6 @@
 #include "RenderHelper.h"
 #include "MeshBuilder.h"
 #include "../PlayerInfo/PlayerInfo.h"
-#include "../Projectile/Projectile.h"
 #include "../Items/Powerup.h"
 
 static const float ENEMY_MAX_SPEED = 50.0f;

@@ -2,7 +2,6 @@
 
 #include <list>
 #include "Vector3.h"
-#include "../WeaponInfo/WeaponInfo.h"
 #include "../GenericEntity.h"
 #include "../TextEntity.h"
 #include "../Level/GenerateHeatmap.h"
@@ -101,8 +100,6 @@ private:
 	double m_dSpeed;
 	double m_dAcceleration;
 
-	CWeaponInfo* weapon;
-
 	SpriteAnimation* playerMeshes[2];
 
     SpriteAnimation* currentAnimation;
@@ -131,6 +128,7 @@ private:
 	float healthregenCooldownTimer;
 	float treasureDurationTimer;
 	float dreamBar;
+	unsigned int damage;
 
 	// Treasure
 	Treasure* treasure;
@@ -154,12 +152,17 @@ private:
 	TextEntity* textOBJ[4];
 	float fontSize = 25.0f;
 
+	// UI
 	bool onScreenUI;
-
 	int UIScale;
 	float prevHealth;
 	float healthRatio;
 	float healthScale;
 	float dashScale;
 	float dreambarScale;
+
+	// projectile
+	double elapsedTime;
+	double timeBetweenShots;
+	bool fire;
 };

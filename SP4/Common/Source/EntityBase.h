@@ -90,6 +90,7 @@ protected:
 	// 2D movement
 	float mass;
 	Vector3 velocity;
+	Vector3 heatmapDir;
 	Vector3 front;
 
     int roomID;
