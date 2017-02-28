@@ -25,10 +25,11 @@ struct Animation
 class SpriteAnimation : public Mesh
 {
 public:
-	SpriteAnimation(const std::string &meshName, int row, int col);
+    SpriteAnimation();
+	SpriteAnimation(const std::string& meshName);
 	~SpriteAnimation();
 	void Update(double dt);
-	virtual void Render();
+    virtual void Render();
 
 	inline float GetTimeCurrent(){ return m_timeCurrent; };
 	inline void SetTimeCurrent(float timeCurrent){ m_timeCurrent = timeCurrent; };
@@ -37,16 +38,19 @@ public:
 	inline int GetPlayCount(){ return m_playCount; };
 	inline void SetPlayCount(float playCount){ m_playCount = playCount; };
 
-	int m_row;
-	int m_col;
-
-	float m_timeCurrent;
-	int m_currentFrame;
-	int m_playCount;
+    inline void SetAttackFrame(int attackframe){ m_attackFrame = attackframe; };
+    inline bool GetAttack(){ return m_attack; };
 
 	Animation *m_anim;
 
-protected:
+private:
+    int m_row;
+    int m_col;
 
+    float m_timeCurrent;
+    int m_currentFrame;
+    int m_playCount;
+    int m_attackFrame;
 
+    bool m_attack;
 };

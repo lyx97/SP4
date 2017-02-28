@@ -3,7 +3,6 @@
 CHeatmap::CHeatmap()
     : value(0)
     , marked(false)
-    , obstacle(false)
     , Dir(Vector3(0,0,0))
 {
 

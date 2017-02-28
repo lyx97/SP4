@@ -9,10 +9,13 @@ public:
 	enum ENTITY_TYPE
 	{
 		DEFAULT,
+        PLAYER,
 		ENEMY,
 		POWERUP,
 		TREASURE,
 		PROJECTILE,
+        ENEMYPROJECTILE,
+        OBSTACLE,
 
 		NUM_ENTITYTYPE
 	};
@@ -65,10 +68,15 @@ public:
     inline int GetRoomID(void) const { return roomID; }
     inline void SetRoomID(const int& roomid) { roomID = roomid; }
 
+    inline int GetHP(void) const { return HP; }
+    inline void SetHP(const int& hp) { HP = hp; }
+    inline void SetHPDamaged(const int& damage) { HP -= damage; }
+
 protected:
 	Vector3 position;
 	Vector3 scale;
     Vector3 index;
+    Vector3 maxBoundary, minBoundary;
 
 	bool isDone;
 	bool m_bCollider;
@@ -82,6 +90,7 @@ protected:
 	Vector3 front;
 
     int roomID;
+    int HP;
 };
 
 #endif // ENTITY_BASE_H

@@ -95,21 +95,17 @@ public:
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
 	Vector3 target, up;
-	Vector3 maxBoundary, minBoundary;
     Vector3 direction;
+    Vector3 prevPos;
 
 	double m_dSpeed;
 	double m_dAcceleration;
 
-	bool m_bJumpUpwards;
-	double m_dJumpSpeed;
-	double m_dJumpAcceleration;
-
-	double m_dFallSpeed;
-	bool m_bFallDownwards;
-	double m_dFallAcceleration;
-
 	CWeaponInfo* weapon;
+
+	SpriteAnimation* playerMeshes[2];
+
+    SpriteAnimation* currentAnimation;
 
 	// Key to move the player
 	char keyMoveForward;

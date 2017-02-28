@@ -231,9 +231,9 @@ int CSpatialPartition::GetzNumOfGrid(void) const
 /********************************************************************************
 Get a particular grid
 ********************************************************************************/
-CGrid CSpatialPartition::GetGrid(const int xIndex, const int zIndex) const
+CGrid* CSpatialPartition::GetGrid(const int xIndex, const int zIndex) const
 {
-    return theGrid[xIndex*zNumOfGrid + zIndex];
+    return &theGrid[xIndex*zNumOfGrid + zIndex];
 }
 
 Vector3 CSpatialPartition::GetGridPos(const int xIndex, const int zIndex) const

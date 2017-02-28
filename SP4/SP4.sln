@@ -10,6 +10,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Base", "Base\Base.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{B594FE34-E00B-4E94-AD04-D1FF100AA5DC}"
 EndProject
+<<<<<<< 63b8bc1b99484635fe52843898d3ce36abee3506
+=======
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BD144164-60B9-4ABD-A5C9-F407E63E1377}"
+EndProject
+>>>>>>> 3be06b05b6721417886799b60a5e99d796a3ea5d
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32

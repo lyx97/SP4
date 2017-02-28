@@ -43,10 +43,10 @@ unsigned int ShaderProgram::GetUniform(const std::string& _name)
         return SHADER_ERROR;
     return it->second;
 	// Return error code if the uniform does not exist
-	if (uniformMap.count(_name) == 0)
-		return SHADER_ERROR;
+	//if (uniformMap.count(_name) == 0)
+	//	return SHADER_ERROR;
 
-	return uniformMap[_name];
+	//return uniformMap[_name];
 }
 
 unsigned int ShaderProgram::GetOrAddUniform(const std::string& _name)

@@ -19,6 +19,11 @@
 #include "RenderHelper.h"
 #include "Level/Level.h"
 #include "Particle/Particle.h"
+#include "Enemy/FlyingTongue.h"
+#include "Enemy/Skull.h"
+#include "Enemy/Spitter.h"
+#include "Enemy/Reaper.h"
+#include "Obstacle/Obstacle.h"
 
 #include <iostream>
 using namespace std;
@@ -133,7 +138,7 @@ void SceneText::Init()
 
     minimap = new CMinimap();
 
-    //for (int i = 0; i < 400; ++i)
+    //for (int i = 0; i < 800; ++i)
     //{
     //    Particle* particle = EntityManager::GetInstance()->GetParticle();
     //    particle->Init();
@@ -142,7 +147,17 @@ void SceneText::Init()
     //    //particle->AddEffect(Particle::SHRINK);
     //}
 
-    test = 0.0;
+    //test = 0.0;
+
+    //FlyingTongue* tongy = new FlyingTongue(0);
+
+    //Skull* skull = new Skull(0);
+
+    //Spitter* spitter = new Spitter(0);
+
+    //Obstacle* obs = new Obstacle(0);
+
+    //Reaper* reaper = new Reaper(0);
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;

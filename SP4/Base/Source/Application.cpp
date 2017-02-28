@@ -18,7 +18,7 @@
 #include "../Lua/LuaInterface.h"
 
 GLFWwindow* m_window;
-const unsigned char FPS = 90; // FPS of this game
+const unsigned char FPS = 60; // FPS of this game
 const unsigned int frameTime = 1000 / FPS; // time for each frame
 
 //Define an error callback

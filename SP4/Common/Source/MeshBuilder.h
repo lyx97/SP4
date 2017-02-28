@@ -24,6 +24,7 @@ public:
 	Mesh* GenerateCrossHair(const std::string &meshName, float colour_r = 1.0f, float colour_g = 1.0f, float colour_b = 0.0f, float length = 1.0f);
 	Mesh* GenerateQuad(const std::string &meshName, Color color, float length = 1.f);
     Mesh* GenerateTriangle(const std::string &meshName, Color color, float length = 1.f);
+    Mesh* GenerateParticle(const std::string &meshName, Color color, float length = 1.f);
 	Mesh* GenerateCube(const std::string &meshName, Color color, float length = 1.f);
 	Mesh* GenerateRing(const std::string &meshName, Color color, unsigned numSlice, float outerR = 1.f, float innerR = 0.f);
 	Mesh* GenerateSphere(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius = 1.f);
@@ -34,6 +35,7 @@ public:
 	Mesh* GenerateRay(const std::string &meshName, const float length = 1.0f);
 
 	SpriteAnimation* GenerateSpriteAnimation(const std::string &meshName, unsigned numRow, unsigned numCol);
+    SpriteAnimation* GenerateSpriteAnimation(unsigned numRow, unsigned numCol);
 
 	Mesh* GetMesh(const std::string& _meshName);
 	void AddMesh(const std::string& _meshName, Mesh* _newMesh);

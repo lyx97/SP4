@@ -50,7 +50,11 @@ public:
 
     void ExpandRoom(void);
 
+    // Link room
     void SetDoor(CRoom* room);
+
+    // Spawn entities for each room generated
+    void Spawn(CRoom* room);
 
     void CleanRoomList(void);
 

@@ -86,7 +86,7 @@ public:
 	int GetzNumOfGrid(void) const;
 
 	// Get a particular grid
-	CGrid GetGrid(const int xIndex, const int zIndex) const;
+	CGrid* GetGrid(const int xIndex, const int zIndex) const;
     Vector3 GetGridPos(const int xIndex, const int zIndex) const;
     GRID_TYPE GetGridType(const int xIndex, const int zIndex) const;
     void SetGridType(const int xIndex, const int zIndex, const GRID_TYPE type);

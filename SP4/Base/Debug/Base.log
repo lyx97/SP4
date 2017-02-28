@@ -1,3 +1,4 @@
+<<<<<<< 63b8bc1b99484635fe52843898d3ce36abee3506
 ﻿Build started 2/27/2017 8:16:54 PM.
      1>Project "C:\Users\155118A\Documents\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -13,12 +14,34 @@
      1>c:\users\155118a\documents\sp4\sp4\base\source\enemy\enemy2d.cpp(40): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\155118a\documents\sp4\sp4\base\source\enemy\enemy2d.cpp(72): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
          Generating Code...
+=======
+﻿Build started 2/28/2017 9:03:12 AM.
+     1>Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/Common/Source /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\SceneText.cpp
+         SceneText.cpp
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(32): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\scenetext.h(24): warning C4099: 'Color' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\155117g\desktop\sp4\sp4\common\source\vertex.h(14) : see declaration of 'Color'
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\mousecontroller.h(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.h(79): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\scenetext.cpp(90): warning C4244: 'initializing' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\scenetext.cpp(183): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\scenetext.cpp(184): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\scenetext.cpp(307): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+>>>>>>> 3be06b05b6721417886799b60a5e99d796a3ea5d
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155118A\Documents\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155118A\Documents\SP4\SP4\Debug /LIBPATH:"C:\Users\155118A\Documents\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155118A\Documents\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155118A\Documents\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155118A\Documents\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155118A\Documents\SP4\SP4\Debug\Base.lib" /MACHINE:X86 /PROFILE Debug\Application.obj
          Debug\Camera.obj
          Debug\Chaser.obj
          Debug\Enemy.obj
          Debug\Enemy2D.obj
+         Debug\Reaper.obj
+         Debug\Spitter.obj
+         Debug\FlyingTongue.obj
+         Debug\Skull.obj
          Debug\EntityManager.obj
          Debug\FPSCamera.obj
          Debug\HelpState.obj
@@ -39,9 +62,17 @@
          Debug\LuaInterface.obj
          Debug\main.obj
          Debug\OBJMesh.obj
+         Debug\Obstacle.obj
          Debug\Particle.obj
          Debug\PlayerInfo.obj
+         Debug\Ghast.obj
          Debug\Projectile.obj
+<<<<<<< 63b8bc1b99484635fe52843898d3ce36abee3506
+=======
+         Debug\Spit.obj
+         Debug\SceneGraph.obj
+         Debug\SceneNode.obj
+>>>>>>> 3be06b05b6721417886799b60a5e99d796a3ea5d
          Debug\Transform.obj
          Debug\UpdateTransformation.obj
          Debug\SceneText.obj
@@ -60,4 +91,8 @@
 
 Build succeeded.
 
+<<<<<<< 63b8bc1b99484635fe52843898d3ce36abee3506
 Time Elapsed 00:00:03.38
+=======
+Time Elapsed 00:00:01.88
+>>>>>>> 3be06b05b6721417886799b60a5e99d796a3ea5d

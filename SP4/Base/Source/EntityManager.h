@@ -37,6 +37,9 @@ public:
 
     inline void RemoveSpatialPartition(void) { partitionList.clear(); }
 
+    static std::list<Vector3> tilePosList;
+    static std::list<Vector3> particlePosList;
+
 private:
 	EntityManager();
 	virtual ~EntityManager();
@@ -56,7 +59,7 @@ private:
     // Check two positions are within a box region
     bool InBox(Vector3 Hit, Vector3 B1, Vector3 B2, const int Axis);
 	// Check if any Collider is colliding with another Collider
-	bool CheckForCollision(void);
+	void CheckForCollision(void);
 
 	std::list<EntityBase*> entityList;
     std::list<Particle*> particleList_Active;

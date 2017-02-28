@@ -16,6 +16,10 @@
     <ClCompile Include="Source\Enemy\Chaser.cpp" />
     <ClCompile Include="Source\Enemy\Enemy.cpp" />
     <ClCompile Include="Source\Enemy\Enemy2D.cpp" />
+    <ClCompile Include="Source\Enemy\Reaper.cpp" />
+    <ClCompile Include="Source\Enemy\Spitter.cpp" />
+    <ClCompile Include="Source\Enemy\FlyingTongue.cpp" />
+    <ClCompile Include="Source\Enemy\Skull.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\FPSCamera.cpp" />
     <ClCompile Include="Source\GameStateManagement\HelpState.cpp" />
@@ -36,9 +40,17 @@
     <ClCompile Include="Source\Lua\LuaInterface.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\OBJMesh.cpp" />
+    <ClCompile Include="Source\Obstacle\Obstacle.cpp" />
     <ClCompile Include="Source\Particle\Particle.cpp" />
     <ClCompile Include="Source\PlayerInfo\PlayerInfo.cpp" />
+    <ClCompile Include="Source\Projectile\Ghast.cpp" />
     <ClCompile Include="Source\Projectile\Projectile.cpp" />
+<<<<<<< 63b8bc1b99484635fe52843898d3ce36abee3506
+=======
+    <ClCompile Include="Source\Projectile\Spit.cpp" />
+    <ClCompile Include="Source\SceneGraph\SceneGraph.cpp" />
+    <ClCompile Include="Source\SceneGraph\SceneNode.cpp" />
+>>>>>>> 3be06b05b6721417886799b60a5e99d796a3ea5d
     <ClCompile Include="Source\SceneGraph\Transform.cpp" />
     <ClCompile Include="Source\SceneGraph\UpdateTransformation.cpp" />
     <ClCompile Include="Source\SceneText.cpp" />
@@ -57,6 +69,10 @@
     <ClInclude Include="Source\Enemy\Chaser.h" />
     <ClInclude Include="Source\Enemy\Enemy.h" />
     <ClInclude Include="Source\Enemy\Enemy2D.h" />
+    <ClInclude Include="Source\Enemy\Reaper.h" />
+    <ClInclude Include="Source\Enemy\Spitter.h" />
+    <ClInclude Include="Source\Enemy\FlyingTongue.h" />
+    <ClInclude Include="Source\Enemy\Skull.h" />
     <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\FPSCamera.h" />
     <ClInclude Include="Source\GameStateManagement\HelpState.h" />
@@ -81,9 +97,17 @@
     <ClInclude Include="Source\Lua\LuaInterface.h" />
     <ClInclude Include="Source\Lua\lualib.h" />
     <ClInclude Include="Source\OBJMesh.h" />
+    <ClInclude Include="Source\Obstacle\Obstacle.h" />
     <ClInclude Include="Source\Particle\Particle.h" />
     <ClInclude Include="Source\PlayerInfo\PlayerInfo.h" />
+    <ClInclude Include="Source\Projectile\Ghast.h" />
     <ClInclude Include="Source\Projectile\Projectile.h" />
+<<<<<<< 63b8bc1b99484635fe52843898d3ce36abee3506
+=======
+    <ClInclude Include="Source\Projectile\Spit.h" />
+    <ClInclude Include="Source\SceneGraph\SceneGraph.h" />
+    <ClInclude Include="Source\SceneGraph\SceneNode.h" />
+>>>>>>> 3be06b05b6721417886799b60a5e99d796a3ea5d
     <ClInclude Include="Source\SceneGraph\Transform.h" />
     <ClInclude Include="Source\SceneGraph\UpdateTransformation.h" />
     <ClInclude Include="Source\SceneText.h" />

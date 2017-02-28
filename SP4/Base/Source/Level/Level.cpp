@@ -4,6 +4,9 @@
 #include "RenderHelper.h"
 #include "MeshBuilder.h"
 #include "../PlayerInfo/PlayerInfo.h"
+#include "../Enemy/FlyingTongue.h"
+#include "../Enemy/Skull.h"
+#include "../Obstacle/Obstacle.h"
 
 CLevel::CLevel()
     : m_iRoomID(0)
@@ -42,6 +45,7 @@ void CLevel::Init(const float room_bias)
     for (auto it : roomList)
     {
         SetDoor(it);
+        //Spawn(it);
     }
 }
 
@@ -50,16 +54,18 @@ void CLevel::Render()
     CRoom* room = GetRoom(CPlayerInfo::GetInstance()->GetRoomID());
 
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
-    //modelStack.PushMatrix();
-    //modelStack.Translate(0, 0, -200);
-    //modelStack.Scale(room->GetRoomXMax() * GRIDSIZE, room->GetRoomZMax() * GRIDSIZE, 1);
-    //RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("nightmare"));
-    //modelStack.PopMatrix();
+    modelStack.PushMatrix();
+    modelStack.Translate(0, -15, 0);
+    modelStack.Rotate(90, -1, 0, 0);
+    modelStack.Scale(room->GetRoomXMax() * GRIDSIZE, room->GetRoomZMax() * GRIDSIZE, 1);
+    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("floor"));
+    modelStack.PopMatrix();
 
     if (room->GetDoorToRoomID(0) >= 0)
     {
         modelStack.PushMatrix();
         modelStack.Translate(-((room->GetRoomXMax() * GRIDSIZE) >> 1), 0, 0);
+        modelStack.Rotate(90, -1, 0, 0);
         modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
         RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
         modelStack.PopMatrix();
@@ -69,6 +75,7 @@ void CLevel::Render()
     {
         modelStack.PushMatrix();
         modelStack.Translate(((room->GetRoomXMax() * GRIDSIZE) >> 1), 0, 0);
+        modelStack.Rotate(90, -1, 0, 0);
         modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
         RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
         modelStack.PopMatrix();
@@ -77,7 +84,8 @@ void CLevel::Render()
     if (room->GetDoorToRoomID(2) >= 0)
     {
         modelStack.PushMatrix();
-        modelStack.Translate(0, ((room->GetRoomZMax() * GRIDSIZE) >> 1), 0);
+        modelStack.Translate(0, 0, -((room->GetRoomZMax() * GRIDSIZE) >> 1));
+        modelStack.Rotate(90, -1, 0, 0);
         modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
         RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
         modelStack.PopMatrix();
@@ -86,7 +94,8 @@ void CLevel::Render()
     if (room->GetDoorToRoomID(3) >= 0)
     {
         modelStack.PushMatrix();
-        modelStack.Translate(0, -((room->GetRoomZMax() * GRIDSIZE) >> 1), 0);
+        modelStack.Translate(0, 0, ((room->GetRoomZMax() * GRIDSIZE) >> 1));
+        modelStack.Rotate(90, -1, 0, 0);
         modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
         RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
         modelStack.PopMatrix();
@@ -100,10 +109,7 @@ const bool CLevel::CompareOverlap(Vector3 index)
     while (tempIter < roomIndexList.size())
     {
         if (roomIndexList[tempIter] == index)
-        {
-            cout << "COMPARING: " << roomIndexList[tempIter] << " " << index << endl;
             return true;
-        }
         tempIter++;
     }
     return false;
@@ -149,7 +155,6 @@ void CLevel::CreateRoom(const int roomID,
     if (roomList.size() > 0)
         tempRoomID--;
 
-    int tempBias = m_fRoomBias;
     for (int i = 0; i < 4; ++i)
     {
         roomMap[roomID][i] = -1;
@@ -271,6 +276,58 @@ void CLevel::SetDoor(CRoom* room)
     cout << "SIZE: " << xMin << " " << xMax << " " << zMin << " " << zMax << " ";
     cout << "ROOM ID: " << tempRoomID << " " << CLevel::GetInstance()->GetRoom(tempRoomIndex.x - 1, tempRoomIndex.z) << " " << CLevel::GetInstance()->GetRoom(tempRoomIndex.x + 1, tempRoomIndex.z) << " " <<
         CLevel::GetInstance()->GetRoom(tempRoomIndex.x, tempRoomIndex.z - 1) << " " << CLevel::GetInstance()->GetRoom(tempRoomIndex.x, tempRoomIndex.z + 1) << endl;
+}
+
+void CLevel::Spawn(CRoom* room)
+{
+    int xMin = room->GetRoomXMin();
+    int xMax = room->GetRoomXMax();
+    int zMin = room->GetRoomZMin();
+    int zMax = room->GetRoomZMax();
+
+    int tempRoomID = room->GetRoomID();
+    Vector3 tempRoomIndex = room->GetIndex();
+
+    float spawnbias = 10.f;
+
+    for (int x = xMin + 1; x <= xMax - 1; ++x)
+    {
+        for (int z = zMin + 1; z <= zMax - 1; ++z)
+        {
+            if (spawnbias >= Math::RandFloatMinMax(0, 100))
+            {
+                spawnbias *= 0.75f;
+
+                int randspawn = Math::RandIntMinMax(0, 2);
+
+                    Skull* skull = new Skull(room->GetRoomID());
+                    skull->SetPosition(room->GetSpatialPartition()->GetGridPos(x, z));
+
+                //switch (randspawn)
+                //{
+                //case 0:
+                //{                    
+                //    //Obstacle* obstacle = new Obstacle(room->GetRoomID());
+                //    //obstacle->SetPosition(room->GetSpatialPartition()->GetGridPos(x, z));
+                //    break;
+                //}
+                //case 1:
+                //{
+                //    FlyingTongue* flyingtongue = new FlyingTongue(room->GetRoomID());
+                //    flyingtongue->SetPosition(room->GetSpatialPartition()->GetGridPos(x, z));
+                //    break;
+                //}
+                //case 2:
+                //{
+                //    Skull* skull = new Skull(room->GetRoomID());
+                //    skull->SetPosition(room->GetSpatialPartition()->GetGridPos(x, z));
+                //    break;
+                //}
+                //}
+            }
+        }
+    }
+
 }
 
 void CLevel::CleanRoomList(void)

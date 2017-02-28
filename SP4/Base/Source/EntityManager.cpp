@@ -5,9 +5,13 @@
 #include "Enemy\Enemy2D.h"
 #include "PlayerInfo/PlayerInfo.h"
 #include "Particle/Particle.h"
+#include "LoadTGA.h"
 
 #include <iostream>
 using namespace std;
+
+std::list<Vector3> EntityManager::tilePosList;
+std::list<Vector3> EntityManager::particlePosList;
 
 // Update all entities
 void EntityManager::Update(double _dt)
@@ -25,7 +29,7 @@ void EntityManager::Update(double _dt)
     //CSceneGraph::GetInstance()->Update();
 
     // Check for Collision amongst entities with collider properties
-    //CheckForCollision();
+    CheckForCollision();
 
     // Clean up entities that are done
     it = entityList.begin();
@@ -66,8 +70,6 @@ void EntityManager::Update(double _dt)
         Splice(particle, (*particle)->IsDone());
         SpliceQueue.pop();
     }
-
-    //cout << particleList_Active.size() + particleList_Inactive.size() << endl;
 }
 
 // Render all entities
@@ -78,7 +80,7 @@ void EntityManager::Render()
 	end = entityList.end();
 	for (it = entityList.begin(); it != end; ++it)
 	{
-        //if ((*it)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
+        if ((*it)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
 		    (*it)->Render();
 	}
 
@@ -89,15 +91,24 @@ void EntityManager::Render()
 	//if (partitionList.size() > 0)
 	//	partitionList[CPlayerInfo::GetInstance()->GetRoomID()]->Render();
 
+
     // Render particles
     std::list<Particle*>::iterator it2, end2;
     end2 = particleList_Active.end();
     for (it2 = particleList_Active.begin(); it2 != end2; ++it2)
     {
-        (*it2)->Render();
+        // To store positions
+        //(*it2)->Render();
+
+        particlePosList.push_back((*it2)->GetPosition());
     }
     if (particleList_Active.size() > 0)
-        RenderHelper::RenderParticleMesh(MeshBuilder::GetInstance()->GetMesh("particle"));
+    {
+        MeshBuilder::GetInstance()->GenerateParticle("particle", Color(1.0f, 1.0f, 1.0f), 10.f);
+        MeshBuilder::GetInstance()->GetMesh("particle")->textureID = LoadTGA("Image//Tile//wall.tga");
+        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("particle"));
+        particlePosList.clear();
+    }
 }
 
 // Render the UI entities
@@ -199,19 +210,6 @@ Particle* EntityManager::GetParticle(void)
             SpliceQueue.push(it);
             return *it;
         }
-
-
-        //std::list<Particle*>::iterator it, end;
-        ////end = particleList_Inactive.end();
-        ////for (it = particleList_Inactive.begin(); it != end; ++it)
-        ////{
-        ////    if ((*it)->IsDone())
-        ////    {
-        ////        (*it)->SetIsDone(false);
-        ////        SpliceQueue.push(it);
-        ////        return *it;
-        ////    }
-        ////}
 
         Particle* particle = new Particle();
         particleList_Active.push_back(particle);
@@ -387,8 +385,93 @@ bool EntityManager::InBox(Vector3 Hit, Vector3 B1, Vector3 B2, const int Axis)
 	return false;
 }
 
-// Check if any Collider is colliding with another Collider
-bool EntityManager::CheckForCollision(void)
+void EntityManager::CheckForCollision(void)
 {
-	return false;
+    // Check for Collision
+    std::list<EntityBase*>::iterator This, ThisEnd;
+    std::list<EntityBase*>::iterator Other, OtherEnd;
+    
+    ThisEnd = entityList.end();
+    for (This = entityList.begin(); This != ThisEnd; ++This)
+    {
+        if ((*This)->GetRoomID() != CPlayerInfo::GetInstance()->GetRoomID())
+            continue;
+
+        if ((*This)->IsDone())
+            continue;
+
+         // Check if this entity is a CLaser type
+        if ((*This)->GetIsLaser())
+        {
+        	// Dynamic cast it to a CLaser class
+            CLaser* laser = dynamic_cast<CLaser*>(*This);
+        
+        	// Check for collision with another collider class
+            OtherEnd = entityList.end();
+            for (Other = entityList.begin(); Other != OtherEnd; ++Other)
+        	{
+                if (This == Other)
+        			continue;
+
+                if ((*Other)->GetRoomID() != CPlayerInfo::GetInstance()->GetRoomID())
+                    continue;
+
+                if ((*Other)->IsDone())
+                    continue;
+
+                if ((*Other)->GetEntityType() == EntityBase::ENEMY)
+                {
+                    if ((*Other)->HasCollider())
+                    {
+                        if (CheckSphereCollision((*This), (*Other)))
+                        {
+                            (*This)->SetIsDone(true);
+                            (*Other)->SetHPDamaged(5);
+                            // EDIT MASS
+                            (*Other)->SetPosition((*Other)->GetPosition() + ((*This)->GetVelocity() * 2));
+                        }
+                    }
+                }
+        	}
+        }
+        else if ((*This)->GetEntityType() == EntityBase::PLAYER)
+        {
+            if ((*This)->GetRoomID() != CPlayerInfo::GetInstance()->GetRoomID())
+                continue;
+
+            // Check for collision with another collider class
+            OtherEnd = entityList.end();
+            for (Other = entityList.begin(); Other != OtherEnd; ++Other)
+            {
+                if (This == Other)
+                    continue;
+
+                if ((*Other)->GetRoomID() != CPlayerInfo::GetInstance()->GetRoomID())
+                    continue;
+
+                if ((*Other)->GetEntityType() == EntityBase::ENEMYPROJECTILE)
+                {
+                    if ((*Other)->HasCollider())
+                    {
+                        if (CheckSphereCollision((*This), (*Other)))
+                        {
+                            (*Other)->SetIsDone(true);
+                            // PLAYER GET DAMAGED
+                        }
+                    }
+                }
+                else if ((*Other)->GetEntityType() == EntityBase::ENEMY)
+                {
+                    if ((*Other)->HasCollider())
+                    {
+                        if (CheckSphereCollision((*This), (*Other)))
+                        {
+                            // PLAYER GET DAMAGED
+                            cout << "PLAYER DAMAGED" << endl;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

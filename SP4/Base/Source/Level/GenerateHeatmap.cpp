@@ -1,5 +1,6 @@
 #include "GenerateHeatmap.h"
 #include "SpatialPartition.h"
+#include "Level.h"
 
 CGenerateHeatmap::CGenerateHeatmap()
     : count(0)
@@ -23,8 +24,11 @@ void CGenerateHeatmap::GenerateHeatmap(CHeatmap** heatmap,
         for (int z = 0; z <= zSize; ++z)
         {
             heatmap[x][z].SetPos(Vector3(x, 0, z));
+            heatmap[x][z].SetValue(0);
             if (heatmap[x][z].isMarked())
                 heatmap[x][z].SetMarked(false);
+            if (heatmap[x][z].isObstacle())
+                heatmap[x][z].SetObstacle(false);
         }
     }
 
@@ -68,22 +72,29 @@ void CGenerateHeatmap::StartBrushfire(CHeatmap** heatmap,
             if (!heatmap[x][z].isMarked())
             {
                 count++;
-                //if (!CSpatialPartition::GetInstance()->CheckForEntity(x, z, EntityBase::ENTITY_TYPE::OBSTACLE))
+                if (CLevel::GetInstance()->GetRoom(CPlayerInfo::GetInstance()->GetRoomID())->GetSpatialPartition()->GetGridType(x, z)
+                    != GRID_TYPE::OBSTACLE)
                 {
                     heatmap[x][z].SetValue(prevValue + 1);
                     heatmap[x][z].SetMarked(true);
                     AddChild(x, z, prevValue + 1);
                 }
-                //else
-                //{
-                //    heatmap[x][z]->SetValue(999);
-                //    heatmap[x][z]->SetMarked(true);
-                //    heatmap[x][z]->SetObstacle(true);
-                //}
+                else
+                {
+                    heatmap[x][z].SetValue(99999);
+                    heatmap[x][z].SetMarked(true);
+                    heatmap[x][z].SetObstacle(true);
+
+                    //heatmap[x - 1][z].SetValue(heatmap[x - 1][z].GetValue() + 1);
+                    //heatmap[x + 1][z].SetValue(heatmap[x + 1][z].GetValue() + 1);
+                    //heatmap[x][z - 1].SetValue(heatmap[x][z - 1].GetValue() + 1);
+                    //heatmap[x][z + 1].SetValue(heatmap[x][z + 1].GetValue() + 1);
+                }
             }
 
         }
     }
+
 }
 
 // Add child fire
@@ -114,7 +125,7 @@ void CGenerateHeatmap::CalculateDirection(CHeatmap** heatmap, const int xSize, c
     {
         for (int z = 0; z <= zSize; ++z)
         {
-            if (!heatmap[x][z].isObstacle())
+            //if (!heatmap[x][z].isObstacle())
             {
                 int lowest = 99999;
                 for (int i = -1; i <= 1; ++i)

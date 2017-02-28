@@ -22,14 +22,9 @@ CPlayerInfo *CPlayerInfo::s_instance = 0;
 CPlayerInfo::CPlayerInfo(void)
 	: GenericEntity(NULL)
     , prevIndex(Vector3(0, 0, 0))
+    , prevPos(Vector3(0, 0, 0))
 	, m_dSpeed(40.0)
 	, m_dAcceleration(10.0)
-	, m_bJumpUpwards(false)
-	, m_dJumpSpeed(10.0)
-	, m_dJumpAcceleration(-10.0)
-	, m_bFallDownwards(false)
-	, m_dFallSpeed(0.0)
-	, m_dFallAcceleration(-10.0)
 	, weapon(NULL)
 	, keyMoveForward('W')
 	, keyMoveBackward('S')
@@ -41,8 +36,8 @@ CPlayerInfo::CPlayerInfo(void)
 	, maxHealth(100.0f)
 	, health(90.0f)
 	, maxSpeed(300.0f)
-	, dashDistance(50.0f)
-	, dashCooldown(2.f)
+	, dashDistance(25.0f)
+	, dashCooldown(1.0f)
 	, dashCooldownTimer(0)
 	, healthregen(2.5f)
 	, healthregenCooldownTimer(0)
@@ -69,7 +64,9 @@ CPlayerInfo::~CPlayerInfo(void)
 // Initialise this class instance
 void CPlayerInfo::Init(void)
 {
-	this->scale.Set(3, 3, 3);
+    m_eEntityType = ENTITY_TYPE::PLAYER;
+
+	scale.Set(24, 30, 1);
 	// Set the default values
 	defaultPosition.Set(0, 0, 10);
 	defaultTarget.Set(0, 0, 0);
@@ -94,6 +91,17 @@ void CPlayerInfo::Init(void)
 	treasure = new Treasure();
 	healthregenCooldown = defaultHealthRegenCooldown;
 	maxSpeed = defaultSpeed;
+
+	playerMeshes[0] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_walkleft");     // left
+	playerMeshes[1] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_walkright");    // right
+
+	for (int i = 0; i < 2; ++i)
+	{
+		playerMeshes[i]->m_anim = new Animation;
+		playerMeshes[i]->m_anim->Set(0, 6, 1, 1.f, true);
+	}
+
+    currentAnimation = playerMeshes[0];
 
     // Initialise the custom keyboard inputs
     keyMoveForward = CLuaInterface::GetInstance()->getCharValue("moveForward");
@@ -184,6 +192,17 @@ void CPlayerInfo::Update(double dt)
 	if (dreamBar > Math::EPSILON)
 		this->dreamBar -= 0.1 * dt;
 
+    if (currentAnimation)
+    {
+        currentAnimation->m_anim->animActive = true;
+        currentAnimation->Update(dt * 1.5f);
+    }
+
+    if (prevPos != position)
+    {
+        prevPos = position;
+    }
+
 	position += velocity * (float)dt;
 	if (!Application::GetInstance().GetWorldBasedMousePos().IsZero())
 		front.Set(Vector3(position - Application::GetInstance().GetWorldBasedMousePos()).Normalized());
@@ -194,6 +213,7 @@ void CPlayerInfo::Update(double dt)
 		velocity *= 0.9f;
 	}
 
+    // Change room
     if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomCleared() &&
         CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridType(index.x, index.z) == GRID_TYPE::DOOR)
     {
@@ -256,10 +276,12 @@ void CPlayerInfo::Update(double dt)
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
 	{
         forceDir.x -= 1;
+        currentAnimation = playerMeshes[0];
 	}
 	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
 	{
         forceDir.x += 1;
+        currentAnimation = playerMeshes[1];
 	}
 
 	if (velocity.LengthSquared() < maxSpeed * maxSpeed)
@@ -369,40 +391,38 @@ void CPlayerInfo::Update(double dt)
 
 void CPlayerInfo::Render()
 {
+    glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(this->position.x, this->position.y, this->position.z);
-    modelStack.Rotate(Math::RadianToDegree(atan2(direction.z, direction.x)), 0, -1, 0);
-	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("body"));
-
     modelStack.PushMatrix();
-    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("head"));
-    modelStack.PopMatrix();
-
-    modelStack.PushMatrix();
-    modelStack.Rotate(rotateLeftLeg.z, 0, 0, -1);
-    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("leftleg"));
+    modelStack.Translate(position.x, position.y + 1, position.z + 4);
+    modelStack.Rotate(90, -1, 0, 0);
+    modelStack.Rotate(Math::RadianToDegree(atan2(direction.z, direction.x)), 0, 0, -1);
+    modelStack.Scale(15, 12, 0);
+    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("laserblaster"));
     modelStack.PopMatrix();
 
     modelStack.PushMatrix();
-    modelStack.Rotate(rotateRightLeg.z, 0, 0, -1);
-    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("rightleg"));
+    modelStack.Translate(position.x, position.y, position.z);
+    modelStack.Rotate(90, -1, 0, 0);
+    modelStack.Scale(scale.x, scale.y, scale.z);
+    RenderHelper::RenderMesh(currentAnimation);
     modelStack.PopMatrix();
 
-    modelStack.PopMatrix();
+    glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
-    //for (int x = 0; x <= CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomXMax(); ++x)
+    //for (int x = 0; x <= CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax(); ++x)
     //{
-    //    for (int z = 0; z <= CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetRoomZMax(); ++z)
+    //    for (int z = 0; z <= CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax(); ++z)
     //    {
     //        GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
-    //        Vector3 temp = CLevel::GetInstance()->GetRoom(m_iCurrentRoom)->GetSpatialPartition()->GetGridPos(x, z);
+    //        Vector3 temp = CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(x, z);
     //        Vector3 dir = heatmap[x][z].GetDir();
     //        GraphicsManager::GetInstance()->GetModelStack().Translate(temp.x, 1, temp.z);
     //        GraphicsManager::GetInstance()->GetModelStack().Rotate(-90, 1, 0, 0);
     //        GraphicsManager::GetInstance()->GetModelStack().Rotate(Math::RadianToDegree(atan2(dir.x, dir.z)), 0, 0, 1);
-    //        GraphicsManager::GetInstance()->GetModelStack().Scale(scale.x, scale.y, scale.z);
+    //        GraphicsManager::GetInstance()->GetModelStack().Scale(scale.x * 0.5f, scale.y* 0.5f, scale.z* 0.5f);
     //        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("direction"));
     //        GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
     //    }

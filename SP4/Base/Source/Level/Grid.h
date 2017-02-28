@@ -18,6 +18,7 @@ enum GRID_TYPE
     PATH,
     WALL,
     DOOR,
+    OBSTACLE,
     NUM_GRIDTYPE
 };
 

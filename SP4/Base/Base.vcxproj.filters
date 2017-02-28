@@ -118,6 +118,27 @@
     <ClCompile Include="Source\Items\Treasure.cpp">
       <Filter>Items</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\FlyingTongue.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Obstacle\Obstacle.cpp">
+      <Filter>Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Skull.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Spitter.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Projectile\Ghast.cpp">
+      <Filter>Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Projectile\Spit.cpp">
+      <Filter>Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Reaper.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Enemy\Enemy.h">
@@ -249,6 +270,27 @@
     <ClInclude Include="Source\Items\Treasure.h">
       <Filter>Items</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy\FlyingTongue.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Obstacle\Obstacle.h">
+      <Filter>Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Skull.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Spitter.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile\Ghast.h">
+      <Filter>Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile\Spit.h">
+      <Filter>Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Reaper.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">
@@ -295,6 +337,9 @@
     </Filter>
     <Filter Include="SpriteAnimation">
       <UniqueIdentifier>{564f550c-98ed-4288-ae5c-a457202f1892}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Obstacle">
+      <UniqueIdentifier>{52c77462-acf3-4e39-9e13-fca55c419393}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

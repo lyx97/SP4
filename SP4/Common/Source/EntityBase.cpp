@@ -9,6 +9,8 @@ EntityBase::EntityBase()
 	, m_bLaser(false)
 	, m_eEntityType(DEFAULT)
 	, mass(1.0f)
+    , roomID(-1)
+    , HP(0)
 {
 }
 

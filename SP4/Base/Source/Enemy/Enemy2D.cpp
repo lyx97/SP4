@@ -55,21 +55,20 @@ void Enemy2D::Update(double _dt)
 	{
 		this->position.z += Application::GetInstance().GetWindowHeight();
 	}
-	for (auto entity : EntityManager::GetInstance()->GetEntityList())
-	{
-		if (entity->GetEntityType() == EntityBase::PROJECTILE)
-		{
-			CProjectile* proj = dynamic_cast<CProjectile*>(entity);
-			if ((proj->GetPosition() - this->position).LengthSquared() < 200)
-			{
-				this->velocity += proj->GetVelocity() * proj->GetMass();
-				this->health -= proj->GetDamage();
-				     proj->SetIsDone(true);
-				this->SetIsDone(true); // debugging
-			}
-		}
-	}
-	this->maxHealth = maxHealth / CPlayerInfo::GetInstance()->GetDreamBar();
+	//for (auto entity : EntityManager::GetInstance()->GetEntityList())
+	//{
+	//	if (entity->GetEntityType() == EntityBase::PROJECTILE)
+	//	{
+	//		CProjectile* proj = dynamic_cast<CProjectile*>(entity);
+	//		if ((proj->GetPosition() - this->position).LengthSquared() < 200)
+	//		{
+	//			this->velocity += proj->GetVelocity() * proj->GetMass();
+	//			this->health -= proj->GetDamage();
+	//			//proj->SetIsDone(true);
+	//			//this->SetIsDone(true); // debugging
+	//		}
+	//	}
+	//}
 	Vector3 temp = (Cohesion(this) +Alignment(this) + Separation(this));
 	if (!temp.IsZero())
 	{

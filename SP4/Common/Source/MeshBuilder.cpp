@@ -6,6 +6,7 @@
 #include "LoadOBJ.h"
 #include "LoadTGA.h"
 #include <iostream>
+#include "../../Base/Source/EntityManager.h"
 
 using namespace std;
 /******************************************************************************/
@@ -212,6 +213,53 @@ Mesh* MeshBuilder::GenerateTriangle(const std::string &meshName, Color color, fl
     index_buffer_data.push_back(1);
     index_buffer_data.push_back(2);
     index_buffer_data.push_back(0);
+
+    Mesh *mesh = new Mesh(meshName);
+
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex), &vertex_buffer_data[0], GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint), &index_buffer_data[0], GL_STATIC_DRAW);
+
+    mesh->indexSize = index_buffer_data.size();
+    mesh->mode = Mesh::DRAW_TRIANGLES;
+
+    AddMesh(meshName, mesh);
+
+    return mesh;
+}
+
+Mesh* MeshBuilder::GenerateParticle(const std::string &meshName, Color color, float length)
+{
+    Vertex v;
+    std::vector<Vertex> vertex_buffer_data;
+    std::vector<GLuint> index_buffer_data;
+
+    std::list<Vector3>::iterator it, end = EntityManager::particlePosList.end();
+    int i = 0;
+    for (it = EntityManager::particlePosList.begin(); it != end; ++it)
+    {
+        v.pos.Set((-0.5f * length) + (*it).x, (-0.5f * length) + (*it).z, 0);
+        v.color = color;
+        v.normal.Set(0, 0, 1);
+        v.texCoord.Set(0, 0);
+        vertex_buffer_data.push_back(v);
+        v.pos.Set((0.5f * length) + (*it).x, (-0.5f * length) + (*it).z, 0);
+        v.color = color;
+        v.normal.Set(0, 0, 1);
+        v.texCoord.Set(1.0f, 0);
+        vertex_buffer_data.push_back(v);
+        v.pos.Set((0.5f * length) + (*it).x, (0.5f * length) + (*it).z, 0);
+        v.color = color;
+        v.normal.Set(0, 0, 1);
+        v.texCoord.Set(1.0f, 1.0f);
+        vertex_buffer_data.push_back(v);
+
+        index_buffer_data.push_back(1 + i);
+        index_buffer_data.push_back(2 + i);
+        index_buffer_data.push_back(0 + i);
+        i += 3;
+    }
 
     Mesh *mesh = new Mesh(meshName);
 
@@ -641,7 +689,7 @@ SpriteAnimation* MeshBuilder::GenerateSpriteAnimation(const std::string &meshNam
 		}
 	}
 
-	SpriteAnimation *animation = new SpriteAnimation(meshName, numRow, numCol);
+	SpriteAnimation *animation = new SpriteAnimation(meshName);
 
 	animation->mode = Mesh::DRAW_TRIANGLES;
 
@@ -655,6 +703,61 @@ SpriteAnimation* MeshBuilder::GenerateSpriteAnimation(const std::string &meshNam
 	AddMesh(meshName, animation);
 
 	return animation;
+}
+
+SpriteAnimation* MeshBuilder::GenerateSpriteAnimation(unsigned numRow, unsigned numCol)
+{
+    Vertex v;
+    std::vector<Vertex> vertex_buffer_data;
+    std::vector<GLuint> index_buffer_data;
+
+    float width = 1.f / numCol;
+    float height = 1.f / numRow;
+    int offset = 0;
+    for (unsigned i = 0; i < numRow; ++i)
+    {
+        for (unsigned j = 0; j < numCol; ++j)
+        {
+            float u1 = j * width;
+            float v1 = 1.f - height - i * height;
+            v.pos.Set(-0.5f, -0.5f, 0);
+            v.texCoord.Set(u1, v1);
+            vertex_buffer_data.push_back(v);
+
+            v.pos.Set(0.5f, -0.5f, 0);
+            v.texCoord.Set(u1 + width, v1);
+            vertex_buffer_data.push_back(v);
+
+            v.pos.Set(0.5f, 0.5f, 0);
+            v.texCoord.Set(u1 + width, v1 + height);
+            vertex_buffer_data.push_back(v);
+
+            v.pos.Set(-0.5f, 0.5f, 0);
+            v.texCoord.Set(u1, v1 + height);
+            vertex_buffer_data.push_back(v);
+
+            index_buffer_data.push_back(offset + 0);
+            index_buffer_data.push_back(offset + 1);
+            index_buffer_data.push_back(offset + 2);
+            index_buffer_data.push_back(offset + 0);
+            index_buffer_data.push_back(offset + 2);
+            index_buffer_data.push_back(offset + 3);
+            offset += 4;
+        }
+    }
+
+    SpriteAnimation *animation = new SpriteAnimation();
+
+    animation->mode = Mesh::DRAW_TRIANGLES;
+
+    glBindBuffer(GL_ARRAY_BUFFER, animation->vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex), &vertex_buffer_data[0], GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, animation->indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint), &index_buffer_data[0], GL_STATIC_DRAW);
+
+    animation->indexSize = index_buffer_data.size();
+
+    return animation;
 }
 
 Mesh* MeshBuilder::GetMesh(const std::string& _meshName)
@@ -698,8 +801,6 @@ void MeshBuilder::Init()
 	GenerateText("text", 16, 16);
 	GetMesh("text")->textureID = LoadTGA("Image//calibri.tga");
 	GetMesh("text")->material.kAmbient.Set(1, 0, 0);
-	GenerateOBJ("Chair", "OBJ//chair.obj");
-	GetMesh("Chair")->textureID = LoadTGA("Image//chair.tga");
 	GenerateRing("ring", Color(1, 0, 1), 36, 1, 0.5f);
 	GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
 	GenerateSphere("sphere", Color(1, 0, 0), 18, 36, 1.f);
@@ -713,7 +814,7 @@ void MeshBuilder::Init()
 	GetMesh("GEO_GRASS_LIGHTGREEN")->textureID = LoadTGA("Image//grass_lightgreen.tga");
 	GenerateQuad("GRIDMESH", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GenerateCube("cubeSG", Color(1.0f, 0.64f, 0.0f), 1.0f);
-    GenerateTriangle("particle", Color(1.0f, 1.0f, 1.0f), 1.f);
+    //GenerateTriangle("particle", Color(1.0f, 1.0f, 1.0f), 1.f);
 
 	// SKYBOX
 	GenerateQuad("SKYBOX_FRONT", Color(1, 1, 1), 1.f);
@@ -733,8 +834,10 @@ void MeshBuilder::Init()
 	GenerateRay("laser", 10.0f);
 	GenerateQuad("direction", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("direction")->textureID = LoadTGA("Image//direction.tga");
-	GenerateQuad("wall", Color(1.0f, 1.0f, 1.0f), 1.f);
+    GenerateQuad("wall", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("wall")->textureID = LoadTGA("Image//Tile//wall.tga");
+    GenerateQuad("floor", Color(1.0f, 1.0f, 1.0f), 1.f);
+    GetMesh("floor")->textureID = LoadTGA("Image//Tile//floor.tga");
 	GenerateQuad("room", Color(0.5f, 0.5f, 0.5f), 1.f);
 
 	GenerateQuad("powerup_maxhealth", Color(1.0f, 1.0f, 1.0f), 1.f);
@@ -746,54 +849,23 @@ void MeshBuilder::Init()
 	GenerateQuad("powerup_speed", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("powerup_speed")->textureID = LoadTGA("Image//Powerups//powerup_speed.tga");
 
-	GenerateSpriteAnimation("player_up", 1, 14);
-	GetMesh("player_up")->textureID = LoadTGA("Image//Player//player_up.tga");
-	GenerateSpriteAnimation("player_down", 1, 14);
-	GetMesh("player_down")->textureID = LoadTGA("Image//Player//player_down.tga");
-	GenerateSpriteAnimation("player_left", 1, 14);
-	GetMesh("player_left")->textureID = LoadTGA("Image//Player//player_left.tga");
-	GenerateSpriteAnimation("player_right", 1, 14);
-	GetMesh("player_right")->textureID = LoadTGA("Image//Player//player_right.tga");
+    // PROJECTILE
+    GenerateQuad("ghast", Color(1.0f, 1.0f, 1.0f), 1.f);
+    GetMesh("ghast")->textureID = LoadTGA("Image//Projectile//ghast.tga");
 
-	GenerateSpriteAnimation("player_shootingup", 1, 4);
-	GetMesh("player_shootingup")->textureID = LoadTGA("Image//Player//player_shootingup.tga");
-	GenerateSpriteAnimation("player_shootingupright", 1, 4);
-	GetMesh("player_shootingupright")->textureID = LoadTGA("Image//Player//player_shootingupright.tga");
-	GenerateSpriteAnimation("player_shootingright", 1, 4);
-	GetMesh("player_shootingright")->textureID = LoadTGA("Image//Player//player_shootingright.tga");
-	GenerateSpriteAnimation("player_shootingdownright", 1, 4);
-	GetMesh("player_shootingdownright")->textureID = LoadTGA("Image//Player//player_shootingdownright.tga");
-	GenerateSpriteAnimation("player_shootingdown", 1, 4);
-	GetMesh("player_shootingdown")->textureID = LoadTGA("Image//Player//player_shootingdown.tga");
-	GenerateSpriteAnimation("player_shootingdownleft", 1, 4);
-	GetMesh("player_shootingdownleft")->textureID = LoadTGA("Image//Player//player_shootingdownleft.tga");
-	GenerateSpriteAnimation("player_shootingleft", 1, 4);
-	GetMesh("player_shootingleft")->textureID = LoadTGA("Image//Player//player_shootingleft.tga");
-	GenerateSpriteAnimation("player_shootingupleft", 1, 4);
-	GetMesh("player_shootingupleft")->textureID = LoadTGA("Image//Player//player_shootingupleft.tga");
-
-	//GenerateOBJ("player_body", "OBJ//Player//player_body.obj");
-	//GenerateOBJ("player_leg", "OBJ//Player//player_leg.obj");
-	//GenerateOBJ("player_arm", "OBJ//Player//player_arm.obj");
-	//GetMesh("player_body")->textureID = LoadTGA("Image//Player//player_texture.tga");
-	//GetMesh("player_leg")->textureID = LoadTGA("Image//Player//player_texture.tga");
-	//GetMesh("player_arm")->textureID = LoadTGA("Image//Player//player_texture.tga");
 
     // PLAYER
-    GenerateOBJ("body", "OBJ//Player//player_body.obj");
-    GetMesh("body")->textureID = LoadTGA("Image//bed.tga");
-
-    GenerateOBJ("head", "OBJ//Player//player_head.obj");
-    GetMesh("head")->textureID = LoadTGA("Image//color.tga");
-    GenerateOBJ("leftleg", "OBJ//Player//player_leftleg.obj");
-    GetMesh("leftleg")->textureID = LoadTGA("Image//chair.tga");
-    GenerateOBJ("rightleg", "OBJ//Player//player_rightleg.obj");
-    GetMesh("rightleg")->textureID = LoadTGA("Image//chair.tga");
-
 	GenerateQuad("health_full", Color(0.0f, 0.5f, 0.0f), 1.f);
 	GenerateQuad("health_half", Color(0.5f, 0.5f, 0.0f), 1.f);
 	GenerateQuad("health_quad", Color(0.5f, 0.0f, 0.0f), 1.f);
 	GenerateQuad("dash", Color(0.0f, 0.0f, 1.0f), 1.f);
 	GenerateQuad("dreambar", Color(0.0f, 0.5f, 0.5f), 1.f);
 	GenerateQuad("border", Color(0.5f, 0.5f, 0.5f), 1.f);
+
+	GenerateSpriteAnimation("player_walkleft", 1, 7);
+	GetMesh("player_walkleft")->textureID = LoadTGA("Image//Player//player_walkleft.tga");
+	GenerateSpriteAnimation("player_walkright", 1, 7);
+	GetMesh("player_walkright")->textureID = LoadTGA("Image//Player//player_walkright.tga");
+    GenerateQuad("laserblaster", Color(1.0f, 1.0f, 1.0f), 1.f);
+    GetMesh("laserblaster")->textureID = LoadTGA("Image//Player//laserblaster.tga");
 }

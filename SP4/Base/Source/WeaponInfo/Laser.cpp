@@ -75,8 +75,8 @@ void CLaser::Update(double dt)
             GetRoom(CPlayerInfo::GetInstance()
             ->GetRoomID())
             ->GetSpatialPartition()
-            ->GetGrid(index.x, index.z)
-            .GetType() == GRID_TYPE::WALL)
+            ->GetGridType(index.x, index.z)
+            == GRID_TYPE::WALL)
         {
             SetStatus(false);
             SetIsDone(true);
