@@ -21,7 +21,7 @@ public:
 	virtual ~Enemy2D();
 
 	virtual void Update(double _dt);
-	virtual void Render();
+    virtual void Render(float& _renderOrder);
 
 	Vector3 Cohesion(Enemy2D* enemy);
 	Vector3 Separation(Enemy2D* enemy);

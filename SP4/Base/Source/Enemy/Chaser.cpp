@@ -210,12 +210,12 @@ void CChaser::Update(double dt)
 	}
 }
 
-void CChaser::Render()
+void CChaser::Render(float& _renderOrder)
 {
 	GraphicsManager::GetInstance()->GetModelStack().PushMatrix();
 	GraphicsManager::GetInstance()->GetModelStack().Translate(
 		this->position.x,
-		this->position.y,
+        this->position.y + _renderOrder,
 		this->position.z);
 	GraphicsManager::GetInstance()->GetModelStack().Scale(
 		this->scale.x,

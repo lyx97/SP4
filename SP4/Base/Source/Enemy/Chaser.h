@@ -26,7 +26,7 @@ public:
 	~CChaser();
 
 	void Update(double dt);
-	void Render();
+    void Render(float& _renderOrder);
 	void RanPosition();
 	void Respond();
 	void FSMUpdate();

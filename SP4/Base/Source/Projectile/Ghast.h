@@ -17,9 +17,9 @@ public:
 public:
 
     // Update the status of this projectile
-    void Update(double dt = 0.0333f);
+    virtual void Update(double dt = 0.0333f);
     // Render this projectile
-    void Render(void);
+    virtual void Render(float& _renderOrder);
 private:
     Vector3 prevIndex;
 };

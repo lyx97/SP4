@@ -80,7 +80,7 @@ void CSpit::Update(double dt)
 }
 
 // Render this projectile
-void CSpit::Render(void)
+void CSpit::Render(float& _renderOrder)
 {
     if (m_bStatus == false)
         return;
@@ -90,7 +90,7 @@ void CSpit::Render(void)
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     modelStack.PushMatrix();
-    modelStack.Translate(position.x, position.y, position.z);
+    modelStack.Translate(position.x, position.y + _renderOrder, position.z);
     modelStack.Rotate(90, -1, 0, 0);
     modelStack.Scale(30, 30, 30);
     RenderHelper::RenderMesh(spit);

@@ -56,8 +56,8 @@ public:
 
 	// Update
 	void Update(double dt = 0.0333f);
-	void Render();
-	void RenderUI();
+    void Render(float& _renderOrder);
+	void RenderUI(void);
 
 	// Constrain the position within the borders
 	void Constrain(void);

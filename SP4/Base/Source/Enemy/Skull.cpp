@@ -94,7 +94,7 @@ void Skull::Update(double dt)
     }
     else
     {
-        if ((position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() <= 200
+        if ((position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() <= 300
             && m_dResponseTime >= m_dResponse)
         {
             fsm = FSM::ATTACK;
@@ -102,7 +102,13 @@ void Skull::Update(double dt)
         }
         else if (m_dResponseTime >= m_dResponse)
         {
-            fsm = FSM::MOVE;
+            int rand = Math::RandIntMinMax(0, 10);
+
+            if (rand > 2)
+                fsm = FSM::MOVE;
+            else
+                fsm = FSM::CHASE;
+
             m_dResponseTime = 0.0;
         }
     }
@@ -110,7 +116,15 @@ void Skull::Update(double dt)
     switch (fsm)
     {
     case MOVE:
-        position += velocity * dt * m_dSpeed;
+        position += velocity * dt * m_dSpeed * 0.5f;
+
+        if (velocity.x > 0)
+            currentAnimation = moveRight;
+        else
+            currentAnimation = moveLeft;
+        break;
+    case CHASE:
+        position += velocity * dt * m_dSpeed * 2;
 
         if (velocity.x > 0)
             currentAnimation = moveRight;
@@ -145,21 +159,26 @@ void Skull::Update(double dt)
     if (currentAnimation)
     {
         currentAnimation->m_anim->animActive = true;
-        currentAnimation->Update(dt * 1.f);
+        if (fsm == FSM::CHASE)
+            currentAnimation->Update(dt * 6.0f);
+        else if (fsm == FSM::ATTACK)
+            currentAnimation->Update(dt * 2.0f);
+        else
+            currentAnimation->Update(dt * 0.5f);
 
         if (fsm == FSM::DEAD && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
             SetIsDone(true);
     }
 }
 
-void Skull::Render()
+void Skull::Render(float& _renderOrder)
 {
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 
     modelStack.PushMatrix();
-    modelStack.Translate(position.x, position.y, position.z);
+    modelStack.Translate(position.x, position.y + _renderOrder, position.z);
     modelStack.Rotate(90, -1, 0, 0);
     modelStack.Scale(scale.x, scale.y, scale.z);
     RenderHelper::RenderMesh(currentAnimation);

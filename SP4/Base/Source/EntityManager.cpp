@@ -78,10 +78,14 @@ void EntityManager::Render()
 	// Render all entities
 	std::list<EntityBase*>::iterator it, end;
 	end = entityList.end();
+    float _renderOrder = 0.f;
 	for (it = entityList.begin(); it != end; ++it)
 	{
         if ((*it)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
-		    (*it)->Render();
+        {
+            _renderOrder += 0.01f;
+            (*it)->Render(_renderOrder);
+        }
 	}
 
     // Render the Scene Graph

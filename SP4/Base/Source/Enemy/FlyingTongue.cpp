@@ -157,14 +157,14 @@ void FlyingTongue::Update(double dt)
     }
 }
 
-void FlyingTongue::Render()
+void FlyingTongue::Render(float& _renderOrder)
 {
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 
     modelStack.PushMatrix();
-    modelStack.Translate(position.x, position.y, position.z);
+    modelStack.Translate(position.x, position.y + _renderOrder, position.z);
     modelStack.Rotate(90, -1, 0, 0);
     modelStack.Scale(scale.x, scale.y, scale.z);
     RenderHelper::RenderMesh(currentAnimation);

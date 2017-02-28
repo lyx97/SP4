@@ -67,7 +67,7 @@ void CGhast::Update(double dt)
 }
 
 // Render this projectile
-void CGhast::Render(void)
+void CGhast::Render(float& _renderOrder)
 {
     if (m_bStatus == false)
         return;
@@ -80,7 +80,7 @@ void CGhast::Render(void)
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     modelStack.PushMatrix();
-    modelStack.Translate(position.x, position.y, position.z);
+    modelStack.Translate(position.x, position.y + _renderOrder, position.z);
     modelStack.Rotate(90, -1, 0, 0);
     modelStack.Scale(15, 15, 15);
     RenderHelper::RenderMesh(modelMesh);

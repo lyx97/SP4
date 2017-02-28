@@ -55,7 +55,7 @@ public:
     // Update
     virtual void Update(double dt = 0.0333f);
     // Render
-    virtual void Render(void);
+    virtual void Render(float& _renderOrder);
     virtual void RenderUI(void);
 
     // Constrain the position within the borders

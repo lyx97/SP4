@@ -43,7 +43,7 @@ public:
 	// Update the status of this projectile
 	virtual void Update(double dt = 0.0333f);
 	// Render this projectile
-	virtual void Render(void);
+	virtual void Render(float& _renderOrder);
 protected:
 	// The model mesh for this projectile
 	Mesh* modelMesh;

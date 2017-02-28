@@ -22,7 +22,7 @@ void EntityBase::Update(double _dt)
 {
 }
 
-void EntityBase::Render()
+void EntityBase::Render(float& _renderOrder)
 {
 }
 

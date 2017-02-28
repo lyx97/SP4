@@ -55,5 +55,5 @@ public:
     // Constrain the position within the borders
     void Constrain(void);
     // Render
-    void Render(void);
+    void Render(float& _renderOrder);
 };

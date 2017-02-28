@@ -45,12 +45,7 @@
     <ClCompile Include="Source\PlayerInfo\PlayerInfo.cpp" />
     <ClCompile Include="Source\Projectile\Ghast.cpp" />
     <ClCompile Include="Source\Projectile\Projectile.cpp" />
-<<<<<<< 63b8bc1b99484635fe52843898d3ce36abee3506
-=======
     <ClCompile Include="Source\Projectile\Spit.cpp" />
-    <ClCompile Include="Source\SceneGraph\SceneGraph.cpp" />
-    <ClCompile Include="Source\SceneGraph\SceneNode.cpp" />
->>>>>>> 3be06b05b6721417886799b60a5e99d796a3ea5d
     <ClCompile Include="Source\SceneGraph\Transform.cpp" />
     <ClCompile Include="Source\SceneGraph\UpdateTransformation.cpp" />
     <ClCompile Include="Source\SceneText.cpp" />
@@ -102,12 +97,7 @@
     <ClInclude Include="Source\PlayerInfo\PlayerInfo.h" />
     <ClInclude Include="Source\Projectile\Ghast.h" />
     <ClInclude Include="Source\Projectile\Projectile.h" />
-<<<<<<< 63b8bc1b99484635fe52843898d3ce36abee3506
-=======
     <ClInclude Include="Source\Projectile\Spit.h" />
-    <ClInclude Include="Source\SceneGraph\SceneGraph.h" />
-    <ClInclude Include="Source\SceneGraph\SceneNode.h" />
->>>>>>> 3be06b05b6721417886799b60a5e99d796a3ea5d
     <ClInclude Include="Source\SceneGraph\Transform.h" />
     <ClInclude Include="Source\SceneGraph\UpdateTransformation.h" />
     <ClInclude Include="Source\SceneText.h" />

@@ -128,7 +128,7 @@ void CProjectile::Update(double dt)
 
 
 // Render this projectile
-void CProjectile::Render(void)
+void CProjectile::Render(float& _renderOrder)
 {
 	if (m_bStatus == false)
 		return;
@@ -138,7 +138,7 @@ void CProjectile::Render(void)
 
 	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 	modelStack.PushMatrix();
-	modelStack.Translate(position.x, position.y, position.z);
+    modelStack.Translate(position.x, position.y + _renderOrder, position.z);
 	//modelStack.Scale(scale.x, scale.y, scale.z);
 	RenderHelper::RenderMesh(modelMesh);
 	modelStack.PopMatrix();

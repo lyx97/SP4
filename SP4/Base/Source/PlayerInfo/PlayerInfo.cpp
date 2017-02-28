@@ -389,7 +389,7 @@ void CPlayerInfo::Update(double dt)
 	}
 }
 
-void CPlayerInfo::Render()
+void CPlayerInfo::Render(float& _renderOrder)
 {
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
@@ -429,7 +429,7 @@ void CPlayerInfo::Render()
     //}
 }
 
-void CPlayerInfo::RenderUI()
+void CPlayerInfo::RenderUI(void)
 {
 	for (int i = 0; i < 4; ++i)
 	{

@@ -194,14 +194,14 @@ void Spitter::Update(double dt)
     }
 }
 
-void Spitter::Render()
+void Spitter::Render(float& _renderOrder)
 {
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 
     modelStack.PushMatrix();
-    modelStack.Translate(position.x, position.y, position.z + 1);
+    modelStack.Translate(position.x, position.y +_renderOrder, position.z);
     modelStack.Rotate(90, -1, 0, 0);
     modelStack.Scale(scale.x, scale.y, scale.z);
     RenderHelper::RenderMesh(currentAnimation);

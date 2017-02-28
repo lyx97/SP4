@@ -103,7 +103,7 @@ void CLaser::Update(double dt)
 }
 
 // Render this projectile
-void CLaser::Render(void)
+void CLaser::Render(float& _renderOrder)
 {
 	if (m_bStatus == false)
 		return;
@@ -116,7 +116,7 @@ void CLaser::Render(void)
 	// Reset the model stack
 	modelStack.LoadIdentity();
 	// We introduce a small offset to y position so that we can see the laser beam.
-	modelStack.Translate(position.x, position.y - 1.f, position.z);
+    modelStack.Translate(position.x, position.y + _renderOrder, position.z);
 	//modelStack.Scale(scale.x, scale.y, scale.z);
 	modelStack.PushMatrix();
 	modelStack.Rotate(180 / Math::PI * angle_z, 0.0f, 1.0f, 0.0f);

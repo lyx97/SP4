@@ -45,7 +45,7 @@ void CLevel::Init(const float room_bias)
     for (auto it : roomList)
     {
         SetDoor(it);
-        //Spawn(it);
+        Spawn(it);
     }
 }
 

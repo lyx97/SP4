@@ -1,21 +1,37 @@
-<<<<<<< 63b8bc1b99484635fe52843898d3ce36abee3506
-﻿Build started 2/27/2017 7:37:04 PM.
-     1>Project "C:\Users\155118A\Documents\SP4\SP4\Common\Common.vcxproj" on node 2 (Build target(s)).
-     1>Lib:
-         Common.vcxproj -> C:\Users\155118A\Documents\SP4\SP4\Debug\Common.lib
-     1>Done Building Project "C:\Users\155118A\Documents\SP4\SP4\Common\Common.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:00.06
-=======
-﻿Build started 2/28/2017 9:03:12 AM.
+﻿Build started 2/28/2017 9:32:44 AM.
      1>Project "C:\Users\155117g\Desktop\SP4\SP4\Common\Common.vcxproj" on node 2 (Build target(s)).
-     1>Lib:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\MeshBuilder.cpp
+         MeshBuilder.cpp
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Common.lib" /NOLOGO Debug\CameraBase.obj
+         Debug\Collider.obj
+         Debug\EntityBase.obj
+         Debug\GraphicsManager.obj
+         Debug\KeyboardController.obj
+         Debug\LightBase.obj
+         Debug\LoadOBJ.obj
+         Debug\LoadTGA.obj
+         Debug\MathUtility.obj
+         Debug\MatrixStack.obj
+         Debug\Mesh.obj
+         Debug\MeshBuilder.obj
+         Debug\MouseController.obj
+         Debug\Mtx44.obj
+         Debug\RenderHelper.obj
+         Debug\SceneManager.obj
+         Debug\ShaderProgram.obj
+         Debug\timer.obj
+         Debug\Utility.obj
+         Debug\Vector2.obj
+         Debug\Vector3.obj
+         Debug\Win32Input.obj
          Common.vcxproj -> C:\Users\155117g\Desktop\SP4\SP4\Debug\Common.lib
      1>Done Building Project "C:\Users\155117g\Desktop\SP4\SP4\Common\Common.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.05
->>>>>>> 3be06b05b6721417886799b60a5e99d796a3ea5d
+Time Elapsed 00:00:01.36
