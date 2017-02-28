@@ -857,6 +857,7 @@ void MeshBuilder::Init()
 	GenerateQuad("health_full", Color(0.0f, 0.5f, 0.0f), 1.f);
 	GenerateQuad("health_half", Color(0.5f, 0.5f, 0.0f), 1.f);
 	GenerateQuad("health_quad", Color(0.5f, 0.0f, 0.0f), 1.f);
+	GenerateQuad("health_invin", Color(0.7f, 0.7f, 0.7f), 1.f);
 	GenerateQuad("dash", Color(0.0f, 0.0f, 1.0f), 1.f);
 	GenerateQuad("dreambar", Color(0.0f, 0.5f, 0.5f), 1.f);
 	GenerateQuad("border", Color(0.5f, 0.5f, 0.5f), 1.f);

@@ -89,6 +89,12 @@ public:
 
 	inline float GetDreamBar() { return this->dreamBar; };
 	inline void SetDreamBar(float dreamBar) { this->dreamBar = dreamBar; };
+
+	inline unsigned int GetDamage() { return this->damage; };
+	inline void SetDamage(unsigned int damage) { this->damage = damage; };
+
+	inline bool IsInvincible() { return this->invincible; };
+	inline void SetIsInvincible(bool invincible) { this->invincible = invincible; };
 	int killCount;
 	
 private:
@@ -129,6 +135,8 @@ private:
 	float treasureDurationTimer;
 	float dreamBar;
 	unsigned int damage;
+	float invincibleTimer;
+	bool invincible;
 
 	// Treasure
 	Treasure* treasure;

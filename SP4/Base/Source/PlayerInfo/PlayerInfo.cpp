@@ -44,7 +44,9 @@ CPlayerInfo::CPlayerInfo(void)
 	, defaultHealthRegenCooldown(5)
 	, defaultSpeed(300.f)
 	, dreamBar(MAX_DREAMBAR * 0.5f)
-	, damage(5)
+	, damage(2)
+	, invincibleTimer(0)
+	, invincible(false)
 	, killCount(0)
 	, rotateLeftLeg(Vector3(0, 0, 0))
 	, rotateRightLeg(Vector3(0, 0, 0))
@@ -355,6 +357,17 @@ void CPlayerInfo::Update(double dt)
 		}
 	}
 
+	if (invincible)
+	{
+		cout << invincibleTimer << endl;
+		invincibleTimer += dt;
+		if (invincibleTimer >= 2.0f)
+		{
+			invincible = false;
+			invincibleTimer = 0;
+		}
+	}
+
 	if (KeyboardController::GetInstance()->IsKeyPressed('U'))
 	{
 		onScreenUI = !onScreenUI;
@@ -414,24 +427,25 @@ void CPlayerInfo::Update(double dt)
 
 void CPlayerInfo::Render(float& _renderOrder)
 {
-    glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+	glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
-    MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 
-    modelStack.PushMatrix();
-    modelStack.Translate(position.x, position.y + 1, position.z + 4);
-    modelStack.Rotate(90, -1, 0, 0);
-    modelStack.Rotate(Math::RadianToDegree(atan2(direction.z, direction.x)), 0, 0, -1);
-    modelStack.Scale(15, 12, 0);
-    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("laserblaster"));
-    modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(position.x, position.y + 1, position.z + 4);
+	modelStack.Rotate(90, -1, 0, 0);
+	modelStack.Rotate(Math::RadianToDegree(atan2(direction.z, direction.x)), 0, 0, -1);
+	modelStack.Scale(15, 12, 0);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("laserblaster"));
+	modelStack.PopMatrix();
 
-    modelStack.PushMatrix();
-    modelStack.Translate(position.x, position.y, position.z);
-    modelStack.Rotate(90, -1, 0, 0);
-    modelStack.Scale(scale.x, scale.y, scale.z);
-    RenderHelper::RenderMesh(currentAnimation);
-    modelStack.PopMatrix();
+	glEnable(GL_BLEND);
+	modelStack.PushMatrix();
+	modelStack.Translate(position.x, position.y, position.z);
+	modelStack.Rotate(90, -1, 0, 0);
+	modelStack.Scale(scale.x, scale.y, scale.z);
+	RenderHelper::RenderMesh(currentAnimation);
+	modelStack.PopMatrix();
 
 	if (!onScreenUI)
 	{
@@ -441,7 +455,9 @@ void CPlayerInfo::Render(float& _renderOrder)
 		modelStack.Scale(0.5f, 0.5f, 1);
 		modelStack.Translate(healthScale * 0.5f, 0, 0);
 		modelStack.Scale(healthScale, fontSize * 0.5f, 1);
-		if (healthRatio < 0.25f)
+		if (invincible)
+			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_invin"));
+		else if (healthRatio < 0.25f)
 			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_quad"));
 		else if (healthRatio < 0.5f)
 			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_half"));
@@ -556,7 +572,9 @@ void CPlayerInfo::RenderUI(void)
 		modelStack.Scale(2, 2, 2);
 		modelStack.Scale(healthScale, fontSize * 0.5f, 1);
 		float healthRatio = this->health / this->maxHealth;
-		if (healthRatio < 0.25f)
+		if (invincible)
+			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_invin"));
+		else if (healthRatio < 0.25f)
 			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_quad"));
 		else if (healthRatio < 0.5f)
 			RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("health_half"));

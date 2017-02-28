@@ -467,9 +467,10 @@ void EntityManager::CheckForCollision(void)
                 {
                     if ((*Other)->HasCollider())
                     {
-                        if (CheckSphereCollision((*This), (*Other)))
+						if (CheckSphereCollision((*This), (*Other)) && !CPlayerInfo::GetInstance()->IsInvincible())
                         {
                             // PLAYER GET DAMAGED
+							CPlayerInfo::GetInstance()->SetIsInvincible(true);
                             cout << "PLAYER DAMAGED" << endl;
                         }
                     }

@@ -64,6 +64,12 @@ void Powerup::Update(double _dt)
 			CPlayerInfo::GetInstance()->SetHealthRegen(CPlayerInfo::GetInstance()->GetHealthRegen() + 5);
 		}
 		break;
+		case Powerup::DAMAGE_INCREASE:
+		{
+			cout << "Damage Increase" << endl;
+			CPlayerInfo::GetInstance()->SetDamage(CPlayerInfo::GetInstance()->GetDamage() + 2);
+		}
+		break;
 		} // end of break
 		this->SetIsDone(true);
 		return;
