@@ -15,6 +15,9 @@ private:
         CHASE,
         ATTACK,
         DEAD,
+		TRANSFORMING,
+		UNTRANSFORMING,
+		TRANSFORMED,
 
         NUM_FSM
     };
@@ -36,8 +39,16 @@ private:
     SpriteAnimation* attackRight;
     SpriteAnimation* dieLeft;
     SpriteAnimation* dieRight;
+	SpriteAnimation* transformingLeft;
+	SpriteAnimation* transformingRight;
+	SpriteAnimation* untransformingLeft;
+	SpriteAnimation* untransformingRight;
+	SpriteAnimation* transformedLeft;
+	SpriteAnimation* transformedRight;
+
 
     FSM fsm;
+	bool tranformed;
 
 public:
     Skull(const int _roomID);

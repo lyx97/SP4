@@ -26,9 +26,13 @@ public:
 	Vector3 Separation(Enemy2D* enemy);
 	Vector3 Alignment(Enemy2D* enemy);
 
+	inline unsigned int GetDamage(){ return this->damage; };
+	inline void SetDamage(unsigned int damage){ this->damage = damage; };
+
 protected:
 	float speed;
 	float healthScale;
 	float healthRatio;
+	unsigned int damage;
 	int prevHealth;
 };

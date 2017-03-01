@@ -23,7 +23,7 @@ public:
 	virtual ~TextEntity();
 
 	virtual void Update(double _dt);
-    virtual void Render();
+	virtual void Render(float& _renderOrder);
     virtual void RenderUI();
 
 	inline void SetPosition(const Vector3& _value){ position = _value; };

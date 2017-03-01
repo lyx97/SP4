@@ -23,7 +23,7 @@ void TextEntity::Update(double _dt)
 	// Does nothing here, can inherit & override or create your own version of this class :D
 }
 
-void TextEntity::Render()
+void TextEntity::Render(float& _renderOrder)
 {
 	if (mode == MODE_2D)
 		return;

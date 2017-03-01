@@ -8,7 +8,7 @@ Enemy2D::Enemy2D()
 	: GenericEntity(NULL)
 {
 	this->position = Vector3(0, 0, 0);
-	this->scale = Vector3(1, 5, 1);
+	this->scale = Vector3(30, 30, 1);
 
 	this->isDone = false;
 	this->m_bCollider = true;
@@ -23,6 +23,12 @@ Enemy2D::Enemy2D()
 	this->prevHealth = 0;
 	this->healthScale = 0.0f;
 	this->healthRatio = 0.0f;
+	this->damage = 1.0f;
+
+	this->scale = Vector3(30, 30, 1);
+	int x = scale.x, y = scale.y;
+	x = (x >> 2); y = (y >> 2);
+	this->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
 }
 
 Enemy2D::~Enemy2D()
@@ -49,6 +55,7 @@ void Enemy2D::Update(double _dt)
 			CPlayerInfo::GetInstance()->killCount < CPlayerInfo::GetInstance()->GetTreasure()->GetCooldown())
 			CPlayerInfo::GetInstance()->killCount++;
 	}
+
 	if (this->prevHealth != health)
 	{
 		prevHealth = health;

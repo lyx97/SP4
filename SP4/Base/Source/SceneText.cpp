@@ -270,10 +270,6 @@ void SceneText::Update(double dt)
 			m_orthoHeight++;
 			m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 		}
-		if (KeyboardController::GetInstance()->IsKeyPressed('J'))
-		{
-			Treasure* newTreasure = new Treasure(CPlayerInfo::GetInstance()->GetRoomID());
-		}
         if (KeyboardController::GetInstance()->IsKeyDown('L'))
         {
             EntityManager::GetInstance()->GetSpatialPartition(CPlayerInfo::GetInstance()->GetRoomID())->Remove(playerInfo);
@@ -290,6 +286,17 @@ void SceneText::Update(double dt)
 		//playerInfo->Update(dt);
 
 		GraphicsManager::GetInstance()->UpdateLights(dt);
+
+		// DEBUGGING TOOLS
+		if (KeyboardController::GetInstance()->IsKeyPressed('K'))
+		{
+			Powerup* test = new Powerup(CPlayerInfo::GetInstance()->GetRoomID());
+			test->Init();
+		}
+		if (KeyboardController::GetInstance()->IsKeyPressed('J'))
+		{
+			Treasure* newTreasure = new Treasure(CPlayerInfo::GetInstance()->GetRoomID());
+		}
 	}
 	// Update the 2 text object values. NOTE: Can do this in their own class but i'm lazy to do it now :P
 	// Eg. FPSRenderEntity or inside RenderUI for LightEntity

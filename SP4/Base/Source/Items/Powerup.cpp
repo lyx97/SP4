@@ -4,7 +4,17 @@
 Powerup::Powerup(const int& _roomID)
 	: GenericEntity(NULL)
 {
-    this->roomID = _roomID;
+	this->position.Set(0, 0, 0);
+	this->velocity.Set(0, 0, 0);
+	this->scale.Set(20, 20, 20);
+
+	this->m_eEntityType = EntityBase::POWERUP;
+
+	this->roomID = _roomID;
+
+	EntityManager::GetInstance()->AddEntity(this, roomID);
+
+	textObj = Create::Text3DObject("text", this->position, "", Vector3(20, 20, 20), Color(0.0f, 1.0f, 0.0f));
 }
 
 Powerup::Powerup(Vector3 pos, const int& _roomID)
@@ -23,6 +33,8 @@ Powerup::Powerup(Vector3 pos, const int& _roomID)
     this->roomID = _roomID;
 
     EntityManager::GetInstance()->AddEntity(this, roomID);
+
+	textObj = Create::Text3DObject("text", pos, "", Vector3(25, 25, 25), Color(0.0f, 1.0f, 0.0f));
 }
 
 Powerup::~Powerup()
@@ -42,7 +54,8 @@ void Powerup::Update(double _dt)
 		{
 		case Powerup::HEALTH_RECOVER:
 		{
-			cout << "Recover Health" << endl;
+
+			cout << textObj->GetText() << " : " << textObj->GetPosition() << endl;
 			CPlayerInfo::GetInstance()->RecoverHealth();
 		}
 		break;
@@ -85,11 +98,15 @@ void Powerup::Render(float& _renderOrder)
     modelStack.Rotate(90, -1, 0, 0);
     modelStack.Scale(scale.x, scale.y, scale.z);
 
+	textObj->SetPosition(Vector3(0, 0, 0));
+
 	switch (random)
 	{
 	case Powerup::HEALTH_RECOVER:
 	{
-		// change to be dropped by every enemy
+		ss.str("");
+		ss << "Recover Health";
+		textObj->SetText(ss.str());
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_healthrecover"));
 	}
 		break;
@@ -108,6 +125,12 @@ void Powerup::Render(float& _renderOrder)
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_healthregen"));
 	}
 		break;
+	case Powerup::DAMAGE_INCREASE:
+	{
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("powerup_healthregen"));
+	}
+	break;
 	} // end of switch
-	GraphicsManager::GetInstance()->GetModelStack().PopMatrix();
+
+	modelStack.PopMatrix();
 }

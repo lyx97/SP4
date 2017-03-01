@@ -10,11 +10,12 @@ Skull::Skull(const int _roomID)
     , m_dResponseTime(0.0)
     , m_bAttackAnimation(false)
     , m_bAlive(true)
+	, tranformed(false)
 {
     this->position = Vector3(100, 0, 50);
-    this->scale = Vector3(30, 30, 0);
     this->velocity = Vector3(0, 0, 0);
 	this->heatmapDir = Vector3(0, 0, 0);
+	this->damage = 5.f;
 
     moveLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 4);
     moveLeft->textureID = LoadTGA("Image//Enemy//skull_moveleft.tga");
@@ -48,15 +49,42 @@ Skull::Skull(const int _roomID)
     dieRight->m_anim = new Animation;
     dieRight->m_anim->Set(0, 6, 1, 1.f, true);
 
+	transformingLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 7);
+	transformingLeft->textureID = LoadTGA("Image//Enemy//skull_transformingleft.tga");
+	transformingLeft->m_anim = new Animation;
+	transformingLeft->m_anim->Set(0, 6, 1, 1.f, true);
+
+	transformingRight = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 7);
+	transformingRight->textureID = LoadTGA("Image//Enemy//skull_transformingright.tga");
+	transformingRight->m_anim = new Animation;
+	transformingRight->m_anim->Set(0, 6, 1, 1.f, true);
+
+	untransformingLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 7);
+	untransformingLeft->textureID = LoadTGA("Image//Enemy//skull_untransformingleft.tga");
+	untransformingLeft->m_anim = new Animation;
+	untransformingLeft->m_anim->Set(0, 6, 1, 1.f, true);
+
+	untransformingRight = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 7);
+	untransformingRight->textureID = LoadTGA("Image//Enemy//skull_untransformingright.tga");
+	untransformingRight->m_anim = new Animation;
+	untransformingRight->m_anim->Set(0, 6, 1, 1.f, true);
+
+	transformedLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 2);
+	transformedLeft->textureID = LoadTGA("Image//Enemy//skull_transformedleft.tga");
+	transformedLeft->m_anim = new Animation;
+	transformedLeft->m_anim->Set(0, 1, 1, 1.f, true);
+
+	transformedRight = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 2);
+	transformedRight->textureID = LoadTGA("Image//Enemy//skull_transformedright.tga");
+	transformedRight->m_anim = new Animation;
+	transformedRight->m_anim->Set(0, 1, 1, 1.f, true);
+
     currentAnimation = moveLeft;
 	
-	this->maxHealth = 50;
+	this->maxHealth = 100;
 	this->health = this->maxHealth;
 
     this->SetCollider(true);
-    int x = scale.x, y = scale.y;
-    x = (x >> 1) - 5; y = (y >> 1) - 5;
-    this->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
 
 	roomID = _roomID;
 
@@ -71,6 +99,12 @@ Skull::~Skull()
     delete attackRight;
     delete dieLeft;
     delete dieRight;
+	delete transformingLeft;
+	delete transformingRight;
+	delete untransformingLeft;
+	delete untransformingRight;
+	delete transformedLeft;
+	delete transformedRight;
 }
 
 void Skull::Update(double dt)
@@ -110,24 +144,63 @@ void Skull::Update(double dt)
             m_dResponseTime = 0.0;
         }
     }
+	if (CPlayerInfo::GetInstance()->GetDreamBarRatio() <= 0.25f && !tranformed)
+		fsm = FSM::TRANSFORMING;
+
+	if (fsm == FSM::TRANSFORMING && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
+	{
+		fsm = FSM::MOVE;
+		tranformed = true;
+		m_dSpeed = 50.0f;
+		damage = 10.f;
+	}
+
+	if (CPlayerInfo::GetInstance()->GetDreamBarRatio() > 0.26f && tranformed)
+		fsm = FSM::UNTRANSFORMING;
+
+	if (fsm == FSM::UNTRANSFORMING && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
+	{
+		fsm = FSM::MOVE;
+		tranformed = false;
+		m_dSpeed = 30.0f;
+		damage = 5.f;
+	}
 
     switch (fsm)
     {
     case MOVE:
         position += velocity * dt * m_dSpeed * 0.5f;
-
-        if (temp.x > 0)
-            currentAnimation = moveRight;
-        else
-            currentAnimation = moveLeft;
+		if (!tranformed)
+		{
+			if (temp.x > 0)
+				currentAnimation = moveRight;
+			else
+				currentAnimation = moveLeft;
+		}
+		else
+		{
+			if (temp.x > 0)
+				currentAnimation = transformedRight;
+			else
+				currentAnimation = transformedLeft;
+		}
         break;
     case CHASE:
         position += velocity * dt * m_dSpeed * 2;
-
-        if (temp.x > 0)
-            currentAnimation = moveRight;
-        else
-            currentAnimation = moveLeft;
+		if (!tranformed)
+		{
+			if (temp.x > 0)
+				currentAnimation = moveRight;
+			else
+				currentAnimation = moveLeft;
+		}
+		else
+		{
+			if (temp.x > 0)
+				currentAnimation = transformedRight;
+			else
+				currentAnimation = transformedLeft;
+		}
         break;
     case ATTACK:
         if (temp.x > 0)
@@ -147,6 +220,18 @@ void Skull::Update(double dt)
         else
             currentAnimation = dieLeft;
         break;
+	case TRANSFORMING:
+		if (temp.x > 0)
+			currentAnimation = transformingRight;
+		else
+			currentAnimation = transformingLeft;
+		break;
+	case UNTRANSFORMING:
+		if (temp.x > 0)
+			currentAnimation = untransformingRight;
+		else
+			currentAnimation = untransformingLeft;
+		break;
     }
 
     if (currentAnimation)
@@ -158,8 +243,14 @@ void Skull::Update(double dt)
             currentAnimation->Update(dt * 2.0f);
         else if (fsm == FSM::DEAD)
             currentAnimation->Update(dt * 1.0f);
-        else
-            currentAnimation->Update(dt * 0.5f);
+		else if (fsm == FSM::TRANSFORMING)
+			currentAnimation->Update(dt * 2.0f);
+		else if (fsm == FSM::UNTRANSFORMING)
+			currentAnimation->Update(dt * 2.0f);
+		else if (fsm == FSM::TRANSFORMED)
+			currentAnimation->Update(dt * 1.0f);
+		else
+			currentAnimation->Update(dt * 0.5f);
 
         if (fsm == FSM::DEAD && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
             SetIsDone(true);

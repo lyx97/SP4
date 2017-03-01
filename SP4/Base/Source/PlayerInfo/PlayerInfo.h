@@ -1,6 +1,9 @@
 #pragma once
 
 #include <list>
+#include <iostream>
+#include <sstream>
+
 #include "Vector3.h"
 #include "../GenericEntity.h"
 #include "../TextEntity.h"
@@ -89,12 +92,19 @@ public:
 
 	inline float GetDreamBar() { return this->dreamBar; };
 	inline void SetDreamBar(float dreamBar) { this->dreamBar = dreamBar; };
+	inline float GetDreamBarRatio() { return this->dreamBar / MAX_DREAMBAR; };
 
 	inline unsigned int GetDamage() { return this->damage; };
 	inline void SetDamage(unsigned int damage) { this->damage = damage; };
 
+	inline double GetTimeBetweenShots() { return this->timeBetweenShots; };
+	inline void SetTimeBetweenShots(double timeBetweenShots) { this->timeBetweenShots = timeBetweenShots; };
+
 	inline bool IsInvincible() { return this->invincible; };
 	inline void SetIsInvincible(bool invincible) { this->invincible = invincible; };
+
+	inline bool IsOnScreenUI() { return this->onScreenUI; };
+	inline void SetIsOnScreenUI(bool onScreenUI) { this->onScreenUI = onScreenUI; };
 	int killCount;
 	
 private:
@@ -157,7 +167,7 @@ private:
 
     std::list<ANIMATION> animationList;
 
-	TextEntity* textOBJ[4];
+	TextEntity* textOBJ[5];
 	float fontSize = 25.0f;
 
 	// UI
@@ -168,6 +178,8 @@ private:
 	float healthScale;
 	float dashScale;
 	float dreambarScale;
+	float treasureScale;
+	std::ostringstream stats;
 
 	// projectile
 	double elapsedTime;

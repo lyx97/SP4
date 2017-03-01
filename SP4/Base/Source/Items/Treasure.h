@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 #include "../GenericEntity.h"
 #include "../EntityManager.h"
@@ -19,6 +20,7 @@ public:
 		SPRINT,
 		ONE_HIT_KILL,
 		INVINCIBLE,
+		INCREASE_FIRERATE,
 
 		NUM_TREASURE
 	}treasure_type;
@@ -34,10 +36,12 @@ public:
 
 	inline int GetCooldown() { return cooldown; };
 	inline float GetDuration() { return duration; };
+	inline std::string GetName() { return name; };
 	unsigned int random;
 
 private:
 	float duration;
 	int cooldown;
+	std::string name;
 
 };

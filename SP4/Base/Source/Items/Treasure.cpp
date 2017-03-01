@@ -71,11 +71,19 @@ void Treasure::Effects()
 	case Treasure::ONE_HIT_KILL:
 	{
 		cout << "ONE SHOT KILL USED" << endl;
+		CPlayerInfo::GetInstance()->SetDamage(9999);
 	}
 	break;
 	case Treasure::INVINCIBLE:
 	{
 		cout << "INVINCIBLE USED" << endl;
+		CPlayerInfo::GetInstance()->SetIsInvincible(true);
+	}
+	break;
+	case Treasure::INCREASE_FIRERATE:
+	{
+		cout << "INCREASE_FIRERATE USED" << endl;
+		CPlayerInfo::GetInstance()->SetTimeBetweenShots(CPlayerInfo::GetInstance()->GetTimeBetweenShots() * 0.5f);
 	}
 	break;
 	} // end of switch
@@ -89,7 +97,8 @@ void Treasure::Render(float& _renderOrder)
     modelStack.Translate(position.x, position.y + _renderOrder, position.z);
     modelStack.Rotate(90, -1, 0, 0);
     modelStack.Scale(scale.x, scale.y, scale.z);
-    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("lightball"));
+
     modelStack.PopMatrix();
 }
 
@@ -103,13 +112,14 @@ void Treasure::SetValues()
 		{
 			cooldown = 0;
 			duration = 0;
+			name = "None";
 		}
 		break;
 		case Treasure::RAPID_HEALTHREGEN:
 		{
-			cout << "RAPID_HEALTHREGEN" << endl;
 			cooldown = 15;
 			duration = 5;
+			name = "Rapid Healthregen";
 		}
 		break;
 		case Treasure::SPRINT:
@@ -117,20 +127,28 @@ void Treasure::SetValues()
 			cout << "SPRINT" << endl;
 			cooldown = 25;
 			duration = 20;
+			name = "Sprint";
 		}
 		break;
 		case Treasure::ONE_HIT_KILL:
 		{
-			cout << "ONE_HIT_KILL" << endl;
-			cooldown = 25;
+			cooldown = 40;
 			duration = 7;
+			name = "One hit kill";
 		}
 		break;
 		case Treasure::INVINCIBLE:
 		{
-			cout << "INVINCIBLE" << endl;
 			cooldown = 30;
 			duration = 3;
+			name = "Invincibility";
+		}
+		break;
+		case Treasure::INCREASE_FIRERATE:
+		{
+			cooldown = 20;
+			duration = 7;
+			name = "Rapidfire";
 		}
 		break;
 	}

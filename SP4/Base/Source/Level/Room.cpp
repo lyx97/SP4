@@ -168,7 +168,7 @@ void CRoom::Spawn(void)
     }
     case ROOM_TYPE::TREASUREROOM:
     {
-        Treasure* newTreasure = new Treasure(m_iRoomID);
+       // Treasure* newTreasure = new Treasure(m_iRoomID);
         break;
     }
     }

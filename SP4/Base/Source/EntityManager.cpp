@@ -479,6 +479,7 @@ PLAYER
                         if (CheckSphereCollision((*This), (*Other)))
                         {
                             (*Other)->SetIsDone(true);
+							CPlayerInfo::GetInstance()->SetIsInvincible(true);
                             // PLAYER GET DAMAGED
                             cout << "PLAYER DAMAGED" << endl;
                         }
@@ -486,6 +487,7 @@ PLAYER
                 }
                 else if ((*Other)->GetEntityType() == EntityBase::ENEMY)
                 {
+					Enemy2D* enemy = dynamic_cast<Enemy2D*>(*Other);
                     if ((*Other)->GetHP() <= 0)
                         continue;
 
@@ -494,6 +496,7 @@ PLAYER
 						if (CheckSphereCollision((*This), (*Other)) && !CPlayerInfo::GetInstance()->IsInvincible())
                         {
                             // PLAYER GET DAMAGED
+							CPlayerInfo::GetInstance()->SetHealth(CPlayerInfo::GetInstance()->GetHealth() - enemy->GetDamage());
 							CPlayerInfo::GetInstance()->SetIsInvincible(true);
                             cout << "PLAYER DAMAGED" << endl;
                         }

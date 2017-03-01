@@ -860,6 +860,7 @@ void MeshBuilder::Init()
 	GenerateQuad("health_invin", Color(0.7f, 0.7f, 0.7f), 1.f);
 	GenerateQuad("dash", Color(0.0f, 0.0f, 1.0f), 1.f);
 	GenerateQuad("dreambar", Color(0.0f, 0.5f, 0.5f), 1.f);
+	GenerateQuad("treasure", Color(1.0f, 0.8f, 0.0f), 1.f);
 	GenerateQuad("border", Color(0.5f, 0.5f, 0.5f), 1.f);
 	GenerateQuad("healthicon", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("healthicon")->textureID = LoadTGA("Image//UI//health.tga");
@@ -869,6 +870,8 @@ void MeshBuilder::Init()
 	GetMesh("dashicon")->textureID = LoadTGA("Image//UI//dash.tga");
 	GenerateQuad("dreambaricon", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("dreambaricon")->textureID = LoadTGA("Image//UI//dreambar.tga");
+	GenerateQuad("treasureicon", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("treasureicon")->textureID = LoadTGA("Image//UI//treasure.tga");
 
 	GenerateSpriteAnimation("player_walkleft", 1, 7);
 	GetMesh("player_walkleft")->textureID = LoadTGA("Image//Player//player_walkleft.tga");

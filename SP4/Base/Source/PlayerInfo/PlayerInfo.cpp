@@ -1,6 +1,4 @@
 #include "PlayerInfo.h"
-#include <iostream>
-#include <sstream>
 
 #include "MouseController.h"
 #include "KeyboardController.h"
@@ -44,7 +42,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, defaultHealthRegenCooldown(5)
 	, defaultSpeed(300.f)
 	, dreamBar(MAX_DREAMBAR * 0.5f)
-	, damage(2)
+	, damage(10)
 	, invincibleTimer(0)
 	, invincible(false)
 	, killCount(0)
@@ -58,6 +56,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, healthScale(0)
 	, dashScale(0)
 	, dreambarScale(0)
+	, treasureScale(0)
 	, elapsedTime(0)
 	, timeBetweenShots(0.15f)
 	, fire(true)
@@ -117,7 +116,6 @@ void CPlayerInfo::Init(void)
     //int a = 1, b = 2, c = 3, d = 4;
     //CLuaInterface::GetInstance()->getVariableValues("GetMinMax", a, b, c, d);
 
-
     EntityManager::GetInstance()->AddEntity(this, roomID);
 
     // Init heatmap
@@ -150,7 +148,7 @@ void CPlayerInfo::Init(void)
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() << 1;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() << 1;
 
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		textOBJ[i] = Create::Text2DObject(
 			"text",
@@ -359,9 +357,8 @@ void CPlayerInfo::Update(double dt)
 
 	if (invincible)
 	{
-		cout << invincibleTimer << endl;
 		invincibleTimer += dt;
-		if (invincibleTimer >= 2.0f)
+		if (invincibleTimer >= 1.0f)
 		{
 			invincible = false;
 			invincibleTimer = 0;
@@ -400,8 +397,10 @@ void CPlayerInfo::Update(double dt)
 		healthRatio = health / maxHealth;
 		healthScale = (health / maxHealth) * UIScale;
 	}
-	dashScale = ((dashCooldown - dashCooldownTimer) / dashCooldown) * UIScale;
+	dashScale = ((dashCooldown - dashCooldownTimer) / dashCooldown) * fontSize;
 	dreambarScale = (dreamBar / MAX_DREAMBAR) * UIScale;
+	if (treasure->GetCooldown() > 0)
+		treasureScale = (killCount / treasure->GetCooldown()) * UIScale;
 
 	// handling projectile
 	if (elapsedTime > timeBetweenShots)
@@ -416,13 +415,11 @@ void CPlayerInfo::Update(double dt)
 
 	// DEBUGGING TOOLS
 	if (KeyboardController::GetInstance()->IsKeyPressed('O'))
-	{
 		this->health -= 10;
-	}
-	if (KeyboardController::GetInstance()->IsKeyPressed('I'))
-	{
+	if (KeyboardController::GetInstance()->IsKeyPressed('G'))
 		this->dreamBar -= 10;
-	}
+	if (KeyboardController::GetInstance()->IsKeyPressed('H'))
+		this->dreamBar += 10;
 }
 
 void CPlayerInfo::Render(float& _renderOrder)
@@ -449,6 +446,9 @@ void CPlayerInfo::Render(float& _renderOrder)
 
 	if (!onScreenUI)
 	{
+		stats.str("");
+		for (int i = 0; i < 5; i++)
+			textOBJ[i]->SetText(stats.str());
 		// HEALTH
 		modelStack.PushMatrix();
 		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 25.f);
@@ -471,15 +471,6 @@ void CPlayerInfo::Render(float& _renderOrder)
 		modelStack.Translate(UIScale * 0.5f, 0, 0);
 		modelStack.Scale(UIScale, fontSize * 0.5f, 1);
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
-		modelStack.PopMatrix();
-
-		// DASH
-		modelStack.PushMatrix();
-		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 20.f);
-		modelStack.Scale(0.5f, 0.5f, 1);
-		modelStack.Translate(dashScale * 0.5f, 0, 0);
-		modelStack.Scale(dashScale, fontSize * 0.5f, 1);
-		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dash"));
 		modelStack.PopMatrix();
 
 		modelStack.PushMatrix();
@@ -529,30 +520,33 @@ void CPlayerInfo::Render(float& _renderOrder)
 
 void CPlayerInfo::RenderUI(void)
 {
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		textOBJ[i]->SetPosition(Vector3(
 			-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize * 2,
 			(Application::GetInstance().GetWindowHeight() * 0.5f) - (fontSize * (i * 1.5f)) - fontSize,
 			2.0f));
 	}
+
+	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 	if (onScreenUI)
 	{
-		std::ostringstream ss;
-		ss.precision(3);
-		ss << health << " / " << maxHealth << endl;
-		textOBJ[0]->SetText(ss.str());
-		ss.str("");
-		//ss << dashCooldown - dashCooldownTimer << endl;
-		textOBJ[1]->SetText(ss.str());
-		ss.str("");
-		ss << dreamBar << " / " << MAX_DREAMBAR << endl;
-		textOBJ[2]->SetText(ss.str());
-		ss.str("");
-		ss << maxSpeed << endl;
-		textOBJ[3]->SetText(ss.str());
+		stats.precision(3);
+		stats.str("");
+		stats << health << " / " << maxHealth << endl;
+		textOBJ[0]->SetText(stats.str());
+		stats.str("");
+		stats << dreamBar << " / " << MAX_DREAMBAR << endl;
+		textOBJ[1]->SetText(stats.str());
+		stats.str("");
+		stats << maxSpeed << endl;
+		textOBJ[2]->SetText(stats.str());
+		stats.str("");
+		textOBJ[3]->SetText(treasure->GetName());
+		stats.str("");
+		stats << killCount << " / " << treasure->GetCooldown() << endl;
+		textOBJ[4]->SetText(stats.str());
 
-		MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 		// HEALTH
 		modelStack.PushMatrix();
 		modelStack.Translate(
@@ -593,43 +587,11 @@ void CPlayerInfo::RenderUI(void)
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
 		modelStack.PopMatrix();
 
-		// DASH
-		modelStack.PushMatrix();
-		modelStack.Translate(
-			-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize,
-			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 2.5f,
-			0.5f);
-		modelStack.Scale(fontSize, fontSize, 1);
-		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dashicon"));
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(
-			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
-			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 2.5f,
-			1);
-		modelStack.Translate(dashScale - fontSize * 2, 0, 0);
-		modelStack.Scale(2, 2, 2);
-		modelStack.Scale(dashScale, fontSize * 0.5f, 1);
-		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dash"));
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(
-			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
-			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 2.5f,
-			0.5f);
-		modelStack.Translate(UIScale - fontSize * 2, 0, 0);
-		modelStack.Scale(2, 2, 2);
-		modelStack.Scale(UIScale, fontSize * 0.5f, 1);
-		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
-		modelStack.PopMatrix();
-
 		// DREAMBAR
 		modelStack.PushMatrix();
 		modelStack.Translate(
 			-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize,
-			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 4,
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 2.5f,
 			0.5f);
 		modelStack.Scale(fontSize, fontSize, 1);
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dreambaricon"));
@@ -638,7 +600,7 @@ void CPlayerInfo::RenderUI(void)
 		modelStack.PushMatrix();
 		modelStack.Translate(
 			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
-			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 4,
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 2.5f,
 			1);
 		modelStack.Translate(dreambarScale - fontSize * 2, 0, 0);
 		modelStack.Scale(2, 2, 2);
@@ -649,7 +611,7 @@ void CPlayerInfo::RenderUI(void)
 		modelStack.PushMatrix();
 		modelStack.Translate(
 			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
-			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 4,
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 2.5f,
 			0.5f);
 		modelStack.Translate(UIScale - fontSize * 2, 0, 0);
 		modelStack.Scale(2, 2, 2);
@@ -661,12 +623,42 @@ void CPlayerInfo::RenderUI(void)
 		modelStack.PushMatrix();
 		modelStack.Translate(
 			-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize,
-			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 5.5f,
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 4,
 			0.5f);
 		modelStack.Scale(fontSize, fontSize, 1);
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("speedicon"));
 		modelStack.PopMatrix();
+
+		// TREASURE
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize,
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 5.5f,
+			0.5f);
+		modelStack.Scale(fontSize, fontSize, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("treasureicon"));
+		modelStack.PopMatrix();
 	}
+	// DASH
+	modelStack.PushMatrix();
+	modelStack.Translate(
+		Application::GetInstance().GetWindowWidth() * 0.5f - fontSize * 2,
+		(-Application::GetInstance().GetWindowHeight() * 0.5f) + fontSize * 2,
+		1.5f);
+	modelStack.Scale(fontSize, fontSize, 1);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dashicon"));
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(
+		Application::GetInstance().GetWindowWidth() * 0.5f - fontSize * 2,
+		(-Application::GetInstance().GetWindowHeight() * 0.5f) + fontSize * 2,
+		1);
+	modelStack.Translate(0, dashScale - fontSize, 0);
+	modelStack.Scale(2, 2, 2);
+	modelStack.Scale(fontSize, dashScale, 1);
+	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dash"));
+	modelStack.PopMatrix();
 }
 
 // Constrain the position within the borders

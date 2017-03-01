@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-﻿Build started 2/28/2017 7:57:40 PM.
+﻿Build started 3/1/2017 4:22:20 PM.
      1>Project "C:\Users\155118A\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155118A\Desktop\SP4\SP4\/Common/Source /IC:\Users\155118A\Desktop\SP4\SP4\/glfw/include /IC:\Users\155118A\Desktop\SP4\SP4\/glew/include /IC:\Users\155118A\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\PlayerInfo\PlayerInfo.cpp
@@ -8,40 +7,40 @@
      1>c:\users\155118a\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
      1>c:\users\155118a\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
      1>c:\users\155118a\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\level\room.h(79): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\level\room.h(76): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(83): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(84): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(85): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(109): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
      1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(110): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
      1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(111): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
      1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(112): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(113): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(132): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(135): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(136): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(147): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(148): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(150): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(151): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(190): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(196): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(221): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(253): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(261): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(295): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(304): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(350): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(363): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(389): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(390): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(394): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(395): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(130): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(133): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(134): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(145): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(146): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(148): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(149): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(188): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(194): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(219): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(251): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(259): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(293): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(302): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(348): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(360): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(386): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(387): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(391): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(392): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(403): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(472): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(489): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(506): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(590): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(622): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(654): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(708): warning C4244: 'argument' : conversion from 'unsigned int' to 'const float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(480): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(497): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(586): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(618): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155118a\desktop\sp4\sp4\base\source\playerinfo\playerinfo.cpp(702): warning C4244: 'argument' : conversion from 'unsigned int' to 'const float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\Debug /LIBPATH:"C:\Users\155118A\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155118A\Desktop\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 /PROFILE Debug\Application.obj
          Debug\Camera.obj
@@ -89,20 +88,26 @@
          Debug\WaypointManager.obj
      1>Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
      1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>Common.lib(CameraBase.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(CameraBase.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(Collider.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(Collider.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(EntityBase.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(EntityBase.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(GraphicsManager.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(GraphicsManager.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(KeyboardController.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(KeyboardController.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(LightBase.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(LightBase.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(LoadOBJ.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(LoadOBJ.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(LoadTGA.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(LoadTGA.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(MatrixStack.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(MatrixStack.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(Mesh.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(Mesh.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(MouseController.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(MouseController.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(Mtx44.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(Mtx44.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(RenderHelper.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(RenderHelper.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(SceneManager.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(SceneManager.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(ShaderProgram.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(ShaderProgram.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(timer.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(timer.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
+     1>Common.lib(Vector3.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(Vector3.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
          Base.vcxproj -> C:\Users\155118A\Desktop\SP4\SP4\Debug\Base.exe
      1>Done Building Project "C:\Users\155118A\Desktop\SP4\SP4\Base\Base.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.82
-=======
-﻿Build started 2/28/2017 5:59:28 PM.
-     1>Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         Base.vcxproj -> C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.exe
-     1>Done Building Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:00.10
->>>>>>> 08f647be060e699547e1b270ba3c4a3a7f8fc060
+Time Elapsed 00:00:01.85

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <sstream>
+
 #include "../GenericEntity.h"
 #include "../EntityManager.h"
 #include "../Application.h"
@@ -32,5 +34,7 @@ public:
 
 private:
 	unsigned int random;
+	TextEntity* textObj;
+	std::ostringstream ss;
 };
 
