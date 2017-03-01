@@ -488,7 +488,7 @@ PLAYER
                     {
 						if (CheckSphereCollision((*This), (*Other)) && !CPlayerInfo::GetInstance()->IsInvincible())
                         {
-                            (*Other)->SetIsDone(true)
+                            (*Other)->SetIsDone(true);
 							CPlayerInfo::GetInstance()->SetHealth(CPlayerInfo::GetInstance()->GetHealth() - enemyProjectile->GetDamage());
 							CPlayerInfo::GetInstance()->SetIsInvincible(true);
                             (*This)->SetVelocity((*This)->GetVelocity() + ((*Other)->GetVelocity()));

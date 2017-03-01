@@ -1,5 +1,9 @@
-c:\users\155117g\desktop\sp4\sp4\common\debug\vc120.pdb
-c:\users\155117g\desktop\sp4\sp4\common\debug\vc120.idb
+c:\users\155118a\desktop\sp4\sp4\common\debug\vc120.pdb
+c:\users\155118a\desktop\sp4\sp4\common\debug\vc120.idb
+c:\users\155118a\desktop\sp4\sp4\common\debug\meshbuilder.obj
+c:\users\155118a\desktop\sp4\sp4\debug\common.lib
+c:\users\155117g\desktop\sp4\sp4\common\debug\camerabase.obj
+c:\users\155117g\desktop\sp4\sp4\common\debug\collider.obj
 c:\users\155117g\desktop\sp4\sp4\common\debug\entitybase.obj
 c:\users\155117g\desktop\sp4\sp4\common\debug\graphicsmanager.obj
 c:\users\155117g\desktop\sp4\sp4\common\debug\keyboardcontroller.obj
@@ -20,8 +24,8 @@ c:\users\155117g\desktop\sp4\sp4\common\debug\utility.obj
 c:\users\155117g\desktop\sp4\sp4\common\debug\vector2.obj
 c:\users\155117g\desktop\sp4\sp4\common\debug\vector3.obj
 c:\users\155117g\desktop\sp4\sp4\common\debug\win32input.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\camerabase.obj
-c:\users\155117g\desktop\sp4\sp4\common\debug\collider.obj
+c:\users\155117g\desktop\sp4\sp4\common\debug\vc120.idb
+c:\users\155117g\desktop\sp4\sp4\common\debug\vc120.pdb
 c:\users\155117g\desktop\sp4\sp4\debug\common.lib
 c:\users\155117g\desktop\sp4\sp4\common\debug\common.tlog\cl.command.1.tlog
 c:\users\155117g\desktop\sp4\sp4\common\debug\common.tlog\cl.read.1.tlog

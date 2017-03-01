@@ -1,26 +1,40 @@
-<<<<<<< 195e930d6ad09e8af84db816edd6f273b1375f1b
-﻿Build started 3/1/2017 8:28:39 PM.
-     1>Project "C:\Users\155118A\Desktop\SP4\SP4\Common\Common.vcxproj" on node 2 (Build target(s)).
+﻿Build started 3/1/2017 9:46:49 PM.
+     1>Project "C:\Users\155117g\Desktop\SP4\SP4\Common\Common.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155118A\Desktop\SP4\SP4\/glew/include /IC:\Users\155118A\Desktop\SP4\SP4\/glfw/include /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\MeshBuilder.cpp
-         MeshBuilder.cpp
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155118a\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
-       Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\Users\155118A\Desktop\SP4\SP4\Debug\Common.lib" /NOLOGO Debug\CameraBase.obj
-=======
-﻿Build started 3/1/2017 9:29:53 PM.
-     1>Project "C:\Users\155117g\Desktop\SP4\SP4\Common\Common.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\MeshBuilder.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\CameraBase.cpp Source\Collider\Collider.cpp Source\EntityBase.cpp Source\GraphicsManager.cpp Source\KeyboardController.cpp Source\LightBase.cpp Source\LoadOBJ.cpp Source\LoadTGA.cpp Source\MathUtility.cpp Source\MatrixStack.cpp Source\Mesh.cpp Source\MeshBuilder.cpp Source\MouseController.cpp Source\Mtx44.cpp Source\RenderHelper.cpp Source\SceneManager.cpp Source\ShaderProgram.cpp Source\timer.cpp Source\Utility.cpp Source\Vector2.cpp Source\Vector3.cpp Source\Win32Input.cpp
+         Win32Input.cpp
+         Vector3.cpp
+         Vector2.cpp
+         Utility.cpp
+         timer.cpp
+         ShaderProgram.cpp
+         SceneManager.cpp
+         RenderHelper.cpp
+         Mtx44.cpp
+         MouseController.cpp
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
          MeshBuilder.cpp
      1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
      1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
      1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+         Mesh.cpp
+         MatrixStack.cpp
+         MathUtility.cpp
+         LoadTGA.cpp
+         LoadOBJ.cpp
+         LightBase.cpp
+         KeyboardController.cpp
+         GraphicsManager.cpp
+         EntityBase.cpp
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+         Generating Code...
+         Compiling...
+         Collider.cpp
+         CameraBase.cpp
+         Generating Code...
        Lib:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Common.lib" /NOLOGO Debug\CameraBase.obj
->>>>>>> 3b06c6b1274316aba62b3a55ebd98c51b1ed8914
          Debug\Collider.obj
          Debug\EntityBase.obj
          Debug\GraphicsManager.obj
@@ -42,18 +56,9 @@
          Debug\Vector2.obj
          Debug\Vector3.obj
          Debug\Win32Input.obj
-<<<<<<< 195e930d6ad09e8af84db816edd6f273b1375f1b
-         Common.vcxproj -> C:\Users\155118A\Desktop\SP4\SP4\Debug\Common.lib
-     1>Done Building Project "C:\Users\155118A\Desktop\SP4\SP4\Common\Common.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:01.78
-=======
          Common.vcxproj -> C:\Users\155117g\Desktop\SP4\SP4\Debug\Common.lib
-     1>Done Building Project "C:\Users\155117g\Desktop\SP4\SP4\Common\Common.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\155117g\Desktop\SP4\SP4\Common\Common.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.61
->>>>>>> 3b06c6b1274316aba62b3a55ebd98c51b1ed8914
+Time Elapsed 00:00:10.92
