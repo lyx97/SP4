@@ -35,4 +35,5 @@ protected:
 	float healthRatio;
 	unsigned int damage;
 	int prevHealth;
+	bool nightmare;
 };

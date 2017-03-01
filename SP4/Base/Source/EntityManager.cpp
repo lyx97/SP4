@@ -1,6 +1,7 @@
 #include "EntityManager.h"
 #include "EntityBase.h"
 #include "Collider/Collider.h"
+#include "../Source/Projectile/Projectile.h"
 #include "../Source/Projectile/Laser.h"
 #include "Enemy\Enemy2D.h"
 #include "PlayerInfo/PlayerInfo.h"
@@ -473,15 +474,15 @@ PLAYER
                     continue;
 
                 if ((*Other)->GetEntityType() == EntityBase::ENEMYPROJECTILE)
-                {
+				{
+					CProjectile* enemyProjectile = dynamic_cast<CProjectile*>(*Other);
                     if ((*Other)->HasCollider())
                     {
-                        if (CheckSphereCollision((*This), (*Other)))
+						if (CheckSphereCollision((*This), (*Other)) && !CPlayerInfo::GetInstance()->IsInvincible())
                         {
                             (*Other)->SetIsDone(true);
+							CPlayerInfo::GetInstance()->SetHealth(CPlayerInfo::GetInstance()->GetHealth() - enemyProjectile->GetDamage());
 							CPlayerInfo::GetInstance()->SetIsInvincible(true);
-                            // PLAYER GET DAMAGED
-                            cout << "PLAYER DAMAGED" << endl;
                         }
                     }
                 }
@@ -495,10 +496,8 @@ PLAYER
                     {
 						if (CheckSphereCollision((*This), (*Other)) && !CPlayerInfo::GetInstance()->IsInvincible())
                         {
-                            // PLAYER GET DAMAGED
 							CPlayerInfo::GetInstance()->SetHealth(CPlayerInfo::GetInstance()->GetHealth() - enemy->GetDamage());
 							CPlayerInfo::GetInstance()->SetIsInvincible(true);
-                            cout << "PLAYER DAMAGED" << endl;
                         }
                     }
                 }

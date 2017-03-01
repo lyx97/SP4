@@ -30,7 +30,7 @@ void TextEntity::Render(float& _renderOrder)
 
 	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 	modelStack.PushMatrix();
-	modelStack.Translate(position.x, position.y, position.z);
+	modelStack.Translate(position.x, position.y + _renderOrder, position.z);
 	modelStack.Scale(scale.x, scale.y, scale.z);
     RenderHelper::RenderText(modelMesh, text, color);
 	modelStack.PopMatrix();

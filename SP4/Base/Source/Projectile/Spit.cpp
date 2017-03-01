@@ -103,11 +103,13 @@ void CSpit::Render(float& _renderOrder)
 CSpit* Create::Spit(
     const Vector3& _position,
     const Vector3& _direction,
-    const float m_fSpeed)
+    const float m_fSpeed,
+	const float damage)
 {
     CSpit* result = new CSpit();
     result->Set(_position, _direction, 0, m_fSpeed);
     result->AddUpwardForce(_direction.Length() * 0.5f);
+	result->SetDamage(damage);
     result->SetMass(50);
     result->SetStatus(true);
     result->SetCollider(true);

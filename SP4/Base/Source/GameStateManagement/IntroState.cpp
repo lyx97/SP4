@@ -46,7 +46,7 @@ void CIntroState::Init()
 
 void CIntroState::Update(double dt)
 {
-	MouseController::GetInstance()->GetMousePosition(MousePosX, MousePosY);
+	MouseController::GetInstance()->UpdateMousePosition(MousePosX, MousePosY);
 
 	//Play
 	if (MousePosX >= 327 && MousePosX < 471 && MousePosY <= 359 && MousePosY >= 299)

@@ -34,7 +34,6 @@ public:
 
 private:
 	unsigned int random;
-	TextEntity* textObj;
 	std::ostringstream ss;
 };
 

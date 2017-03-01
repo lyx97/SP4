@@ -13,6 +13,7 @@ Enemy2D::Enemy2D()
 	this->isDone = false;
 	this->m_bCollider = true;
 	this->m_bLaser = false;
+	this->nightmare = false;
 
 	this->m_eEntityType = EntityBase::ENEMY;
 
@@ -43,13 +44,20 @@ void Enemy2D::Update(double _dt)
 	//	this->velocity += temp.Normalized();
 	//}
 	//cout << isDone << endl;
+	if (CPlayerInfo::GetInstance()->GetDreamBarRatio() < 0.25)
+		nightmare = true;
+	else
+		nightmare = false;
+
 	if (isDone)
 	{
+		CPlayerInfo::GetInstance()->SetDreamBar(CPlayerInfo::GetInstance()->GetDreamBar() + 0.2);
 		float randomNo = Math::RandFloatMinMax(0, 100);
 		if (randomNo < CHANCE_OF_DROPPING_POWERUP)
 		{
 			Powerup* newPowerup = new Powerup(this->position, CPlayerInfo::GetInstance()->GetRoomID());
-			newPowerup->Init();
+			if (CPlayerInfo::GetInstance()->GetDreamBarRatio() < 0.75)
+				newPowerup->Init();
 		}
 		if (CPlayerInfo::GetInstance()->GetTreasure()->treasure_type != 0 &&
 			CPlayerInfo::GetInstance()->killCount < CPlayerInfo::GetInstance()->GetTreasure()->GetCooldown())

@@ -149,7 +149,8 @@ void Reaper::Update(double dt)
             CSpit* spit = Create::Spit(
                 position,
                 temp,
-                60.f);
+                60.f,
+				damage);
 
             m_bAttackAnimation = false;
         }

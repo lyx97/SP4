@@ -30,6 +30,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, isMoving(false)
 	, isDashed(false)
 	, usingTreasure(false)
+	, usedTreasure(false)
 	, maxHealth(100.0f)
 	, health(90.0f)
 	, maxSpeed(300.0f)
@@ -41,8 +42,9 @@ CPlayerInfo::CPlayerInfo(void)
 	, treasureDurationTimer(0)
 	, defaultHealthRegenCooldown(5)
 	, defaultSpeed(300.f)
+	, defaultDamage(10)
+	, defaultFirerate(0.15f)
 	, dreamBar(MAX_DREAMBAR * 0.5f)
-	, damage(10)
 	, invincibleTimer(0)
 	, invincible(false)
 	, killCount(0)
@@ -58,7 +60,6 @@ CPlayerInfo::CPlayerInfo(void)
 	, dreambarScale(0)
 	, treasureScale(0)
 	, elapsedTime(0)
-	, timeBetweenShots(0.15f)
 	, fire(true)
 {
 }
@@ -93,6 +94,8 @@ void CPlayerInfo::Init(void)
 	treasure = new Treasure();
 	healthregenCooldown = defaultHealthRegenCooldown;
 	maxSpeed = defaultSpeed;
+	damage = defaultDamage;
+	timeBetweenShots = defaultFirerate;
 
 	playerMeshes[0] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_walkleft");     // left
 	playerMeshes[1] = (SpriteAnimation*)MeshBuilder::GetInstance()->GetMesh("player_walkright");    // right
@@ -344,18 +347,23 @@ void CPlayerInfo::Update(double dt)
 	}
 	if (usingTreasure)
 	{
-		treasure->Effects();
+		if (!usedTreasure)
+		{
+			treasure->Effects();
+			usedTreasure = true;
+		}
 		treasureDurationTimer += dt;
 		if (treasureDurationTimer >= treasure->GetDuration())
 		{
 			usingTreasure = false;
+			usedTreasure = false;
 			treasureDurationTimer = 0;
 			// set back to default values
 			Revert();
 		}
 	}
 
-	if (invincible)
+	if (invincible && !usingTreasure)
 	{
 		invincibleTimer += dt;
 		if (invincibleTimer >= 1.0f)
@@ -399,8 +407,7 @@ void CPlayerInfo::Update(double dt)
 	}
 	dashScale = ((dashCooldown - dashCooldownTimer) / dashCooldown) * fontSize;
 	dreambarScale = (dreamBar / MAX_DREAMBAR) * UIScale;
-	if (treasure->GetCooldown() > 0)
-		treasureScale = (killCount / treasure->GetCooldown()) * UIScale;
+	treasureScale = treasure->GetCooldown() - treasureDurationTimer;
 
 	// handling projectile
 	if (elapsedTime > timeBetweenShots)
@@ -409,9 +416,7 @@ void CPlayerInfo::Update(double dt)
 		elapsedTime = 0.0;
 	}
 	else
-	{
 		elapsedTime += dt;
-	}
 
 	// DEBUGGING TOOLS
 	if (KeyboardController::GetInstance()->IsKeyPressed('O'))
@@ -420,6 +425,8 @@ void CPlayerInfo::Update(double dt)
 		this->dreamBar -= 10;
 	if (KeyboardController::GetInstance()->IsKeyPressed('H'))
 		this->dreamBar += 10;
+	if (KeyboardController::GetInstance()->IsKeyPressed('R'))
+		this->killCount += 5;
 }
 
 void CPlayerInfo::Render(float& _renderOrder)
@@ -449,6 +456,15 @@ void CPlayerInfo::Render(float& _renderOrder)
 		stats.str("");
 		for (int i = 0; i < 5; i++)
 			textOBJ[i]->SetText(stats.str());
+
+		stats << killCount << " / " << treasure->GetCooldown() << endl;
+		textOBJ[4]->SetScale(Vector3(40, 40, 40));
+		textOBJ[4]->SetPosition(Vector3(
+			-fontSize * 3.f,
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize,
+			0));
+		textOBJ[4]->SetText(stats.str());
+
 		// HEALTH
 		modelStack.PushMatrix();
 		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 25.f);
@@ -467,14 +483,6 @@ void CPlayerInfo::Render(float& _renderOrder)
 
 		modelStack.PushMatrix();
 		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 25.f);
-		modelStack.Scale(0.5f, 0.5f, 1);
-		modelStack.Translate(UIScale * 0.5f, 0, 0);
-		modelStack.Scale(UIScale, fontSize * 0.5f, 1);
-		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("border"));
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(position.x - (UIScale * 0.25f), 0.0f, position.z - 20.f);
 		modelStack.Scale(0.5f, 0.5f, 1);
 		modelStack.Translate(UIScale * 0.5f, 0, 0);
 		modelStack.Scale(UIScale, fontSize * 0.5f, 1);
@@ -520,17 +528,18 @@ void CPlayerInfo::Render(float& _renderOrder)
 
 void CPlayerInfo::RenderUI(void)
 {
-	for (int i = 0; i < 5; ++i)
-	{
-		textOBJ[i]->SetPosition(Vector3(
-			-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize * 2,
-			(Application::GetInstance().GetWindowHeight() * 0.5f) - (fontSize * (i * 1.5f)) - fontSize,
-			2.0f));
-	}
-
 	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 	if (onScreenUI)
 	{
+		for (int i = 0; i < 5; ++i)
+		{
+			textOBJ[i]->SetScale(Vector3(fontSize, fontSize, fontSize));
+			textOBJ[i]->SetPosition(Vector3(
+				-Application::GetInstance().GetWindowWidth() * 0.5f + fontSize * 2,
+				(Application::GetInstance().GetWindowHeight() * 0.5f) - (fontSize * (i * 1.5f)) - fontSize,
+				2.0f));
+		}
+
 		stats.precision(3);
 		stats.str("");
 		stats << health << " / " << maxHealth << endl;
@@ -638,6 +647,17 @@ void CPlayerInfo::RenderUI(void)
 		modelStack.Scale(fontSize, fontSize, 1);
 		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("treasureicon"));
 		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(
+			-Application::GetInstance().GetWindowWidth() * 0.5f + (fontSize * 4.0f),
+			(Application::GetInstance().GetWindowHeight() * 0.5f) - fontSize * 5.5f,
+			1);
+		modelStack.Translate(treasureScale - fontSize * 2, 0, 0);
+		modelStack.Scale(2, 2, 2);
+		modelStack.Scale(treasureScale, fontSize * 0.5f, 1);
+		RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dreambar"));
+		modelStack.PopMatrix();
 	}
 	// DASH
 	modelStack.PushMatrix();
@@ -722,4 +742,6 @@ void CPlayerInfo::Revert()
 {
 	healthregenCooldown = defaultHealthRegenCooldown;
 	maxSpeed = defaultSpeed;
+	damage = defaultDamage;
+	timeBetweenShots = defaultFirerate;
 }

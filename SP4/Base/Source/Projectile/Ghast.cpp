@@ -94,7 +94,8 @@ CGhast* Create::Ghast(const std::string& _meshName,
     const Vector3& _position,
     const Vector3& _direction,
     const float m_fLifetime,
-    const float m_fSpeed)
+    const float m_fSpeed,
+	const float damage)
 {
     Mesh* modelMesh = MeshBuilder::GetInstance()->GetMesh(_meshName);
     if (modelMesh == nullptr)
@@ -102,6 +103,7 @@ CGhast* Create::Ghast(const std::string& _meshName,
 
     CGhast* result = new CGhast(modelMesh);
     result->Set(_position, _direction, m_fLifetime, m_fSpeed);
+	result->SetDamage(damage);
     result->SetMass(50);
     result->SetStatus(true);
     result->SetCollider(true);

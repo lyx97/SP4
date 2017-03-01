@@ -848,6 +848,8 @@ void MeshBuilder::Init()
 	GetMesh("powerup_healthregen")->textureID = LoadTGA("Image//Powerups//powerup_healthregen.tga");
 	GenerateQuad("powerup_speed", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("powerup_speed")->textureID = LoadTGA("Image//Powerups//powerup_speed.tga");
+	GenerateQuad("treasure_texture", Color(1.0f, 1.0f, 1.0f), 1.f);
+	GetMesh("treasure_texture")->textureID = LoadTGA("Image//Powerups//treasure_texture.tga");
 
     // PROJECTILE
     GenerateQuad("ghast", Color(1.0f, 1.0f, 1.0f), 1.f);

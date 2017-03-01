@@ -14,7 +14,6 @@
 #include "Enemy/Enemy2D.h"
 #include "../Items/Powerup.h"
 #include "../Items/Treasure.h"
-#include "Enemy/Chaser.h"
 #include "Level/Minimap.h"
 
 class SceneManager;
@@ -45,16 +44,9 @@ private:
 	TextEntity* textObj[3];
 	Light* lights[2];
 
-	GenericEntity* theCube;
-	CEnemy* theEnemy;
-	Enemy2D* enemy2D;
-	CChaser* chaser;
-
 	bool GamePaused = false;
 	
     CMinimap* minimap;
-
-    double test;
 };
 
 #endif

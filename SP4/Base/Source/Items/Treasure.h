@@ -18,7 +18,7 @@ public:
 		NONE,
 		RAPID_HEALTHREGEN,
 		SPRINT,
-		ONE_HIT_KILL,
+		DOUBLE_DAMAGE,
 		INVINCIBLE,
 		INCREASE_FIRERATE,
 
@@ -43,5 +43,4 @@ private:
 	float duration;
 	int cooldown;
 	std::string name;
-
 };

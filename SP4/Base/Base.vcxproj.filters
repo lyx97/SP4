@@ -13,9 +13,6 @@
     <ClCompile Include="Source\Camera\Camera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\Chaser.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Source\EntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -146,9 +143,6 @@
     </ClInclude>
     <ClInclude Include="Source\Application.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\Chaser.h">
-      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Header Files</Filter>

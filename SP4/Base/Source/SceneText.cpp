@@ -74,17 +74,10 @@ void SceneText::Init()
 	m_orthoHeight = 200;
 	m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 
-	//camera.entityList.push_back(playerInfo->GetInstance()->GetPosition());
-
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 
 	// Init Meshes
 	MeshBuilder::GetInstance()->Init();
-
-    //spa1->Init(20, 20, 10, 10, 0, 0);
-    ////spa1->SetMesh("GRIDMESH");
-    ////CSpatialPartition::GetInstance()->SetCamera(&camera);
-    //EntityManager::GetInstance()->SetSpatialPartition(spa1);
 
     unsigned seed = time(NULL);
     srand(seed);
@@ -96,45 +89,6 @@ void SceneText::Init()
     playerInfo = CPlayerInfo::GetInstance();
     playerInfo->SetRoomID(0);
     playerInfo->Init();
-
-	// Create entities into the scene
-	//Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
-	//Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
-
-    // Create a Waypoint inside WaypointManager
-    //lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_1");
-    //int aWayPoint = CWaypointManager::GetInstance()->AddWaypoint(
-    //    Vector3(
-    //    CLuaInterface::GetInstance()->GetField("x"),
-    //    CLuaInterface::GetInstance()->GetField("y"),
-    //    CLuaInterface::GetInstance()->GetField("z")
-    //    ));
-
-    //lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_2");
-    //int anotherWayPoint = CWaypointManager::GetInstance()->AddWaypoint(
-    //    aWayPoint,
-    //    Vector3(
-    //    CLuaInterface::GetInstance()->GetField("x"),
-    //    CLuaInterface::GetInstance()->GetField("y"),
-    //    CLuaInterface::GetInstance()->GetField("z")
-    //    ));
-
-    //lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_3");
-    //CWaypointManager::GetInstance()->AddWaypoint(
-    //    anotherWayPoint,
-    //    Vector3(
-    //    CLuaInterface::GetInstance()->GetField("x"),
-    //    CLuaInterface::GetInstance()->GetField("y"),
-    //    CLuaInterface::GetInstance()->GetField("z")
-    //    ));
-
-    //CWaypointManager::GetInstance()->PrintSelf();
-
-    // Create a CEnemy instance
-    //enemy2D = new Enemy2D();
-    //enemy2D->Init();
-
-	//Create::Sprite2DObject("crosshair", Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f));
 
     minimap = new CMinimap();
 
@@ -153,8 +107,14 @@ void SceneText::Init()
 
     //Skull* skull = new Skull(0);
 
-    //Spitter* spitter = new Spitter(0);
-
+	for (int i = 0; i < 10; ++i)
+	{
+		Spitter* spitter = new Spitter(0);
+		spitter->SetPosition(Vector3(
+			Math::RandFloatMinMax(-100, 100),
+			1,
+			Math::RandFloatMinMax(-100, 100)));
+	}
     //Obstacle* obs = new Obstacle(Vector3(20, 0, 0), 0);
     //CLevel::GetInstance()->GetRoom(0)->GetSpatialPartition()->GetGrid(obs->GetIndex().x, obs->GetIndex().z)->SetType(GRID_TYPE::OBSTACLE);
 

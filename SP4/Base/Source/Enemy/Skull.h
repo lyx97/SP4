@@ -46,9 +46,8 @@ private:
 	SpriteAnimation* transformedLeft;
 	SpriteAnimation* transformedRight;
 
-
     FSM fsm;
-	bool tranformed;
+	bool transformed;
 
 public:
     Skull(const int _roomID);

@@ -177,7 +177,7 @@ void Application::Init()
 	SceneManager::GetInstance()->AddScene("GameState", new SceneText());
 
 	// Set the active scene
-	SceneManager::GetInstance()->SetActiveScene("IntroState");
+	SceneManager::GetInstance()->SetActiveScene("GameState");
 }
 
 void Application::Run()

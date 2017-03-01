@@ -21,6 +21,7 @@ Spitter::Spitter(const int _roomID)
     this->isDone = false;
     this->m_bCollider = true;
     this->m_bLaser = false;
+	this->damage = 5.f;
 
     this->m_eEntityType = EntityBase::ENEMY;
 
@@ -68,13 +69,10 @@ Spitter::Spitter(const int _roomID)
 
     currentAnimation = moveLeft;
 
-    health = 10;
-    roomID = _roomID;
+	maxHealth = 75;
+	health = maxHealth;
 
-    this->SetCollider(true);
-    int x = scale.x, y = scale.y;
-    x = (x >> 1) - 5; y = (y >> 1) - 5;
-    this->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
+    roomID = _roomID;
 
     EntityManager::GetInstance()->AddEntity(this, roomID);
 
@@ -117,6 +115,17 @@ void Spitter::Update(double dt)
     //}
 
     //cout << velocity << endl;
+
+	if (nightmare)
+	{
+		m_dSpeed = 50.0f;
+		damage = 10.f;
+	}
+	else
+	{
+		m_dSpeed = 30.0f;
+		damage = 5.f;
+	}
 
 	if (health <= 0)
     {
@@ -173,7 +182,8 @@ void Spitter::Update(double dt)
             CSpit* spit = Create::Spit(
                 position,
                 temp,
-                100.f);
+                170.f,
+				damage);
 
             m_bAttackAnimation = false;
         }
@@ -195,7 +205,10 @@ void Spitter::Update(double dt)
     if (currentAnimation)
     {
         currentAnimation->m_anim->animActive = true;
-        currentAnimation->Update(dt * 1.f);
+		if (nightmare)
+			currentAnimation->Update(dt * 3.f);
+		else
+			currentAnimation->Update(dt * 1.f);
 
         if (fsm == FSM::DEAD && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
             SetIsDone(true);

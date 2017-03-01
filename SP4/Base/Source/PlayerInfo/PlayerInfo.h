@@ -131,6 +131,7 @@ private:
 	bool isMoving;
 	bool isDashed;
 	bool usingTreasure;
+	bool usedTreasure;
 
 	// player stats
 	float maxHealth;
@@ -152,6 +153,8 @@ private:
 	Treasure* treasure;
 	float defaultHealthRegenCooldown;
 	float defaultSpeed;
+	float defaultDamage;
+	float defaultFirerate;
 	
     // Room
     Vector3 prevIndex;

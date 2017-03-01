@@ -10,7 +10,7 @@ Skull::Skull(const int _roomID)
     , m_dResponseTime(0.0)
     , m_bAttackAnimation(false)
     , m_bAlive(true)
-	, tranformed(false)
+	, transformed(false)
 {
     this->position = Vector3(100, 0, 50);
     this->velocity = Vector3(0, 0, 0);
@@ -81,10 +81,8 @@ Skull::Skull(const int _roomID)
 
     currentAnimation = moveLeft;
 	
-	this->maxHealth = 100;
-	this->health = this->maxHealth;
-
-    this->SetCollider(true);
+	maxHealth = 75;
+	health = maxHealth;
 
 	roomID = _roomID;
 
@@ -144,24 +142,24 @@ void Skull::Update(double dt)
             m_dResponseTime = 0.0;
         }
     }
-	if (CPlayerInfo::GetInstance()->GetDreamBarRatio() <= 0.25f && !tranformed)
+	if (nightmare && !transformed)
 		fsm = FSM::TRANSFORMING;
 
 	if (fsm == FSM::TRANSFORMING && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
 	{
 		fsm = FSM::MOVE;
-		tranformed = true;
+		transformed = true;
 		m_dSpeed = 50.0f;
 		damage = 10.f;
 	}
 
-	if (CPlayerInfo::GetInstance()->GetDreamBarRatio() > 0.26f && tranformed)
+	if (!nightmare && transformed)
 		fsm = FSM::UNTRANSFORMING;
 
 	if (fsm == FSM::UNTRANSFORMING && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
 	{
 		fsm = FSM::MOVE;
-		tranformed = false;
+		transformed = false;
 		m_dSpeed = 30.0f;
 		damage = 5.f;
 	}
@@ -170,7 +168,7 @@ void Skull::Update(double dt)
     {
     case MOVE:
         position += velocity * dt * m_dSpeed * 0.5f;
-		if (!tranformed)
+		if (!transformed)
 		{
 			if (temp.x > 0)
 				currentAnimation = moveRight;
@@ -187,7 +185,7 @@ void Skull::Update(double dt)
         break;
     case CHASE:
         position += velocity * dt * m_dSpeed * 2;
-		if (!tranformed)
+		if (!transformed)
 		{
 			if (temp.x > 0)
 				currentAnimation = moveRight;
