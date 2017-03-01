@@ -4,17 +4,18 @@
 #include "SpatialPartition.h"
 
 static const int GRIDSIZE = 20;
+static const int ENEMYSPAWNCOUNT = 5;
 
 class EntityManager;
 class Powerup;
+class CLevel;
 
 enum ROOM_TYPE
 {
     STARTROOM = 0,
     ENEMYROOM,
-    SHOPROOM,
-    PUZZLEROOM,
     TREASUREROOM,
+    NEXTLEVELROOM,
     NUM_ROOMTYPE
 };
 
@@ -47,7 +48,7 @@ public:
     void Add(const int& roomID,
              const int& xNum, const int& zNum,
              const int& xIndex, const int& zIndex,
-             bool firstRoom = false);
+             ROOM_TYPE _type);
 
     // Spawn entities for each room generated
     void Spawn(void);
@@ -70,7 +71,7 @@ public:
     inline void SetPreviousRoomID(const int id) { m_iPreviousID = id; }
 
     inline const bool GetRoomCleared(void) { return m_bCleared; }
-    inline void SetRoomCleared(const bool cleared) { m_bCleared = cleared; }
+    inline void SetRoomCleared(void) { m_bCleared = true; }
 
     inline Vector3 GetIndex(void) { return index; }
     inline void SetIndex(const int xIndex, const int zIndex) { index = Vector3(xIndex, 0, zIndex); }

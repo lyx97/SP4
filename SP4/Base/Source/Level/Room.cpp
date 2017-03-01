@@ -3,7 +3,10 @@
 #include "../Items/Powerup.h"
 #include "../Enemy/FlyingTongue.h"
 #include "../Enemy/Skull.h"
+#include "../Enemy/Spitter.h"
+#include "../Enemy/Reaper.h"
 #include "../Obstacle/Obstacle.h"
+#include "Level.h"
 
 CRoom::CRoom()
     : m_iRoomID(-1)
@@ -12,7 +15,7 @@ CRoom::CRoom()
     , m_iMin_Z(-1)
     , m_iMax_Z(-1)
     , m_iPreviousID(-1)
-    , m_bCleared(true)
+    , m_bCleared(false)
     , index(Vector3(-1, -1, -1))
     , RoomSpatial(NULL)
 {
@@ -25,12 +28,10 @@ CRoom::~CRoom()
 
 }
 
-
-
 void CRoom::Add(const int& roomID,
                 const int& xNum, const int& zNum,
                 const int& xIndex, const int& zIndex,
-                bool firstRoom)
+                ROOM_TYPE _type)
 {
     // Create a new spatial partition for the room
     RoomSpatial = new CSpatialPartition();
@@ -38,27 +39,10 @@ void CRoom::Add(const int& roomID,
     EntityManager::GetInstance()->SetSpatialPartition(RoomSpatial);
 
     // Set room type
-    if (firstRoom)
-        m_eRoomType = ROOM_TYPE::STARTROOM;
-    else
-    {
-        int tempRand = Math::RandIntMinMax(1, NUM_ROOMTYPE - 1);
-        switch (tempRand)
-        {
-        case 1:
-            m_eRoomType = ROOM_TYPE::ENEMYROOM;
-            break;
-        case 2:
-            m_eRoomType = ROOM_TYPE::ENEMYROOM;
-            break;
-        case 3:
-            m_eRoomType = ROOM_TYPE::ENEMYROOM;
-            break;
-        case 4:
-            m_eRoomType = ROOM_TYPE::TREASUREROOM;
-            break;
-        }
-    }
+    m_eRoomType = _type;
+
+    // Set if room cleared
+    m_bCleared = false;
 
     // Set room ID
     m_iRoomID = roomID;
@@ -94,6 +78,8 @@ void CRoom::Add(const int& roomID,
 
 void CRoom::Spawn(void)
 {
+    list<Vector3> OccupiedGridList;
+
     switch (m_eRoomType)
     {
     case ROOM_TYPE::STARTROOM:
@@ -113,62 +99,105 @@ void CRoom::Spawn(void)
                 }
             }
         }
+
+        CLevel::GetInstance()->AddNumEnemyToList(0);
         break;
     }
     case ROOM_TYPE::ENEMYROOM:
     {
-        float spawnbias = 10.f;
-
-        for (int x = m_iMin_X + 1; x <= m_iMax_X - 1; ++x)
+        int enemyCount = 0;
+        while (enemyCount < ENEMYSPAWNCOUNT)
         {
-            for (int z = m_iMin_Z + 1; z <= m_iMax_Z - 1; ++z)
+            Vector3 tempPos = Vector3(
+                Math::RandIntMinMax(m_iMin_X + 1, m_iMax_X - 1),
+                0,
+                Math::RandIntMinMax(m_iMin_Z + 1, m_iMax_Z - 1));
+
+            bool spawn = true;
+
+            for (auto it : OccupiedGridList)
             {
-                if (spawnbias >= Math::RandFloatMinMax(0, 100))
+                if (it == tempPos)
+                    spawn = false;
+                    break;
+            }
+
+            if (spawn)
+            {
+                int randspawn = Math::RandIntMinMax(0, 2);
+
+                switch (randspawn)
                 {
-                    spawnbias *= 0.75f;
-
-                    int randspawn = Math::RandIntMinMax(0, 2);
-
-                    Skull* skull = new Skull(m_iRoomID);
-                    skull->SetPosition(RoomSpatial->GetGridPos(x, z));
-
-                    //switch (randspawn)
-                    //{
-                    //case 0:
-                    //{                    
-                    //    //Obstacle* obstacle = new Obstacle(room->GetRoomID());
-                    //    //obstacle->SetPosition(room->GetSpatialPartition()->GetGridPos(x, z));
-                    //    break;
-                    //}
-                    //case 1:
-                    //{
-                    //    FlyingTongue* flyingtongue = new FlyingTongue(room->GetRoomID());
-                    //    flyingtongue->SetPosition(room->GetSpatialPartition()->GetGridPos(x, z));
-                    //    break;
-                    //}
-                    //case 2:
-                    //{
-                    //    Skull* skull = new Skull(room->GetRoomID());
-                    //    skull->SetPosition(room->GetSpatialPartition()->GetGridPos(x, z));
-                    //    break;
-                    //}
-                    //}
+                case 0:
+                {                    
+                    Spitter* spitter = new Spitter(m_iRoomID);
+                    spitter->SetPosition(RoomSpatial->GetGridPos(tempPos.x, tempPos.z));
+                    break;
                 }
+                case 1:
+                {
+                    FlyingTongue* flyingtongue = new FlyingTongue(m_iRoomID);
+                    flyingtongue->SetPosition(RoomSpatial->GetGridPos(tempPos.x, tempPos.z));
+                    break;
+                }
+                case 2:
+                {
+                    Skull* skull = new Skull(m_iRoomID);
+                    skull->SetPosition(RoomSpatial->GetGridPos(tempPos.x, tempPos.z));
+                    break;
+                }
+                }
+                enemyCount++;
             }
         }
-        break;
-    }
-    case ROOM_TYPE::SHOPROOM:
-    {
-        break;
-    }
-    case ROOM_TYPE::PUZZLEROOM:
-    {
+
+        int obstacleCount = Math::RandIntMinMax(0, 10);
+        while (obstacleCount != 0)
+        {
+            Vector3 tempPos = Vector3(
+                Math::RandIntMinMax(m_iMin_X + 1, m_iMax_X - 1),
+                0,
+                Math::RandIntMinMax(m_iMin_Z + 1, m_iMax_Z - 1));
+
+            bool spawn = true;
+
+            for (auto it : OccupiedGridList)
+            {
+                if (it == tempPos)
+                    spawn = false;
+                break;
+            }
+
+            if (spawn)
+            {
+                Obstacle* obstacle = new Obstacle(RoomSpatial->GetGridPos(tempPos.x, tempPos.z), m_iRoomID);
+                RoomSpatial->GetGrid(tempPos.x, tempPos.z)->SetType(GRID_TYPE::OBSTACLE);
+                obstacleCount--;
+            }
+        }
+
+        CLevel::GetInstance()->AddNumEnemyToList(ENEMYSPAWNCOUNT);
         break;
     }
     case ROOM_TYPE::TREASUREROOM:
     {
-       // Treasure* newTreasure = new Treasure(m_iRoomID);
+        Treasure* newTreasure = new Treasure(m_iRoomID);
+        CLevel::GetInstance()->AddNumEnemyToList(0);
+        break;
+    }
+    case ROOM_TYPE::NEXTLEVELROOM:
+    {
+        if (CLevel::GetInstance()->GetLevel() == 3)
+        {
+            Reaper* reaper = new Reaper(m_iRoomID);
+            CLevel::GetInstance()->AddNumEnemyToList(1);
+        }
+        else
+        {
+            // SPAWN NEXT LEVEL DOOR
+
+            CLevel::GetInstance()->AddNumEnemyToList(0);
+        }
         break;
     }
     }

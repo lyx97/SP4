@@ -162,8 +162,7 @@ void CGenerateHeatmap::CalculateDirection(CHeatmap** heatmap, const int xSize, c
                                 if (lowest > temp)
                                 {
                                     lowest = temp;
-                                    if (!(heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()).IsZero())
-                                        heatmap[x][z].SetDir((heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()).Normalized());
+                                    heatmap[x][z].SetDir((heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()));
                                 }
                             }
                         }
@@ -188,8 +187,7 @@ void CGenerateHeatmap::CalculateDirection(CHeatmap** heatmap, const int xSize, c
                                 if (lowest > temp)
                                 {
                                     lowest = temp;
-                                    if (!(heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()).IsZero())
-                                        heatmap[x][z].SetDir((heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()).Normalized());
+                                    heatmap[x][z].SetDir((heatmap[x + i][z + j].GetPos() - heatmap[x][z].GetPos()));
                                 }
                             }
                         }

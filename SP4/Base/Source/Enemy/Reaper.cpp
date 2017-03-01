@@ -4,7 +4,7 @@
 #include "RenderHelper.h"
 #include "../EntityManager.h"
 #include "../Level/Level.h"
-#include "../Projectile/Spit.h"
+#include "../Projectile/Scythe.h"
 #include "LoadTGA.h"
 
 Reaper::Reaper(const int _roomID)
@@ -13,8 +13,9 @@ Reaper::Reaper(const int _roomID)
     , m_dResponseTime(0.0)
     , m_bAttackAnimation(false)
     , m_bAlive(true)
+    , m_bInvulnerable(true)
 {
-    this->position = Vector3(100, 0, 0);
+    this->position = Vector3(0, 0, 0);
     this->scale = Vector3(100, 100, 0);
     this->velocity = Vector3(0, 0, 0);
 
@@ -34,17 +35,39 @@ Reaper::Reaper(const int _roomID)
     moveRight->m_anim = new Animation;
     moveRight->m_anim->Set(0, 3, 1, 1.f, true);
 
+    moveLeft2 = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 7);
+    moveLeft2->textureID = LoadTGA("Image//Boss//reaper2_moveleft.tga");
+    moveLeft2->m_anim = new Animation;
+    moveLeft2->m_anim->Set(0, 6, 1, 1.f, true);
+
+    moveRight2 = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 7);
+    moveRight2->textureID = LoadTGA("Image//Boss//reaper2_moveright.tga");
+    moveRight2->m_anim = new Animation;
+    moveRight2->m_anim->Set(0, 6, 1, 1.f, true);
+
     attackLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 5);
     attackLeft->textureID = LoadTGA("Image//Boss//reaper_attackleft.tga");
     attackLeft->m_anim = new Animation;
     attackLeft->m_anim->Set(0, 4, 1, 2.0f, true);
-    attackLeft->SetAttackFrame(11);
+    attackLeft->SetAttackFrame(4);
 
     attackRight = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 5);
     attackRight->textureID = LoadTGA("Image//Boss//reaper_attackright.tga");
     attackRight->m_anim = new Animation;
     attackRight->m_anim->Set(0, 4, 1, 2.0f, true);
-    attackRight->SetAttackFrame(11);
+    attackRight->SetAttackFrame(4);
+
+    scytheattackLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 5);
+    scytheattackLeft->textureID = LoadTGA("Image//Boss//reaper_scytheattackleft.tga");
+    scytheattackLeft->m_anim = new Animation;
+    scytheattackLeft->m_anim->Set(0, 4, 1, 2.0f, true);
+    scytheattackLeft->SetAttackFrame(4);
+
+    scytheattackRight = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 5);
+    scytheattackRight->textureID = LoadTGA("Image//Boss//reaper_attackright.tga");
+    scytheattackRight->m_anim = new Animation;
+    scytheattackRight->m_anim->Set(0, 4, 1, 2.0f, true);
+    scytheattackRight->SetAttackFrame(4);
 
     dieLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 6);
     dieLeft->textureID = LoadTGA("Image//Boss//reaper_dieleft.tga");
@@ -56,19 +79,10 @@ Reaper::Reaper(const int _roomID)
     dieRight->m_anim = new Animation;
     dieRight->m_anim->Set(0, 5, 1, 1.f, true);
 
-    smoke = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 5);
-    smoke->textureID = LoadTGA("Image//Boss//reaper_smoke.tga");
-    smoke->m_anim = new Animation;
-    smoke->m_anim->Set(0, 4, 1, 1.f, true);
-
-    scythe = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 2);
-    scythe->textureID = LoadTGA("Image//Boss//reaper_scythe.tga");
-    scythe->m_anim = new Animation;
-    scythe->m_anim->Set(0, 1, 1, 1.f, true);
-
     currentAnimation = moveLeft;
 
-	health = 100;
+    maxHealth = 100;
+    health = maxHealth;
     roomID = _roomID;
 
     this->SetCollider(true);
@@ -79,11 +93,21 @@ Reaper::Reaper(const int _roomID)
     EntityManager::GetInstance()->AddEntity(this, roomID);
 
     // Boundary
-    CRoom* room = CLevel::GetInstance()->GetRoom(roomID);
-    int xSize = room->GetRoomXMax();
-    int zSize = room->GetRoomZMax();
-    minBoundary.Set(room->GetSpatialPartition()->GetGridPos(1, 1) - Vector3(GRIDSIZE, 0, GRIDSIZE));
-    maxBoundary.Set(room->GetSpatialPartition()->GetGridPos(xSize - 1, zSize - 1) + Vector3(GRIDSIZE, 0, GRIDSIZE));
+    minBoundary.Set(CPlayerInfo::GetInstance()->GetMinBoundary());
+    maxBoundary.Set(CPlayerInfo::GetInstance()->GetMaxBoundary());
+
+    // Smoke
+    Vector3 smokePos[4];
+    smokePos[0] = Vector3(position.x - 125, 0, position.z);
+    smokePos[1] = Vector3(position.x + 125, 0, position.z);
+    smokePos[2] = Vector3(position.x, 0, position.z - 125);
+    smokePos[3] = Vector3(position.x, 0, position.z + 125);
+
+    for (int i = 0; i < 4; ++i)
+    {
+        m_bSmokeActive[i] = true;
+        smoke[i] = new Smoke(smokePos[i], roomID);
+    }
 }
 
 Reaper::~Reaper()
@@ -92,9 +116,17 @@ Reaper::~Reaper()
     delete moveRight;
     delete attackLeft;
     delete attackRight;
+    delete scytheattackLeft;
+    delete scytheattackRight;
     delete dieLeft;
     delete dieRight;
-    delete smoke;
+
+    delete moveLeft2;
+    delete moveRight2;
+    //delete attackLeft2;
+    //delete attackRight2;
+    //delete dieLeft2;
+    //delete dieRight2;
 }
 
 void Reaper::Update(double dt)
@@ -108,49 +140,120 @@ void Reaper::Update(double dt)
 
     m_dResponseTime += dt;
 
+    if (m_bInvulnerable)
+    {
+        health = maxHealth;
+
+        for (int i = 0; i < 4; ++i)
+        {
+            if (!smoke[i]->IsDone())
+                m_bSmokeActive[i] = true;
+            else
+                m_bSmokeActive[i] = false;
+        }
+
+        m_bInvulnerable = false;
+        for (int i = 0; i < 4; ++i)
+        {
+            if (m_bSmokeActive[i])
+            {
+                m_bInvulnerable = true;
+                break;
+            }
+        }
+    }
+
+    Vector3 temp = CPlayerInfo::GetInstance()->GetPosition() - position;
+
 	if (health <= 0)
     {
         fsm = FSM::DEAD;
     }
     else
     {
-        if ((position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() <= 2000
-            && m_dResponseTime >= m_dResponse)
+        if (m_bInvulnerable)
         {
-            fsm = FSM::ATTACK;
-            m_dResponseTime = 0.0;
+            fsm = FSM::SMOKEATTACK;
         }
-        else if (m_dResponseTime >= m_dResponse)
+        else
         {
-            fsm = FSM::MOVE;
-            m_dResponseTime = 0.0;
+            //if (m_dResponseTime >= m_dResponse)
+            //{
+            //    if (temp.LengthSquared() <= 3000)
+            //        fsm = FSM::SCYTHEATTACK;
+            //    else
+            //        fsm = FSM::MOVE;
+
+            //    m_dResponseTime = 0.0;
+            //}
+            fsm = FSM::SCYTHEATTACK;
+
         }
     }
 
     switch (fsm)
     {
-    case MOVE:
-        //position += velocity.Normalized() * dt * m_dSpeed;
+    //case MOVE:
+    //    position += velocity * dt * m_dSpeed * 2;
 
-        if (velocity.x > 0)
-            currentAnimation = moveRight;
-        else
-            currentAnimation = moveLeft;
-        break;
-    case ATTACK:
-        if (velocity.x > 0)
+    //    if (temp.x > 0)
+    //        currentAnimation = moveRight;
+    //    else
+    //        currentAnimation = moveLeft;
+    //    break;
+    case SMOKEATTACK:
+        if (temp.x > 0)
             currentAnimation = attackRight;
         else
             currentAnimation = attackLeft;
 
         if (currentAnimation->GetAttack() && m_bAttackAnimation)
         {
-            Vector3 temp = CPlayerInfo::GetInstance()->GetPosition() - position;
-            CSpit* spit = Create::Spit(
+            float scythespeed = 1.5f;
+            for (int i = 0; i < 4; ++i)
+            {
+                if (m_bSmokeActive[i])
+                    scythespeed -= 0.2f;
+            }
+            for (int i = 0; i < 4; ++i)
+            {
+                if (m_bSmokeActive[i])
+                {
+                    Vector3 tempPos = smoke[i]->GetPosition();
+
+                    temp = CPlayerInfo::GetInstance()->GetPosition() - tempPos;
+
+                    CScythe* scythe = Create::Scythe(
+                        tempPos,
+                        temp,
+                        scythespeed);
+                }
+            }
+
+            m_bAttackAnimation = false;
+        }
+        if (!currentAnimation->GetAttack())
+            m_bAttackAnimation = true;
+
+        break;
+    case SCYTHEATTACK:
+        currentAnimation->SetCurrentFrame(0);
+
+        if (temp.x > 0)
+            currentAnimation = attackRight;
+        else
+            currentAnimation = attackLeft;
+
+        if (currentAnimation->GetAttack() && m_bAttackAnimation)
+        {
+            temp = CPlayerInfo::GetInstance()->GetPosition() - position;
+
+            CScythe* scythe = Create::Scythe(
                 position,
                 temp,
-                60.f,
-				damage);
+                5.0f,
+                0.5f,
+                true);
 
             m_bAttackAnimation = false;
         }
@@ -159,7 +262,7 @@ void Reaper::Update(double dt)
 
         break;
     case DEAD:
-        if (velocity.x > 0)
+        if (temp.x > 0)
             currentAnimation = dieRight;
         else
             currentAnimation = dieLeft;
@@ -169,16 +272,18 @@ void Reaper::Update(double dt)
     if (currentAnimation)
     {
         currentAnimation->m_anim->animActive = true;
-        currentAnimation->Update(dt * 1.f);
+        if (fsm == FSM::MOVE)
+            currentAnimation->Update(dt * 10.f);
+        else if (fsm == FSM::SCYTHEATTACK)
+            currentAnimation->Update(dt * 5.f);
+        else
+            currentAnimation->Update(dt * 1.f);
 
         if (fsm == FSM::DEAD && currentAnimation->GetCurrentFrame() == currentAnimation->m_anim->endFrame)
+        {
             SetIsDone(true);
-    }
-
-    if (scythe)
-    {
-        scythe->m_anim->animActive = true;
-        scythe->Update(dt * 1.f);
+            return;
+        }
     }
 
     if (prevHP != health)
@@ -187,14 +292,13 @@ void Reaper::Update(double dt)
         HPScale = ((float)health / 100.f) * 100.f;
     }
 
-    bob += dt * 1000;
-
     Enemy2D::Update(dt);
 }
 
 void Reaper::Render(float& _renderOrder)
 {
-	Enemy2D::Render(_renderOrder);
+    if (!m_bInvulnerable)
+	    Enemy2D::Render(_renderOrder);
 
     glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
@@ -206,22 +310,6 @@ void Reaper::Render(float& _renderOrder)
     modelStack.Scale(scale.x, scale.y, scale.z);
     //RenderHelper::RenderMesh(smoke);
     RenderHelper::RenderMesh(currentAnimation);
-    modelStack.PopMatrix();
-
-    modelStack.PushMatrix();
-    modelStack.Translate(position.x, position.y + _renderOrder, position.z + 1);
-    modelStack.Rotate(bob, 0, 1, 0);
-    modelStack.Rotate(90, -1, 0, 0);    
-    modelStack.Scale(scale.x * 2, scale.y * 2, scale.z * 2);
-    //RenderHelper::RenderMesh(smoke);
-    RenderHelper::RenderMesh(scythe);
-    modelStack.PopMatrix();
-
-    // FOR HP BAR
-    modelStack.PushMatrix();
-    modelStack.Translate(position.x, position.y + (scale.y * 0.5f), position.z);
-    modelStack.Scale(HPScale, 20, 1);
-    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("wall"));
     modelStack.PopMatrix();
 
     glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);

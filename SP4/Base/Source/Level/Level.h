@@ -16,14 +16,13 @@ class CLevel : public Singleton<CLevel>
 {
     friend Singleton<CLevel>;
 protected:
-
+    int m_iLevel = 1;
     int m_iRoomID;
 
     float m_fRoomBias;
 
-    bool m_bLevelChanged;
-
     std::vector<Vector3> roomIndexList;
+    std::vector<int> roomNumEnemyList;
     std::vector<CRoom*> roomList;
 
     std::queue<Vector3> expandList;
@@ -50,14 +49,19 @@ public:
 
     void ExpandRoom(void);
 
+    void AddSpecialRoom(const int xSize, const int zSize,
+                        ROOM_TYPE _type);
+
     // Link room
     void SetDoor(CRoom* room);
-
-    void CleanRoomList(void);
 
     inline int GetNumRoom(void) { return roomList.size(); }
     inline std::vector<Vector3> GetRoomIndex(void) { return roomIndexList; }
 
-    inline bool GetLevelChanged(void) { return m_bLevelChanged; }
-    inline void SetLevelChanged(bool levelchange) { this->m_bLevelChanged = levelchange; }
+    inline int GetLevel(void) { return m_iLevel; }
+    inline void IncreaseLevel(void) { m_iLevel += 1; }
+
+    inline void AddNumEnemyToList(const int _value) { roomNumEnemyList.push_back(_value); }
+    inline void DecreaseEnemyInList(const int _roomID) { roomNumEnemyList[_roomID]--; }
+    inline int GetNumEnemyFromList(const int _roomID) { return roomNumEnemyList[_roomID]; }
 };

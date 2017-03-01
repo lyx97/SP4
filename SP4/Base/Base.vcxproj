@@ -13,9 +13,13 @@
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Camera\Camera.cpp" />
+<<<<<<< 195e930d6ad09e8af84db816edd6f273b1375f1b
     <ClCompile Include="Source\Enemy\Enemy.cpp" />
+=======
+>>>>>>> 3b06c6b1274316aba62b3a55ebd98c51b1ed8914
     <ClCompile Include="Source\Enemy\Enemy2D.cpp" />
     <ClCompile Include="Source\Enemy\Reaper.cpp" />
+    <ClCompile Include="Source\Enemy\Smoke.cpp" />
     <ClCompile Include="Source\Enemy\Spitter.cpp" />
     <ClCompile Include="Source\Enemy\FlyingTongue.cpp" />
     <ClCompile Include="Source\Enemy\Skull.cpp" />
@@ -45,6 +49,7 @@
     <ClCompile Include="Source\Projectile\Ghast.cpp" />
     <ClCompile Include="Source\Projectile\Laser.cpp" />
     <ClCompile Include="Source\Projectile\Projectile.cpp" />
+    <ClCompile Include="Source\Projectile\Scythe.cpp" />
     <ClCompile Include="Source\Projectile\Spit.cpp" />
     <ClCompile Include="Source\SceneGraph\Transform.cpp" />
     <ClCompile Include="Source\SceneGraph\UpdateTransformation.cpp" />
@@ -58,9 +63,13 @@
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Camera\Camera.h" />
+<<<<<<< 195e930d6ad09e8af84db816edd6f273b1375f1b
     <ClInclude Include="Source\Enemy\Enemy.h" />
+=======
+>>>>>>> 3b06c6b1274316aba62b3a55ebd98c51b1ed8914
     <ClInclude Include="Source\Enemy\Enemy2D.h" />
     <ClInclude Include="Source\Enemy\Reaper.h" />
+    <ClInclude Include="Source\Enemy\Smoke.h" />
     <ClInclude Include="Source\Enemy\Spitter.h" />
     <ClInclude Include="Source\Enemy\FlyingTongue.h" />
     <ClInclude Include="Source\Enemy\Skull.h" />
@@ -94,6 +103,7 @@
     <ClInclude Include="Source\Projectile\Ghast.h" />
     <ClInclude Include="Source\Projectile\Laser.h" />
     <ClInclude Include="Source\Projectile\Projectile.h" />
+    <ClInclude Include="Source\Projectile\Scythe.h" />
     <ClInclude Include="Source\Projectile\Spit.h" />
     <ClInclude Include="Source\SceneGraph\Transform.h" />
     <ClInclude Include="Source\SceneGraph\UpdateTransformation.h" />

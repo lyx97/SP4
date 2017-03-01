@@ -55,6 +55,9 @@ public:
 
     // Set boundary
 	void SetBoundary(Vector3 max, Vector3 min);
+    // Get boundary
+    inline Vector3 GetMinBoundary(void) { return minBoundary; }
+    inline Vector3 GetMaxBoundary(void) { return maxBoundary; }
 
 	// Update
 	void Update(double dt = 0.0333f);
@@ -66,6 +69,11 @@ public:
 
     inline Vector3 GetDirection(void) const { return direction; }
     inline void SetDirection(Vector3 dir) { direction = dir; }
+
+    inline void SetPositionX(const float _value) { position.x = _value; }
+    inline void SetPositionZ(const float _value) { position.x = _value; }
+    inline void SetVelocityX(const float _value) { velocity.x = _value; }
+    inline void SetVelocityZ(const float _value) { velocity.x = _value; }
     
 	void RecoverHealth();
 	void Shoot(Vector3 dir);

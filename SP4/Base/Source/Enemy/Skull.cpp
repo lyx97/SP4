@@ -15,7 +15,6 @@ Skull::Skull(const int _roomID)
     this->position = Vector3(100, 0, 50);
     this->velocity = Vector3(0, 0, 0);
 	this->heatmapDir = Vector3(0, 0, 0);
-	this->damage = 5.f;
 
     moveLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 4);
     moveLeft->textureID = LoadTGA("Image//Enemy//skull_moveleft.tga");
@@ -87,6 +86,10 @@ Skull::Skull(const int _roomID)
 	roomID = _roomID;
 
 	EntityManager::GetInstance()->AddEntity(this, roomID);
+
+    // Boundary
+    minBoundary.Set(CPlayerInfo::GetInstance()->GetMinBoundary());
+    maxBoundary.Set(CPlayerInfo::GetInstance()->GetMaxBoundary());
 }
 
 Skull::~Skull()
@@ -167,7 +170,7 @@ void Skull::Update(double dt)
     switch (fsm)
     {
     case MOVE:
-        position += velocity * dt * m_dSpeed * 0.5f;
+        position += velocity * dt * m_dSpeed * 0.5;
 		if (!transformed)
 		{
 			if (temp.x > 0)
@@ -184,7 +187,7 @@ void Skull::Update(double dt)
 		}
         break;
     case CHASE:
-        position += velocity * dt * m_dSpeed * 2;
+        position += velocity * dt * m_dSpeed * 2.0;
 		if (!transformed)
 		{
 			if (temp.x > 0)
@@ -279,5 +282,25 @@ void Skull::Render(float& _renderOrder)
 
 void Skull::Constrain()
 {
-
+    // Constrain entity within the boundary
+    if (position.x > maxBoundary.x - 1.0f)
+    {
+        position.x = maxBoundary.x - 1.0f;
+        velocity.x = 0;
+    }
+    if (position.z > maxBoundary.z - 1.0f)
+    {
+        position.z = maxBoundary.z - 1.0f;
+        velocity.z = 0;
+    }
+    if (position.x < minBoundary.x + 1.0f)
+    {
+        position.x = minBoundary.x + 1.0f;
+        velocity.x = 0;
+    }
+    if (position.z < minBoundary.z + 1.0f)
+    {
+        position.z = minBoundary.z + 1.0f;
+        velocity.z = 0;
+    }
 }

@@ -17,13 +17,7 @@ Spitter::Spitter(const int _roomID)
     this->position = Vector3(100, 0, 0);
     this->scale = Vector3(30, 30, 0);
     this->velocity = Vector3(0, 0, 0);
-
-    this->isDone = false;
-    this->m_bCollider = true;
-    this->m_bLaser = false;
-	this->damage = 5.f;
-
-    this->m_eEntityType = EntityBase::ENEMY;
+    this->heatmapDir = Vector3(0, 0, 0);
 
     idleLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 4);
     idleLeft->textureID = LoadTGA("Image//Enemy//spitter_idleleft.tga");
@@ -77,11 +71,8 @@ Spitter::Spitter(const int _roomID)
     EntityManager::GetInstance()->AddEntity(this, roomID);
 
     // Boundary
-    CRoom* room = CLevel::GetInstance()->GetRoom(roomID);
-    int xSize = room->GetRoomXMax();
-    int zSize = room->GetRoomZMax();
-    minBoundary.Set(room->GetSpatialPartition()->GetGridPos(1, 1) - Vector3(GRIDSIZE, 0, GRIDSIZE));
-    maxBoundary.Set(room->GetSpatialPartition()->GetGridPos(xSize - 1, zSize - 1) + Vector3(GRIDSIZE, 0, GRIDSIZE));
+    minBoundary.Set(CPlayerInfo::GetInstance()->GetMinBoundary());
+    maxBoundary.Set(CPlayerInfo::GetInstance()->GetMaxBoundary());
 }
 
 Spitter::~Spitter()
@@ -215,6 +206,8 @@ void Spitter::Update(double dt)
     }
 
 	Enemy2D::Update(dt);
+
+    velocity.SetZero();
 }
 
 void Spitter::Render(float& _renderOrder)
@@ -237,14 +230,12 @@ void Spitter::Render(float& _renderOrder)
 
 void Spitter::Constrain()
 {
-    // Constrain player within the boundary
+    // Constrain entity within the boundary
     if (position.x > maxBoundary.x - 1.0f)
     {
         position.x = maxBoundary.x - 1.0f;
         velocity.x = 0;
     }
-    //if (position.y > maxBoundary.y - 1.0f)
-    //	position.y = maxBoundary.y - 1.0f;
     if (position.z > maxBoundary.z - 1.0f)
     {
         position.z = maxBoundary.z - 1.0f;
@@ -255,8 +246,6 @@ void Spitter::Constrain()
         position.x = minBoundary.x + 1.0f;
         velocity.x = 0;
     }
-    //if (position.y < minBoundary.y + 1.0f)
-    //	position.y = minBoundary.y + 1.0f;
     if (position.z < minBoundary.z + 1.0f)
     {
         position.z = minBoundary.z + 1.0f;

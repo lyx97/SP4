@@ -2,6 +2,7 @@
 
 #include "../SpriteAnimation/SpriteAnimation.h"
 #include "Enemy2D.h"
+#include "Smoke.h"
 
 class CLevel;
 class CPlayerInfo;
@@ -12,7 +13,8 @@ private:
     enum FSM
     {
         MOVE,
-        ATTACK,   
+        SMOKEATTACK,
+        SCYTHEATTACK,
         DEAD,
         NUM_FSM
     };
@@ -23,15 +25,14 @@ private:
     double m_dAcceleration;
     double m_dResponseTime;
 
-    const double m_dResponse = 1.0;
+    const double m_dResponse = 2.0;
 
     bool m_bAttackAnimation;
     bool m_bAlive;
+    bool m_bInvulnerable;
 
     float HPScale;
     int prevHP;
-
-    float bob = 0;
 
     SpriteAnimation* currentAnimation;
 
@@ -39,11 +40,20 @@ private:
     SpriteAnimation* moveRight;
     SpriteAnimation* attackLeft;
     SpriteAnimation* attackRight;
+    SpriteAnimation* scytheattackLeft;
+    SpriteAnimation* scytheattackRight;
     SpriteAnimation* dieLeft;
     SpriteAnimation* dieRight;
 
-    SpriteAnimation* smoke;
-    SpriteAnimation* scythe;
+    SpriteAnimation* moveLeft2;
+    SpriteAnimation* moveRight2;
+    SpriteAnimation* attackLeft2;
+    SpriteAnimation* attackRight2;
+    SpriteAnimation* dieLeft2;
+    SpriteAnimation* dieRight2;
+    
+    Smoke* smoke[4];
+    bool m_bSmokeActive[4];
 
     FSM fsm;
 

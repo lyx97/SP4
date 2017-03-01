@@ -22,7 +22,7 @@ Obstacle::Obstacle(const Vector3 _pos, const int _roomID)
 
     this->SetCollider(true);
     int x = scale.x, y = scale.y;
-    x = (x >> 1) - 5; y = (y >> 1) - 5;
+    x = (x >> 1); y = (y >> 1);
     this->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
 
     EntityManager::GetInstance()->AddEntity(this, roomID);

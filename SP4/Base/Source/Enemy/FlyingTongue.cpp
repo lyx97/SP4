@@ -15,13 +15,7 @@ FlyingTongue::FlyingTongue(const int _roomID)
     this->position = Vector3(100, 0, 0);
     this->scale = Vector3(30, 30, 0);
     this->velocity = Vector3(0, 0, 0);
-
-    this->isDone = false;
-    this->m_bCollider = true;
-    this->m_bLaser = false;
-	this->damage = 5.0f;
-
-    this->m_eEntityType = EntityBase::ENEMY;
+    this->heatmapDir = Vector3(0, 0, 0);
     
     moveLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 5);
     moveLeft->textureID = LoadTGA("Image//Enemy//flyingtongue_moveleft.tga");
@@ -63,6 +57,10 @@ FlyingTongue::FlyingTongue(const int _roomID)
     roomID = _roomID;
 
     EntityManager::GetInstance()->AddEntity(this, roomID);
+
+    // Boundary
+    minBoundary.Set(CPlayerInfo::GetInstance()->GetMinBoundary());
+    maxBoundary.Set(CPlayerInfo::GetInstance()->GetMaxBoundary());
 }
 
 FlyingTongue::~FlyingTongue()
@@ -82,7 +80,8 @@ void FlyingTongue::Update(double dt)
     int x = index.x;
     int z = index.z;
 
-    velocity = heatmap[x][z].GetDir();
+    heatmapDir = heatmap[x][z].GetDir();
+    velocity += heatmapDir;
 
     m_dResponseTime += dt;
 
@@ -106,7 +105,7 @@ void FlyingTongue::Update(double dt)
     }
     else
     {
-        if (temp.LengthSquared() <= 10000
+        if (temp.LengthSquared() <= 20000
             && m_dResponseTime >= m_dResponse)
         {
             fsm = FSM::ATTACK;
@@ -172,6 +171,8 @@ void FlyingTongue::Update(double dt)
     }
 
 	Enemy2D::Update(dt);
+
+    velocity.SetZero();
 }
 
 void FlyingTongue::Render(float& _renderOrder)
@@ -194,5 +195,25 @@ void FlyingTongue::Render(float& _renderOrder)
 
 void FlyingTongue::Constrain()
 {
-
+    // Constrain entity within the boundary
+    if (position.x > maxBoundary.x - 1.0f)
+    {
+        position.x = maxBoundary.x - 1.0f;
+        velocity.x = 0;
+    }
+    if (position.z > maxBoundary.z - 1.0f)
+    {
+        position.z = maxBoundary.z - 1.0f;
+        velocity.z = 0;
+    }
+    if (position.x < minBoundary.x + 1.0f)
+    {
+        position.x = minBoundary.x + 1.0f;
+        velocity.x = 0;
+    }
+    if (position.z < minBoundary.z + 1.0f)
+    {
+        position.z = minBoundary.z + 1.0f;
+        velocity.z = 0;
+    }
 }

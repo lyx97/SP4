@@ -106,15 +106,9 @@ void SceneText::Init()
     //FlyingTongue* tongy = new FlyingTongue(0);
 
     //Skull* skull = new Skull(0);
-
-	for (int i = 0; i < 10; ++i)
-	{
-		Spitter* spitter = new Spitter(0);
-		spitter->SetPosition(Vector3(
-			Math::RandFloatMinMax(-100, 100),
-			1,
-			Math::RandFloatMinMax(-100, 100)));
-	}
+    
+    //Spitter* spitter = new Spitter(0);
+    
     //Obstacle* obs = new Obstacle(Vector3(20, 0, 0), 0);
     //CLevel::GetInstance()->GetRoom(0)->GetSpatialPartition()->GetGrid(obs->GetIndex().x, obs->GetIndex().z)->SetType(GRID_TYPE::OBSTACLE);
 
@@ -230,9 +224,9 @@ void SceneText::Update(double dt)
 			m_orthoHeight++;
 			m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
 		}
-        if (KeyboardController::GetInstance()->IsKeyDown('L'))
+        if (KeyboardController::GetInstance()->IsKeyPressed('L'))
         {
-            EntityManager::GetInstance()->GetSpatialPartition(CPlayerInfo::GetInstance()->GetRoomID())->Remove(playerInfo);
+            EntityManager::GetInstance()->ResetEntities();
             EntityManager::GetInstance()->RemoveSpatialPartition();
             CLevel::GetInstance()->Init(100);
             playerInfo->SetRoomID(0);  

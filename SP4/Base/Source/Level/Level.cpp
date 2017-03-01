@@ -7,7 +7,7 @@
 
 
 CLevel::CLevel()
-    : m_iRoomID(0)
+    : m_iRoomID(1)
     , m_fRoomBias(0.f)
     , roomIndexList(NULL)
     , roomList(NULL)
@@ -22,11 +22,14 @@ CLevel::~CLevel()
 void CLevel::Init(const float room_bias)
 {
     roomIndexList.clear();
+    roomNumEnemyList.clear();
     roomList.clear();
     roomMap.clear();
 
     m_iRoomID = 0;
     m_fRoomBias = room_bias;
+
+    cout << "LEVEL: " << m_iLevel << endl;
 
     roomIndexList.push_back(Vector3(0, 0, 0));
 
@@ -34,16 +37,32 @@ void CLevel::Init(const float room_bias)
 
     ExpandRoom();
 
+    // Add special room limited to each level
+    AddSpecialRoom(ROOMSIZE, ROOMSIZE, ROOM_TYPE::TREASUREROOM);
+    AddSpecialRoom(ROOMSIZE, ROOMSIZE, ROOM_TYPE::NEXTLEVELROOM);
+
     for (int i = 0; i < roomIndexList.size(); ++i)
     {
         cout << "Room: " << i << " Index: " << roomIndexList[i] << endl;
     }
     cout << "roomlist size: " << roomList.size() << endl;
 
+    // Link rooms
     for (auto it : roomList)
     {
         SetDoor(it);
     }
+
+    // Check if room has enemy and set doors open if none
+    int count = 0;
+    for (auto it : roomNumEnemyList)
+    {
+        if (it == 0)
+            CLevel::GetInstance()->GetRoom(count)->SetRoomCleared();
+        count++;
+    }
+
+    m_iLevel++;
 }
 
 void CLevel::Render()
@@ -139,9 +158,9 @@ void CLevel::CreateRoom(const int roomID,
     // Create and add the room
     CRoom* room = new CRoom();
     if (firstRoom)
-        room->Add(m_iRoomID, ROOMSIZE, ROOMSIZE, xIndex, zIndex, true);
+        room->Add(m_iRoomID, ROOMSIZE, ROOMSIZE, xIndex, zIndex, ROOM_TYPE::STARTROOM);
     else
-        room->Add(m_iRoomID, xSize, zSize, xIndex, zIndex);
+        room->Add(m_iRoomID, xSize, zSize, xIndex, zIndex, ROOM_TYPE::ENEMYROOM);
 
     // Create room mapping
     roomMap[roomID];
@@ -228,6 +247,71 @@ void CLevel::ExpandRoom(void)
     }
 }
 
+void CLevel::AddSpecialRoom(const int xSize, const int zSize,
+                            ROOM_TYPE _type)
+{
+    // Create room mapping
+    roomMap[m_iRoomID];
+
+    for (int roomIter = roomList.size(); roomIter >= 0; --roomIter)
+    {
+        for (int i = 0; i < 4; ++i)
+        {
+            if (roomMap[roomIter][i] >= 0)
+                continue;
+
+            // Set Index for room mapping & Check for overlap
+            bool AddSpecialRoom = true;
+            Vector3 tempIndex;
+            switch (i)
+            {
+            case 0:
+                tempIndex = Vector3(roomIndexList[roomIter].x - 1, 0, roomIndexList[roomIter].z);
+                if (CompareOverlap(tempIndex))
+                    AddSpecialRoom = false;
+                break;
+            case 1:
+                tempIndex = Vector3(roomIndexList[roomIter].x + 1, 0, roomIndexList[roomIter].z);
+                if (CompareOverlap(tempIndex))
+                    AddSpecialRoom = false;
+                break;
+            case 2:
+                tempIndex = Vector3(roomIndexList[roomIter].x, 0, roomIndexList[roomIter].z - 1);
+                if (CompareOverlap(tempIndex))
+                    AddSpecialRoom = false;
+                break;
+            case 3:
+                tempIndex = Vector3(roomIndexList[roomIter].x, 0, roomIndexList[roomIter].z + 1);
+                if (CompareOverlap(tempIndex))
+                    AddSpecialRoom = false;
+                break;
+            }
+
+            if (AddSpecialRoom)
+            {
+                // Create and add the room
+                CRoom* room = new CRoom();
+                room->Add(m_iRoomID, xSize, zSize, tempIndex.x, tempIndex.z, _type);
+
+                roomMap[roomIter][i] = m_iRoomID;
+
+                roomIndexList.push_back(Vector3(tempIndex.x, 0, tempIndex.z));
+
+                roomList.push_back(room);
+                m_iRoomID++;
+
+                cout << "SPECIAL ROOM MAP: " << m_iRoomID << " " <<
+                    roomMap[roomIter][0] << " " <<
+                    roomMap[roomIter][1] << " " <<
+                    roomMap[roomIter][2] << " " <<
+                    roomMap[roomIter][3] << endl;
+
+                return;
+            }
+        }
+    }
+}
+
 void CLevel::SetDoor(CRoom* room)
 {
     int xMin = room->GetRoomXMin();
@@ -273,12 +357,4 @@ void CLevel::SetDoor(CRoom* room)
     cout << "SIZE: " << xMin << " " << xMax << " " << zMin << " " << zMax << " ";
     cout << "ROOM ID: " << tempRoomID << " " << CLevel::GetInstance()->GetRoom(tempRoomIndex.x - 1, tempRoomIndex.z) << " " << CLevel::GetInstance()->GetRoom(tempRoomIndex.x + 1, tempRoomIndex.z) << " " <<
         CLevel::GetInstance()->GetRoom(tempRoomIndex.x, tempRoomIndex.z - 1) << " " << CLevel::GetInstance()->GetRoom(tempRoomIndex.x, tempRoomIndex.z + 1) << endl;
-}
-
-void CLevel::CleanRoomList(void)
-{
-    while (roomList.size() > 0)
-    {
-        roomList.clear();
-    }
 }

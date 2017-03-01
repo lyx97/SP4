@@ -10,7 +10,6 @@
 #include "GenericEntity.h"
 #include "Waypoint/WaypointManager.h"
 #include "../Lua/LuaInterface.h"
-#include "Enemy/Enemy.h"
 #include "Enemy/Enemy2D.h"
 #include "../Items/Powerup.h"
 #include "../Items/Treasure.h"

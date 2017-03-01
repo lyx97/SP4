@@ -60,7 +60,12 @@ void CGhast::Update(double dt)
         return;
     }
 
-    theDirection = (CPlayerInfo::GetInstance()->GetPosition() - position).Normalized();
+    CHeatmap** heatmap = CPlayerInfo::GetInstance()->GetHeatmap();
+
+    int x = index.x;
+    int z = index.z;
+
+    theDirection = heatmap[x][z].GetDir();
 
     // Update Position
     position += theDirection * dt * m_fSpeed;

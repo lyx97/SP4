@@ -67,6 +67,15 @@ void CLaser::Update(double dt)
 	if (m_bStatus == false)
 		return;
 
+    // Update TimeLife of projectile. Set to inactive if too long
+    m_fLifetime -= (float)dt;
+    if (m_fLifetime < 0.0f)
+    {
+        m_bStatus = false;
+        SetIsDone(true);	// This method is to inform the EntityManager that it should remove this instance
+        return;
+    }
+
     if (prevIndex != index)
     {
         if (CLevel::GetInstance()->
@@ -82,15 +91,6 @@ void CLaser::Update(double dt)
         }
         prevIndex = index;
     }
-
-	// Update TimeLife of projectile. Set to inactive if too long
-	m_fLifetime -= (float)dt;
-    if (m_fLifetime < 0.0f)
-	{
-		m_bStatus = false;
-		SetIsDone(true);	// This method is to inform the EntityManager that it should remove this instance
-		return;
-	}
 
 	// Update Position
 	position.Set(position.x + (float)(theDirection.x * dt * m_fSpeed),

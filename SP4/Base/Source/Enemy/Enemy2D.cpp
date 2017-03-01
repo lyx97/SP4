@@ -44,10 +44,15 @@ void Enemy2D::Update(double _dt)
 	//	this->velocity += temp.Normalized();
 	//}
 	//cout << isDone << endl;
+
 	if (CPlayerInfo::GetInstance()->GetDreamBarRatio() < 0.25)
 		nightmare = true;
 	else
 		nightmare = false;
+
+	// Force y position 0
+    position.y = 0;
+
 
 	if (isDone)
 	{

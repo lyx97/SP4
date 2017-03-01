@@ -114,10 +114,10 @@ void CPlayerInfo::Init(void)
     keyMoveLeft = CLuaInterface::GetInstance()->getCharValue("moveLeft");
     keyMoveRight = CLuaInterface::GetInstance()->getCharValue("moveRight");
 
-    //float distanceSquare = CLuaInterface::GetInstance()->getDistanceSquareValue("CalculateDistanceSquare", Vector3(0, 0, 0), Vector3(10, 10, 10));
-
-    //int a = 1, b = 2, c = 3, d = 4;
-    //CLuaInterface::GetInstance()->getVariableValues("GetMinMax", a, b, c, d);
+    this->SetCollider(true);
+    int x = scale.x, y = scale.y;
+    x = (x >> 1) - 5; y = (y >> 1) - 5;
+    this->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
 
     EntityManager::GetInstance()->AddEntity(this, roomID);
 
@@ -138,7 +138,7 @@ void CPlayerInfo::Init(void)
 
     prevIndex = index;
 
-    // Spawn location -- Fixed to room size of 19
+    // Spawn location -- Fixed to room size of odd number
     SpawnLocation[0] = CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(xSize - 1, zSize >> 1);
     SpawnLocation[1] = CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(1, zSize >> 1);
     SpawnLocation[2] = CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(xSize >> 1, zSize - 1);
@@ -183,6 +183,8 @@ Player Update
 ********************************************************************************/
 void CPlayerInfo::Update(double dt)
 {
+    position.y = 0;
+
     int xSize = CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax();
     int zSize = CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax();
 
@@ -309,27 +311,30 @@ void CPlayerInfo::Update(double dt)
 
 	for (auto entity : EntityManager::GetInstance()->GetEntityList())
 	{
-		if (entity->GetEntityType() == TREASURE)
-		{
-			Treasure* newTreasure = dynamic_cast<Treasure*>(entity);
-			if ((newTreasure->GetPosition() - this->position).LengthSquared() < 100 &&
-				KeyboardController::GetInstance()->IsKeyPressed('Q'))
-			{
-				if (treasure->treasure_type == Treasure::NONE)
-				{
-					AddTreasures(newTreasure->random);
-					newTreasure->SetIsDone(true);
-				}
-				else
-				{
-					int tempType = this->treasure->treasure_type;
-					AddTreasures(newTreasure->random);
-					newTreasure->SetIsDone(true);
-					Treasure* spawnTreasure = new Treasure();
-					spawnTreasure->SpawnTreasure(this->position, tempType, roomID);
-				}
-			}
-		}
+        if ((entity)->GetRoomID() == CPlayerInfo::GetInstance()->GetRoomID())
+        {
+            if (entity->GetEntityType() == TREASURE)
+            {
+                Treasure* newTreasure = dynamic_cast<Treasure*>(entity);
+                if ((newTreasure->GetPosition() - this->position).LengthSquared() < 100 &&
+                    KeyboardController::GetInstance()->IsKeyPressed('Q'))
+                {
+                    if (treasure->treasure_type == Treasure::NONE)
+                    {
+                        AddTreasures(newTreasure->random);
+                        newTreasure->SetIsDone(true);
+                    }
+                    else
+                    {
+                        int tempType = this->treasure->treasure_type;
+                        AddTreasures(newTreasure->random);
+                        newTreasure->SetIsDone(true);
+                        Treasure* spawnTreasure = new Treasure();
+                        spawnTreasure->SpawnTreasure(this->position, tempType, roomID);
+                    }
+                }
+            }
+        }
 	}
 
 	if (KeyboardController::GetInstance()->IsKeyPressed('E'))

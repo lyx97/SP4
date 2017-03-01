@@ -30,6 +30,8 @@ public:
     void RemoveParticleActive(Particle* _Particle);
     Particle* GetParticle(void);
 
+    void ResetEntities(void);
+
 	std::list<EntityBase*> GetEntityList() { return entityList; };
 
     CSpatialPartition* GetSpatialPartition(const int roomID);

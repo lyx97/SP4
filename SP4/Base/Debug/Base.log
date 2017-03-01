@@ -1,3 +1,4 @@
+<<<<<<< 195e930d6ad09e8af84db816edd6f273b1375f1b
 ﻿Build started 3/1/2017 9:30:46 PM.
      1>Project "C:\Users\155118A\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -26,6 +27,16 @@
          Debug\Enemy.obj
          Debug\Enemy2D.obj
          Debug\Reaper.obj
+=======
+﻿Build started 3/1/2017 9:29:55 PM.
+     1>Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\Debug /LIBPATH:"C:\Users\155117g\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 /PROFILE Debug\Application.obj
+         Debug\Camera.obj
+         Debug\Enemy2D.obj
+         Debug\Reaper.obj
+         Debug\Smoke.obj
+>>>>>>> 3b06c6b1274316aba62b3a55ebd98c51b1ed8914
          Debug\Spitter.obj
          Debug\FlyingTongue.obj
          Debug\Skull.obj
@@ -55,6 +66,10 @@
          Debug\Ghast.obj
          Debug\Laser.obj
          Debug\Projectile.obj
+<<<<<<< 195e930d6ad09e8af84db816edd6f273b1375f1b
+=======
+         Debug\Scythe.obj
+>>>>>>> 3b06c6b1274316aba62b3a55ebd98c51b1ed8914
          Debug\Spit.obj
          Debug\Transform.obj
          Debug\UpdateTransformation.obj
@@ -66,6 +81,7 @@
          Debug\WaypointManager.obj
      1>Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
      1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+<<<<<<< 195e930d6ad09e8af84db816edd6f273b1375f1b
      1>Common.lib(CameraBase.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(CameraBase.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
      1>Common.lib(Collider.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(Collider.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
      1>Common.lib(EntityBase.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(EntityBase.obj)' or at 'C:\Users\155118A\Desktop\SP4\SP4\Debug\vc120.pdb'; linking object as if no debug info
@@ -89,3 +105,11 @@
 Build succeeded.
 
 Time Elapsed 00:00:02.89
+=======
+         Base.vcxproj -> C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.exe
+     1>Done Building Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.59
+>>>>>>> 3b06c6b1274316aba62b3a55ebd98c51b1ed8914
