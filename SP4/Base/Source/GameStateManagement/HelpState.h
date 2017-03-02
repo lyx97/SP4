@@ -23,7 +23,7 @@ public:
 private:
 	Camera camera;
 	float m_orthoWidth, m_orthoHeight;
-	SpriteEntity* sprites[6];
-	TextEntity* text[4];
+	SpriteEntity* sprites[13];
+	TextEntity* text[6];
 	double MousePosX, MousePosY;
 };

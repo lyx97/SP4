@@ -451,8 +451,10 @@ void CPlayerInfo::Update(double dt)
 		elapsedTime += dt;
 
 	// DEBUGGING TOOLS
-	if (KeyboardController::GetInstance()->IsKeyPressed('O'))
+	if (KeyboardController::GetInstance()->IsKeyPressed('I'))
 		this->health -= 10;
+	if (KeyboardController::GetInstance()->IsKeyPressed('O'))
+		this->health += 10;
 	if (KeyboardController::GetInstance()->IsKeyPressed('G'))
 		this->dreamBar -= 10;
 	if (KeyboardController::GetInstance()->IsKeyPressed('H'))

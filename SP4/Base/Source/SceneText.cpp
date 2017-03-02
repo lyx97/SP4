@@ -90,7 +90,7 @@ void SceneText::Init()
     // Create the playerinfo instance, which manages all information about the player
     playerInfo = CPlayerInfo::GetInstance();
     playerInfo->SetRoomID(0);
-    playerInfo->Init();
+	playerInfo->Init();
 
     minimap = new CMinimap();
 
@@ -178,15 +178,10 @@ void SceneText::Update(double dt)
 	{
 		GamePaused = !GamePaused;
 	}
-	if (KeyboardController::GetInstance()->IsKeyPressed(VK_BACK))
+	if (playerInfo->GetHealth() <= 0)
 	{
-		SceneManager::GetInstance()->SetActiveScene("HelpState");
+		SceneManager::GetInstance()->SetActiveScene("LoseState");
 	}
-
-    if (KeyboardController::GetInstance()->IsKeyPressed('K'))
-    {
-        SceneManager::GetInstance()->SetActiveScene("IntroState");
-    }
 
     //test += dt;
 
@@ -320,6 +315,7 @@ void SceneText::Exit()
     BatchRendering::GetInstance()->Destroy();
     MeshBuilder::GetInstance()->Destroy();
     SoundManager::GetInstance()->StopMusic();
+	playerInfo->GetInstance()->DropInstance();
 
 	// Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();

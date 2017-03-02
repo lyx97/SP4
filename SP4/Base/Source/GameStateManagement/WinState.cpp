@@ -34,7 +34,8 @@ void WinState::Init()
 	MeshBuilder::GetInstance()->Init();
 
 	sprite = Create::Sprite2DObject("background", Vector3(0, 0, 0));
-	text = Create::Text2DObject("text", Vector3(0, 0, 0), "YOU WIN!", Vector3(100, 100, 100), Color(1, 1, 1));
+	text = Create::Text2DObject("text", Vector3(0, 0, 0), "YOU WON! YOU DEFEATED THE BOSS!", Vector3(100, 100, 100), Color(1, 1, 1));
+	text1 = Create::Text2DObject("text", Vector3(0, 0, 0), "Backspace to return to main menu", Vector3(50, 50, 50), Color(1, 1, 1));
 }
 
 void WinState::Update(double dt)
@@ -42,7 +43,12 @@ void WinState::Update(double dt)
 	sprite->SetPosition(Vector3(Application::GetInstance().GetWindowWidth() * 0.5f, Application::GetInstance().GetWindowHeight() * 0.5f, 0.0f));
 	sprite->SetScale(Vector3(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight(), 0.0f));
 
-	if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
+	text->SetPosition(Vector3(0, Application::GetInstance().GetWindowHeight() * 0.5f, 1.0f));
+	text->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.05f, Application::GetInstance().GetWindowHeight() * 0.06f, 50));
+	text1->SetPosition(Vector3(0, Application::GetInstance().GetWindowHeight() * 0.3f, 1.0f));
+	text1->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.03f, Application::GetInstance().GetWindowHeight() * 0.04f, 50));
+
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_BACK))
 		SceneManager::GetInstance()->SetActiveScene("MenuState");
 }
 
@@ -81,8 +87,9 @@ void WinState::Exit()
 	// Remove the enity from EntityManager
 	EntityManager::GetInstance()->RemoveEntity(sprite);
 	EntityManager::GetInstance()->RemoveEntity(text);
+	EntityManager::GetInstance()->RemoveEntity(text1);
 
-	MeshBuilder::GetInstance()->RemoveMesh("background");
+	MeshBuilder::GetInstance()->Destroy();
 
 	//Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();

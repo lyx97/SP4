@@ -42,7 +42,14 @@ void CHelpState::Init()
 	sprites[5] = Create::Sprite2DObject("powerup_speed", Vector3(0, 0, 0));
 	sprites[6] = Create::Sprite2DObject("healthicon", Vector3(0, 0, 0));
 
-	for (int i = 0; i < 2; ++i)
+	sprites[7] = Create::Sprite2DObject("wall", Vector3(0, 0, 0));
+	sprites[8] = Create::Sprite2DObject("floor", Vector3(0, 0, 0));
+	sprites[9] = Create::Sprite2DObject("obstacle", Vector3(0, 0, 0));
+	sprites[10] = Create::Sprite2DObject("doorlocked", Vector3(0, 0, 0));
+	sprites[11] = Create::Sprite2DObject("doorlocked2", Vector3(0, 0, 0));
+	sprites[12] = Create::Sprite2DObject("stair", Vector3(0, 0, 0));
+
+	for (int i = 0; i < 6; ++i)
 		text[i] = Create::Text2DObject("text", Vector3(0, 0, 0), "", Vector3(75, 75, 75), Color(1, 1, 1));
 }
 
@@ -64,9 +71,15 @@ void CHelpState::Update(double dt)
 		sprites[i]->SetPosition(Vector3(i * 100, Application::GetInstance().GetWindowHeight() * 0.6f, 1.0f));
 		sprites[i]->SetScale(Vector3(75, 75, 1.0f));
 	}
+	for (int i = 7; i < 13; ++i)
+	{
+		sprites[i]->SetPosition(Vector3((i - 6) * 100, Application::GetInstance().GetWindowHeight() * 0.4f, 1.0f));
+		sprites[i]->SetScale(Vector3(75, 75, 1.0f));
+	}
 	std::ostringstream ss;
 	ss << "These are powerups and treasures that aid you.";
 	text[0]->SetPosition(Vector3(0, Application::GetInstance().GetWindowHeight() * 0.7f, 1.0f));
+	text[0]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.03f, Application::GetInstance().GetWindowHeight() * 0.04f, 50));
 	text[0]->SetText(ss.str());
 
 	ss.str("");
@@ -75,12 +88,32 @@ void CHelpState::Update(double dt)
 	text[1]->SetScale(Vector3(50, 50, 50));
 	text[1]->SetText(ss.str());
 
+	ss.str("");
+	ss << "These are the tiles, enter the game to find out what it does!";
+	text[2]->SetPosition(Vector3(0, Application::GetInstance().GetWindowHeight() * 0.5f, 1.0f));
+	text[2]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.03f, Application::GetInstance().GetWindowHeight() * 0.04f, 50));
+	text[2]->SetText(ss.str());
+
+	ss.str("");
+	ss << "Use WASD to move, Mouse to aim, LMB to shoot, RMB to dash";
+	text[3]->SetPosition(Vector3(0, Application::GetInstance().GetWindowHeight() * 0.3f, 1.0f));
+	text[3]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.03f, Application::GetInstance().GetWindowHeight() * 0.04f, 50));
+	text[3]->SetText(ss.str());
+
+	ss.str("");
+	ss << "Q to pickup treasures (first icon in the top row)";
+	text[4]->SetPosition(Vector3(0, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+	text[4]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.03f, Application::GetInstance().GetWindowHeight() * 0.04f, 50));
+	text[4]->SetText(ss.str());
+
+	ss.str("");
+	ss << "E to use treasures, U to toggle between simple and complex UI";
+	text[5]->SetPosition(Vector3(0, Application::GetInstance().GetWindowHeight() * 0.1f, 1.0f));
+	text[5]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.03f, Application::GetInstance().GetWindowHeight() * 0.04f, 50));
+	text[5]->SetText(ss.str());
+
 	if (KeyboardController::GetInstance()->IsKeyReleased(VK_BACK))
 		SceneManager::GetInstance()->SetActiveScene("MenuState");
-
-	//sprites[6]->SetPosition(Vector3(100, Application::GetInstance().GetWindowHeight() * 0.5f, 1.0f));
-	//sprites[6]->SetScale(Vector3(75, 75, 1.0f));
-
 }
 
 void CHelpState::Render()

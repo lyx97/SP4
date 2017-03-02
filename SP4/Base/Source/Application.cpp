@@ -109,8 +109,8 @@ void Application::Init()
 	CLuaInterface::GetInstance()->Init();
 
 	// Get the OpenGL resolution
-	m_window_width = CLuaInterface::GetInstance()->getIntValue("width");
-	m_window_height = CLuaInterface::GetInstance()->getIntValue("height");
+	m_window_width = 1980;
+	m_window_height = 1080;
 
 	CLuaInterface::GetInstance()->Run();
 	CLuaInterface::GetInstance()->saveFloatValue("Player1", 200.1000, true);

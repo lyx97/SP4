@@ -27,4 +27,5 @@ private:
 	double MousePosX, MousePosY;
 	SpriteEntity* sprite;
 	TextEntity* text;
+	TextEntity* text1;
 };
