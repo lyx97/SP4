@@ -319,7 +319,7 @@ void SceneText::Exit()
     CLevel::GetInstance()->Destroy();
     BatchRendering::GetInstance()->Destroy();
     MeshBuilder::GetInstance()->Destroy();
-    SoundManager::GetInstance()->stopMusic();
+    SoundManager::GetInstance()->StopMusic();
 
 	// Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();
