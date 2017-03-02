@@ -1,0 +1,39 @@
+﻿Build started 03-Mar-17 1:58:22 AM.
+     1>Project "C:\Users\SHEEP\Desktop\SP_04\SP4\Common\Common.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         A:\Visual Studio\VC\bin\CL.exe /c /IC:\Users\SHEEP\Desktop\SP_04\SP4\\glew\include /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _VARIADIC_MAX=10 /D WIN32 /D NDEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\MeshBuilder.cpp
+         MeshBuilder.cpp
+     1>c:\users\sheep\desktop\sp_04\sp4\common\source\../../Base/Source/SpriteAnimation/SpriteAnimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\sheep\desktop\sp_04\sp4\common\source\../../Base/Source/SpriteAnimation/SpriteAnimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\sheep\desktop\sp_04\sp4\common\source\../../Base/Source/BatchRendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\sheep\desktop\sp_04\sp4\common\source\EntityBase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\sheep\desktop\sp_04\sp4\common\source\../../Base/Source/Level/Room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+       Lib:
+         A:\Visual Studio\VC\bin\Lib.exe /OUT:"C:\Users\SHEEP\Desktop\SP_04\SP4\Release\Common.lib" /NOLOGO /LTCG Release\CameraBase.obj
+         Release\Collider.obj
+         Release\EntityBase.obj
+         Release\GraphicsManager.obj
+         Release\KeyboardController.obj
+         Release\LightBase.obj
+         Release\LoadOBJ.obj
+         Release\LoadTGA.obj
+         Release\MathUtility.obj
+         Release\MatrixStack.obj
+         Release\Mesh.obj
+         Release\MeshBuilder.obj
+         Release\MouseController.obj
+         Release\Mtx44.obj
+         Release\RenderHelper.obj
+         Release\SceneManager.obj
+         Release\ShaderProgram.obj
+         Release\timer.obj
+         Release\Utility.obj
+         Release\Vector2.obj
+         Release\Vector3.obj
+         Release\Win32Input.obj
+         Common.vcxproj -> C:\Users\SHEEP\Desktop\SP_04\SP4\Release\Common.lib
+     1>Done Building Project "C:\Users\SHEEP\Desktop\SP_04\SP4\Common\Common.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.28

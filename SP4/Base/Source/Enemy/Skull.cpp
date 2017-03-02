@@ -4,6 +4,7 @@
 #include "RenderHelper.h"
 #include "../EntityManager.h"
 #include "LoadTGA.h"
+#include "../Sound/SoundManager.h"
 
 Skull::Skull(const int _roomID)
     : m_dSpeed(30.0)
@@ -130,6 +131,7 @@ void Skull::Update(double dt)
         if (temp.LengthSquared() <= 300
             && m_dResponseTime >= m_dResponse)
         {
+			SoundManager::GetInstance()->PlaySoundEffect2D("Sound//whoosh.wav");
             fsm = FSM::ATTACK;
             m_dResponseTime = 0.0;
         }

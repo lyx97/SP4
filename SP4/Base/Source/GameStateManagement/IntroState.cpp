@@ -12,8 +12,9 @@ using namespace std;
 #include "../SpriteEntity.h"
 #include "../EntityManager.h"
 #include "MouseController.h"
-
 #include "KeyboardController.h"
+#include "../Sound/SoundManager.h"
+
 #include "SceneManager.h"
 
 CIntroState::CIntroState()
@@ -37,6 +38,8 @@ void CIntroState::Init()
 	title = Create::Sprite2DObject("menutitle", Vector3(0, 0, 0));
 	moveon = Create::Sprite2DObject("intro", Vector3(0, 0, 0));	
 	scale = 1.f;
+
+	SoundManager::GetInstance()->PlayBGM("Sound//normal.mp3");
 }
 
 void CIntroState::Update(double dt)
@@ -56,8 +59,6 @@ void CIntroState::Update(double dt)
 		scale += dt * 0.5f;
 	else
 		scale -= dt * 0.5f;
-
-	cout << scale << endl;
 
 	moveon->SetPosition(Vector3(Application::GetInstance().GetWindowWidth() * 0.5f, Application::GetInstance().GetWindowHeight() * 0.5f, 1.0f));
 	moveon->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.7f * scale, 100 * scale, 1.0f));

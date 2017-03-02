@@ -42,7 +42,8 @@ void CHelpState::Init()
 	sprites[5] = Create::Sprite2DObject("powerup_speed", Vector3(0, 0, 0));
 	sprites[6] = Create::Sprite2DObject("healthicon", Vector3(0, 0, 0));
 
-	text[0] = Create::Text2DObject("text", Vector3(0, 0, 0), "", Vector3(75, 75, 75), Color(1, 1, 1));
+	for (int i = 0; i < 2; ++i)
+		text[i] = Create::Text2DObject("text", Vector3(0, 0, 0), "", Vector3(75, 75, 75), Color(1, 1, 1));
 }
 
 void CHelpState::Update(double dt)
@@ -60,13 +61,22 @@ void CHelpState::Update(double dt)
 	
 	for (int i = 1; i < 6; ++i)
 	{
-		sprites[i]->SetPosition(Vector3(i * 100, Application::GetInstance().GetWindowHeight() * 0.7f, 1.0f));
+		sprites[i]->SetPosition(Vector3(i * 100, Application::GetInstance().GetWindowHeight() * 0.6f, 1.0f));
 		sprites[i]->SetScale(Vector3(75, 75, 1.0f));
 	}
 	std::ostringstream ss;
 	ss << "These are powerups and treasures that aid you.";
-	text[0]->SetPosition(Vector3(0, Application::GetInstance().GetWindowHeight() * 0.8f, 1.0f));
+	text[0]->SetPosition(Vector3(0, Application::GetInstance().GetWindowHeight() * 0.7f, 1.0f));
 	text[0]->SetText(ss.str());
+
+	ss.str("");
+	ss << "Backspace to return to main menu";
+	text[1]->SetPosition(Vector3(0, Application::GetInstance().GetWindowHeight() * 0.9f, 1.0f));
+	text[1]->SetScale(Vector3(50, 50, 50));
+	text[1]->SetText(ss.str());
+
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_BACK))
+		SceneManager::GetInstance()->SetActiveScene("MenuState");
 
 	//sprites[6]->SetPosition(Vector3(100, Application::GetInstance().GetWindowHeight() * 0.5f, 1.0f));
 	//sprites[6]->SetScale(Vector3(75, 75, 1.0f));
@@ -108,9 +118,10 @@ void CHelpState::Exit()
 	// Remove the enity from EntityManager
 	for (auto q : sprites)
 		EntityManager::GetInstance()->RemoveEntity(q);
+	for (auto w : text)
+		EntityManager::GetInstance()->RemoveEntity(w);
 
-	MeshBuilder::GetInstance()->RemoveMesh("HELPSTATE_BKGROUND");
-	MeshBuilder::GetInstance()->RemoveMesh("treasure_texture"); 
+	MeshBuilder::GetInstance()->Destroy();
 
 	//Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();

@@ -1,0 +1,113 @@
+﻿Build started 03-Mar-17 2:32:10 AM.
+     1>Project "C:\Users\SHEEP\Desktop\SP_04\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         A:\Visual Studio\VC\bin\CL.exe /c /IC:\Users\SHEEP\Desktop\SP_04\SP4\\Base\Source\Lua /IC:\Users\SHEEP\Desktop\SP_04\SP4\\irrklang\include /IC:\Users\SHEEP\Desktop\SP_04\SP4\/Common/Source /IC:\Users\SHEEP\Desktop\SP_04\SP4\/glew/include /IC:\Users\SHEEP\Desktop\SP_04\SP4\/glfw/include /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _VARIADIC_MAX=10 /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Enemy\Enemy2D.cpp Source\PlayerInfo\PlayerInfo.cpp
+         Enemy2D.cpp
+     1>C:\Users\SHEEP\Desktop\SP_04\SP4\Common\Source\EntityBase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\sheep\desktop\sp_04\sp4\common\source\../../Base/Source/SpriteAnimation/SpriteAnimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\sheep\desktop\sp_04\sp4\common\source\../../Base/Source/SpriteAnimation/SpriteAnimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>Source\Enemy\Enemy2D.cpp(26): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>Source\Enemy\Enemy2D.cpp(29): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>Source\Enemy\Enemy2D.cpp(31): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>Source\Enemy\Enemy2D.cpp(71): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         PlayerInfo.cpp
+     1>C:\Users\SHEEP\Desktop\SP_04\SP4\Common\Source\EntityBase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\../SpriteAnimation/SpriteAnimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\../SpriteAnimation/SpriteAnimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>C:\Users\SHEEP\Desktop\SP_04\SP4\Common\Source\MouseController.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\sheep\desktop\sp_04\sp4\base\source\level\Room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\sheep\desktop\sp_04\sp4\base\source\playerinfo\../BatchRendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>Source\PlayerInfo\PlayerInfo.cpp(78): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(86): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(87): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(99): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(114): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(115): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(116): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(117): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(120): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(122): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(135): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(138): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(139): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(153): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(154): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(200): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(205): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(236): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(249): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(274): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(282): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(316): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(326): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(387): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(401): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(427): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(428): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(432): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(433): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(520): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(537): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(627): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(659): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(722): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(785): warning C4244: 'argument' : conversion from 'unsigned int' to 'const float', possible loss of data
+     1>Source\PlayerInfo\PlayerInfo.cpp(811): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
+       Link:
+         A:\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\SHEEP\Desktop\SP_04\SP4\Release\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\SHEEP\Desktop\SP_04\SP4\\Common\Source /LIBPATH:C:\Users\SHEEP\Desktop\SP_04\SP4\\Lua\lib /LIBPATH:C:\Users\SHEEP\Desktop\SP_04\SP4\\irrklang\lib /LIBPATH:C:\Users\SHEEP\Desktop\SP_04\SP4\Release /LIBPATH:"C:\Users\SHEEP\Desktop\SP_04\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\SHEEP\Desktop\SP_04\SP4\/glew/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib irrKlang.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\SHEEP\Desktop\SP_04\SP4\Release\Base.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\SHEEP\Desktop\SP_04\SP4\Release\Base.lib" /MACHINE:X86 /SAFESEH Release\Application.obj
+         Release\BatchRendering.obj
+         Release\Camera.obj
+         Release\Enemy2D.obj
+         Release\Reaper.obj
+         Release\Smoke.obj
+         Release\Spitter.obj
+         Release\FlyingTongue.obj
+         Release\Skull.obj
+         Release\EntityManager.obj
+         Release\FPSCamera.obj
+         Release\HelpState.obj
+         Release\IntroState.obj
+         Release\LoseState.obj
+         Release\MenuState.obj
+         Release\WinState.obj
+         Release\GenericEntity.obj
+         Release\Powerup.obj
+         Release\Treasure.obj
+         Release\GenerateHeatmap.obj
+         Release\Grid.obj
+         Release\Heatmap.obj
+         Release\Level.obj
+         Release\Minimap.obj
+         Release\Room.obj
+         Release\SpatialPartition.obj
+         Release\Light.obj
+         Release\LuaInterface.obj
+         Release\main.obj
+         Release\OBJMesh.obj
+         Release\Obstacle.obj
+         Release\Particle.obj
+         Release\PlayerInfo.obj
+         Release\Ghast.obj
+         Release\Laser.obj
+         Release\Projectile.obj
+         Release\Scythe.obj
+         Release\Spit.obj
+         Release\Transform.obj
+         Release\UpdateTransformation.obj
+         Release\SceneText.obj
+         Release\SoundManager.obj
+         Release\SpriteAnimation.obj
+         Release\SpriteEntity.obj
+         Release\TextEntity.obj
+         Release\Waypoint.obj
+         Release\WaypointManager.obj
+         Generating code
+     1>c:\users\sheep\desktop\sp_04\sp4\base\source\level\spatialpartition.cpp(253): warning C4715: 'CSpatialPartition::GetGridType' : not all control paths return a value
+     1>c:\users\sheep\desktop\sp_04\sp4\base\source\level\spatialpartition.cpp(245): warning C4715: 'CSpatialPartition::GetGridPos' : not all control paths return a value
+         Finished generating code
+         Base.vcxproj -> C:\Users\SHEEP\Desktop\SP_04\SP4\Release\Base.exe
+     1>Done Building Project "C:\Users\SHEEP\Desktop\SP_04\SP4\Base\Base.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:06.08

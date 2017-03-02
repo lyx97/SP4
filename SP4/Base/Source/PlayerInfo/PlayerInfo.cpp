@@ -163,7 +163,8 @@ void CPlayerInfo::Init(void)
 			Color(0.0f, 1.0f, 0.0f));
 	}
 
-	SoundManager::GetInstance()->playMusic("Sound//normal.mp3");
+	SoundManager::GetInstance()->StopMusic();
+	SoundManager::GetInstance()->PlayBGM("Sound//nightmare.mp3");
     // Particle
     color.Set(Vector3(0.8f, 1.f, 0.5f));
 }
@@ -245,7 +246,7 @@ void CPlayerInfo::Update(double dt)
     }
 
 	if (dreamBar > Math::EPSILON)
-		this->dreamBar -= 0.1 * dt;
+		this->dreamBar -= 0.5 * dt;
 
     if (currentAnimation)
     {
@@ -319,6 +320,7 @@ void CPlayerInfo::Update(double dt)
 	{
 		if (!forceDir.IsZero() && !isDashed)
 		{
+			SoundManager::GetInstance()->PlaySoundEffect2D("Sound//dash.wav");
 			dashCooldownTimer = dashCooldown;
 			forceMagnitude = maxSpeed * dashDistance;
 			this->ApplyForce(forceDir, forceMagnitude * dt);
@@ -373,9 +375,7 @@ void CPlayerInfo::Update(double dt)
 			this->killCount = 0;
 		}
 		else
-		{
-			cout << "NOT ENOUGH KILLS" << endl;
-		}
+			SoundManager::GetInstance()->PlaySoundEffect2D("Sound//notyet.wav");
 	}
 	if (usingTreasure)
 	{
@@ -773,6 +773,7 @@ void CPlayerInfo::Shoot(Vector3 dir)
 {
 	if (fire)
 	{
+		SoundManager::GetInstance()->PlaySoundEffect2D("Sound//shooting.wav");
 		Vector3 _direction = (dir - position).Normalized();
 		Create::Laser(
 			"laser",
@@ -788,6 +789,7 @@ void CPlayerInfo::Shoot(Vector3 dir)
 
 void CPlayerInfo::RecoverHealth()
 { 
+	SoundManager::GetInstance()->PlaySoundEffect2D("Sound//recover.wav");
 	if (health + 10 > maxHealth)
 		health = maxHealth;
 	else
@@ -796,12 +798,14 @@ void CPlayerInfo::RecoverHealth()
 
 void CPlayerInfo::AddTreasures(int type)
 {
+	SoundManager::GetInstance()->PlaySoundEffect2D("Sound//treasure.wav");
 	treasure->treasure_type = (Treasure::TREASURES_TYPE)type;
 	this->treasure->SetValues();
 }
 
 void CPlayerInfo::Revert()
 {
+	SoundManager::GetInstance()->PlaySoundEffect2D("Sound//treasure_end.mp3");
 	healthregenCooldown = defaultHealthRegenCooldown;
 	maxSpeed = defaultSpeed;
 	damage = defaultDamage;

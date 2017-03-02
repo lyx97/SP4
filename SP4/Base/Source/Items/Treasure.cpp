@@ -53,7 +53,6 @@ void Treasure::Effects()
 	{
 	case Treasure::NONE:
 	{
-		cout << "NO TREASURE" << endl;
 	}
 	break;
 	case Treasure::RAPID_HEALTHREGEN:

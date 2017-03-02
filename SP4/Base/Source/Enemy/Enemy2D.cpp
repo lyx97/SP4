@@ -51,7 +51,7 @@ void Enemy2D::Update(double _dt)
 
 	if (isDone)
 	{
-		CPlayerInfo::GetInstance()->SetDreamBar(CPlayerInfo::GetInstance()->GetDreamBar() + 0.2);
+		CPlayerInfo::GetInstance()->SetDreamBar(CPlayerInfo::GetInstance()->GetDreamBar() + 2);
 		float randomNo = Math::RandFloatMinMax(0, 100);
 		if (randomNo < CHANCE_OF_DROPPING_POWERUP)
 		{

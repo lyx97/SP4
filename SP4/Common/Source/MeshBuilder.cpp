@@ -894,9 +894,9 @@ void MeshBuilder::Init()
 	GenerateAxes("reference");
 	GenerateCrossHair("crosshair");
 	GenerateQuad("quad", Color(1, 1, 1), 1.f);
-	GetMesh("quad")->textureID = LoadTGA("Image//calibri.tga");
+	GetMesh("quad")->textureID = LoadTGA("Image//fontdata.tga");
 	GenerateText("text", 16, 16);
-	GetMesh("text")->textureID = LoadTGA("Image//calibri.tga");
+	GetMesh("text")->textureID = LoadTGA("Image//fontdata.tga");
 	GetMesh("text")->material.kAmbient.Set(1, 0, 0);
 	GenerateRing("ring", Color(1, 0, 1), 36, 1, 0.5f);
 	GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);

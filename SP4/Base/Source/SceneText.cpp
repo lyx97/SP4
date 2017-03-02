@@ -35,7 +35,7 @@ SceneText::SceneText()
 
 SceneText::~SceneText()
 {
-    CWaypointManager::GetInstance()->DropInstance();
+	playerInfo->DropInstance();
 }
 
 void SceneText::Init()
@@ -177,6 +177,10 @@ void SceneText::Update(double dt)
 	{
 		GamePaused = !GamePaused;
 	}
+	if (KeyboardController::GetInstance()->IsKeyPressed(VK_BACK))
+	{
+		SceneManager::GetInstance()->SetActiveScene("HelpState");
+	}
 
     //test += dt;
 
@@ -307,6 +311,11 @@ void SceneText::Exit()
 {
 	// Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();
+
+	for (auto q : textObj)
+		EntityManager::GetInstance()->RemoveEntity(q);
+
+	MeshBuilder::GetInstance()->Destroy();
 
 	if (playerInfo->DropInstance() == false)
 	{

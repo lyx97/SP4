@@ -12,8 +12,9 @@ using namespace std;
 #include "../SpriteEntity.h"
 #include "../EntityManager.h"
 #include "MouseController.h"
-
 #include "KeyboardController.h"
+#include "../Sound/SoundManager.h"
+
 #include "SceneManager.h"
 
 CMenuState::CMenuState()
@@ -85,11 +86,14 @@ void CMenuState::Update(double dt)
 		sprites[2]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.35f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
 		if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
 		{
+			SoundManager::GetInstance()->PlaySoundEffect2D("Sound//menu_hover.wav");
 			SceneManager::GetInstance()->SetActiveScene("GameState");
 		}
 	}
 	else
+	{
 		sprites[2]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.3f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+	}
 
 	// instructions
 	if (MousePosX >= -60 && MousePosX <= 60 && MousePosY >= 60 && MousePosY <= 95)
@@ -97,11 +101,14 @@ void CMenuState::Update(double dt)
 		sprites[3]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.65f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
 		if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
 		{
+			SoundManager::GetInstance()->PlaySoundEffect2D("Sound//menu_hover.wav");
 			SceneManager::GetInstance()->SetActiveScene("HelpState");
 		}
 	}
 	else
+	{
 		sprites[3]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.6f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+	}
 
 	// quit
 	if (MousePosX >= -60 && MousePosX <= 60 && MousePosY >= 145 && MousePosY <= 175)
@@ -109,11 +116,14 @@ void CMenuState::Update(double dt)
 		sprites[4]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.15f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
 		if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
 		{
+			SoundManager::GetInstance()->PlaySoundEffect2D("Sound//menu_hover.wav");
 			Application::GetInstance().Exit();
 		}
 	}
 	else
+	{ 		
 		sprites[4]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.1f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+	}
 
 }
 
@@ -153,10 +163,7 @@ void CMenuState::Exit()
 	for (auto q : sprites)
 		EntityManager::GetInstance()->RemoveEntity(q);
 
-	MeshBuilder::GetInstance()->RemoveMesh("background");
-	MeshBuilder::GetInstance()->RemoveMesh("title");
-	MeshBuilder::GetInstance()->RemoveMesh("instructions");
-	MeshBuilder::GetInstance()->RemoveMesh("quit");
+	MeshBuilder::GetInstance()->Destroy();
 
 	//Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();

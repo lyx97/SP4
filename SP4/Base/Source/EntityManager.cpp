@@ -9,6 +9,7 @@
 #include "../Level/Level.h"
 #include "BatchRendering.h"
 #include "LoadTGA.h"
+#include "Sound\SoundManager.h"
 
 #include <iostream>
 using namespace std;
@@ -358,6 +359,8 @@ void EntityManager::CheckForCollision(void)
                                 (*Other)->GetColor(),
                                 (*This)->GetVelocity() * (*This)->GetMass(),
                                 NUMPARTICLESPAWN);
+
+							SoundManager::GetInstance()->PlaySoundEffect2D("Sound//hit_click.wav");
                         }
                     }
                 }
@@ -430,6 +433,9 @@ PLAYER
                                 (*Other)->GetColor(),
                                 -(*Other)->GetVelocity().Normalized() * (*Other)->GetMass(),
                                 NUMPARTICLESPAWN);
+
+
+							SoundManager::GetInstance()->PlaySoundEffect2D("Sound//hit.wav");
                         }
                     }
                 }

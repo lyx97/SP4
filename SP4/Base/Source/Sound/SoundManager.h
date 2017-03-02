@@ -16,9 +16,9 @@ public:
 	SoundManager(void);
 	virtual ~SoundManager(void);
 
-	void playMusic(string Music);
-	void stopMusic();
-	void playSoundEffect2D(string Music);
+	void PlayBGM(string Music);
+	void StopMusic();
+	void PlaySoundEffect2D(string Music);
 
 private:
 	irrklang::ISoundEngine* musicEngine;

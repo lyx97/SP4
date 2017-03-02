@@ -17,18 +17,17 @@ SoundManager::~SoundManager()
 		musicEngine->drop();
 }
 
-void SoundManager::playMusic(string Music)
+void SoundManager::PlayBGM(string Music)
 {
 	BGM = musicEngine->play2D(Music.c_str(), true, false, true);
-	//BGM->setVolume(0.5);
 }
 
-void SoundManager::stopMusic()
+void SoundManager::StopMusic()
 {
 	BGM->stop();
 }
 
-void SoundManager::playSoundEffect2D(string Music)
+void SoundManager::PlaySoundEffect2D(string Music)
 {
 	SoundEffect2D = musicEngine->play2D(Music.c_str(), false, false, false);
 }
