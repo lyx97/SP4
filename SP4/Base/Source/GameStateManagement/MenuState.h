@@ -21,8 +21,8 @@ public:
 	virtual void Exit();
 
 private:
-	Camera camera;
-	SpriteEntity* MenuStateBackground;
+	Camera camera;	
+	float m_orthoWidth, m_orthoHeight;
 	double MousePosX, MousePosY;
-	// TextEntity* textObj[3];
+	SpriteEntity* sprites[5];
 };

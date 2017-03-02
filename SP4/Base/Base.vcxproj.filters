@@ -58,9 +58,6 @@
     <ClCompile Include="Source\Level\Minimap.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameStateManagement\OptionState.cpp">
-      <Filter>GameStateManagement</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PlayerInfo\PlayerInfo.cpp">
       <Filter>PlayerInfo</Filter>
     </ClCompile>
@@ -136,6 +133,15 @@
     <ClCompile Include="Source\BatchRendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Sound\SoundManager.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\LoseState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\WinState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Enemy\Enemy2D.h">
@@ -206,9 +212,6 @@
     </ClInclude>
     <ClInclude Include="Source\OBJMesh.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameStateManagement\OptionState.h">
-      <Filter>GameStateManagement</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerInfo\PlayerInfo.h">
       <Filter>PlayerInfo</Filter>
@@ -285,6 +288,15 @@
     <ClInclude Include="Source\BatchRendering.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sound\SoundManager.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\LoseState.h">
+      <Filter>GameStateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\WinState.h">
+      <Filter>GameStateManagement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">
@@ -331,6 +343,9 @@
     </Filter>
     <Filter Include="Obstacle">
       <UniqueIdentifier>{52c77462-acf3-4e39-9e13-fca55c419393}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{dfe3830d-ea4c-45dc-9dc5-745ae12e885f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

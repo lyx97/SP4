@@ -970,4 +970,12 @@ void MeshBuilder::Init()
 	GetMesh("player_walkright")->textureID = LoadTGA("Image//Player//player_walkright.tga");
     GenerateQuad("laserblaster", Color(1.0f, 1.0f, 1.0f), 1.f);
     GetMesh("laserblaster")->textureID = LoadTGA("Image//Player//laserblaster.tga");
+
+	// menu UI
+	GenerateQuad("background", Color(1, 1, 1), 1.f);
+	GetMesh("background")->textureID = LoadTGA("Image//UI//background.tga");
+	GenerateQuad("menutitle", Color(1, 1, 1), 1.f);
+	GetMesh("menutitle")->textureID = LoadTGA("Image//UI//title.tga");
+	GenerateQuad("intro", Color(1, 1, 1), 1.f);
+	GetMesh("intro")->textureID = LoadTGA("Image//UI//intro.tga");
 }

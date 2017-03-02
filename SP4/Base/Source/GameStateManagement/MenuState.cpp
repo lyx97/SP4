@@ -26,55 +26,95 @@ CMenuState::~CMenuState()
 
 void CMenuState::Init()
 {
+	//Camera Space View
+	m_orthoHeight = 200;
+	m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
+
 	// Create and attach the camera to the scene
 	camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 
 	// Load all the meshes
 	MeshBuilder::GetInstance()->GenerateQuad("MENUSTATE_BKGROUND", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//MenuState.tga");
-	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
-	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
-	MenuStateBackground = Create::Sprite2DObject("MENUSTATE_BKGROUND",
-		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
-		Vector3(800.0f, 600.0f, 0.0f));
+	MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//UI//background.tga");
+	MeshBuilder::GetInstance()->GenerateQuad("menutitle", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("menutitle")->textureID = LoadTGA("Image//UI//title.tga");
+	MeshBuilder::GetInstance()->GenerateQuad("startgame", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("startgame")->textureID = LoadTGA("Image//UI//startgame.tga");
+	MeshBuilder::GetInstance()->GenerateQuad("instructions", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("instructions")->textureID = LoadTGA("Image//UI//instructions.tga");
+	MeshBuilder::GetInstance()->GenerateQuad("quit", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("quit")->textureID = LoadTGA("Image//UI//quit.tga");
 
-	cout << "MENU state loaded!\n" << endl;
+	sprites[0] = Create::Sprite2DObject("MENUSTATE_BKGROUND", Vector3(0, 0, 0));
+	sprites[1] = Create::Sprite2DObject("menutitle", Vector3(0,0,0));
+	sprites[2] = Create::Sprite2DObject("startgame", Vector3(0, 0, 0));
+	sprites[3] = Create::Sprite2DObject("instructions", Vector3(0, 0, 0));
+	sprites[4] = Create::Sprite2DObject("quit", Vector3(0, 0, 0));
 }
 
 void CMenuState::Update(double dt)
 {
-	MouseController::GetInstance()->GetMousePosition(MousePosX, MousePosY);
-
-	//Play
-	if (MousePosX >= 257 && MousePosX < 529 && MousePosY <= 216 && MousePosY >= 153)
-	{
-		MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//UI//main_play.tga");
-	}
-	//Option
-	else if (MousePosX >= 207 && MousePosX < 586 && MousePosY <= 306 && MousePosY >= 244)
-	{
-		MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//UI//main_option.tga");
-	}
-	//Exit
-	else if (MousePosX >= 277 && MousePosX < 529 && MousePosY <= 405 && MousePosY >= 340)
-	{
-		MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//UI//main_exit.tga");
+	{//handles required mouse calculations
+		MousePosX = Application::GetInstance().GetWorldBasedMousePos().x;
+		MousePosY = Application::GetInstance().GetWorldBasedMousePos().z;
+		float w = Application::GetInstance().GetWindowWidth();
+		float h = Application::GetInstance().GetWindowHeight();
+		MousePosX = m_orthoWidth * (MousePosX / w) * 1.4f;
+		MousePosY = m_orthoHeight * (MousePosY / h) * 2;
 	}
 
-	if (MousePosX >= 257 && MousePosX < 529 && MousePosY <= 216 && MousePosY >= 153 && MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
+	sprites[0]->SetPosition(Vector3(Application::GetInstance().GetWindowWidth() * 0.5f, Application::GetInstance().GetWindowHeight() * 0.5f, 0.0f));
+	sprites[0]->SetScale(Vector3(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight(), 0.0f));
+
+	sprites[1]->SetPosition(Vector3(Application::GetInstance().GetWindowWidth() * 0.5f, Application::GetInstance().GetWindowHeight() * 0.9f, 1.0f));
+	sprites[1]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.7f, Application::GetInstance().GetWindowHeight() * 0.2, 1.0f));
+
+	sprites[2]->SetPosition(Vector3(Application::GetInstance().GetWindowWidth() * 0.5f, Application::GetInstance().GetWindowHeight() * 0.5f, 1.0f));
+	sprites[2]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.3f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+
+	sprites[3]->SetPosition(Vector3(Application::GetInstance().GetWindowWidth() * 0.5f, Application::GetInstance().GetWindowHeight() * 0.3f, 1.0f));
+	sprites[3]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.6f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+
+	sprites[4]->SetPosition(Vector3(Application::GetInstance().GetWindowWidth() * 0.5f, Application::GetInstance().GetWindowHeight() * 0.1f, 1.0f));
+	sprites[4]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.1f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+
+	// start game
+	if (MousePosX >= -60 && MousePosX <= 60 && MousePosY >= -25 && MousePosY <= 15)
 	{
-		cout << "Loading CGameState" << endl;
-		SceneManager::GetInstance()->SetActiveScene("GameState");
+		sprites[2]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.35f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+		if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
+		{
+			SceneManager::GetInstance()->SetActiveScene("GameState");
+		}
 	}
-	else if (MousePosX >= 207 && MousePosX < 586 && MousePosY <= 306 && MousePosY >= 244 && MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
+	else
+		sprites[2]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.3f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+
+	// instructions
+	if (MousePosX >= -60 && MousePosX <= 60 && MousePosY >= 60 && MousePosY <= 95)
 	{
-		cout << "Loading COptionState" << endl;
-		SceneManager::GetInstance()->SetActiveScene("OptionState");
+		sprites[3]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.65f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+		if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
+		{
+			SceneManager::GetInstance()->SetActiveScene("HelpState");
+		}
 	}
-	else if (MousePosX >= 277 && MousePosX < 529 && MousePosY <= 405 && MousePosY >= 340 && MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
+	else
+		sprites[3]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.6f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+
+	// quit
+	if (MousePosX >= -60 && MousePosX <= 60 && MousePosY >= 145 && MousePosY <= 175)
 	{
+		sprites[4]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.15f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+		if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
+		{
+			Application::GetInstance().Exit();
+		}
 	}
+	else
+		sprites[4]->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.1f, Application::GetInstance().GetWindowHeight() * 0.2f, 1.0f));
+
 }
 
 void CMenuState::Render()
@@ -110,10 +150,13 @@ void CMenuState::Render()
 void CMenuState::Exit()
 {
 	// Remove the enity from EntityManager
-	EntityManager::GetInstance()->RemoveEntity(MenuStateBackground);
+	for (auto q : sprites)
+		EntityManager::GetInstance()->RemoveEntity(q);
 
-	// Remove the meshes which are specific to CIntroState
-	MeshBuilder::GetInstance()->RemoveMesh("MENUSTATE_BKGROUND");
+	MeshBuilder::GetInstance()->RemoveMesh("background");
+	MeshBuilder::GetInstance()->RemoveMesh("title");
+	MeshBuilder::GetInstance()->RemoveMesh("instructions");
+	MeshBuilder::GetInstance()->RemoveMesh("quit");
 
 	//Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();

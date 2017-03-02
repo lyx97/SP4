@@ -24,6 +24,9 @@ public:
 private:
 	Camera camera;
 	SpriteEntity* IntroStateBackground;
+	SpriteEntity* moveon;
+	SpriteEntity* title;
 	double MousePosX, MousePosY;
-	// TextEntity* textObj[3];
+	float scale;
+	bool gobig;
 };

@@ -26,42 +26,44 @@ CIntroState::~CIntroState()
 
 void CIntroState::Init()
 {
-	cout << "Loading INTRO state..." << endl;
-
 	// Create and attach the camera to the scene
 	camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 
 	// Load all the meshes
-	MeshBuilder::GetInstance()->GenerateQuad("INTROSTATE_BKGROUND", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("INTROSTATE_BKGROUND")->textureID = LoadTGA("Image//IntroState.tga");
-	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
-	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
-	IntroStateBackground = Create::Sprite2DObject("INTROSTATE_BKGROUND",
-		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
-		Vector3(800.0f, 600.0f, 0.0f));
+	MeshBuilder::GetInstance()->Init();
 
-	cout << "INTRO state loaded!\n" << endl;
+	IntroStateBackground = Create::Sprite2DObject("background", Vector3(0, 0, 0));
+	title = Create::Sprite2DObject("menutitle", Vector3(0, 0, 0));
+	moveon = Create::Sprite2DObject("intro", Vector3(0, 0, 0));	
+	scale = 1.f;
 }
 
 void CIntroState::Update(double dt)
 {
-	MouseController::GetInstance()->UpdateMousePosition(MousePosX, MousePosY);
+	IntroStateBackground->SetPosition(Vector3(Application::GetInstance().GetWindowWidth() * 0.5f, Application::GetInstance().GetWindowHeight() * 0.5f, 0.0f));
+	IntroStateBackground->SetScale(Vector3(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight(), 0.0f));
 
-	//Play
-	if (MousePosX >= 327 && MousePosX < 471 && MousePosY <= 359 && MousePosY >= 299)
-	{
-		MeshBuilder::GetInstance()->GetMesh("INTROSTATE_BKGROUND")->textureID = LoadTGA("Image//UI//intro_go.tga");
-		if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
-		{
-			cout << "Loading CMenuState" << endl;
-			SceneManager::GetInstance()->SetActiveScene("MenuState");
-		}
-	}
+	title->SetPosition(Vector3(Application::GetInstance().GetWindowWidth() * 0.5f, Application::GetInstance().GetWindowHeight() * 0.9f, 1.0f));
+	title->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.7f, Application::GetInstance().GetWindowHeight() * 0.2, 1.0f));
+
+	if (scale >= 1.3f)
+		gobig = false;
+	else if (scale <= 1.f)
+		gobig = true;
+
+	if (gobig)
+		scale += dt * 0.5f;
 	else
-	{
-		MeshBuilder::GetInstance()->GetMesh("INTROSTATE_BKGROUND")->textureID = LoadTGA("Image//IntroState.tga");
-	}
+		scale -= dt * 0.5f;
+
+	cout << scale << endl;
+
+	moveon->SetPosition(Vector3(Application::GetInstance().GetWindowWidth() * 0.5f, Application::GetInstance().GetWindowHeight() * 0.5f, 1.0f));
+	moveon->SetScale(Vector3(Application::GetInstance().GetWindowWidth() * 0.7f * scale, 100 * scale, 1.0f));
+
+	if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
+		SceneManager::GetInstance()->SetActiveScene("MenuState");
 }
 
 void CIntroState::Render()
@@ -98,9 +100,12 @@ void CIntroState::Exit()
 {
 	// Remove the enity from EntityManager
 	EntityManager::GetInstance()->RemoveEntity(IntroStateBackground);
+	EntityManager::GetInstance()->RemoveEntity(title);
+	EntityManager::GetInstance()->RemoveEntity(moveon);
 
-	// Remove the meshes which are specific to CIntroState
-	MeshBuilder::GetInstance()->RemoveMesh("INTROSTATE_BKGROUND");
+	MeshBuilder::GetInstance()->RemoveMesh("background");
+	MeshBuilder::GetInstance()->RemoveMesh("title");
+	MeshBuilder::GetInstance()->RemoveMesh("intro");
 
 	//Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();

@@ -5,6 +5,7 @@
 #include "MatrixStack.h"
 #include "../Camera/Camera.h"
 #include "../SpriteEntity.h"
+#include "../TextEntity.h"
 
 class SceneManager;
 
@@ -21,6 +22,8 @@ public:
 
 private:
 	Camera camera;
-	SpriteEntity* MenuStateBackground;
+	float m_orthoWidth, m_orthoHeight;
+	SpriteEntity* sprites[6];
+	TextEntity* text[4];
 	double MousePosX, MousePosY;
 };

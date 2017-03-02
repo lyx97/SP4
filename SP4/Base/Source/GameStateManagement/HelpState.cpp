@@ -23,25 +23,54 @@ CHelpState::~CHelpState()
 
 void CHelpState::Init()
 {
+	//Camera Space View
+	m_orthoHeight = 200;
+	m_orthoWidth = m_orthoHeight * (float)Application::GetInstance().GetWindowWidth() / Application::GetInstance().GetWindowHeight();
+
 	// Create and attach the camera to the scene
 	camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 
 	// Load all the meshes
-	MeshBuilder::GetInstance()->GenerateQuad("HELPSTATE_BKGROUND", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("HELPSTATE_BKGROUND")->textureID = LoadTGA("Image//MenuState.tga");
-	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
-	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
-	MenuStateBackground = Create::Sprite2DObject("HELPSTATE_BKGROUND",
-		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
-		Vector3(800.0f, 600.0f, 0.0f));
+	MeshBuilder::GetInstance()->Init();
 
-	cout << "HELP state loaded!\n" << endl;
+	sprites[0] = Create::Sprite2DObject("background", Vector3(0, 0, 0));
+	sprites[1] = Create::Sprite2DObject("treasure_texture", Vector3(0, 0, 0));
+	sprites[2] = Create::Sprite2DObject("powerup_maxhealth", Vector3(0, 0, 0));
+	sprites[3] = Create::Sprite2DObject("powerup_healthrecover", Vector3(0, 0, 0));
+	sprites[4] = Create::Sprite2DObject("powerup_healthregen", Vector3(0, 0, 0));
+	sprites[5] = Create::Sprite2DObject("powerup_speed", Vector3(0, 0, 0));
+	sprites[6] = Create::Sprite2DObject("healthicon", Vector3(0, 0, 0));
+
+	text[0] = Create::Text2DObject("text", Vector3(0, 0, 0), "", Vector3(75, 75, 75), Color(1, 1, 1));
 }
 
 void CHelpState::Update(double dt)
 {
-	MouseController::GetInstance()->GetMousePosition(MousePosX, MousePosY);
+	{//handles required mouse calculations
+		MousePosX = Application::GetInstance().GetWorldBasedMousePos().x;
+		MousePosY = Application::GetInstance().GetWorldBasedMousePos().z;
+		float w = Application::GetInstance().GetWindowWidth();
+		float h = Application::GetInstance().GetWindowHeight();
+		MousePosX = m_orthoWidth * (MousePosX / w) * 1.4f;
+		MousePosY = m_orthoHeight * (MousePosY / h) * 2;
+	}
+	sprites[0]->SetPosition(Vector3(Application::GetInstance().GetWindowWidth() * 0.5f, Application::GetInstance().GetWindowHeight() * 0.5f, 0.0f));
+	sprites[0]->SetScale(Vector3(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight(), 0.0f));
+	
+	for (int i = 1; i < 6; ++i)
+	{
+		sprites[i]->SetPosition(Vector3(i * 100, Application::GetInstance().GetWindowHeight() * 0.7f, 1.0f));
+		sprites[i]->SetScale(Vector3(75, 75, 1.0f));
+	}
+	std::ostringstream ss;
+	ss << "These are powerups and treasures that aid you.";
+	text[0]->SetPosition(Vector3(0, Application::GetInstance().GetWindowHeight() * 0.8f, 1.0f));
+	text[0]->SetText(ss.str());
+
+	//sprites[6]->SetPosition(Vector3(100, Application::GetInstance().GetWindowHeight() * 0.5f, 1.0f));
+	//sprites[6]->SetScale(Vector3(75, 75, 1.0f));
+
 }
 
 void CHelpState::Render()
@@ -77,10 +106,11 @@ void CHelpState::Render()
 void CHelpState::Exit()
 {
 	// Remove the enity from EntityManager
-	EntityManager::GetInstance()->RemoveEntity(MenuStateBackground);
+	for (auto q : sprites)
+		EntityManager::GetInstance()->RemoveEntity(q);
 
-	// Remove the meshes which are specific to CIntroState
-	MeshBuilder::GetInstance()->RemoveMesh("OPTIONSTATE_BKGROUND");
+	MeshBuilder::GetInstance()->RemoveMesh("HELPSTATE_BKGROUND");
+	MeshBuilder::GetInstance()->RemoveMesh("treasure_texture"); 
 
 	//Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();

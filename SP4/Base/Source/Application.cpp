@@ -173,11 +173,12 @@ void Application::Init()
 	SceneManager::GetInstance()->AddScene("IntroState", new CIntroState());
 	SceneManager::GetInstance()->AddScene("MenuState", new CMenuState());
 	SceneManager::GetInstance()->AddScene("HelpState", new CHelpState());
-	SceneManager::GetInstance()->AddScene("OptionState", new COptionState());
 	SceneManager::GetInstance()->AddScene("GameState", new SceneText());
+	SceneManager::GetInstance()->AddScene("LoseState", new LoseState());
+	SceneManager::GetInstance()->AddScene("WinState", new WinState());
 
 	// Set the active scene
-	SceneManager::GetInstance()->SetActiveScene("GameState");
+	SceneManager::GetInstance()->SetActiveScene("IntroState");
 }
 
 void Application::Run()

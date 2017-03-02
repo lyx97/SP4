@@ -5,7 +5,8 @@
 #include "GameStateManagement\IntroState.h"
 #include "GameStateManagement\MenuState.h"
 #include "GameStateManagement\HelpState.h"
-#include "GameStateManagement\OptionState.h"
+#include "GameStateManagement\LoseState.h"
+#include "GameStateManagement\WinState.h"
 #include "ShaderProgram.h"
 
 struct GLFWwindow;

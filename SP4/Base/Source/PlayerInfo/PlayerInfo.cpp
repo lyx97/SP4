@@ -13,6 +13,7 @@
 #include "../Level/Level.h"
 #include "../Projectile/Laser.h"
 #include "../BatchRendering.h"
+#include "../Sound/SoundManager.h"
 
 // Allocating and initializing CPlayerInfo's static data member.
 // The pointer is allocated but not the object's constructor.
@@ -162,6 +163,7 @@ void CPlayerInfo::Init(void)
 			Color(0.0f, 1.0f, 0.0f));
 	}
 
+	SoundManager::GetInstance()->playMusic("Sound//normal.mp3");
     // Particle
     color.Set(Vector3(0.8f, 1.f, 0.5f));
 }
@@ -383,6 +385,7 @@ void CPlayerInfo::Update(double dt)
 			usedTreasure = true;
 		}
 		treasureDurationTimer += dt;
+		treasureScale = (treasure->GetDuration() - treasureDurationTimer) / treasure->GetDuration() * UIScale;
 		if (treasureDurationTimer >= treasure->GetDuration())
 		{
 			usingTreasure = false;
@@ -437,7 +440,6 @@ void CPlayerInfo::Update(double dt)
 	}
 	dashScale = ((dashCooldown - dashCooldownTimer) / dashCooldown) * fontSize;
 	dreambarScale = (dreamBar / MAX_DREAMBAR) * UIScale;
-	treasureScale = treasure->GetCooldown() - treasureDurationTimer;
 
 	// handling projectile
 	if (elapsedTime > timeBetweenShots)
