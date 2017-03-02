@@ -978,4 +978,16 @@ void MeshBuilder::Init()
 	GetMesh("menutitle")->textureID = LoadTGA("Image//UI//title.tga");
 	GenerateQuad("intro", Color(1, 1, 1), 1.f);
 	GetMesh("intro")->textureID = LoadTGA("Image//UI//intro.tga");
+
+    // Pause
+    GenerateQuad("pause", Color(1, 1, 1), 1.f);
+    GetMesh("pause")->textureID = LoadTGA("Image//UI//Pause_BG.tga");
+    GenerateQuad("pause_title", Color(1, 1, 1), 1.f);
+    GetMesh("pause_title")->textureID = LoadTGA("Image//UI//Pause_Title.tga");
+    GenerateQuad("pause_r", Color(1, 1, 1), 1.f);
+    GetMesh("pause_r")->textureID = LoadTGA("Image//UI//Button_R.tga");
+    GenerateQuad("pause_mn", Color(1, 1, 1), 1.f);
+    GetMesh("pause_mn")->textureID = LoadTGA("Image//UI//Button_menu.tga");
+    GenerateQuad("pause_qg", Color(1, 1, 1), 1.f);
+    GetMesh("pause_qg")->textureID = LoadTGA("Image//UI//Button_QG.tga");
 }

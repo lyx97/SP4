@@ -82,12 +82,6 @@
     <ClCompile Include="Source\SceneGraph\UpdateTransformation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Waypoint\Waypoint.cpp">
-      <Filter>Waypoint</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Waypoint\WaypointManager.cpp">
-      <Filter>Waypoint</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Items\Powerup.cpp">
       <Filter>Items</Filter>
     </ClCompile>
@@ -225,12 +219,6 @@
     <ClInclude Include="Source\Level\SpatialPartition.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Waypoint\Waypoint.h">
-      <Filter>Waypoint</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Waypoint\WaypointManager.h">
-      <Filter>Waypoint</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TextEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -328,9 +316,6 @@
     </Filter>
     <Filter Include="Shader">
       <UniqueIdentifier>{22690a5f-a5a8-4ac8-b875-ed8a68bbfa6d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Waypoint">
-      <UniqueIdentifier>{e9e74d12-1f17-42c7-ae5d-0153ad8e82ae}</UniqueIdentifier>
     </Filter>
     <Filter Include="Items">
       <UniqueIdentifier>{8d35496c-7e97-45eb-9163-975b72921092}</UniqueIdentifier>

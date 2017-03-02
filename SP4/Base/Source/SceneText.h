@@ -8,7 +8,6 @@
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "GenericEntity.h"
-#include "Waypoint/WaypointManager.h"
 #include "../Lua/LuaInterface.h"
 #include "Enemy/Enemy2D.h"
 #include "../Items/Powerup.h"
@@ -31,7 +30,18 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
+    void UpdatePause();
+    void RenderPause();
+
 private:
+    enum PAUSESTATE
+    {
+        RESUME,
+        MENU,
+        QUIT,
+        NUM_PAUSESTATE
+    }state;
+
 	CPlayerInfo* playerInfo;
 
     Camera camera;
@@ -44,6 +54,8 @@ private:
 	Light* lights[2];
 
 	bool GamePaused = false;
+
+    float buttonScale[3];
 	
     CMinimap* minimap;
 };

@@ -13,7 +13,6 @@ FlyingTongue::FlyingTongue(const int _roomID)
     , m_bAlive(true)
 {
     this->position = Vector3(100, 0, 0);
-    this->scale = Vector3(30, 30, 0);
     this->velocity = Vector3(0, 0, 0);
     this->heatmapDir = Vector3(0, 0, 0);
     

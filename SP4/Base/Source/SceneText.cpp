@@ -161,22 +161,23 @@ void SceneText::Update(double dt)
 	if (KeyboardController::GetInstance()->IsKeyDown('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	if (KeyboardController::GetInstance()->IsKeyDown('5'))
-	{
-		lights[0]->type = Light::LIGHT_POINT;
-	}
-	else if (KeyboardController::GetInstance()->IsKeyDown('6'))
-	{
-		lights[0]->type = Light::LIGHT_DIRECTIONAL;
-	}
-	else if (KeyboardController::GetInstance()->IsKeyDown('7'))
-	{
-		lights[0]->type = Light::LIGHT_SPOT;
-	}
+	//if (KeyboardController::GetInstance()->IsKeyDown('5'))
+	//{
+	//	lights[0]->type = Light::LIGHT_POINT;
+	//}
+	//else if (KeyboardController::GetInstance()->IsKeyDown('6'))
+	//{
+	//	lights[0]->type = Light::LIGHT_DIRECTIONAL;
+	//}
+	//else if (KeyboardController::GetInstance()->IsKeyDown('7'))
+	//{
+	//	lights[0]->type = Light::LIGHT_SPOT;
+	//}
 
 	if (KeyboardController::GetInstance()->IsKeyPressed('P'))
 	{
 		GamePaused = !GamePaused;
+        state = PAUSESTATE::RESUME;
 	}
 	if (playerInfo->GetHealth() <= 0)
 	{
@@ -261,6 +262,11 @@ void SceneText::Update(double dt)
 			Treasure* newTreasure = new Treasure(CPlayerInfo::GetInstance()->GetRoomID());
 		}
 	}
+    else
+    {
+        UpdatePause();
+    }
+
 	// Update the 2 text object values. NOTE: Can do this in their own class but i'm lazy to do it now :P
 	// Eg. FPSRenderEntity or inside RenderUI for LightEntity
 	std::ostringstream ss;
@@ -306,6 +312,93 @@ void SceneText::Render()
 	GraphicsManager::GetInstance()->SetOrthographicProjection(-halfWindowWidth, halfWindowWidth, -halfWindowHeight, halfWindowHeight, -10, 10000);
 	GraphicsManager::GetInstance()->DetachCamera();
 	EntityManager::GetInstance()->RenderUI();
+    RenderPause();
+}
+
+void SceneText::UpdatePause()
+{
+    switch (state)
+    {
+    case SceneText::RESUME:
+        buttonScale[0] = 20.f;
+        buttonScale[1] = 0.f;
+        buttonScale[2] = 0.f;
+        break;
+    case SceneText::MENU:
+        buttonScale[0] = 0.f;
+        buttonScale[1] = 20.f;
+        buttonScale[2] = 0.f;
+        break;
+    case SceneText::QUIT:
+        buttonScale[0] = 0.f;
+        buttonScale[1] = 0.f;
+        buttonScale[2] = 20.f;
+        break;
+    }
+
+    if (KeyboardController::GetInstance()->IsKeyPressed(VK_UP))
+    {
+        if (state != 0)
+            state = static_cast<PAUSESTATE>(state - 1);
+    }
+    else if (KeyboardController::GetInstance()->IsKeyPressed(VK_DOWN))
+    {
+        if (state != NUM_PAUSESTATE - 1)
+            state = static_cast<PAUSESTATE>(state + 1);
+    }
+    else if (KeyboardController::GetInstance()->IsKeyPressed(VK_RETURN))
+    {
+        switch (state)
+        {
+        case SceneText::RESUME:
+            GamePaused = !GamePaused;
+            break;
+        case SceneText::MENU:
+            GamePaused = !GamePaused;
+            SceneManager::GetInstance()->SetActiveScene("MenuState");
+            break;
+        case SceneText::QUIT:
+            Application::Quit = true;
+            break;
+        }
+    }
+}
+
+void SceneText::RenderPause()
+{
+    if (GamePaused)
+    {
+        MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+        modelStack.PushMatrix();
+        modelStack.Translate(0, -25, 1);
+        modelStack.Scale(300, 400, 1);
+        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("pause"));
+        modelStack.PopMatrix();
+
+        modelStack.PushMatrix();
+        modelStack.Translate(0, 125, 2);
+        modelStack.Scale(200, 75, 1);
+        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("pause_title"));
+        modelStack.PopMatrix();
+
+        modelStack.PushMatrix();
+        modelStack.Translate(0, 25, 2);
+        modelStack.Scale(200 + buttonScale[0], 75, 1);
+        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("pause_r"));
+        modelStack.PopMatrix();
+
+        modelStack.PushMatrix();
+        modelStack.Translate(0, -75, 2);
+        modelStack.Scale(200 + buttonScale[1], 75, 1);
+        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("pause_mn"));
+        modelStack.PopMatrix();
+
+        modelStack.PushMatrix();
+        modelStack.Translate(0, -175, 2);
+        modelStack.Scale(200 + buttonScale[2], 75, 1);
+        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("pause_qg"));
+        modelStack.PopMatrix();
+    }
 }
 
 void SceneText::Exit()

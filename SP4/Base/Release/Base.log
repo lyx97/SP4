@@ -1,160 +1,20 @@
-﻿Build started 03-Mar-17 3:08:39 AM.
+﻿Build started 03-Mar-17 4:49:30 AM.
      1>Project "C:\Users\Lee\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Lee\Desktop\SP4\SP4\\Base\Source\Lua /IC:\Users\Lee\Desktop\SP4\SP4\\irrklang\include /IC:\Users\Lee\Desktop\SP4\SP4\/Common/Source /IC:\Users\Lee\Desktop\SP4\SP4\/glew/include /IC:\Users\Lee\Desktop\SP4\SP4\/glfw/include /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _VARIADIC_MAX=10 /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Level\Level.cpp
-         Level.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Lee\Desktop\SP4\SP4\\Base\Source\Lua /IC:\Users\Lee\Desktop\SP4\SP4\\irrklang\include /IC:\Users\Lee\Desktop\SP4\SP4\/Common/Source /IC:\Users\Lee\Desktop\SP4\SP4\/glew/include /IC:\Users\Lee\Desktop\SP4\SP4\/glfw/include /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _VARIADIC_MAX=10 /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\SceneText.cpp
+         SceneText.cpp
      1>C:\Users\Lee\Desktop\SP4\SP4\Common\Source\EntityBase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\lee\desktop\sp4\sp4\common\source\../../Base/Source/SpriteAnimation/SpriteAnimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\lee\desktop\sp4\sp4\common\source\../../Base/Source/SpriteAnimation/SpriteAnimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\playerinfo\../SpriteAnimation/SpriteAnimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\playerinfo\../SpriteAnimation/SpriteAnimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\SceneText.h(20): warning C4099: 'Color' : type name first seen using 'struct' now seen using 'class'
+                 C:\Users\Lee\Desktop\SP4\SP4\Common\Source\Vertex.h(14) : see declaration of 'Color'
+     1>C:\Users\Lee\Desktop\SP4\SP4\Common\Source\MouseController.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\lee\desktop\sp4\sp4\base\source\level\Room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(43): warning C4018: '<' : signed/unsigned mismatch
-     1>Source\Level\Level.cpp(76): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(78): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(89): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(92): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(103): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(105): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(116): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(118): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(132): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(143): warning C4018: '<' : signed/unsigned mismatch
-     1>Source\Level\Level.cpp(162): warning C4018: '<' : signed/unsigned mismatch
-     1>Source\Level\Level.cpp(164): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(240): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>Source\Level\Level.cpp(262): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>Source\Level\Level.cpp(312): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>Source\Level\Level.cpp(349): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>Source\Level\Level.cpp(353): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>Source\Level\Level.cpp(356): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>Source\Level\Level.cpp(360): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>Source\Level\Level.cpp(363): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>Source\Level\Level.cpp(367): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>Source\Level\Level.cpp(370): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>Source\Level\Level.cpp(374): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>Source\Level\Level.cpp(380): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>Source\Level\Level.cpp(381): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\tuple(746): warning C4351: new behavior: elements of array 'std::pair<const _Kty,_Ty>::second' will be default initialized
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\tuple(762) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<std::tuple<const int &>,std::tuple<>,0,>(_Tuple1 &,_Tuple2 &,std::_Arg_idx<0>,std::_Arg_idx<>)' being compiled
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-         ,            _Tuple1=std::tuple<const int &>
-         ,            _Tuple2=std::tuple<>
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\tuple(762) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<std::tuple<const int &>,std::tuple<>,0,>(_Tuple1 &,_Tuple2 &,std::_Arg_idx<0>,std::_Arg_idx<>)' being compiled
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-         ,            _Tuple1=std::tuple<const int &>
-         ,            _Tuple2=std::tuple<>
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xmemory0(600) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<const int&,>(std::piecewise_construct_t,std::tuple<const int &>,std::tuple<>)' being compiled
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xmemory0(600) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<const int&,>(std::piecewise_construct_t,std::tuple<const int &>,std::tuple<>)' being compiled
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xmemory0(723) : see reference to function template instantiation 'void std::allocator<_Other>::construct<_Objty,const std::piecewise_construct_t&,_Ty,std::tuple<>>(_Objty *,const std::piecewise_construct_t &,_Ty &&,std::tuple<> &&)' being compiled
-                 with
-                 [
-                     _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
-         ,            _Objty=std::pair<const int,int [4]>
-         ,            _Ty=std::tuple<const int &>
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xmemory0(723) : see reference to function template instantiation 'void std::allocator<_Other>::construct<_Objty,const std::piecewise_construct_t&,_Ty,std::tuple<>>(_Objty *,const std::piecewise_construct_t &,_Ty &&,std::tuple<> &&)' being compiled
-                 with
-                 [
-                     _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
-         ,            _Objty=std::pair<const int,int [4]>
-         ,            _Ty=std::tuple<const int &>
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xmemory0(872) : see reference to function template instantiation 'void std::allocator_traits<_Alloc>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(std::allocator<_Other> &,_Objty *,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
-                 with
-                 [
-                     _Alloc=std::allocator<std::_Tree_node<std::pair<const int,int [4]>,void *>>
-         ,            _Ty=std::pair<const int,int [4]>
-         ,            _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
-         ,            _Objty=std::pair<const int,int [4]>
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xmemory0(872) : see reference to function template instantiation 'void std::allocator_traits<_Alloc>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(std::allocator<_Other> &,_Objty *,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
-                 with
-                 [
-                     _Alloc=std::allocator<std::_Tree_node<std::pair<const int,int [4]>,void *>>
-         ,            _Ty=std::pair<const int,int [4]>
-         ,            _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
-         ,            _Objty=std::pair<const int,int [4]>
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xtree(933) : see reference to function template instantiation 'void std::_Wrap_alloc<std::allocator<_Other>>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(_Ty *,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
-                 with
-                 [
-                     _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
-         ,            _Ty=std::pair<const int,int [4]>
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xtree(933) : see reference to function template instantiation 'void std::_Wrap_alloc<std::allocator<_Other>>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(_Ty *,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
-                 with
-                 [
-                     _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
-         ,            _Ty=std::pair<const int,int [4]>
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xtree(1184) : see reference to function template instantiation 'std::_Tree_node<std::pair<const _Kty,_Ty>,void *> *std::_Tree_buy<std::pair<const _Kty,_Ty>,std::allocator<std::pair<const _Kty,_Ty>>>::_Buynode<const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xtree(1184) : see reference to function template instantiation 'std::_Tree_node<std::pair<const _Kty,_Ty>,void *> *std::_Tree_buy<std::pair<const _Kty,_Ty>,std::allocator<std::pair<const _Kty,_Ty>>>::_Buynode<const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\map(233) : see reference to function template instantiation 'std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace_hint<const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>>,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-         ,            _Pr=std::less<int>
-         ,            _Alloc=std::allocator<std::pair<const int,int [4]>>
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\map(233) : see reference to function template instantiation 'std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace_hint<const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>>,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-         ,            _Pr=std::less<int>
-         ,            _Alloc=std::allocator<std::pair<const int,int [4]>>
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\map(225) : while compiling class template member function 'int (&std::map<int,int [4],std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>::operator [](const int &))[4]'
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-                 ]
-                 Source\Level\Level.cpp(184) : see reference to function template instantiation 'int (&std::map<int,int [4],std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>::operator [](const int &))[4]' being compiled
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-                 ]
-                 c:\users\lee\desktop\sp4\sp4\base\source\level\Level.h(35) : see reference to class template instantiation 'std::map<int,int [4],std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>' being compiled
-                 with
-                 [
-                     _Kty=int
-         ,            _Ty=int [4]
-                 ]
+     1>c:\users\lee\desktop\sp4\sp4\base\source\BatchRendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>Source\SceneText.cpp(84): warning C4244: 'initializing' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>Source\SceneText.cpp(141): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Source\SceneText.cpp(142): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Source\SceneText.cpp(252): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Lee\Desktop\SP4\SP4\Release\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\Lee\Desktop\SP4\SP4\\Common\Source /LIBPATH:C:\Users\Lee\Desktop\SP4\SP4\\Lua\lib /LIBPATH:C:\Users\Lee\Desktop\SP4\SP4\\irrklang\lib /LIBPATH:C:\Users\Lee\Desktop\SP4\SP4\Release /LIBPATH:"C:\Users\Lee\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\Lee\Desktop\SP4\SP4\/glew/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib irrKlang.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Lee\Desktop\SP4\SP4\Release\Base.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Lee\Desktop\SP4\SP4\Release\Base.lib" /MACHINE:X86 /SAFESEH Release\Application.obj
          Release\BatchRendering.obj
@@ -201,11 +61,9 @@
          Release\SpriteAnimation.obj
          Release\SpriteEntity.obj
          Release\TextEntity.obj
-         Release\Waypoint.obj
-         Release\WaypointManager.obj
          Generating code
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\level\spatialpartition.cpp(253): warning C4715: 'CSpatialPartition::GetGridType' : not all control paths return a value
-     1>c:\users\sheep\desktop\sp_04\sp4\base\source\level\spatialpartition.cpp(245): warning C4715: 'CSpatialPartition::GetGridPos' : not all control paths return a value
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\spatialpartition.cpp(253): warning C4715: 'CSpatialPartition::GetGridType' : not all control paths return a value
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\spatialpartition.cpp(245): warning C4715: 'CSpatialPartition::GetGridPos' : not all control paths return a value
          Finished generating code
      1>Common.lib(KeyboardController.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(KeyboardController.obj)' or at 'C:\Users\Lee\Desktop\SP4\SP4\Release\vc120.pdb'; linking object as if no debug info
      1>Common.lib(SceneManager.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(SceneManager.obj)' or at 'C:\Users\Lee\Desktop\SP4\SP4\Release\vc120.pdb'; linking object as if no debug info
@@ -216,7 +74,6 @@
      1>Common.lib(Vector3.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(Vector3.obj)' or at 'C:\Users\Lee\Desktop\SP4\SP4\Release\vc120.pdb'; linking object as if no debug info
      1>Common.lib(RenderHelper.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(RenderHelper.obj)' or at 'C:\Users\Lee\Desktop\SP4\SP4\Release\vc120.pdb'; linking object as if no debug info
      1>Common.lib(EntityBase.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(EntityBase.obj)' or at 'C:\Users\Lee\Desktop\SP4\SP4\Release\vc120.pdb'; linking object as if no debug info
-     1>Common.lib(MeshBuilder.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(MeshBuilder.obj)' or at 'C:\Users\Lee\Desktop\SP4\SP4\Release\vc120.pdb'; linking object as if no debug info
      1>Common.lib(LoadTGA.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(LoadTGA.obj)' or at 'C:\Users\Lee\Desktop\SP4\SP4\Release\vc120.pdb'; linking object as if no debug info
      1>Common.lib(Mtx44.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(Mtx44.obj)' or at 'C:\Users\Lee\Desktop\SP4\SP4\Release\vc120.pdb'; linking object as if no debug info
      1>Common.lib(CameraBase.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Common.lib(CameraBase.obj)' or at 'C:\Users\Lee\Desktop\SP4\SP4\Release\vc120.pdb'; linking object as if no debug info
@@ -230,4 +87,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.97
+Time Elapsed 00:00:04.86

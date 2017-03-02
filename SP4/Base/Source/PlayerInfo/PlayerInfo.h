@@ -120,6 +120,9 @@ private:
 	Vector3 target, up;
     Vector3 direction;
     Vector3 prevPos;
+    Vector3 prevDir;
+
+    int prevRoom;
 
 	double m_dSpeed;
 	double m_dAcceleration;

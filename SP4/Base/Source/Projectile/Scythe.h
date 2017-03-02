@@ -29,6 +29,7 @@ private:
     SpriteAnimation* scythe;
 
     double m_dChangeDir;
+    double m_dParticleTimer;
 
     float rotation;
 

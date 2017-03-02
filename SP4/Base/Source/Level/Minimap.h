@@ -17,7 +17,6 @@ class CMinimap : public EntityBase
 protected:
     Mesh* Border;
     Mesh* Background;
-    Mesh* Path;
     Mesh* Room;
     Mesh* Player;
 

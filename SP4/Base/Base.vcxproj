@@ -56,8 +56,6 @@
     <ClCompile Include="Source\SpriteAnimation\SpriteAnimation.cpp" />
     <ClCompile Include="Source\SpriteEntity.cpp" />
     <ClCompile Include="Source\TextEntity.cpp" />
-    <ClCompile Include="Source\Waypoint\Waypoint.cpp" />
-    <ClCompile Include="Source\Waypoint\WaypointManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
@@ -109,8 +107,6 @@
     <ClInclude Include="Source\SpriteAnimation\SpriteAnimation.h" />
     <ClInclude Include="Source\SpriteEntity.h" />
     <ClInclude Include="Source\TextEntity.h" />
-    <ClInclude Include="Source\Waypoint\Waypoint.h" />
-    <ClInclude Include="Source\Waypoint\WaypointManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9B172635-4E2B-46F1-A403-08F4194D00F5}</ProjectGuid>

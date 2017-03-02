@@ -17,6 +17,8 @@
 #include "SceneText.h"
 #include "../Lua/LuaInterface.h"
 
+bool Application::Quit = false;
+
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
 const unsigned int frameTime = 1000 / FPS; // time for each frame
@@ -186,7 +188,7 @@ void Application::Run()
 	InitDisplay();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
-	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
+	while (!Quit && !glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
 		glfwPollEvents();
 		UpdateInput();

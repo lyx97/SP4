@@ -32,6 +32,8 @@ public:
 	int GetWindowHeight();
 	int GetWindowWidth();
 	Vector3 GetWorldBasedMousePos();
+
+    static bool Quit;
 	
 private:
 	Application();
@@ -47,7 +49,7 @@ private:
 	int m_window_width;
 	int m_window_height;
 
-	//Declare a window object
+    //Declare a window object
 	StopWatch m_timer;
 
 	// Pointer to shader program

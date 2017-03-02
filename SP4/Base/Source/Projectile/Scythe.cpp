@@ -7,6 +7,7 @@
 #include "GL/glew.h"
 #include "../PlayerInfo/PlayerInfo.h"
 #include "../Level/Level.h"
+#include "../BatchRendering.h"
 #include "LoadTGA.h"
 
 #include <iostream>
@@ -16,6 +17,7 @@ CScythe::CScythe(void)
     : CProjectile(NULL)
     , prevIndex(Vector3(0, 0, 0))
     , m_dChangeDir(0.0)
+    , m_dParticleTimer(0.0)
     , rotation(0)
     , m_bRoamMode(false)
 {
@@ -83,6 +85,20 @@ void CScythe::Update(double dt)
             m_dChangeDir = 0.0;
         }
     }
+
+    m_dParticleTimer += dt;
+    if (m_dParticleTimer >= 0.5)
+    {
+        BatchRendering::GetInstance()->GetParticle(
+            position,
+            Vector3(2.f, 2.f, 2.f),
+            color,
+            Vector3(0.f, 0.f, 0.f),
+            NUMPARTICLESPAWN);
+
+        m_dParticleTimer = 0.0;
+    }
+
 
     // Update Position
     position += theDirection * dt * m_fSpeed;
