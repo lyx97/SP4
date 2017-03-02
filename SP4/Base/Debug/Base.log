@@ -1,84 +1,486 @@
-﻿Build started 3/2/2017 8:54:22 PM.
-     1>Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
+﻿Build started 02-Mar-17 11:45:11 PM.
+     1>Project "C:\Users\Lee\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/Common/Source /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\BatchRendering.cpp Source\EntityManager.cpp Source\Level\Room.cpp
-         Room.cpp
-     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(57): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(114): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(134): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(140): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(146): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(161): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(174): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(175): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-         EntityManager.cpp
-     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\batchrendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-         BatchRendering.cpp
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\batchrendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Lee\Desktop\SP4\SP4\/Common/Source /IC:\Users\Lee\Desktop\SP4\SP4\/glfw/include /IC:\Users\Lee\Desktop\SP4\SP4\/glew/include /IC:\Users\Lee\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Application.cpp Source\BatchRendering.cpp Source\Camera\Camera.cpp Source\Enemy\Enemy2D.cpp Source\Enemy\Reaper.cpp Source\Enemy\Smoke.cpp Source\Enemy\Spitter.cpp Source\Enemy\FlyingTongue.cpp Source\Enemy\Skull.cpp Source\EntityManager.cpp Source\FPSCamera.cpp Source\GameStateManagement\HelpState.cpp Source\GameStateManagement\IntroState.cpp Source\GameStateManagement\LoseState.cpp Source\GameStateManagement\MenuState.cpp Source\GameStateManagement\WinState.cpp Source\GenericEntity.cpp Source\Items\Powerup.cpp Source\Items\Treasure.cpp Source\Level\GenerateHeatmap.cpp Source\Level\Grid.cpp Source\Level\Heatmap.cpp Source\Level\Level.cpp Source\Level\Minimap.cpp Source\Level\Room.cpp Source\Level\SpatialPartition.cpp Source\Light.cpp Source\Lua\LuaInterface.cpp Source\main.cpp Source\OBJMesh.cpp Source\Obstacle\Obstacle.cpp Source\Particle\Particle.cpp Source\PlayerInfo\PlayerInfo.cpp Source\Projectile\Ghast.cpp Source\Projectile\Laser.cpp Source\Projectile\Projectile.cpp Source\Projectile\Scythe.cpp Source\Projectile\Spit.cpp Source\SceneGraph\Transform.cpp Source\SceneGraph\UpdateTransformation.cpp Source\SceneText.cpp Source\Sound\SoundManager.cpp Source\SpriteAnimation\SpriteAnimation.cpp Source\SpriteEntity.cpp Source\TextEntity.cpp Source\Waypoint\Waypoint.cpp Source\Waypoint\WaypointManager.cpp
+         WaypointManager.cpp
+         Waypoint.cpp
+         TextEntity.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         SpriteEntity.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         SpriteAnimation.cpp
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+         SoundManager.cpp
+     1>c:\users\lee\desktop\sp4\sp4\base\source\sound\soundmanager.h(7): fatal error C1083: Cannot open include file: 'irrKlang.h': No such file or directory
+         SceneText.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\scenetext.h(21): warning C4099: 'Color' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\lee\desktop\sp4\sp4\common\source\vertex.h(14) : see declaration of 'Color'
+     1>c:\users\lee\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\batchrendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\lee\desktop\sp4\sp4\base\source\scenetext.cpp(83): warning C4244: 'initializing' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\scenetext.cpp(140): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\scenetext.cpp(141): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\scenetext.cpp(241): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         UpdateTransformation.cpp
+         Transform.cpp
+         Spit.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\batchrendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\spit.cpp(50): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\spit.cpp(61): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\spit.cpp(63): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\spit.cpp(67): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\spit.cpp(130): warning C4244: 'argument' : conversion from 'const float' to 'unsigned int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\spit.cpp(140): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Scythe.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\scythe.cpp(57): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\scythe.cpp(88): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\scythe.cpp(96): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\scythe.cpp(138): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\scythe.cpp(140): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\scythe.cpp(164): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\scythe.cpp(166): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Projectile.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         Laser.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\batchrendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\laser.cpp(96): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\laser.cpp(105): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\laser.cpp(112): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\laser.cpp(180): warning C4244: 'argument' : conversion from 'const float' to 'unsigned int', possible loss of data
+         Ghast.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\batchrendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\ghast.cpp(49): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\ghast.cpp(79): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\ghast.cpp(119): warning C4244: 'argument' : conversion from 'const float' to 'unsigned int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\projectile\ghast.cpp(129): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         PlayerInfo.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\batchrendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\lee\desktop\sp4\sp4\base\source\sound\soundmanager.h(7): fatal error C1083: Cannot open include file: 'irrKlang.h': No such file or directory
+         Particle.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\particle\particle.cpp(46): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\particle\particle.cpp(54): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\particle\particle.cpp(61): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\particle\particle.cpp(62): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\particle\particle.cpp(63): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\particle\particle.cpp(72): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\particle\particle.cpp(73): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\particle\particle.cpp(74): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+         Obstacle.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\obstacle\obstacle.cpp(24): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\obstacle\obstacle.cpp(26): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         OBJMesh.cpp
+         main.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+         LuaInterface.cpp
+     1>c:\users\lee\desktop\sp4\sp4\base\source\lua\luainterface.cpp(123): warning C4244: 'initializing' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\lua\luainterface.cpp(126): warning C4244: 'initializing' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\lua\luainterface.cpp(129): warning C4244: 'initializing' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\lua\luainterface.cpp(132): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\lua\luainterface.cpp(158): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\lua\luainterface.cpp(160): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\lua\luainterface.cpp(162): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\lua\luainterface.cpp(164): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\lua\luainterface.cpp(174): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : see declaration of 'sprintf'
+     1>c:\users\lee\desktop\sp4\sp4\base\source\lua\luainterface.cpp(184): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : see declaration of 'sprintf'
+     1>c:\users\lee\desktop\sp4\sp4\base\source\lua\luainterface.cpp(206): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
          Generating Code...
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\Debug /LIBPATH:"C:\Users\155117g\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 /PROFILE Debug\Application.obj
-         Debug\BatchRendering.obj
-         Debug\Camera.obj
-         Debug\Enemy2D.obj
-         Debug\Reaper.obj
-         Debug\Smoke.obj
-         Debug\Spitter.obj
-         Debug\FlyingTongue.obj
-         Debug\Skull.obj
-         Debug\EntityManager.obj
-         Debug\FPSCamera.obj
-         Debug\HelpState.obj
-         Debug\IntroState.obj
-         Debug\MenuState.obj
-         Debug\OptionState.obj
-         Debug\GenericEntity.obj
-         Debug\Powerup.obj
-         Debug\Treasure.obj
-         Debug\GenerateHeatmap.obj
-         Debug\Grid.obj
-         Debug\Heatmap.obj
-         Debug\Level.obj
-         Debug\Minimap.obj
-         Debug\Room.obj
-         Debug\SpatialPartition.obj
-         Debug\Light.obj
-         Debug\LuaInterface.obj
-         Debug\main.obj
-         Debug\OBJMesh.obj
-         Debug\Obstacle.obj
-         Debug\Particle.obj
-         Debug\PlayerInfo.obj
-         Debug\Ghast.obj
-         Debug\Laser.obj
-         Debug\Projectile.obj
-         Debug\Scythe.obj
-         Debug\Spit.obj
-         Debug\Transform.obj
-         Debug\UpdateTransformation.obj
-         Debug\SceneText.obj
-         Debug\SpriteAnimation.obj
-         Debug\SpriteEntity.obj
-         Debug\TextEntity.obj
-         Debug\Waypoint.obj
-         Debug\WaypointManager.obj
-     1>Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
-     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-         Base.vcxproj -> C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.exe
-     1>Done Building Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" (Build target(s)).
+         Compiling...
+         Light.cpp
+         SpatialPartition.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\spatialpartition.cpp(136): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\spatialpartition.cpp(160): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\spatialpartition.cpp(162): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Room.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.cpp(57): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.cpp(114): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.cpp(134): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.cpp(140): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.cpp(146): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.cpp(161): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.cpp(174): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.cpp(175): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+         Minimap.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\minimap.cpp(19): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\minimap.cpp(31): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\minimap.cpp(36): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\minimap.cpp(52): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\minimap.cpp(69): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\minimap.cpp(76): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+         Level.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(43): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(76): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(78): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(89): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(92): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(103): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(105): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(116): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(118): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(136): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(155): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(157): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(233): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(255): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(305): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(342): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(346): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(349): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(353): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(356): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(360): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(363): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(367): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(373): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(374): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\program files (x86)\microsoft visual studio 12.0\vc\include\tuple(746): warning C4351: new behavior: elements of array 'std::pair<const _Kty,_Ty>::second' will be default initialized
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\tuple(762) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<std::tuple<const int &>,std::tuple<>,0,>(_Tuple1 &,_Tuple2 &,std::_Arg_idx<0>,std::_Arg_idx<>)' being compiled
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+         ,            _Tuple1=std::tuple<const int &>
+         ,            _Tuple2=std::tuple<>
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\tuple(762) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<std::tuple<const int &>,std::tuple<>,0,>(_Tuple1 &,_Tuple2 &,std::_Arg_idx<0>,std::_Arg_idx<>)' being compiled
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+         ,            _Tuple1=std::tuple<const int &>
+         ,            _Tuple2=std::tuple<>
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(600) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<const int&,>(std::piecewise_construct_t,std::tuple<const int &>,std::tuple<>)' being compiled
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(600) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<const int&,>(std::piecewise_construct_t,std::tuple<const int &>,std::tuple<>)' being compiled
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(723) : see reference to function template instantiation 'void std::allocator<_Other>::construct<_Objty,const std::piecewise_construct_t&,_Ty,std::tuple<>>(_Objty *,const std::piecewise_construct_t &,_Ty &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
+         ,            _Objty=std::pair<const int,int [4]>
+         ,            _Ty=std::tuple<const int &>
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(723) : see reference to function template instantiation 'void std::allocator<_Other>::construct<_Objty,const std::piecewise_construct_t&,_Ty,std::tuple<>>(_Objty *,const std::piecewise_construct_t &,_Ty &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
+         ,            _Objty=std::pair<const int,int [4]>
+         ,            _Ty=std::tuple<const int &>
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(872) : see reference to function template instantiation 'void std::allocator_traits<_Alloc>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(std::allocator<_Other> &,_Objty *,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Alloc=std::allocator<std::_Tree_node<std::pair<const int,int [4]>,void *>>
+         ,            _Ty=std::pair<const int,int [4]>
+         ,            _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
+         ,            _Objty=std::pair<const int,int [4]>
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(872) : see reference to function template instantiation 'void std::allocator_traits<_Alloc>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(std::allocator<_Other> &,_Objty *,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Alloc=std::allocator<std::_Tree_node<std::pair<const int,int [4]>,void *>>
+         ,            _Ty=std::pair<const int,int [4]>
+         ,            _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
+         ,            _Objty=std::pair<const int,int [4]>
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xtree(933) : see reference to function template instantiation 'void std::_Wrap_alloc<std::allocator<_Other>>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(_Ty *,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
+         ,            _Ty=std::pair<const int,int [4]>
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xtree(933) : see reference to function template instantiation 'void std::_Wrap_alloc<std::allocator<_Other>>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(_Ty *,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Other=std::_Tree_node<std::pair<const int,int [4]>,void *>
+         ,            _Ty=std::pair<const int,int [4]>
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xtree(1184) : see reference to function template instantiation 'std::_Tree_node<std::pair<const _Kty,_Ty>,void *> *std::_Tree_buy<std::pair<const _Kty,_Ty>,std::allocator<std::pair<const _Kty,_Ty>>>::_Buynode<const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xtree(1184) : see reference to function template instantiation 'std::_Tree_node<std::pair<const _Kty,_Ty>,void *> *std::_Tree_buy<std::pair<const _Kty,_Ty>,std::allocator<std::pair<const _Kty,_Ty>>>::_Buynode<const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(233) : see reference to function template instantiation 'std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace_hint<const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>>,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+         ,            _Pr=std::less<int>
+         ,            _Alloc=std::allocator<std::pair<const int,int [4]>>
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(233) : see reference to function template instantiation 'std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace_hint<const std::piecewise_construct_t&,std::tuple<const int &>,std::tuple<>>(std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>>,const std::piecewise_construct_t &,std::tuple<const int &> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+         ,            _Pr=std::less<int>
+         ,            _Alloc=std::allocator<std::pair<const int,int [4]>>
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(225) : while compiling class template member function 'int (&std::map<int,int [4],std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>::operator [](const int &))[4]'
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+                 ]
+                 c:\users\lee\desktop\sp4\sp4\base\source\level\level.cpp(177) : see reference to function template instantiation 'int (&std::map<int,int [4],std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>::operator [](const int &))[4]' being compiled
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+                 ]
+                 c:\users\lee\desktop\sp4\sp4\base\source\level\level.h(35) : see reference to class template instantiation 'std::map<int,int [4],std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>' being compiled
+                 with
+                 [
+                     _Kty=int
+         ,            _Ty=int [4]
+                 ]
+         Heatmap.cpp
+         Grid.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\grid.cpp(45): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\grid.cpp(46): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\grid.cpp(47): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\grid.cpp(186): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\grid.cpp(224): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\grid.cpp(263): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\grid.cpp(273): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\grid.cpp(286): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\grid.cpp(345): warning C4018: '<' : signed/unsigned mismatch
+         GenerateHeatmap.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\generateheatmap.cpp(26): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\generateheatmap.cpp(49): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\generateheatmap.cpp(50): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\generateheatmap.cpp(51): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\generateheatmap.cpp(52): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\generateheatmap.cpp(69): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\generateheatmap.cpp(70): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\generateheatmap.cpp(103): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\generateheatmap.cpp(104): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\generateheatmap.cpp(114): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\generateheatmap.cpp(117): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+         Treasure.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         Powerup.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         GenericEntity.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         WinState.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\winstate.cpp(43): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         MenuState.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\menustate.cpp(61): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\menustate.cpp(62): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\menustate.cpp(68): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\menustate.cpp(71): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+         LoseState.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\losestate.cpp(43): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         IntroState.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\introstate.cpp(45): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\introstate.cpp(48): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\introstate.cpp(56): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\introstate.cpp(58): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+         HelpState.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\helpstate.cpp(53): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\helpstate.cpp(54): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\helpstate.cpp(59): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\gamestatemanagement\helpstate.cpp(63): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         FPSCamera.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+         EntityManager.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\batchrendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+         Skull.cpp
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\skull.cpp(115): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\skull.cpp(116): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\skull.cpp(156): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\skull.cpp(167): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\skull.cpp(173): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\skull.cpp(190): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+         FlyingTongue.cpp
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\flyingtongue.cpp(80): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\flyingtongue.cpp(81): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\flyingtongue.cpp(94): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\flyingtongue.cpp(99): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\flyingtongue.cpp(124): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\flyingtongue.cpp(145): warning C4244: 'argument' : conversion from 'unsigned int' to 'const float', possible loss of data
+         Generating Code...
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\spatialpartition.cpp(301): warning C4715: 'CSpatialPartition::GetObjects' : not all control paths return a value
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\spatialpartition.cpp(245): warning C4715: 'CSpatialPartition::GetGridPos' : not all control paths return a value
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\spatialpartition.cpp(253): warning C4715: 'CSpatialPartition::GetGridType' : not all control paths return a value
+         Compiling...
+         Spitter.cpp
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\spitter.cpp(86): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\spitter.cpp(91): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\spitter.cpp(130): warning C4244: 'argument' : conversion from 'unsigned int' to 'const float', possible loss of data
+         Smoke.cpp
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\smoke.cpp(18): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\smoke.cpp(20): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Reaper.cpp
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\reaper.cpp(67): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\reaper.cpp(69): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\reaper.cpp(110): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\reaper.cpp(111): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+         Enemy2D.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\enemy2d.cpp(26): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\enemy2d.cpp(29): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\enemy2d.cpp(31): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\enemy2d.cpp(54): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\enemy\enemy2d.cpp(71): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         Camera.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\camera\camera.cpp(43): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+         BatchRendering.cpp
+     1>c:\users\lee\desktop\sp4\sp4\base\source\batchrendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+         Application.cpp
+     1>c:\users\lee\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\common\source\mousecontroller.h(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\lee\desktop\sp4\sp4\base\source\scenetext.h(21): warning C4099: 'Color' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\lee\desktop\sp4\sp4\common\source\vertex.h(14) : see declaration of 'Color'
+     1>c:\users\lee\desktop\sp4\sp4\base\source\application.cpp(116): warning C4305: 'argument' : truncation from 'double' to 'const float'
+         Generating Code...
+     1>Done Building Project "C:\Users\Lee\Desktop\SP4\SP4\Base\Base.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:03.96
+Time Elapsed 00:01:17.86

@@ -81,6 +81,8 @@ void Powerup::Update(double _dt)
 
 void Powerup::Render(float& _renderOrder)
 {
+    glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 
     modelStack.PushMatrix();
@@ -118,4 +120,6 @@ void Powerup::Render(float& _renderOrder)
 	} // end of switch
 
 	modelStack.PopMatrix();
+
+    glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 }

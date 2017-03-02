@@ -15,6 +15,7 @@ using namespace std;
 CGhast::CGhast(void)
     : CProjectile(NULL)
     , prevIndex(Vector3(0, 0, 0))
+    , m_dChangeDir(0.0)
 {
     // Particle
     color.Set(Vector3(0.f, 0.8f, 1.f));
@@ -23,6 +24,7 @@ CGhast::CGhast(void)
 CGhast::CGhast(Mesh* _modelMesh)
     : CProjectile(_modelMesh)
     , prevIndex(Vector3(0, 0, 0))
+    , m_dChangeDir(0.0)
 {
     // Particle
     color.Set(Vector3(0.f, 0.8f, 1.f));
@@ -73,7 +75,12 @@ void CGhast::Update(double dt)
         return;
     }
 
-    theDirection = CPlayerInfo::GetInstance()->GetPosition() - position;
+    m_dChangeDir += dt;
+    if (m_dChangeDir >= 0.1)
+    {
+        theDirection = (CPlayerInfo::GetInstance()->GetPosition() - position);
+        m_dChangeDir = 0.0;
+    }
 
     // Update Position
     position += theDirection * dt * m_fSpeed;

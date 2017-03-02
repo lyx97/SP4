@@ -39,8 +39,13 @@ moveBackward 	= "S"
 moveLeft 		= "A"
 moveRight 		= "D"
 
-Waypoint_A_1 = {x=10.0, y=0.0, z=50.0}
-Waypoint_A_2 = {x=10.0, y=0.0, z=-50.0}
+Waypoint_A_1 = {x=10.0, y=0.0, z=-50.0}
+Waypoint_A_2 = {x=10.0, y=0.0, z=50.0}
 Waypoint_A_3 = {x=-10.0, y=0.0, z=0.0}
+
+
+Chaser_A_1 = {x=1000.0, y=0.0, z=-2000.0}
+Chaser_A_2 = {x=1000.0, y=0.0, z=1000.0}
+Chaser_A_3 = {x=-1000.0, y=0.0, z=5000.0}
 
 

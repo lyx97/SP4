@@ -467,13 +467,22 @@ void CPlayerInfo::Render(float& _renderOrder)
 
 	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 
+    glDisable(GL_CULL_FACE);
+
 	modelStack.PushMatrix();
 	modelStack.Translate(position.x, position.y + 1, position.z + 4);
+    modelStack.Rotate(direction.z, 0, -1, 0);
 	modelStack.Rotate(90, -1, 0, 0);
-	modelStack.Rotate(Math::RadianToDegree(atan2(direction.z, direction.x)), 0, 0, -1);
+    //modelStack.Rotate(Math::RadianToDegree(atan2(direction.z, direction.x)), 0, 0, -1);
+    if (direction.x > 0)
+        modelStack.Rotate(90, 0, 0, -1);
+    else
+        modelStack.Rotate(90, 0, 0, 1);
 	modelStack.Scale(15, 12, 0);
 	RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("laserblaster"));
 	modelStack.PopMatrix();
+
+    glEnable(GL_CULL_FACE);
 
 	glEnable(GL_BLEND);
 	modelStack.PushMatrix();

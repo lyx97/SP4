@@ -123,11 +123,18 @@ void CLevel::Render()
         modelStack.PopMatrix();
     }
 
+    glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
     if (room->GetRoomType() == ROOM_TYPE::NEXTLEVELROOM)
     {
-
+        modelStack.PushMatrix();
+        modelStack.Rotate(90, -1, 0, 0);
+        modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
+        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("stair"));
+        modelStack.PopMatrix();
     }
+
+    glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 }
 
 const bool CLevel::CompareOverlap(Vector3 index)

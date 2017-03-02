@@ -22,6 +22,7 @@ public:
     virtual void Render(float& _renderOrder);
 private:
     Vector3 prevIndex;
+    double m_dChangeDir;
 };
 
 namespace Create

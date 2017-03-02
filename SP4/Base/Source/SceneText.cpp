@@ -25,6 +25,7 @@
 #include "Enemy/Reaper.h"
 #include "Obstacle/Obstacle.h"
 #include "BatchRendering.h"
+#include "../Sound/SoundManager.h"
 
 #include <iostream>
 using namespace std;
@@ -40,28 +41,28 @@ SceneText::~SceneText()
 
 void SceneText::Init()
 {
-	lights[0] = new Light();
-	GraphicsManager::GetInstance()->AddLight("lights[0]", lights[0]);
-	lights[0]->type = Light::LIGHT_DIRECTIONAL;
-	lights[0]->position.Set(0, 20, 0);
-	lights[0]->color.Set(1, 1, 1);
-	lights[0]->power = 1;
-	lights[0]->kC = 1.f;
-	lights[0]->kL = 0.01f;
-	lights[0]->kQ = 0.001f;
-	lights[0]->cosCutoff = cos(Math::DegreeToRadian(45));
-	lights[0]->cosInner = cos(Math::DegreeToRadian(30));
-	lights[0]->exponent = 3.f;
-	lights[0]->spotDirection.Set(0.f, 1.f, 0.f);
-	lights[0]->name = "lights[0]";
+	//lights[0] = new Light();
+	//GraphicsManager::GetInstance()->AddLight("lights[0]", lights[0]);
+	//lights[0]->type = Light::LIGHT_DIRECTIONAL;
+	//lights[0]->position.Set(0, 20, 0);
+	//lights[0]->color.Set(1, 1, 1);
+	//lights[0]->power = 1;
+	//lights[0]->kC = 1.f;
+	//lights[0]->kL = 0.01f;
+	//lights[0]->kQ = 0.001f;
+	//lights[0]->cosCutoff = cos(Math::DegreeToRadian(45));
+	//lights[0]->cosInner = cos(Math::DegreeToRadian(30));
+	//lights[0]->exponent = 3.f;
+	//lights[0]->spotDirection.Set(0.f, 1.f, 0.f);
+	//lights[0]->name = "lights[0]";
 
-	lights[1] = new Light();
-	GraphicsManager::GetInstance()->AddLight("lights[1]", lights[1]);
-	lights[1]->type = Light::LIGHT_DIRECTIONAL;
-	lights[1]->position.Set(1, 1, 0);
-	lights[1]->color.Set(1, 1, 0.5f);
-	lights[1]->power = 0.4f;
-	lights[1]->name = "lights[1]";
+	//lights[1] = new Light();
+	//GraphicsManager::GetInstance()->AddLight("lights[1]", lights[1]);
+	//lights[1]->type = Light::LIGHT_DIRECTIONAL;
+	//lights[1]->position.Set(1, 1, 0);
+	//lights[1]->color.Set(1, 1, 0.5f);
+	//lights[1]->power = 0.4f;
+	//lights[1]->name = "lights[1]";
 
 	// Create the playerinfo instance, which manages all information about the player
 	camera.Init(Vector3(0, 1, 0), Vector3(0, 1, 0), Vector3(0, 0, -1));
@@ -181,6 +182,11 @@ void SceneText::Update(double dt)
 	{
 		SceneManager::GetInstance()->SetActiveScene("HelpState");
 	}
+
+    if (KeyboardController::GetInstance()->IsKeyPressed('K'))
+    {
+        SceneManager::GetInstance()->SetActiveScene("IntroState");
+    }
 
     //test += dt;
 
@@ -309,22 +315,23 @@ void SceneText::Render()
 
 void SceneText::Exit()
 {
+    EntityManager::GetInstance()->Destroy();
+    CLevel::GetInstance()->Destroy();
+    BatchRendering::GetInstance()->Destroy();
+    MeshBuilder::GetInstance()->Destroy();
+    SoundManager::GetInstance()->stopMusic();
+
 	// Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();
-
-	for (auto q : textObj)
-		EntityManager::GetInstance()->RemoveEntity(q);
-
-	MeshBuilder::GetInstance()->Destroy();
-
-	if (playerInfo->DropInstance() == false)
-	{
-#if _DEBUGMODE==1
-		cout << "Unable to drop PlayerInfo class" << endl;
-#endif
-	}
-
-	// Delete the lights
-	delete lights[0];
-	delete lights[1];
+//
+//	if (playerInfo->DropInstance() == false)
+//	{
+//#if _DEBUGMODE==1
+//		cout << "Unable to drop PlayerInfo class" << endl;
+//#endif
+//	}
+//
+//	// Delete the lights
+//	delete lights[0];
+//	delete lights[1];
 }

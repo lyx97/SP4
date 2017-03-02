@@ -33,6 +33,7 @@ public:
     void SetSpatialPartition(CSpatialPartition* theSpatialPartition);
 
     inline void RemoveSpatialPartition(void) { partitionList.clear(); }
+
 private:
 	EntityManager();
 	virtual ~EntityManager();
