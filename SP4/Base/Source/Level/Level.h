@@ -14,7 +14,12 @@ class CPlayerInfo;
 
 class CLevel : public Singleton<CLevel>
 {
+private:
     friend Singleton<CLevel>;
+
+    CLevel();
+    virtual ~CLevel();
+
 protected:
     int m_iLevel = 1;
     int m_iRoomID;
@@ -30,9 +35,6 @@ protected:
     std::map<int, int[4]> roomMap;
 
 public:
-    CLevel();
-    virtual ~CLevel();
-
     void Init(const float room_bias);
 
     void Render();

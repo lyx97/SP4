@@ -35,13 +35,9 @@ private:
     int prevHP;
 
     SpriteAnimation* currentAnimation;
-
-    SpriteAnimation* moveLeft;
-    SpriteAnimation* moveRight;
+    
     SpriteAnimation* attackLeft;
     SpriteAnimation* attackRight;
-    SpriteAnimation* scytheattackLeft;
-    SpriteAnimation* scytheattackRight;
     SpriteAnimation* dieLeft;
     SpriteAnimation* dieRight;
 

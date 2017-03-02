@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\BatchRendering.cpp" />
     <ClCompile Include="Source\Camera\Camera.cpp" />
     <ClCompile Include="Source\Enemy\Enemy2D.cpp" />
     <ClCompile Include="Source\Enemy\Reaper.cpp" />
@@ -58,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\BatchRendering.h" />
     <ClInclude Include="Source\Camera\Camera.h" />
     <ClInclude Include="Source\Enemy\Enemy2D.h" />
     <ClInclude Include="Source\Enemy\Reaper.h" />

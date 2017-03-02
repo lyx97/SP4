@@ -8,6 +8,7 @@
 #include "../PlayerInfo/PlayerInfo.h"
 #include "../Level/Level.h"
 #include "LoadTGA.h"
+#include "../BatchRendering.h"
 
 #include <iostream>
 using namespace std;
@@ -20,6 +21,9 @@ CSpit::CSpit(void)
     spit->textureID = LoadTGA("Image//Projectile//spit.tga");
     spit->m_anim = new Animation;
     spit->m_anim->Set(0, 5, 1, 5.f, true);
+
+    // Particle
+    color.Set(Vector3(0.f, 1.f, 0.f));
 }
 
 CSpit::~CSpit(void)
@@ -35,6 +39,8 @@ void CSpit::Update(double dt)
     if (m_bStatus == false)
         return;
 
+    bool done = false;
+
     if (prevIndex != index)
     {
         if (CLevel::GetInstance()->
@@ -46,7 +52,7 @@ void CSpit::Update(double dt)
         {
             SetStatus(false);
             SetIsDone(true);
-            return;
+            done = true;
         }
         prevIndex = index;
     }
@@ -64,6 +70,7 @@ void CSpit::Update(double dt)
     {
         SetStatus(false);
         SetIsDone(true);
+        done = true;
     }
 
     if (spit)
@@ -76,6 +83,17 @@ void CSpit::Update(double dt)
     {
         SetStatus(false);
         SetIsDone(true);
+        done = true;
+    }
+
+    if (done)
+    {
+        BatchRendering::GetInstance()->GetParticle(
+            position,
+            Vector3(2.f, 2.f, 2.f),
+            color,
+            Vector3(0.f, 0.f, 0.f),
+            NUMPARTICLESPAWN);
     }
 }
 

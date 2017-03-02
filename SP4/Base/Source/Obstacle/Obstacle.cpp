@@ -9,7 +9,7 @@ Obstacle::Obstacle(const Vector3 _pos, const int _roomID)
     : GenericEntity(NULL)
 {
     this->position = _pos;
-    this->scale = Vector3(GRIDSIZE, GRIDSIZE, 0);
+    this->scale = Vector3(GRIDSIZE - 2, GRIDSIZE - 2, 0);
     this->velocity = Vector3(0, 0, 0);
 
     this->isDone = false;
@@ -26,6 +26,9 @@ Obstacle::Obstacle(const Vector3 _pos, const int _roomID)
     this->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
 
     EntityManager::GetInstance()->AddEntity(this, roomID);
+
+    // Particle
+    color.Set(Vector3(0.f, 0.8f, 1.f));
 }
 
 Obstacle::~Obstacle()
@@ -40,11 +43,15 @@ void Obstacle::Update(double _dt)
 
 void Obstacle::Render(float& _renderOrder)
 {
+    glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
     modelStack.PushMatrix();
     modelStack.Translate(position.x, position.y - 0.01f, position.z);
     modelStack.Rotate(90, -1, 0, 0);
     modelStack.Scale(scale.x, scale.y, scale.z);
-    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("wall"));
+    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("obstacle"));
     modelStack.PopMatrix();
+
+    glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 }

@@ -133,6 +133,9 @@
     <ClCompile Include="Source\Enemy\Smoke.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BatchRendering.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Enemy\Enemy2D.h">
@@ -278,6 +281,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\Smoke.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BatchRendering.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

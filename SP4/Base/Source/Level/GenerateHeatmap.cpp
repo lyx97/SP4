@@ -19,9 +19,9 @@ void CGenerateHeatmap::GenerateHeatmap(CHeatmap** heatmap,
     const int xIndex, const int zIndex)
 {
     // Init
-    for (int x = 0; x <= xSize; ++x)
+    for (int x = 1; x < xSize; ++x)
     {
-        for (int z = 0; z <= zSize; ++z)
+        for (int z = 1; z < zSize; ++z)
         {
             heatmap[x][z].SetPos(Vector3(x, 0, z));
             heatmap[x][z].SetValue(0);
@@ -63,8 +63,8 @@ void CGenerateHeatmap::StartBrushfire(CHeatmap** heatmap,
         else if (i == 3)
             temp = ChildD;
 
-        if (0 <= temp.x && temp.x <= xSize &&
-            0 <= temp.z && temp.z <= zSize)
+        if (1 <= temp.x && temp.x < xSize &&
+            1 <= temp.z && temp.z < zSize)
         {
             int x = temp.x;
             int z = temp.z;
@@ -121,9 +121,9 @@ void CGenerateHeatmap::ChildBrushfire(CHeatmap** heatmap, const int xSize, const
 // Calculate direction vector to goal
 void CGenerateHeatmap::CalculateDirection(CHeatmap** heatmap, const int xSize, const int zSize)
 {
-    for (int x = 0; x <= xSize; ++x)
+    for (int x = 1; x < xSize; ++x)
     {
-        for (int z = 0; z <= zSize; ++z)
+        for (int z = 1; z < zSize; ++z)
         {
             //if (!heatmap[x][z].isObstacle())
             {
@@ -139,8 +139,8 @@ void CGenerateHeatmap::CalculateDirection(CHeatmap** heatmap, const int xSize, c
                         if (i == 0 && j == 0)
                             continue;
 
-                        if (x + i >= 0 && x + i <= xSize &&
-                            z + j >= 0 && z + j <= zSize)
+                        if (x + i >= 1 && x + i < xSize &&
+                            z + j >= 1 && z + j < zSize)
                         {
                             if (heatmap[x + i][z + j].isObstacle())
                                 allowDiagonalPath = false;
@@ -155,8 +155,8 @@ void CGenerateHeatmap::CalculateDirection(CHeatmap** heatmap, const int xSize, c
                     {
                         for (int j = -1; j <= 1; ++j)
                         {
-                            if (x + i >= 0 && x + i <= xSize &&
-                                z + j >= 0 && z + j <= zSize)
+                            if (x + i >= 1 && x + i < xSize &&
+                                z + j >= 1 && z + j < zSize)
                             {
                                 int temp = heatmap[x + i][z + j].GetValue();
                                 if (lowest > temp)
@@ -180,8 +180,8 @@ void CGenerateHeatmap::CalculateDirection(CHeatmap** heatmap, const int xSize, c
                             if (i == 0 && j == 0)
                                 continue;
 
-                            if (x + i >= 0 && x + i <= xSize &&
-                                z + j >= 0 && z + j <= zSize)
+                            if (x + i >= 1 && x + i < xSize &&
+                                z + j >= 1 && z + j < zSize)
                             {
                                 int temp = heatmap[x + i][z + j].GetValue();
                                 if (lowest > temp)

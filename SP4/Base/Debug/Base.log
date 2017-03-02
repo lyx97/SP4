@@ -1,14 +1,36 @@
-﻿Build started 3/1/2017 9:47:59 PM.
+﻿Build started 3/2/2017 8:54:22 PM.
      1>Project "C:\Users\155117g\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/Common/Source /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\EntityManager.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\155117g\Desktop\SP4\SP4\/Common/Source /IC:\Users\155117g\Desktop\SP4\SP4\/glfw/include /IC:\Users\155117g\Desktop\SP4\SP4\/glew/include /IC:\Users\155117g\Desktop\SP4\SP4\/Base/Source/Lua /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\BatchRendering.cpp Source\EntityManager.cpp Source\Level\Room.cpp
+         Room.cpp
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(57): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(114): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(134): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(140): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(146): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(161): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(174): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.cpp(175): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
          EntityManager.cpp
      1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
      1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
      1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
      1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\batchrendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+         BatchRendering.cpp
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\batchrendering.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\155117g\desktop\sp4\sp4\common\source\entitybase.h(33): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\spriteanimation\spriteanimation.h(39): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\155117g\desktop\sp4\sp4\base\source\level\room.h(77): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\Debug /LIBPATH:"C:\Users\155117g\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/glew/lib /LIBPATH:C:\Users\155117g\Desktop\SP4\SP4\/Lua/lib Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\155117g\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 /PROFILE Debug\Application.obj
+         Debug\BatchRendering.obj
          Debug\Camera.obj
          Debug\Enemy2D.obj
          Debug\Reaper.obj
@@ -59,4 +81,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.97
+Time Elapsed 00:00:03.96

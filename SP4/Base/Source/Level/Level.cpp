@@ -5,7 +5,6 @@
 #include "MeshBuilder.h"
 #include "../PlayerInfo/PlayerInfo.h"
 
-
 CLevel::CLevel()
     : m_iRoomID(1)
     , m_fRoomBias(0.f)
@@ -70,53 +69,65 @@ void CLevel::Render()
     CRoom* room = GetRoom(CPlayerInfo::GetInstance()->GetRoomID());
 
     MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
-    modelStack.PushMatrix();
-    modelStack.Translate(0, -0.1f, 0);
-    modelStack.Rotate(90, -1, 0, 0);
-    modelStack.Scale(room->GetRoomXMax() * GRIDSIZE, room->GetRoomZMax() * GRIDSIZE, 1);
-    RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("floor"));
-    modelStack.PopMatrix();
 
     if (room->GetDoorToRoomID(0) >= 0)
     {
         modelStack.PushMatrix();
-        modelStack.Translate(-((room->GetRoomXMax() * GRIDSIZE) >> 1), 0, 0);
+        modelStack.Translate(-((room->GetRoomXMax() * GRIDSIZE) >> 1), -0.1f, 0);
         modelStack.Rotate(90, -1, 0, 0);
         modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
-        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
+        if (room->GetRoomCleared())
+            RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dooropen2"));
+        else
+            RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("doorlocked2"));
         modelStack.PopMatrix();
     }
 
     if (room->GetDoorToRoomID(1) >= 0)
     {
         modelStack.PushMatrix();
-        modelStack.Translate(((room->GetRoomXMax() * GRIDSIZE) >> 1), 0, 0);
+        modelStack.Translate(((room->GetRoomXMax() * GRIDSIZE) >> 1), -0.1f, 0);
         modelStack.Rotate(90, -1, 0, 0);
+        modelStack.Rotate(180, 0, 0, 1);
         modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
-        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
+        if (room->GetRoomCleared())
+            RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dooropen2"));
+        else
+            RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("doorlocked2"));
         modelStack.PopMatrix();
     }
 
     if (room->GetDoorToRoomID(2) >= 0)
     {
         modelStack.PushMatrix();
-        modelStack.Translate(0, 0, -((room->GetRoomZMax() * GRIDSIZE) >> 1));
+        modelStack.Translate(0, -0.1f, -((room->GetRoomZMax() * GRIDSIZE) >> 1));
         modelStack.Rotate(90, -1, 0, 0);
         modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
-        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
+        if (room->GetRoomCleared())
+            RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dooropen2"));
+        else
+            RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("doorlocked"));
         modelStack.PopMatrix();
     }
 
     if (room->GetDoorToRoomID(3) >= 0)
     {
         modelStack.PushMatrix();
-        modelStack.Translate(0, 0, ((room->GetRoomZMax() * GRIDSIZE) >> 1));
+        modelStack.Translate(0, -0.1f, ((room->GetRoomZMax() * GRIDSIZE) >> 1));
         modelStack.Rotate(90, -1, 0, 0);
         modelStack.Scale(GRIDSIZE, GRIDSIZE, 1);
-        RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
+        if (room->GetRoomCleared())
+            RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("dooropen2"));
+        else
+            RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("doorlocked"));
         modelStack.PopMatrix();
     }
 
+
+    if (room->GetRoomType() == ROOM_TYPE::NEXTLEVELROOM)
+    {
+
+    }
 }
 
 const bool CLevel::CompareOverlap(Vector3 index)
@@ -331,24 +342,28 @@ void CLevel::SetDoor(CRoom* room)
             if (x == xMin && z == (zMax >> 1) && CLevel::GetInstance()->GetRoom(tempRoomIndex.x - 1, tempRoomIndex.z) != -1)
             {
                 room->GetSpatialPartition()->SetGridType(x, z, GRID_TYPE::DOOR);
+                room->GetSpatialPartition()->SetGridType(x + 1, z, GRID_TYPE::DOORPATH);
                 room->SetDoorToRoomID(0, CLevel::GetInstance()->GetRoom(tempRoomIndex.x - 1, tempRoomIndex.z));
             }
             // Right
             if (x == xMax && z == (zMax >> 1) && CLevel::GetInstance()->GetRoom(tempRoomIndex.x + 1, tempRoomIndex.z) != -1)
             {
                 room->GetSpatialPartition()->SetGridType(x, z, GRID_TYPE::DOOR);
+                room->GetSpatialPartition()->SetGridType(x - 1, z, GRID_TYPE::DOORPATH);
                 room->SetDoorToRoomID(1, CLevel::GetInstance()->GetRoom(tempRoomIndex.x + 1, tempRoomIndex.z));
             }
             // Up
             if (z == zMin && x == (xMax >> 1) && CLevel::GetInstance()->GetRoom(tempRoomIndex.x, tempRoomIndex.z - 1) != -1)
             {
                 room->GetSpatialPartition()->SetGridType(x, z, GRID_TYPE::DOOR);
+                room->GetSpatialPartition()->SetGridType(x, z + 1, GRID_TYPE::DOORPATH);
                 room->SetDoorToRoomID(2, CLevel::GetInstance()->GetRoom(tempRoomIndex.x, tempRoomIndex.z - 1));
             }
             // Down
             if (z == zMax && x == (xMax >> 1) && CLevel::GetInstance()->GetRoom(tempRoomIndex.x, tempRoomIndex.z + 1) != -1)
             {
                 room->GetSpatialPartition()->SetGridType(x, z, GRID_TYPE::DOOR);
+                room->GetSpatialPartition()->SetGridType(x, z - 1, GRID_TYPE::DOORPATH);
                 room->SetDoorToRoomID(3, CLevel::GetInstance()->GetRoom(tempRoomIndex.x, tempRoomIndex.z + 1));
             }
         }

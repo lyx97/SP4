@@ -18,7 +18,6 @@ public:
 	~Mesh();
 	virtual void Render();
 	virtual void Render(unsigned offset, unsigned count);
-    virtual void RenderParticle();
 
 	const std::string name;
 	DRAW_MODE mode;

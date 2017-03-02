@@ -59,9 +59,6 @@ public:
 	inline void SetVelocity(const Vector3& _value){ velocity = _value; };
 	inline Vector3 GetVelocity(){ return velocity; };
 
-	inline void SetFront(const Vector3& _value){ front = _value; };
-	inline Vector3 GetFront(){ return front; };
-
 	inline void SetMass(const float& _value){ mass = _value; };
 	inline float GetMass(){ return mass; };
 
@@ -74,6 +71,9 @@ public:
 
 	inline int GetMaxHealth(void) const { return maxHealth; }
 	inline void SetMaxHealth(const int& maxHealth) { this->maxHealth = maxHealth; }
+
+    inline void SetColor(Vector3 _color) { color = _color; }
+    inline Vector3 GetColor(void) { return color; }
 
 protected:
 	Vector3 position;
@@ -91,11 +91,13 @@ protected:
 	float mass;
 	Vector3 velocity;
 	Vector3 heatmapDir;
-	Vector3 front;
 
     int roomID;
     int health;
 	int maxHealth;
+
+    // Particle
+    Vector3 color;
 };
 
 #endif // ENTITY_BASE_H

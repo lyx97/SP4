@@ -84,21 +84,21 @@ void CRoom::Spawn(void)
     {
     case ROOM_TYPE::STARTROOM:
     {
-        float spawnbias = 10.f;
+        //float spawnbias = 10.f;
 
-        for (int x = m_iMin_X + 1; x <= m_iMax_X - 1; ++x)
-        {
-            for (int z = m_iMin_Z + 1; z <= m_iMax_Z - 1; ++z)
-            {
-                if (spawnbias >= Math::RandFloatMinMax(0, 100))
-                {
-                    spawnbias *= 0.75f;
+        //for (int x = m_iMin_X + 1; x <= m_iMax_X - 1; ++x)
+        //{
+        //    for (int z = m_iMin_Z + 1; z <= m_iMax_Z - 1; ++z)
+        //    {
+        //        if (spawnbias >= Math::RandFloatMinMax(0, 100))
+        //        {
+        //            spawnbias *= 0.75f;
 
-                    Obstacle* obstacle = new Obstacle(RoomSpatial->GetGridPos(x, z), m_iRoomID);
-                    RoomSpatial->GetGrid(x, z)->SetType(GRID_TYPE::OBSTACLE);
-                }
-            }
-        }
+        //            Obstacle* obstacle = new Obstacle(RoomSpatial->GetGridPos(x, z), m_iRoomID);
+        //            RoomSpatial->GetGrid(x, z)->SetType(GRID_TYPE::OBSTACLE);
+        //        }
+        //    }
+        //}
 
         CLevel::GetInstance()->AddNumEnemyToList(0);
         break;
@@ -147,17 +147,18 @@ void CRoom::Spawn(void)
                     break;
                 }
                 }
+                OccupiedGridList.push_back(Vector3(tempPos.x, 0, tempPos.z));
                 enemyCount++;
             }
         }
 
-        int obstacleCount = Math::RandIntMinMax(0, 10);
+        int obstacleCount = Math::RandIntMinMax(15, 20);
         while (obstacleCount != 0)
         {
             Vector3 tempPos = Vector3(
-                Math::RandIntMinMax(m_iMin_X + 1, m_iMax_X - 1),
+                Math::RandIntMinMax(m_iMin_X + 2, m_iMax_X - 2),
                 0,
-                Math::RandIntMinMax(m_iMin_Z + 1, m_iMax_Z - 1));
+                Math::RandIntMinMax(m_iMin_Z + 2, m_iMax_Z - 2));
 
             bool spawn = true;
 
@@ -172,6 +173,7 @@ void CRoom::Spawn(void)
             {
                 Obstacle* obstacle = new Obstacle(RoomSpatial->GetGridPos(tempPos.x, tempPos.z), m_iRoomID);
                 RoomSpatial->GetGrid(tempPos.x, tempPos.z)->SetType(GRID_TYPE::OBSTACLE);
+                OccupiedGridList.push_back(Vector3(tempPos.x, 0, tempPos.z));
                 obstacleCount--;
             }
         }
@@ -194,8 +196,7 @@ void CRoom::Spawn(void)
         }
         else
         {
-            // SPAWN NEXT LEVEL DOOR
-
+            RoomSpatial->GetGrid(m_iMax_X >> 1, m_iMax_Z >> 1)->SetType(GRID_TYPE::STAIR);
             CLevel::GetInstance()->AddNumEnemyToList(0);
         }
         break;

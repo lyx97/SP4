@@ -3,8 +3,6 @@
 #include "GL\glew.h"
 #include "Vertex.h"
 
-int Mesh::countTest = 0;
-
 Mesh::Mesh(const std::string &meshName)
 	: name(meshName)
 	, mode(DRAW_TRIANGLES)
@@ -24,39 +22,39 @@ Mesh::~Mesh()
 
 void Mesh::Render()
 {
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Position));
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Position) + sizeof(Color)));
-	if(textureID > 0)
-	{
-		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Position) + sizeof(Color) + sizeof(Vector3)));
-	}
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Position));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Position) + sizeof(Color)));
 
-	
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    if (textureID > 0)
+    {
+        glEnableVertexAttribArray(3);
+        glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Position) + sizeof(Color) + sizeof(Vector3)));
+    }
 
-	if(mode == DRAW_LINES)
-		glDrawElements(GL_LINES, indexSize, GL_UNSIGNED_INT, 0);
-	else if(mode == DRAW_TRIANGLE_STRIP)
-		glDrawElements(GL_TRIANGLE_STRIP, indexSize, GL_UNSIGNED_INT, 0);
-	else
-		glDrawElements(GL_TRIANGLES, indexSize, GL_UNSIGNED_INT, 0);
+    //glDrawArrays(GL_TRIANGLES, 0, 3);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
+    if (mode == DRAW_LINES)
+        glDrawElements(GL_LINES, indexSize, GL_UNSIGNED_INT, 0);
+    else if (mode == DRAW_TRIANGLE_STRIP)
+        glDrawElements(GL_TRIANGLE_STRIP, indexSize, GL_UNSIGNED_INT, 0);
+    else
+        glDrawElements(GL_TRIANGLES, indexSize, GL_UNSIGNED_INT, 0);
 
-	if(textureID > 0)
-	{
-		glDisableVertexAttribArray(3);
-	}
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
+
+    if (textureID > 0)
+    {
+        glDisableVertexAttribArray(3);
+    }
 }
 
 void Mesh::Render(unsigned offset, unsigned count)
@@ -93,14 +91,4 @@ void Mesh::Render(unsigned offset, unsigned count)
 	{
 		glDisableVertexAttribArray(3);
 	}
-}
-
-void Mesh::RenderParticle()
-{
-    if (mode == DRAW_LINES)
-        glDrawElements(GL_LINES, indexSize, GL_UNSIGNED_INT, 0);
-    else if (mode == DRAW_TRIANGLE_STRIP)
-        glDrawElements(GL_TRIANGLE_STRIP, indexSize, GL_UNSIGNED_INT, 0);
-    else
-        glDrawElements(GL_TRIANGLES, indexSize, GL_UNSIGNED_INT, 0);
 }

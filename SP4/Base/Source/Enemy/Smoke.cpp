@@ -38,7 +38,6 @@ void Smoke::Update(double dt)
 {
     if (health <= 0)
     {
-        SetIsDone(true);
         m_bSmokeActive = false;
         return;
     }

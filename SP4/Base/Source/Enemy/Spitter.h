@@ -12,7 +12,6 @@ private:
     enum FSM
     {
         IDLE,
-        LUNGE,
         ATTACK,
         DEAD,
 
@@ -34,8 +33,6 @@ private:
 
     SpriteAnimation* idleLeft;
     SpriteAnimation* idleRight;
-    SpriteAnimation* moveLeft;
-    SpriteAnimation* moveRight;
     SpriteAnimation* attackLeft;
     SpriteAnimation* attackRight;
     SpriteAnimation* dieLeft;

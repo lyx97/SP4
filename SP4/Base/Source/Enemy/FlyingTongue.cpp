@@ -141,7 +141,7 @@ void FlyingTongue::Update(double dt)
                 position,
                 CPlayerInfo::GetInstance()->GetPosition() - position,
                 5.0f,
-                30.0f,
+                2.0f,
 				damage);
 
             m_bAttackAnimation = false;

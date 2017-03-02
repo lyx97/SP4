@@ -24,6 +24,7 @@
 #include "Enemy/Spitter.h"
 #include "Enemy/Reaper.h"
 #include "Obstacle/Obstacle.h"
+#include "BatchRendering.h"
 
 #include <iostream>
 using namespace std;
@@ -92,13 +93,16 @@ void SceneText::Init()
 
     minimap = new CMinimap();
 
-    //for (int i = 0; i < 800; ++i)
+    //for (int i = 0; i < 200; ++i)
     //{
-    //    Particle* particle = EntityManager::GetInstance()->GetParticle();
-    //    particle->Init();
-    //    particle->SetIsDone(false);
-    //    particle->AddEffect(Particle::GRAVITY);
-    //    //particle->AddEffect(Particle::SHRINK);
+    //    Particle* particle = BatchRendering::GetInstance()->GetParticle(
+    //        Vector3(10, 10, 0), 
+    //        Vector3(20.f, 20.f, 20.f),
+    //        Vector3(0.5f, 0.5f, 0.5f), 
+    //        Vector3(0.f, 0.f, 0.f),
+    //        2.0);
+    //    particle->SetDistort(false);
+    //    //particle->Init();
     //}
 
     //test = 0.0;

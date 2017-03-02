@@ -12,6 +12,7 @@
 #include "MeshBuilder.h"
 #include "../Level/Level.h"
 #include "../Projectile/Laser.h"
+#include "../BatchRendering.h"
 
 // Allocating and initializing CPlayerInfo's static data member.
 // The pointer is allocated but not the object's constructor.
@@ -73,7 +74,7 @@ void CPlayerInfo::Init(void)
 {
     m_eEntityType = ENTITY_TYPE::PLAYER;
 
-	scale.Set(24, 30, 1);
+    scale.Set(GRIDSIZE, GRIDSIZE, 1);
 	// Set the default values
 	defaultPosition.Set(0, 0, 10);
 	defaultTarget.Set(0, 0, 0);
@@ -145,8 +146,8 @@ void CPlayerInfo::Init(void)
     SpawnLocation[3] = CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(xSize >> 1, 1);
 
     // Boundary
-    minBoundary.Set(CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(1, 1) - Vector3(GRIDSIZE, 0, GRIDSIZE));
-    maxBoundary.Set(CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(xSize - 1, zSize - 1) + Vector3(GRIDSIZE, 0, GRIDSIZE));
+    minBoundary.Set(CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(1, 1));
+    maxBoundary.Set(CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridPos(xSize - 1, zSize - 1));
 
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() << 1;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() << 1;
@@ -160,6 +161,9 @@ void CPlayerInfo::Init(void)
 			Vector3(fontSize, fontSize, fontSize),
 			Color(0.0f, 1.0f, 0.0f));
 	}
+
+    // Particle
+    color.Set(Vector3(0.8f, 1.f, 0.5f));
 }
 
 // Set the boundary for the player info
@@ -192,6 +196,49 @@ void CPlayerInfo::Update(double dt)
     {
         CGenerateHeatmap::GetInstance()->GenerateHeatmap(heatmap, xSize, zSize, index.x, index.z);
         CGenerateHeatmap::GetInstance()->CalculateDirection(heatmap, xSize, zSize);
+
+        // Change room
+        if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomCleared() &&
+            CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridType(index.x, index.z) == GRID_TYPE::DOOR)
+        {
+            int previousRoom = roomID;
+
+            if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMin() == index.x && (CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax() >> 1) == index.z)
+            {
+                roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(0);
+                position = SpawnLocation[0];
+            }
+            if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax() == index.x && (CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax() >> 1) == index.z)
+            {
+                roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(1);
+                position = SpawnLocation[1];
+            }
+            if ((CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax() >> 1) == index.x && CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMin() == index.z)
+            {
+                roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(2);
+                position = SpawnLocation[2];
+            }
+            if ((CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax() >> 1) == index.x && CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax() == index.z)
+            {
+                roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(3);
+                position = SpawnLocation[3];
+            }
+
+            EntityManager::GetInstance()->GetSpatialPartition(roomID)->Add(this);
+            EntityManager::GetInstance()->GetSpatialPartition(previousRoom)->Remove(this);
+        }
+
+        // Change level
+        if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomCleared() &&
+            CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridType(index.x, index.z) == GRID_TYPE::STAIR)
+        {
+            EntityManager::GetInstance()->ResetEntities();
+            EntityManager::GetInstance()->RemoveSpatialPartition();
+            CLevel::GetInstance()->Init(100);
+            roomID = 0;
+            EntityManager::GetInstance()->GetSpatialPartition(roomID)->Add(this);
+        }
+
         prevIndex = index;
     }
 
@@ -210,45 +257,13 @@ void CPlayerInfo::Update(double dt)
     }
 
 	position += velocity * (float)dt;
-	if (!Application::GetInstance().GetWorldBasedMousePos().IsZero())
-		front.Set(Vector3(position - Application::GetInstance().GetWorldBasedMousePos()).Normalized());
+
 	Vector3 forceDir;
 	isMoving = false;
 	if (!isMoving)
 	{
 		velocity *= 0.9f;
 	}
-
-    // Change room
-    if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomCleared() &&
-        CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridType(index.x, index.z) == GRID_TYPE::DOOR)
-    {
-        int previousRoom = roomID;
-
-        if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMin() == index.x && (CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax() >> 1) == index.z)
-        {
-            roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(0);
-            position = SpawnLocation[0];
-        }
-        if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax() == index.x && (CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax() >> 1) == index.z)
-        {
-            roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(1);
-            position = SpawnLocation[1];
-        }
-        if ((CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax() >> 1) == index.x && CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMin() == index.z)
-        {
-            roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(2);
-            position = SpawnLocation[2];
-        }
-        if ((CLevel::GetInstance()->GetRoom(roomID)->GetRoomXMax() >> 1) == index.x && CLevel::GetInstance()->GetRoom(roomID)->GetRoomZMax() == index.z)
-        {
-            roomID = CLevel::GetInstance()->GetRoom(roomID)->GetDoorToRoomID(3);
-            position = SpawnLocation[3];
-        }
-
-        EntityManager::GetInstance()->GetSpatialPartition(roomID)->Add(this);
-        EntityManager::GetInstance()->GetSpatialPartition(previousRoom)->Remove(this);
-    }
 
     // Dash cooldown
 	if (isDashed)
@@ -305,7 +320,17 @@ void CPlayerInfo::Update(double dt)
 			dashCooldownTimer = dashCooldown;
 			forceMagnitude = maxSpeed * dashDistance;
 			this->ApplyForce(forceDir, forceMagnitude * dt);
+
 			isDashed = true;
+
+            BatchRendering::GetInstance()->GetParticle(
+                position,
+                Vector3(2.f, 2.f, 2.f),
+                color,
+                -velocity * 0.25f,
+                NUMPARTICLESPAWN,
+                false);
+
 		}
 	}
 
@@ -690,26 +715,56 @@ void CPlayerInfo::RenderUI(void)
 void CPlayerInfo::Constrain(void)
 {
 	// Constrain player within the boundary
-    if (position.x > maxBoundary.x - 1.0f)
+    if (CLevel::GetInstance()->GetRoom(roomID)->GetRoomCleared())
     {
-        position.x = maxBoundary.x - 1.0f; 
-        velocity.x = 0;
+        if (CLevel::GetInstance()->GetRoom(roomID)->GetSpatialPartition()->GetGridType(index.x, index.z) != GRID_TYPE::DOORPATH)
+        {
+            if (position.x > maxBoundary.x - 1.0f)
+            {
+                position.x = maxBoundary.x - 1.0f;
+                velocity.x = 0;
+            }
+            if (position.z > maxBoundary.z - 1.0f)
+            {
+                position.z = maxBoundary.z - 1.0f;
+                velocity.z = 0;
+            }
+            if (position.x < minBoundary.x + 1.0f)
+            {
+                position.x = minBoundary.x + 1.0f;
+                velocity.x = 0;
+            }
+            if (position.z < minBoundary.z + 1.0f)
+            {
+                position.z = minBoundary.z + 1.0f;
+                velocity.z = 0;
+            }
+        }
     }
-    if (position.z > maxBoundary.z - 1.0f)
+    else
     {
-        position.z = maxBoundary.z - 1.0f; 
-        velocity.z = 0;
+        if (position.x > maxBoundary.x - 1.0f)
+        {
+            position.x = maxBoundary.x - 1.0f;
+            velocity.x = 0;
+        }
+        if (position.z > maxBoundary.z - 1.0f)
+        {
+            position.z = maxBoundary.z - 1.0f;
+            velocity.z = 0;
+        }
+        if (position.x < minBoundary.x + 1.0f)
+        {
+            position.x = minBoundary.x + 1.0f;
+            velocity.x = 0;
+        }
+        if (position.z < minBoundary.z + 1.0f)
+        {
+            position.z = minBoundary.z + 1.0f;
+            velocity.z = 0;
+        }
     }
-    if (position.x < minBoundary.x + 1.0f)
-    {
-        position.x = minBoundary.x + 1.0f;
-        velocity.x = 0;
-    }
-    if (position.z < minBoundary.z + 1.0f)
-    {
-        position.z = minBoundary.z + 1.0f;
-        velocity.z = 0;
-    }
+
 }
 
 void CPlayerInfo::Shoot(Vector3 dir)

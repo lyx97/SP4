@@ -19,9 +19,6 @@ public:
 
     void Init(void);
 
-    inline Vector3 GetVelocity(void) const { return velocity; }
-    inline void SetVelocity(const Vector3& velocity) { this->velocity = velocity; }
-
     inline float GetRotation(void) const { return m_fRotation; }
     inline void SetRotation(const float& rotation) { this->m_fRotation = rotation; }
 
@@ -31,16 +28,15 @@ public:
     inline double GetLifetime(void) const { return m_dLifetime; }
     inline void SetLifetime(const double& lifetime) { this->m_dLifetime = lifetime; }
 
+    inline void SetDistort(bool _distort) { m_bDistort = _distort; }
+    inline bool GetDistort(void) { return m_bDistort; }
+
     void AddEffect(PARTICLE_EFFECT effect);
 
     // Update
     void Update(double dt = 0.0333f);
 
-    // Render
-    void Render(void);
-
 protected:
-    Vector3 velocity;           // Velocity of Particle
 
     float m_fRotation;          // Rotation of Particle
     float m_fRotationSpeed;     // Rotational speed of Particle
@@ -53,6 +49,8 @@ protected:
     float m_fMaxSize;           // Max size of particle, default is 10
 
     double m_dLifetime;         // Lifetime of particle
+
+    bool m_bDistort;
 
     std::list<PARTICLE_EFFECT> effectList;
 };

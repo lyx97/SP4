@@ -17,7 +17,9 @@ enum GRID_TYPE
     DEFAULT,
     PATH,
     WALL,
+    DOORPATH,
     DOOR,
+    STAIR,
     OBSTACLE,
     NUM_GRIDTYPE
 };

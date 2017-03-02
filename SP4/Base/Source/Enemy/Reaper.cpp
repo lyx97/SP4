@@ -16,7 +16,7 @@ Reaper::Reaper(const int _roomID)
     , m_bInvulnerable(true)
 {
     this->position = Vector3(0, 0, 0);
-    this->scale = Vector3(100, 100, 0);
+    this->scale = Vector3(50, 50, 0);
     this->velocity = Vector3(0, 0, 0);
 
     this->isDone = false;
@@ -24,16 +24,6 @@ Reaper::Reaper(const int _roomID)
     this->m_bLaser = false;
 
     this->m_eEntityType = EntityBase::ENEMY;
-
-    moveLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 4);
-    moveLeft->textureID = LoadTGA("Image//Boss//reaper_moveleft.tga");
-    moveLeft->m_anim = new Animation;
-    moveLeft->m_anim->Set(0, 3, 1, 1.f, true);
-
-    moveRight = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 4);
-    moveRight->textureID = LoadTGA("Image//Boss//reaper_moveright.tga");
-    moveRight->m_anim = new Animation;
-    moveRight->m_anim->Set(0, 3, 1, 1.f, true);
 
     moveLeft2 = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 7);
     moveLeft2->textureID = LoadTGA("Image//Boss//reaper2_moveleft.tga");
@@ -57,18 +47,6 @@ Reaper::Reaper(const int _roomID)
     attackRight->m_anim->Set(0, 4, 1, 2.0f, true);
     attackRight->SetAttackFrame(4);
 
-    scytheattackLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 5);
-    scytheattackLeft->textureID = LoadTGA("Image//Boss//reaper_scytheattackleft.tga");
-    scytheattackLeft->m_anim = new Animation;
-    scytheattackLeft->m_anim->Set(0, 4, 1, 2.0f, true);
-    scytheattackLeft->SetAttackFrame(4);
-
-    scytheattackRight = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 5);
-    scytheattackRight->textureID = LoadTGA("Image//Boss//reaper_attackright.tga");
-    scytheattackRight->m_anim = new Animation;
-    scytheattackRight->m_anim->Set(0, 4, 1, 2.0f, true);
-    scytheattackRight->SetAttackFrame(4);
-
     dieLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 6);
     dieLeft->textureID = LoadTGA("Image//Boss//reaper_dieleft.tga");
     dieLeft->m_anim = new Animation;
@@ -79,7 +57,7 @@ Reaper::Reaper(const int _roomID)
     dieRight->m_anim = new Animation;
     dieRight->m_anim->Set(0, 5, 1, 1.f, true);
 
-    currentAnimation = moveLeft;
+    currentAnimation = attackLeft;
 
     maxHealth = 100;
     health = maxHealth;
@@ -87,7 +65,7 @@ Reaper::Reaper(const int _roomID)
 
     this->SetCollider(true);
     int x = scale.x, y = scale.y;
-    x = (x >> 1) - 30; y = (y >> 1) - 30;
+    x = (x >> 1) - 10; y = (y >> 1) - 10;
     this->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
 
     EntityManager::GetInstance()->AddEntity(this, roomID);
@@ -112,12 +90,8 @@ Reaper::Reaper(const int _roomID)
 
 Reaper::~Reaper()
 {
-    delete moveLeft;
-    delete moveRight;
     delete attackLeft;
     delete attackRight;
-    delete scytheattackLeft;
-    delete scytheattackRight;
     delete dieLeft;
     delete dieRight;
 
@@ -146,10 +120,14 @@ void Reaper::Update(double dt)
 
         for (int i = 0; i < 4; ++i)
         {
-            if (!smoke[i]->IsDone())
-                m_bSmokeActive[i] = true;
-            else
-                m_bSmokeActive[i] = false;
+            if (m_bSmokeActive[i])
+            {
+                if (!smoke[i]->GetActive())
+                {
+                    m_bSmokeActive[i] = false;
+                    smoke[i]->SetIsDone(true);
+                }
+            }
         }
 
         m_bInvulnerable = false;

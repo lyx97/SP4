@@ -29,16 +29,6 @@ Spitter::Spitter(const int _roomID)
     idleRight->m_anim = new Animation;
     idleRight->m_anim->Set(0, 3, 1, 1.f, true);
 
-    moveLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 9);
-    moveLeft->textureID = LoadTGA("Image//Enemy//spitter_moveleft.tga");
-    moveLeft->m_anim = new Animation;
-    moveLeft->m_anim->Set(0, 8, 1, 1.f, true);
-
-    moveRight = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 9);
-    moveRight->textureID = LoadTGA("Image//Enemy//spitter_moveright.tga");
-    moveRight->m_anim = new Animation;
-    moveRight->m_anim->Set(0, 8, 1, 1.f, true);
-
     attackLeft = MeshBuilder::GetInstance()->GenerateSpriteAnimation(1, 14);
     attackLeft->textureID = LoadTGA("Image//Enemy//spitter_attackleft.tga");
     attackLeft->m_anim = new Animation;
@@ -61,7 +51,7 @@ Spitter::Spitter(const int _roomID)
     dieRight->m_anim = new Animation;
     dieRight->m_anim->Set(0, 7, 1, 1.f, true);
 
-    currentAnimation = moveLeft;
+    currentAnimation = idleLeft;
 
 	maxHealth = 75;
 	health = maxHealth;
@@ -79,8 +69,6 @@ Spitter::~Spitter()
 {
     delete idleLeft;
     delete idleRight;
-    delete moveLeft;
-    delete moveRight;
     delete attackLeft;
     delete attackRight;
     delete dieLeft;
@@ -89,23 +77,8 @@ Spitter::~Spitter()
 
 void Spitter::Update(double dt)
 {
-    CHeatmap** heatmap = CPlayerInfo::GetInstance()->GetHeatmap();
-
-    int x = index.x;
-    int z = index.z;
-
-    //velocity = heatmap[x][z].GetDir();
-
     m_dResponseTime += dt;
 
-    //fsm = FSM::LUNGE;
-    //if (targetPos.IsZero())
-    //{
-    //    targetPos = CPlayerInfo::GetInstance()->GetPosition();
-    //    velocity = (targetPos - position);
-    //}
-
-    //cout << velocity << endl;
 
 	if (nightmare)
 	{
@@ -124,17 +97,7 @@ void Spitter::Update(double dt)
     }
     else
     {
-        if ((position - CPlayerInfo::GetInstance()->GetPosition()).LengthSquared() <= 40000
-            && m_dResponseTime >= m_dResponse)
-        {
-            fsm = FSM::ATTACK;
-            m_dResponseTime = 0.0;
-        }
-        else if (m_dResponseTime >= m_dResponse)
-        {
-            fsm = FSM::IDLE;
-            m_dResponseTime = 0.0;
-        }
+        fsm = FSM::ATTACK;
     }
 
     // length of this enemy to player
@@ -149,16 +112,6 @@ void Spitter::Update(double dt)
         else
             currentAnimation = idleLeft;
 
-        break;
-    }
-    case LUNGE:
-    {
-        position += velocity.Normalized() * dt * m_dSpeed;
-
-        if (temp.x > 0)
-            currentAnimation = moveRight;
-        else
-            currentAnimation = moveLeft;
         break;
     }
     case ATTACK:

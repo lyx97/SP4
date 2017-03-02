@@ -7,6 +7,7 @@
 #include "GL/glew.h"
 #include "../PlayerInfo/PlayerInfo.h"
 #include "../Level/Level.h"
+#include "../BatchRendering.h"
 
 #include <iostream>
 using namespace std;
@@ -19,6 +20,8 @@ CLaser::CLaser(void)
 	, angle_y(0.0)
 	, angle_z(0.0)
 {
+    // Particle
+    color.Set(Vector3(1.f, 0.f, 0.f));
 }
 
 CLaser::CLaser(Mesh* _modelMesh)
@@ -29,6 +32,8 @@ CLaser::CLaser(Mesh* _modelMesh)
 	, angle_y(0.0)
 	, angle_z(0.0)
 {
+    // Particle
+    color.Set(Vector3(1.f, 0.f, 0.f));
 }
 
 CLaser::~CLaser(void)
@@ -73,6 +78,12 @@ void CLaser::Update(double dt)
     {
         m_bStatus = false;
         SetIsDone(true);	// This method is to inform the EntityManager that it should remove this instance
+        BatchRendering::GetInstance()->GetParticle(
+            position,
+            Vector3(2.f, 2.f, 2.f),
+            color,
+            Vector3(0.f, 0.f, 0.f),
+            NUMPARTICLESPAWN);
         return;
     }
 
@@ -87,6 +98,19 @@ void CLaser::Update(double dt)
         {
             m_bStatus = false;
             SetIsDone(true);
+            BatchRendering::GetInstance()->GetParticle(
+                position,
+                Vector3(2.f, 2.f, 2.f),
+                Vector3(0.f, 0.8f, 1.f),
+                theDirection* dt * m_fSpeed,
+                NUMPARTICLESPAWN);
+
+            BatchRendering::GetInstance()->GetParticle(
+                position,
+                Vector3(2.f, 2.f, 2.f),
+                color,
+                -theDirection* dt * m_fSpeed,
+                NUMPARTICLESPAWN);
             return;
         }
         prevIndex = index;

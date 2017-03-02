@@ -7,6 +7,7 @@
 #include "GL/glew.h"
 #include "../PlayerInfo/PlayerInfo.h"
 #include "../Level/Level.h"
+#include "../BatchRendering.h"
 
 #include <iostream>
 using namespace std;
@@ -15,12 +16,16 @@ CGhast::CGhast(void)
     : CProjectile(NULL)
     , prevIndex(Vector3(0, 0, 0))
 {
+    // Particle
+    color.Set(Vector3(0.f, 0.8f, 1.f));
 }
 
 CGhast::CGhast(Mesh* _modelMesh)
     : CProjectile(_modelMesh)
     , prevIndex(Vector3(0, 0, 0))
 {
+    // Particle
+    color.Set(Vector3(0.f, 0.8f, 1.f));
 }
 
 CGhast::~CGhast(void)
@@ -57,15 +62,18 @@ void CGhast::Update(double dt)
     {
         SetStatus(false);
         SetIsDone(true);	// This method is to inform the EntityManager that it should remove this instance
+        
+        BatchRendering::GetInstance()->GetParticle(
+        position, 
+        Vector3(2.f, 2.f, 2.f), 
+        color, 
+        Vector3(0.f, 0.f, 0.f),
+        NUMPARTICLESPAWN);
+
         return;
     }
 
-    CHeatmap** heatmap = CPlayerInfo::GetInstance()->GetHeatmap();
-
-    int x = index.x;
-    int z = index.z;
-
-    theDirection = heatmap[x][z].GetDir();
+    theDirection = CPlayerInfo::GetInstance()->GetPosition() - position;
 
     // Update Position
     position += theDirection * dt * m_fSpeed;
@@ -117,7 +125,7 @@ CGhast* Create::Ghast(const std::string& _meshName,
     result->SetRoomID(CPlayerInfo::GetInstance()->GetRoomID());
     result->SetCollider(true);
     int x = 15; int y = 15;
-    x = (x >> 1) - 2; y = (y >> 1) - 2;
+    x = (x >> 1); y = (y >> 1);
     result->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
 
 

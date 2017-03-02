@@ -6,7 +6,7 @@
 #include <queue>
 #include "Vector3.h"
 #include "Level/SpatialPartition.h"
-#include "Enemy\Enemy2D.h"
+#include "Enemy/Enemy2D.h"
 
 class EntityBase;
 class CPlayerInfo;
@@ -25,11 +25,6 @@ public:
     bool RemoveEntity(EntityBase* _existingEntity, const int _roomID = -1);
     bool MarkForDeletion(EntityBase* _existingEntity);
 
-    void AddParticleActive(void);
-    void AddParticleInactive(void);
-    void RemoveParticleActive(Particle* _Particle);
-    Particle* GetParticle(void);
-
     void ResetEntities(void);
 
 	std::list<EntityBase*> GetEntityList() { return entityList; };
@@ -38,10 +33,6 @@ public:
     void SetSpatialPartition(CSpatialPartition* theSpatialPartition);
 
     inline void RemoveSpatialPartition(void) { partitionList.clear(); }
-
-    static std::list<Vector3> tilePosList;
-    static std::list<Vector3> particlePosList;
-
 private:
 	EntityManager();
 	virtual ~EntityManager();
@@ -64,12 +55,6 @@ private:
 	void CheckForCollision(void);
 
 	std::list<EntityBase*> entityList;
-    std::list<Particle*> particleList_Active;
-    std::list<Particle*> particleList_Inactive;
-
-    std::queue<std::list<Particle*>::iterator> SpliceQueue;
-
-    void Splice(std::list<Particle*>::iterator _particle, bool _IsDone);
 
     // Handler to Spatial Partition
     std::vector<CSpatialPartition*> partitionList;

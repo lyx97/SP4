@@ -8,7 +8,6 @@ Enemy2D::Enemy2D()
 	: GenericEntity(NULL)
 {
 	this->position = Vector3(0, 0, 0);
-	this->scale = Vector3(30, 30, 1);
 
 	this->isDone = false;
 	this->m_bCollider = true;
@@ -26,10 +25,13 @@ Enemy2D::Enemy2D()
 	this->healthRatio = 0.0f;
 	this->damage = 1.0f;
 
-	this->scale = Vector3(30, 30, 1);
+    this->scale = Vector3(20, 20, 1);
 	int x = scale.x, y = scale.y;
-	x = (x >> 2); y = (y >> 2);
+	x = (x >> 1) - 5; y = (y >> 1) - 5;
 	this->SetAABB(Vector3(x, y, 0), Vector3(-x, -y, 0));
+
+    // Particle
+    this->color.Set(Vector3(1.f, 1.f, 1.f));
 }
 
 Enemy2D::~Enemy2D()
@@ -38,13 +40,6 @@ Enemy2D::~Enemy2D()
 
 void Enemy2D::Update(double _dt)
 {
-	//Vector3 temp = (Cohesion(this) +Alignment(this) + Separation(this));
-	//if (!temp.IsZero())
-	//{
-	//	this->velocity += temp.Normalized();
-	//}
-	//cout << isDone << endl;
-
 	if (CPlayerInfo::GetInstance()->GetDreamBarRatio() < 0.25)
 		nightmare = true;
 	else

@@ -6,7 +6,6 @@
 
 Particle::Particle(void)
     : GenericEntity(NULL)
-    , velocity(Vector3(0, 0, 0))
     , m_fRotation(0.f)
     , m_fRotationSpeed(0.f)
     , m_fGravity(9.8f)
@@ -14,8 +13,10 @@ Particle::Particle(void)
     , m_fShrinkSpeed(1.0f)
     , m_fMinSize(Math::EPSILON)
     , m_fMaxSize(10.f)
+    , m_bDistort(true)
 {
-
+    velocity.Set(Vector3(0, 0, 0));
+    color.Set(Vector3(1, 1, 1));
 }
 
 Particle::~Particle(void)
@@ -25,8 +26,6 @@ Particle::~Particle(void)
 
 void Particle::Init(void)
 {
-    isDone = true;
-
     position = Vector3(0, 20, 0);
     scale = Vector3(1, 1, 1);
 
@@ -85,16 +84,4 @@ void Particle::Update(double dt)
     m_dLifetime -= dt;
     if (m_dLifetime <= 0.0)
         SetIsDone(true);
-}
-
-// Render
-void Particle::Render(void)
-{
-    //MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
-    //modelStack.PushMatrix();
-    //modelStack.Translate(position.x, position.y, position.z);
-    ////modelStack.Scale(scale.x, scale.y, scale.z);
-    //RenderHelper::StoreParticlesMVP();
-    ////RenderHelper::RenderMesh(MeshBuilder::GetInstance()->GetMesh("GRIDMESH"));
-    //modelStack.PopMatrix();
 }

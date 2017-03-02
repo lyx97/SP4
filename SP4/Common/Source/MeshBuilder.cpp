@@ -6,7 +6,9 @@
 #include "LoadOBJ.h"
 #include "LoadTGA.h"
 #include <iostream>
-#include "../../Base/Source/EntityManager.h"
+#include "../../Base/Source/BatchRendering.h"
+#include "../../Base/Source/Particle/Particle.h"
+#include "../../Base/Source/Level/Room.h"
 
 using namespace std;
 /******************************************************************************/
@@ -188,6 +190,62 @@ Mesh* MeshBuilder::GenerateQuad(const std::string &meshName, Color color, float 
 	return mesh;
 }
 
+Mesh* MeshBuilder::GenerateTile(const std::string &meshName, std::list<Vector3> _list)
+{
+    Vertex v;
+    std::vector<Vertex> vertex_buffer_data;
+    std::vector<GLuint> index_buffer_data;
+
+    std::list<Vector3>::iterator it, end = _list.end();
+    int i = 0;
+    for (it = _list.begin(); it != end; ++it)
+    {
+        v.pos.Set((-0.5f * GRIDSIZE) + (*it).x, -1, -(-0.5f * GRIDSIZE) + (*it).z);
+        v.color.Set(1.f, 1.f, 1.f);
+        v.normal.Set(0, 0, 1);
+        v.texCoord.Set(0, 0);
+        vertex_buffer_data.push_back(v);
+        v.pos.Set((0.5f * GRIDSIZE) + (*it).x, -1, -(-0.5f * GRIDSIZE) + (*it).z);
+        v.color.Set(1.f, 1.f, 1.f);
+        v.normal.Set(0, 0, 1);
+        v.texCoord.Set(1.0f, 0);
+        vertex_buffer_data.push_back(v);
+        v.pos.Set((0.5f * GRIDSIZE) + (*it).x, -1, -(0.5f * GRIDSIZE) + (*it).z);
+        v.color.Set(1.f, 1.f, 1.f);
+        v.normal.Set(0, 0, 1);
+        v.texCoord.Set(1.0f, 1.0f);
+        vertex_buffer_data.push_back(v);
+        v.pos.Set((-0.5f * GRIDSIZE) + (*it).x, -1, -(0.5f * GRIDSIZE) + (*it).z);
+        v.color.Set(1.f, 1.f, 1.f);
+        v.normal.Set(0, 0, 1);
+        v.texCoord.Set(0, 1.0f);
+        vertex_buffer_data.push_back(v);
+
+        index_buffer_data.push_back(3 + i);
+        index_buffer_data.push_back(0 + i);
+        index_buffer_data.push_back(2 + i);
+        index_buffer_data.push_back(1 + i);
+        index_buffer_data.push_back(2 + i);
+        index_buffer_data.push_back(0 + i);
+
+        i += 4;
+    }
+
+    Mesh *mesh = new Mesh(meshName);
+
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex), &vertex_buffer_data[0], GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint), &index_buffer_data[0], GL_STATIC_DRAW);
+
+    mesh->indexSize = index_buffer_data.size();
+    mesh->mode = Mesh::DRAW_TRIANGLES;
+
+    AddMesh(meshName, mesh);
+
+    return mesh;
+}
+
 Mesh* MeshBuilder::GenerateTriangle(const std::string &meshName, Color color, float length)
 {
     Vertex v;
@@ -229,28 +287,66 @@ Mesh* MeshBuilder::GenerateTriangle(const std::string &meshName, Color color, fl
     return mesh;
 }
 
-Mesh* MeshBuilder::GenerateParticle(const std::string &meshName, Color color, float length)
+Mesh* MeshBuilder::GenerateParticle(const std::string &meshName)
 {
     Vertex v;
     std::vector<Vertex> vertex_buffer_data;
     std::vector<GLuint> index_buffer_data;
 
-    std::list<Vector3>::iterator it, end = EntityManager::particlePosList.end();
+    std::list<Particle*>::iterator it, end = BatchRendering::particleList.end();
     int i = 0;
-    for (it = EntityManager::particlePosList.begin(); it != end; ++it)
+    for (it = BatchRendering::particleList.begin(); it != end; ++it)
     {
-        v.pos.Set((-0.5f * length) + (*it).x, (-0.5f * length) + (*it).z, 0);
-        v.color = color;
+        //v.pos.Set((-0.5f * (it)->GetScale().x) + (it)->GetPosition().x, (-0.5f * (it)->GetScale().z) + (it)->GetPosition().z, 0);
+        //v.color.Set((it)->GetColor().x, (it)->GetColor().y, (it)->GetColor().z);
+        //v.normal.Set(0, 0, 1);
+        //v.texCoord.Set(0, 0);
+        //vertex_buffer_data.push_back(v);
+        //v.pos.Set((0.5f * (it)->GetScale().x) + (it)->GetPosition().x, (-0.5f * (it)->GetScale().z) + (it)->GetPosition().z, 0);
+        //v.color.Set((it)->GetColor().x, (it)->GetColor().y, (it)->GetColor().z);
+        //v.normal.Set(0, 0, 1);
+        //v.texCoord.Set(1.0f, 0);
+        //vertex_buffer_data.push_back(v);
+        //v.pos.Set((0.5f * (it)->GetScale().x) + (it)->GetPosition().x, (0.5f * (it)->GetScale().z) + (it)->GetPosition().z, 0);
+        //v.color.Set((it)->GetColor().x, (it)->GetColor().y, (it)->GetColor().z);
+        //v.normal.Set(0, 0, 1);
+        //v.texCoord.Set(1.0f, 1.0f);
+        //vertex_buffer_data.push_back(v);
+        //v.pos.Set((-0.5f * (it)->GetScale().x) + (it)->GetPosition().x, (0.5f * (it)->GetScale().z) + (it)->GetPosition().z, 0);
+        //v.color.Set((it)->GetColor().x, (it)->GetColor().y, (it)->GetColor().z);
+        //v.normal.Set(0, 0, 1);
+        //v.texCoord.Set(0, 1.0f);
+        //vertex_buffer_data.push_back(v);
+
+        //index_buffer_data.push_back(3 + i);
+        //index_buffer_data.push_back(0 + i);
+        //index_buffer_data.push_back(2 + i);
+        //index_buffer_data.push_back(1 + i);
+        //index_buffer_data.push_back(2 + i);
+        //index_buffer_data.push_back(0 + i);
+
+        //i += 4;
+
+        float tempX = 0.5f;
+        float tempZ = 0.5f;
+        if ((*it)->GetDistort())
+        {
+            tempX = Math::RandFloatMinMax(0.1f, 0.9f);
+            tempZ = Math::RandFloatMinMax(0.1f, 0.9f);
+        }
+
+        v.pos.Set((-tempX * (*it)->GetScale().x) + (*it)->GetPosition().x, 1, -(-tempZ * (*it)->GetScale().z) + (*it)->GetPosition().z);
+        v.color.Set((*it)->GetColor().x, (*it)->GetColor().y, (*it)->GetColor().z);
         v.normal.Set(0, 0, 1);
         v.texCoord.Set(0, 0);
         vertex_buffer_data.push_back(v);
-        v.pos.Set((0.5f * length) + (*it).x, (-0.5f * length) + (*it).z, 0);
-        v.color = color;
+        v.pos.Set((tempX * (*it)->GetScale().x) + (*it)->GetPosition().x, 1, -(-tempZ * (*it)->GetScale().z) + (*it)->GetPosition().z);
+        v.color.Set((*it)->GetColor().x, (*it)->GetColor().y, (*it)->GetColor().z);
         v.normal.Set(0, 0, 1);
         v.texCoord.Set(1.0f, 0);
         vertex_buffer_data.push_back(v);
-        v.pos.Set((0.5f * length) + (*it).x, (0.5f * length) + (*it).z, 0);
-        v.color = color;
+        v.pos.Set((tempX * (*it)->GetScale().x) + (*it)->GetPosition().x, 1, -(tempZ * (*it)->GetScale().z) + (*it)->GetPosition().z);
+        v.color.Set((*it)->GetColor().x, (*it)->GetColor().y, (*it)->GetColor().z);
         v.normal.Set(0, 0, 1);
         v.texCoord.Set(1.0f, 1.0f);
         vertex_buffer_data.push_back(v);
@@ -258,6 +354,7 @@ Mesh* MeshBuilder::GenerateParticle(const std::string &meshName, Color color, fl
         index_buffer_data.push_back(1 + i);
         index_buffer_data.push_back(2 + i);
         index_buffer_data.push_back(0 + i);
+
         i += 3;
     }
 
@@ -821,6 +918,16 @@ void MeshBuilder::Init()
     GenerateQuad("floor", Color(1.0f, 1.0f, 1.0f), 1.f);
     GetMesh("floor")->textureID = LoadTGA("Image//Tile//floor.tga");
 	GenerateQuad("room", Color(0.5f, 0.5f, 0.5f), 1.f);
+    GenerateQuad("obstacle", Color(0.5f, 0.5f, 0.5f), 1.f);
+    GetMesh("obstacle")->textureID = LoadTGA("Image//Tile//obstacle.tga");
+    GenerateQuad("dooropen2", Color(0.5f, 0.5f, 0.5f), 1.f);
+    GetMesh("dooropen2")->textureID = LoadTGA("Image//Tile//dooropen2.tga");
+    GenerateQuad("doorlocked", Color(0.5f, 0.5f, 0.5f), 1.f);
+    GetMesh("doorlocked")->textureID = LoadTGA("Image//Tile//doorlocked.tga");
+    GenerateQuad("doorlocked2", Color(0.5f, 0.5f, 0.5f), 1.f);
+    GetMesh("doorlocked2")->textureID = LoadTGA("Image//Tile//doorlocked2.tga");
+    GenerateQuad("stair", Color(0.5f, 0.5f, 0.5f), 1.f);
+    GetMesh("stair")->textureID = LoadTGA("Image//Tile//stair.tga");
 
 	GenerateQuad("powerup_maxhealth", Color(1.0f, 1.0f, 1.0f), 1.f);
 	GetMesh("powerup_maxhealth")->textureID = LoadTGA("Image//Powerups//powerup_maxhealth.tga");
